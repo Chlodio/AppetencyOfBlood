@@ -1,0 +1,1 @@
+class Primogeniture extends Succession {};

@@ -1,0 +1,22 @@
+table{
+	border:1px solid black;
+	border-collapse: collapse;
+}
+td, th{
+	border:1px solid black;
+	padding:5 10;
+}
+
+.portrait{
+	padding: 0;
+}
+
+img{ width:100; }
+
+.nameCol {
+	max-width: 125px;
+}
+
+.nameCol2 {
+	max-width: 175px;
+}
