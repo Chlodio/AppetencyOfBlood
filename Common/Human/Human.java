@@ -171,6 +171,14 @@ public class Human {
 		}
 	}
 
+	public String getBirthName(){
+		if (this.hadFather()){
+			return this.getName().getName()+" "+this.getHouse().getName();
+		} else {
+			return this.getName().getName();
+		}
+	}
+
 	public List<String> getLivingSonsNames(){
 		List<Human> l =		this.getLegimateLivingSons();
 		List<String> n = 	new ArrayList<>();
@@ -779,4 +787,20 @@ public class Human {
 	public void addEvent(Event e){				this.events.add(e);				}
 	public void removeEvent(Event e){			this.events.remove(e);			}
 	public boolean isWidowed(){					return this.wasMarried() && this.isUnwed();	}
+	public boolean isHouseHead(){				return this.getHouse().getHeads().contains(this); }
+
+	public String getCoALink(){
+		Human h;
+		if (this.isMale()){
+			if (((Man) this).isHouseHead()){
+				return this.getHouse().getCoALink();
+			}
+		} if (this.isAdult() && this.wasMarried()){
+			h = this.getLatestHusband();
+			if (((Man) h).isHouseHead()){
+				return h.getHouse().getCoALink();
+			}
+		}
+		return "";
+	}
 }

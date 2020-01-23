@@ -26,6 +26,7 @@ public class House {
 	protected int generation;
 	protected int naming;
 	protected int nameNum;
+	protected int coa;								//coat of arms
 	protected int prestige;
 	protected int ranking;
 	protected List<House> branches;
@@ -71,6 +72,7 @@ public class House {
 		this.branches = 						new ArrayList<>();
 		this.princes =							new ArrayList<>();
 		this.naming	=							Basic.randint(6);
+		this.coa =								Basic.randint(100)+1;
 		Basic.house.put(House.id, this);
 		list.add(this);
 	}
@@ -745,6 +747,8 @@ public class House {
 	public int getGeneration(){						return this.generation;		}
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
+	public int getCoA(){							return this.coa; 			}
+	public String getCoALink(){	return "<img src='CoAs/"+this.getCoA()+".svg'</img>";}
 	public List<Human> getKinsmen(){				return this.kinsmen;		}
 	public List<Human> getKinswomen(){				return this.kinsmen;		}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}

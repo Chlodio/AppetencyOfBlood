@@ -17,7 +17,7 @@ public class Rela{
 	protected List<Human> children;
 	protected List<Human> realChildren;		//sons+daughters are legal children, but not always real
 	protected List<Marriage> marriages;
-	protected int numOfLivingSons;
+	protected int numOfLivingSons;			//legimate sons
 
 	//For starters who are adults
 	public Rela(Human o){
@@ -179,8 +179,10 @@ public class Rela{
 	public void addSon(Human f, Human m){
 		f.getRela().sons.add(this.o);
 		m.getRela().sons.add(this.o);
-		f.addLivingSon();
-		m.addLivingSon();
+		if (this.o.isLegimate()){
+			f.addLivingSon();
+		}
+		m.addLivingSon();					//Mater semper certa est
 	}
 
 

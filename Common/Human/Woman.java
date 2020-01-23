@@ -60,7 +60,7 @@ public class Woman extends Human {
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
-			return n;
+			return n+" of "+this.getHouse().getName();
 		}
 		if (this.hasTitle(Title.PRINCESS)){
 			return n+", "+Basic.getOrdial(this.getCadency())+" "+this.getTitleS();

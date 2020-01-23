@@ -127,7 +127,7 @@ public class Marriage extends SexRelation{
 			for (Human x: l){
 				if (x.isFemaleAdult()){
 					a = x.getAge();
-					if (x.isUnwed() && a <= (groom.getAge()+5) && a >= 40 ){
+					if (x.isUnwed() && a <= (groom.getAge()+5) && a <= 40 ){
 						bestMatch = x;
 						return true;
 					}
@@ -509,9 +509,26 @@ public class Marriage extends SexRelation{
 		}
 		return l/monthlyWeddingList.size();
 	}
-		public boolean isCousinUnion(){				return this.cousinUnion;				}
-		public static int getMonthlyWedding(){		return numOfMonthlyWeddings;			}
-		public static int getNum(){					return list.size(); 					}
-		public static void addMonthlyWedding(){		numOfMonthlyWeddings++;					}
+
+	public static int getPerOfCousinUnions(){
+		List<Marriage> l = getList();
+		int n = 0;
+		float i;
+		for(Marriage x: l){
+			if (x.isCousinUnion()){
+				n++;
+			}
+		}
+
+		i = (n+0.0f)/getNum();
+		return (int) (i*100);
+	}
+
+
+	public boolean isCousinUnion(){				return this.cousinUnion;				}
+	public static int getMonthlyWedding(){		return numOfMonthlyWeddings;			}
+	public static int getNum(){					return list.size(); 					}
+	public static List<Marriage> getList(){		return new ArrayList<>(list); 			}
+	public static void addMonthlyWedding(){		numOfMonthlyWeddings++;					}
 
 }

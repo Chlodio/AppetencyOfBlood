@@ -9,10 +9,11 @@ td, th{
 
 .portrait{
 	padding: 0;
+	clip: rect(10px, 90px, 190px, 10px);
 
 }
 
-img{}
+
 
 .nameCol {
 	max-width: 123px;

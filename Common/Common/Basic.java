@@ -45,8 +45,6 @@ public class Basic {
 		}
 		Basic.date.set(1000,0,1);
 
-
-
 		for (int x = 0; x < 90; x++){
 			Human.createFamily();
 		}
@@ -72,7 +70,6 @@ public class Basic {
 				}
 			}
 		}
-		Office.create();
 		Office.create();
 		Death.death();
 
@@ -134,10 +131,10 @@ public class Basic {
 		System.out.println(Marriage.failedMarriageAttemp);
 		System.out.println("COMPLETED");
 
-		List<Holder> xt =  Realm.getLineage(1);
+	/*	List<Holder> xt =  Realm.getLineage(1);
 		for(Holder x: xt){
 			System.out.println(x.getPerson().getFullName());
-		}
+		}*/
 
 	}
 

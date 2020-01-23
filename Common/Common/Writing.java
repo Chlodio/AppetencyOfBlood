@@ -68,18 +68,22 @@ public class Writing {
 					if (y.isCousinUnion()){
 						s1 += q.getPossessive()+" cousin, ";
 					}
-					s1 += Basic.getCardinal(y.getAgeAt(y.getSpouse(q)))+"-year-old "+y.getSpouse(q).getFormalName();
+					s1 += Basic.getCardinal(y.getAgeAt(y.getSpouse(q)))+"-year-old "+y.getSpouse(q).getBirthName();
 					writer.write(s1);
 						writer.write("; "+y.getHappinessDesc());
 					if (y.getOffspringNum() != 0){
 						writer.write(" produced "+y.buildOffspringHTML()+y.buildLivingOffspringHTML()+":<br>");
-						writer.write("\n<table><r><th>Name</th><th>Prt.</th><th>Lifespan</th><th>Notes</th></tr>\n");
+						writer.write("\n<table><r><th>Name</th><th>Prt.</th><th>CoA</th><th>Lifespan</th><th>Notes</th></tr>\n");
 						lo = y.getOffspring();
 						for (Human x: lo ){
 							writer.write("<tr>");
 							writer.write("<td class='nameCol'>"+x.getShortName()+"</td>\n<td class='portrait'>");
 							writer.write(x.getPortrait());
 							writer.write("</td>\n");
+							writer.write("<td>");
+							writer.write(x.getCoALink());
+							writer.write("</td>\n");
+
 							writer.write("<td>"+x.getLifespan()+"<br>"+"Aged "+x.aged()+"</td>\n");
 							writer.write("<td>");
 							if (x.isAdult() && x.wasMarried()){
@@ -88,24 +92,24 @@ public class Writing {
 									if (nOm > 1){
 										writer.write("Wives:<ol>");
 										for(int z = 0; z < nOm; z++){
-											writer.write("<li>"+x.getMarriage(z).getDoe().getFormalName()+x.getMarriage(z).getTenure());
+											writer.write("<li>"+x.getMarriage(z).getDoe().getBirthName()+x.getMarriage(z).getTenure());
 											writer.write(x.getMarriage(z).getOffspringHTML()+"</li>\n");
 										}
 										writer.write("</ol>");
 									} else{
-										writer.write("Married "+x.getFirstMarriage().getDoe().getFormalName()+" in "+x.getFirstMarriage().getBeginning()+"\n");
+										writer.write("Married "+x.getFirstMarriage().getDoe().getBirthName()+" in "+x.getFirstMarriage().getBeginning()+"\n");
 										writer.write(x.getFirstMarriage().getOffspringHTML());
 									}
 								} else{
 									if (nOm > 1){
 										writer.write("Husbands:<ol>");
 										for(int z = 0; z < nOm; z++){
-											writer.write("<li>"+x.getMarriage(z).getStag().getFormalName()+x.getMarriage(z).getTenure());
+											writer.write("<li>"+x.getMarriage(z).getStag().getBirthName()+x.getMarriage(z).getTenure());
 											writer.write(x.getMarriage(z).getOffspringHTML()+"</li>\n");
 										}
 										writer.write("</ol>");
 									} else{
-										writer.write("Married "+x.getFirstMarriage().getStag().getFormalName()+" in "+x.getFirstMarriage().getBeginning()+"\n");
+										writer.write("Married "+x.getFirstMarriage().getStag().getBirthName()+" in "+x.getFirstMarriage().getBeginning()+"\n");
 										writer.write(x.getFirstMarriage().getOffspringHTML());
 									}
 								}
@@ -282,6 +286,11 @@ public class Writing {
 			writer.write("<tr><th>#</th><th>%</th><tr>\n");
 			writer.write("<tr><td>Married</td><td>"+Woman.getPerOfMarriedRepWomen()+"%</td></tr>");
 			writer.write("<tr><td>Pregnant</td><td>"+Woman.getPerOfPregnantWomen()+"%</td></tr>");
+
+			writer.write("</table><b>Marriages</b><table>");
+
+			writer.write("<tr><th>#</th><th>%</th><tr>\n");
+			writer.write("<tr><th>Cousin marriages</th><td>"+Marriage.getPerOfCousinUnions()+"%</td><tr>\n");
 
 			writer.write("</table><p style='float:right'><b>CENSUS:</b><table>");
 			writer.write("<tr><th>YEAR</th><th>MEN</th><th>WOMEN</th><th>Bastards</th></tr>");

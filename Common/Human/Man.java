@@ -61,7 +61,7 @@ public class Man extends Human {
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
-			return n;
+			return n+" of "+this.getHouse().getName();
 		}
 		if (this.hasTitle(Title.PRINCE)){
 			return n+", "+Basic.getOrdial(this.getCadency())+" "+this.getTitleS();
@@ -145,7 +145,7 @@ public class Man extends Human {
 			this.addToHouse();
 			this.nameChild();
 			this.addSon(f, m);
-			this.cadency = f.getLegimateLivingSons().size()-1;
+			this.cadency = f.getNumOfLivingSons();
 
 			if (((Man) f).isPatriarch()){
 				f.getHouse().addPrince(this);
@@ -222,16 +222,18 @@ public class Man extends Human {
 		}
 
 		if (this.hadFather()){
-			if(this.hasBrother()){
-				h = this.getFather().getLivingSons();
-				for (int x = 0; x < h.size(); x++){
-					h.get(x).cadency = x;
+			if (this.isLegimate()){
+				this.getFather().removeLivingSon();
+				if(this.hasBrother()){
+					h = this.getFather().getLivingSons();
+					for (int x = 0; x < h.size(); x++){
+						h.get(x).cadency = x;
+					}
 				}
 			}
 			if (this.isHousePrince()){
 				this.getHouse().removePrince(this);
 			}
-			this.getFather().removeLivingSon();
 			this.getMother().removeLivingSon();
 /*	 		else if(this.getHouse().isActive() && !this.hasSeniorPaternalRelative()){
 				System.out.println("splitting after death of "+this);
