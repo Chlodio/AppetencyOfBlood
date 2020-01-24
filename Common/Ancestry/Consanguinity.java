@@ -16,7 +16,6 @@ public class Consanguinity{
 			return getUniqueEntries(list)+"%, "+a;
 		}
 		return "0%";
-			//return countDuplicates()/list.size();
 	}
 
 	public static int getUniqueEntries(List<Human> l){

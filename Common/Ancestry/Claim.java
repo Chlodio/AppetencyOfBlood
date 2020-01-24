@@ -29,8 +29,8 @@ public class Claim{
 	}
 
 	public String getThroughLine(int i){
-		Human a1 =	lineage[0]; //this.lineage.get(i-1);
-		Human a2 =	lineage[1]; //this.lineage.get(i-2);
+		Human a1 =	lineage[0];
+		Human a2 =	lineage[1];
 		String s =	a1.getFullName()+", through ";
 		s +=		a1.getPossessive()+" "+a2.getOffspring();
 		s +=		", "+a2.getFullName();
@@ -41,7 +41,7 @@ public class Claim{
 		String prefix = "";
 		int linSiz;
 		if (lineage != null){
-			linSiz = lineage.length; 	//this.lineage.size();		//lineage size
+			linSiz = lineage.length;
 			for(Human x: this.lineage){
 				System.out.print(x.getFormalName()+" ("+x+") -> ");
 			}
@@ -53,7 +53,7 @@ public class Claim{
 		if (linSiz > 2){
 			prefix = kinship[this.blood]+" ";
 		}
-		//System.out.println(this.special+" "+this.isSpecial()+"  "+linSiz);
+;
 		if (!this.isSpecial()){
 			Human heir =	this.holder;
 			Human pr   =	this.getPredecessor().getPerson();	//predecessor
@@ -119,13 +119,9 @@ public class Claim{
  		return this.getOrigin().getClaim().getFromLineage(1);
 	}
 
-	//Was the last holder incumbent's parent
+	//Was the last holder incumbent's parent?
 	public boolean isLastPredecessorParent(){
 		return this.getHolder().isChildOf(this.getPredecessor().getPerson());
-		/*if(this.getPredecessor() != null && this.getPredecessor().getPerson().isAdult()){
-			return this.getHolder().isChildOf(this.getPredecessor().getPerson());
-		}*/
-//		return false;
 	}
 
 	public boolean isPredecessorWoman(){

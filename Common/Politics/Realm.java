@@ -14,7 +14,6 @@ public class Realm extends Territory{
 	public Realm(Office office){
 		super(office);
 		this.poverty = 										0.5f;
-//		this.magnates =										House.getMagnates();
 		realms.add(this);
 	}
 

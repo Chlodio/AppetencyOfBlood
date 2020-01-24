@@ -375,9 +375,11 @@ public class Human {
 
 		if (f.isRegnant()){
 			it.princify();
+		} else {
+			it.name.setFull(it.makeName());
 		}
-
 		Basic.print(this.getFullName()+" gave birth to "+it.getFullName());
+
 		return it;
 	}
 
@@ -391,6 +393,7 @@ public class Human {
 		Bastard.add(it);
 		Basic.print(this.getFullName()+" gave birth to a bastard, "+it.getFullName());
 		it.getName().setNick("the Bastard");
+
 		return it;
 	}
 

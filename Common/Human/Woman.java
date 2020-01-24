@@ -60,7 +60,11 @@ public class Woman extends Human {
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
-			return n+" of "+this.getHouse().getName();
+			if (this.hadFather()){
+				return n+" of "+this.getHouse().getName();
+			} else {
+				return n;
+			}
 		}
 		if (this.hasTitle(Title.PRINCESS)){
 			return n+", "+Basic.getOrdial(this.getCadency())+" "+this.getTitleS();
@@ -76,7 +80,7 @@ public class Woman extends Human {
     public String makeName(){
 		String s = this.getShortName();
 		if (this.getName().getNick() != null){
-				s +=" "+this.getName().getNick();
+			s +=" "+this.getName().getNick();
 		}
 		if (this.house != null){
 			if (this.title == null){
@@ -335,6 +339,8 @@ public class Woman extends Human {
 		this.name.setFull(this.makeName());
 		//this.getName().setFull(this.getName().getName());
 	}
+
+
 
 	public void princify(){
 		this.title = Title.PRINCESS;

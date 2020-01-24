@@ -298,9 +298,9 @@ public class Marriage extends SexRelation{
 
 	public void breed(){
 		Woman w = (Woman) this.doe;
-		if (this.stag.hasNumOfLivingSons(4)){
+		/*if (this.stag.hasNumOfLivingSons(4)){
 			return;
-		}
+		}*/
 		try{
 			if (Basic.randint(100) < this.procreation[this.anniversary] && !w.isPregnant()){
 				w.fillUterus(this);

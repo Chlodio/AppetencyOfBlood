@@ -139,8 +139,8 @@ public class Man extends Human {
 
 	public void handlePostBirth(Human f, Human m){
 		this.setParents(f, m);
-
-		if (!this.isPosthumous() || this.hasBrother()){
+		//false && !this.isPosthumous() || this.hasBrother()
+		if (!this.isPosthumous()){
 			this.house = f.house;
 			this.addToHouse();
 			this.nameChild();

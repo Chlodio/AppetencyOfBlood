@@ -148,7 +148,11 @@ public class House {
 		} else{
 			Basic.print(this.getName()+" went extinct");
 		}
-		House.list.remove(this);
+		list.remove(this);
+		if (list.contains(this)){
+			System.out.println("ERROR dead house is alive");
+			throw new RuntimeException();
+		}
 	}
 
 	public void handleRanking(House newHouse){
@@ -173,6 +177,7 @@ public class House {
 		} catch (NullPointerException e){
 			h = this.getHead();
 			System.out.println(h.getHouse()==p.getHouse());
+			System.out.println("One of the heads is posthumous:"+this.hadPosthumousHead());
 			System.out.println("Senior branch not found");
 			System.out.println(this+" "+this.getHeads().get(this.getHeads().size()-1));
 			System.out.println("Living male members: "+this.getKinsmen().size());
@@ -734,6 +739,16 @@ public class House {
 		}
 	}
 
+	public boolean hadPosthumousHead(){
+		List<Human> l = this.getHeads();
+		for(Human x: l){
+			if (x.isPosthumous()){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasPatriarchHead(){				return this.patriarch == this.head; }
 	public Human getPatriarch(){					return this.patriarch;				}
 	public boolean hasPrinces(){					return this.princes.size() != 0; 	}
@@ -768,7 +783,7 @@ public class House {
 	public void removeKinsman(Human h){				this.kinsmen.remove(h);		}
 	public void removeKinswoman(Human h){			this.kinswomen.remove(h);	}
 	public void setRanking(int r){					this.ranking = r;			}
-	public List<Human> getHeads(){					return this.heads;			}
+	public List<Human> getHeads(){					return new ArrayList<>(this.heads);		}
 	public boolean isLegimate(){					return this.legimate;		}
 
 	private static List<Integer> namesN = new ArrayList<>();

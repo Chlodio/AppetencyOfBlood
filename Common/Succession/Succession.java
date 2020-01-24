@@ -98,7 +98,7 @@ public class Succession {
 
 	public void setHeir(Human h){
 		this.lineage.setHeir(h);
-		if (h == null){
+		if (h == null || !h.isAlive() ){
 			throw new RuntimeException();
 		}
 	}
