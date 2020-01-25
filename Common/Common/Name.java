@@ -38,7 +38,7 @@ public class Name{
 		FileReader reader;
 		BufferedReader buffy;
 		try {
-			reader = new FileReader("Forename_male.txt");
+			reader = new FileReader("Input/Forename_male.txt");
 			buffy = new BufferedReader(reader);
 			while((l = buffy.readLine()) != null) {
 				maleNames[c] = l;
@@ -53,7 +53,7 @@ public class Name{
 		}
 		c = 0;
 		try {
-			reader = new FileReader("Forename_female.txt");
+			reader = new FileReader("Input/Forename_female.txt");
 			buffy = new BufferedReader(reader);
 			while((l = buffy.readLine()) != null) {
 				femaleNames[c] = l;

@@ -543,7 +543,7 @@ public class Human {
 		int age = this.aged();
 		String s;
 		if (age >= 15){
-			s = "<img src='Portraits/";
+			s = "<img src='../Input/Portraits/";
 			s += this.getEyeShort();
 			s += this.getHairShort();
 			if (this.isMale()){

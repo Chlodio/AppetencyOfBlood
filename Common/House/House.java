@@ -84,7 +84,7 @@ public class House {
 		FileReader reader;
 		BufferedReader buffy;
 		try {
-			reader = new FileReader("Surnames.txt");
+			reader = new FileReader("Input/Surnames.txt");
 			buffy = new BufferedReader(reader);
 			while((l = buffy.readLine()) != null) {
 				names[c] = l;
@@ -173,6 +173,9 @@ public class House {
 		try{
 			while(h.getFather() != p){
 				h = h.getFather();
+				if (h.isPosthumous()){
+					System.out.println("posthum");
+				}
 			}
 		} catch (NullPointerException e){
 			h = this.getHead();
@@ -763,7 +766,7 @@ public class House {
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
 	public int getCoA(){							return this.coa; 			}
-	public String getCoALink(){	return "<img src='CoAs/"+this.getCoA()+".svg'</img>";}
+	public String getCoALink(){			return "<img src='../Input/CoAs/"+this.getCoA()+".svg'</img>";}
 	public List<Human> getKinsmen(){				return this.kinsmen;		}
 	public List<Human> getKinswomen(){				return this.kinsmen;		}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
@@ -787,6 +790,6 @@ public class House {
 	public boolean isLegimate(){					return this.legimate;		}
 
 	private static List<Integer> namesN = new ArrayList<>();
-	private static String[] names = new String[1112];
+	private static String[] names = new String[1256];
 
 }

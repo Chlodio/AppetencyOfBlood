@@ -13,6 +13,7 @@ public class Marriage extends SexRelation{
 	protected boolean cousinUnion;
 	private boolean sated;		//procreational sated
 	private byte PRO; 			//procreational optimism 0–20
+	private byte type;			//0 = regular, 1 = levirate, 2 = sororate
 
 	protected static Human bestMatch;
 	protected static int numOfMonthlyWeddings 			= 0;
@@ -277,11 +278,13 @@ public class Marriage extends SexRelation{
 	/*Widow marries her brother-in-laws*/
 	public static void doLevirate(Human widow, Human departed){
 		marryFiancee(departed.getUnwedBrother(), widow);
+		getRecentMarriage().setLevirate();
 	}
 
 	/*Widower marries his sister-in-laws*/
 	public static void doSororate(Human widower, Human departed){
 		marryFiancee(widower, departed.getUnwedSister());
+		getRecentMarriage().setSorotate();
 	}
 
 	public void terminate(){
@@ -525,10 +528,53 @@ public class Marriage extends SexRelation{
 	}
 
 
+	public static int getNumOfLevirates(){
+		List<Marriage> l = getList();
+		int i = 0;
+		for (Marriage x: l){
+			if (x.isLevirate()){
+				i++;
+			}
+		}
+		return i;
+	}
+
+	public static int getNumOfSororates(){
+		List<Marriage> l = getList();
+		int i = 0;
+		for (Marriage x: l){
+			if (x.isSororate()){
+				i++;
+			}
+		}
+		return i;
+	}
+
+	public static int getPerOfLevirates(){
+		int n = getNumOfLevirates();
+		float i;
+		i = (n+0.0f)/getNum();
+		return (int) (i*100);
+	}
+
+	public static int getPerOfSororates(){
+		int n = getNumOfSororates();
+		float i;
+		i = (n+0.0f)/getNum();
+		return (int) (i*100);
+	}
+
 	public boolean isCousinUnion(){				return this.cousinUnion;				}
+	public boolean isLevirate(){				return this.type == 1;					}
+	public boolean isSororate(){				return this.type == 2;					}
 	public static int getMonthlyWedding(){		return numOfMonthlyWeddings;			}
 	public static int getNum(){					return list.size(); 					}
 	public static List<Marriage> getList(){		return new ArrayList<>(list); 			}
+	public static Marriage getRecentMarriage(){	return list.get(list.size()-1);			}
 	public static void addMonthlyWedding(){		numOfMonthlyWeddings++;					}
+	public void setLevirate(){					this.type = 1;							}
+	public void setSorotate(){					this.type = 2;							}
+
+
 
 }

@@ -16,7 +16,7 @@ public class Writing {
 
 	public static void writeMonarchList(){
 		try {
-			FileWriter writer = new FileWriter("ListOfMonarchs.html", false);
+			FileWriter writer = new FileWriter("Output/ListOfMonarchs.html", false);
 			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
 			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
 			writer.write("</head><body>\n");
@@ -47,7 +47,7 @@ public class Writing {
 		List<Marriage> ml;
 		int nOm;		//num of marriages
 		try {
-			FileWriter writer = new FileWriter("MonarchsInfo.html", false);
+			FileWriter writer = new FileWriter("Output/MonarchsInfo.html", false);
 			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
 			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
 			writer.write("</head><body>\n");
@@ -149,7 +149,7 @@ public class Writing {
 
 	public static void writeSummary(){
 		try {
-			FileWriter writer = new FileWriter("Summary.html", false);
+			FileWriter writer = new FileWriter("Output/Summary.html", false);
 			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
 			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
 			writer.write("</head><body>\n");
@@ -218,7 +218,7 @@ public class Writing {
 		int[][] pop = buildPopulationPyramid();
 		//int[] wom = buildGynaecology();
 		try {
-			FileWriter writer = new FileWriter("Demography.html", false);
+			FileWriter writer = new FileWriter("Output/Demography.html", false);
 			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
 			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
 			writer.write("</head><body>\n");
@@ -291,6 +291,10 @@ public class Writing {
 
 			writer.write("<tr><th>#</th><th>%</th><tr>\n");
 			writer.write("<tr><th>Cousin marriages</th><td>"+Marriage.getPerOfCousinUnions()+"%</td><tr>\n");
+
+			writer.write("<tr><th>Levirate marriages</th><td>"+Marriage.getPerOfLevirates()+"%</td><tr>\n");
+
+			writer.write("<tr><th>Sororate marriages</th><td>"+Marriage.getPerOfSororates()+"%</td><tr>\n");
 
 			writer.write("</table><p style='float:right'><b>CENSUS:</b><table>");
 			writer.write("<tr><th>YEAR</th><th>MEN</th><th>WOMEN</th><th>Bastards</th></tr>");
