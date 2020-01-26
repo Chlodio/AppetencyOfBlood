@@ -61,7 +61,7 @@ public class Man extends Human {
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
-			return n+" of "+this.getHouse().getName();
+			return n+" "+this.getHouse().getName();
 		}
 		if (this.hasTitle(Title.PRINCE)){
 			return n+", "+Basic.getOrdial(this.getCadency())+" "+this.getTitleS();

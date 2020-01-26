@@ -296,6 +296,10 @@ public class Writing {
 
 			writer.write("<tr><th>Sororate marriages</th><td>"+Marriage.getPerOfSororates()+"%</td><tr>\n");
 
+			writer.write("<tr><th>Chidless marriages</th><td>"+Marriage.getPerOfChidless()+"%</td><tr>\n");
+
+			writer.write("<tr><th>Avg. num. of children</th><td>"+Marriage.getAvgNumOfChildren()+"</td><tr>\n");
+
 			writer.write("</table><p style='float:right'><b>CENSUS:</b><table>");
 			writer.write("<tr><th>YEAR</th><th>MEN</th><th>WOMEN</th><th>Bastards</th></tr>");
 			for(String x: Basic.census){

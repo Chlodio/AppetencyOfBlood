@@ -9,7 +9,7 @@ public class Death {
 	//	float as 1.0f;
 		int v = 0;
 		if (a >= 50 && !actor.isMale()){
-			v = (int) (Death.chance[a/10][a%10]*1.75);
+			v = (int) (Death.chance[a/10][a%10]*1.5);
 		} else {
 			v = (int) (Death.chance[a/10][a%10]);
 		}

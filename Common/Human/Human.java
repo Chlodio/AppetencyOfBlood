@@ -556,6 +556,17 @@ public class Human {
 		return "";
 	}
 
+	public boolean isFromSameEstate(Human h){
+		if (this.hadHouse() && h.hadHouse()){
+			return this.getHouse().isNoble() == h.getHouse().isNoble();
+		}
+		return true;
+	}
+
+	public boolean hadHouse(){					return this.house != null;	}
+
+	public boolean isNoble(){					return this.getHouse().isNoble();				}
+	public boolean isPeasant(){					return !this.getHouse().isNoble();				}
 
 //Shortcuts
 	public static int getID(){					return id;										}

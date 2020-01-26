@@ -60,5 +60,8 @@ public class Affair extends SexRelation {
 	public Human getBeau(){		return this.stag;	}
 	public Human getBelle(){	return this.doe;	}
 	public void remove(){		list.remove(this);	}
+	public static List<Affair> getList(){
+		return new ArrayList<>(list);
+	}
 
 }

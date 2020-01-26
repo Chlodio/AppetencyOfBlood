@@ -22,6 +22,9 @@ public class CadetHouse extends House {
 		this.heads.add(founder);
 		this.heads.add(head);
 		List<Human> l = new ArrayList<>(founder.getChildren());
+		if (parent.isNoble()){
+			this.ennoble();
+		}
 		for (Human x: l){
 			x.switchHouse(this);
 		}

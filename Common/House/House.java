@@ -17,7 +17,7 @@ public class House {
 	public static House nextHouse;
     private static int id = 0;
 
-	protected boolean active;
+	protected boolean isActive;
 	protected Calendar founding;
 	protected House parent;
 	protected Human founder;
@@ -29,6 +29,7 @@ public class House {
 	protected int coa;								//coat of arms
 	protected int prestige;
 	protected int ranking;
+	protected boolean isNoble;						//true = noble/false = lowborn
 	protected List<House> branches;
 	protected List<Human> heads;
 	protected List<Human> kinsmen;
@@ -38,7 +39,7 @@ public class House {
 	protected List<String> maleNames;
 	protected static String spareName;								//used for temp
 	protected String name;
-	protected boolean legimate;
+	protected boolean legimate;						//false = bastard house
 
 	/*	0		orderly
 	 	1		weighted random
@@ -49,20 +50,20 @@ public class House {
     public House(Human head){
 		((House) this).handles(head);
 		this.legimate = true;
-		int n = 								fetchName();
-		this.name = 							names[n];
-		this.nameNum =							n;
+		this.isNoble = false;
+		this.nameHouseLowborn();
     }
 
 	public House(Human head, String s){
 		((House) this).handles(head);
 		this.legimate = false;
+		this.isNoble = false;
 		this.name = 							"Fitz"+s;
 	}
 
 	public void handles(Human head){
         id++;
-		this.active = 							true;
+		this.activate();
 		this.founding = 						(Calendar) Basic.date.clone();
 		this.head = 							head;
 		this.heads = 							new ArrayList<>();
@@ -74,7 +75,7 @@ public class House {
 		this.naming	=							Basic.randint(6);
 		this.coa =								Basic.randint(100)+1;
 		Basic.house.put(House.id, this);
-		list.add(this);
+		this.addToPeasants();
 	}
 
 
@@ -84,15 +85,33 @@ public class House {
 		FileReader reader;
 		BufferedReader buffy;
 		try {
-			reader = new FileReader("Input/Surnames.txt");
+			reader = new FileReader("Input/Surname_lowborn.txt");
 			buffy = new BufferedReader(reader);
 			while((l = buffy.readLine()) != null) {
-				names[c] = l;
+				lowbornNames[c] = l;
+				c++;
+            }
+			buffy.close(
+			);
+		}
+		catch(IOException e){
+			System.out.println(e);
+			System.exit(1);
+		}
+		c = 0;
+		try {
+			reader = new FileReader("Input/Surname_highborn.txt");
+			buffy = new BufferedReader(reader);
+			while((l = buffy.readLine()) != null) {
+				highbornNames[c] = l;
 				c++;
             }
 			buffy.close();
 		}
-		catch(IOException e){}
+		catch(IOException e){
+			System.out.println(e);
+			System.exit(1);
+		}
 	}
 
 	public Human getHeir(){
@@ -137,9 +156,9 @@ public class House {
 				return;
 			}
 		}
-		this.active = false;
+		this.deactivate();
 		nextHouse = null;
-		if (this.isLegimate()){
+		if (this.isNoble() && !this.isLegimate()){
 			this.returnToCirculation();
 		}
 		if (this.findNextHouse()){
@@ -148,7 +167,7 @@ public class House {
 		} else{
 			Basic.print(this.getName()+" went extinct");
 		}
-		list.remove(this);
+
 		if (list.contains(this)){
 			System.out.println("ERROR dead house is alive");
 			throw new RuntimeException();
@@ -274,6 +293,17 @@ public class House {
 	}
 
 //Name methods
+
+
+	public void nameHouseLowborn(){
+		this.name = lowbornNames[Basic.randint(lowbornNames.length)];
+	}
+
+	public void nameHouseHighborn(){
+		int n = 								fetchName();
+		this.name = 							highbornNames[n];
+		this.nameNum =							n;
+	}
 
 	public String getMemberNameM(Human c){
 		switch(this.naming){
@@ -655,6 +685,11 @@ public class House {
 
 	public static List<Human> getMagnates(){
 		List<Human> magnates = new ArrayList<>();
+		List<House> nobles = getNobles();
+		for (House x: nobles){
+			magnates.add(x.getHead());
+		}
+		/*
 		for (House x: list){
 			if (x.getRanking() >= 6){
 				magnates.add(x.head);
@@ -671,7 +706,7 @@ public class House {
 		if (magnates.size() == 0){
 			System.out.println("No living men.");
 			System.exit(0);
-		}
+		}*/
 		return magnates;
 	}
 
@@ -722,23 +757,24 @@ public class House {
 	public static int fetchName(){
 		int n = 0;
 		try{
-			n = Basic.randint(namesN.size());
+			n = Basic.randint(highbornNamesN.size());
 		} catch (ArrayIndexOutOfBoundsException e){
-			System.out.println(namesN.size());
+			System.out.println(highbornNamesN.size());
 			System.exit(0);
 		}
-		int s = namesN.get(n);
-		namesN.remove(namesN.get(n));
+		int s = highbornNamesN.get(n);
+		highbornNamesN.remove(highbornNamesN.get(n));
 		return s;
 	}
 
 	public void returnToCirculation(){
-		namesN.add(this.nameNum);
+		highbornNamesN.add(this.nameNum);
 	}
 
-	public static void numberHouses(){
-		for(int x = 0; x < names.length; x++){
-			namesN.add(x);
+	//each noble house name must be unique, each number corresponds to a house name, so there is a list integers being used
+	public static void numberNobleHouses(){
+		for(int x = 0; x < highbornNames.length; x++){
+			highbornNamesN.add(x);
 		}
 	}
 
@@ -752,14 +788,87 @@ public class House {
 		return false;
 	}
 
+
+	public static void ennobleFirst(int i){
+		for(int x = 0; x < i; x++){
+			list.get(x).ennoble();
+		}
+	}
+
+	public void ennoble(){
+		this.nameHouseHighborn();
+		this.isNoble = true;
+		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
+		this.addToNobles();
+	}
+
+	public void addToNobles(){
+		peasants.remove(this);
+		nobles.add(this);
+	}
+
+	public boolean hasPlentyOfNobles(){
+		return getNumOfNobles() >= 10;
+	}
+
+	public boolean isNoble(){						return this.isNoble;		}
+	public static List<House> getNobles(){			return new ArrayList<>(nobles);		}
+	public int getNumOfNobles(){					return nobles.size();				}
+	private void removeFromNobles(){				nobles.remove(this);				}
+
+	private static void raiseNewNoble(){
+		House h = getRandomPeasant();
+		h.ennoble();
+	}
+
+	public void addToPeasants(){					peasants.add(this);					}
+	private void removeFromPeasants(){				peasants.remove(this);				}
+
+
+
+	public static House getRandomPeasant(){
+		House h = Basic.choice(getPeasants());
+		if (!h.isActive()){
+			throw new RuntimeException();
+		}
+		return h;
+	}
+
+	public static List<House> getPeasants(){		return new ArrayList<>(peasants);	}
+
 	public boolean hasPatriarchHead(){				return this.patriarch == this.head; }
 	public Human getPatriarch(){					return this.patriarch;				}
 	public boolean hasPrinces(){					return this.princes.size() != 0; 	}
 
+//Activation	-	if the house is alive or dead
+
+	public void activate(){
+		this.isActive = true;
+		list.add(this);
+	}
+
+	public void deactivate(){
+		this.isActive = false;
+		list.remove(this);
+
+		if (this.isNoble()){
+			this.removeFromNobles();
+			//There must always be nobles
+			if (!hasPlentyOfNobles()){
+				raiseNewNoble();
+			}
+		} else {
+			this.removeFromPeasants();
+		}
+
+	}
+
+	public boolean isActive(){						return this.isActive;		}
+
+
 //Micro methods
 
 	public boolean hasHead(){						return this.head != null;	}
-	public boolean isActive(){						return this.active;			}
 	public House getParent(){						return this.parent;			}
 	public Human getHead(){							return this.head;			}
 	public int getGeneration(){						return this.generation;		}
@@ -789,7 +898,12 @@ public class House {
 	public List<Human> getHeads(){					return new ArrayList<>(this.heads);		}
 	public boolean isLegimate(){					return this.legimate;		}
 
-	private static List<Integer> namesN = new ArrayList<>();
-	private static String[] names = new String[1256];
+
+
+	private static List<Integer> highbornNamesN = 		new ArrayList<>();
+	private static String[] highbornNames = 			new String[1111];
+	private static String[] lowbornNames = 				new String[145];
+	public static List<House> nobles = 					new ArrayList<>(20);
+	public static List<House> peasants = 				new ArrayList<>(100);
 
 }

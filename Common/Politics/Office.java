@@ -64,8 +64,7 @@ public class Office{
 //		Elective.callHeir();
 		Human founder = Basic.choice(House.getMagnates()); //Succession.heir;
 		if (founder.isRegnant()){
-			System.out.println("the same");
-			throw new RuntimeException();
+			throw new RuntimeException();		//the same
 		}
 		office.get(offices.size()).inaugurate(founder);
 		//firstSovereign = founder;
@@ -130,8 +129,11 @@ public class Office{
 			}
 			s = this.getLineage().getHeir();
 		} else {
-			System.out.println("elect");
-			s = Basic.choice(House.getMagnates());
+			try {
+				s = Basic.choice(House.getMagnates());		//elect
+			} catch (RuntimeException e){
+				throw new RuntimeException();
+			}
 		}
 		inaugurate(s);
 	//	this.getLineage().determinePrimogenitureHeir();

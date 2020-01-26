@@ -85,14 +85,16 @@ public class SexRelation{
 		}
 
 		public static void doAnnual(){
-			for(Marriage x: Marriage.list){
+			List<Marriage> lm = Marriage.getList();
+			for(Marriage x: lm){
 				x.anniversary++;
 				//if (x.considerDivorce()){ dList.add(x); }
 			}
 /*			for(Marriage x: dList){
 				x.getDivorce();
 			}*/
-			for(Affair x: Affair.list){
+			List<Affair> la = Affair.getList();
+			for(Affair x: la){
 				x.anniversary++;
 			}
 //			dList.clear();
@@ -101,6 +103,28 @@ public class SexRelation{
 		public String getHappinessDesc(){
 			return happyDesc[(this.getHappiness()-1)/2]+" "+Basic.choice(unionDesc);
 		}
+
+		public boolean isChildless(){
+			List<Human> l = this.getOffspring();
+			for(Human x: l){
+				if (x.isAlive()){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public int getNumOfLivingOffspring(){
+			List<Human> l = this.getOffspring();
+			int i = 0;
+			for(Human x: l){
+				if (x.isAlive()){
+					i++;
+				}
+			}
+			return i;
+		}
+
 
 		public static String[] happyDesc = 		{"miserable", "joyless", "", "happy", "loving"};
 		public static String[] unionDesc = 		{"union", "couple", "wedlock", "marriage", "matrimony"};

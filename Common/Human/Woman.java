@@ -61,7 +61,7 @@ public class Woman extends Human {
 			return this.getFullName();
 		} else if (this.title == null){
 			if (this.hadFather()){
-				return n+" of "+this.getHouse().getName();
+				return n+" "+this.getHouse().getName();
 			} else {
 				return n;
 			}

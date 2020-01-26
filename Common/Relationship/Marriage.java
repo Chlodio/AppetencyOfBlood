@@ -149,6 +149,7 @@ public class Marriage extends SexRelation{
 			lass = pBrides.get(x);
 			//No old women
 			la = lass.getAge();
+			if (!bachelor.isFromSameEstate(lass)){	continue;	}
 			if (la > ba-5|| la > 40){ continue;}
 			//No parent-child marriages
 			if (bachelor.getMother() == lass){ continue; }
@@ -550,6 +551,27 @@ public class Marriage extends SexRelation{
 		return i;
 	}
 
+	public static int getNumOfChildless(){
+		List<Marriage> l = getList();
+		int i = 0;
+		for (Marriage x: l){
+			if (x.isChildless()){
+				i++;
+			}
+		}
+		return i;
+	}
+
+	//total number of children from current marriages
+	public static int getNumOfChildren(){
+		List<Marriage> l = getList();
+		int i = 0;
+		for (Marriage x: l){
+			i += x.getNumOfLivingOffspring();
+		}
+		return i;
+	}
+
 	public static int getPerOfLevirates(){
 		int n = getNumOfLevirates();
 		float i;
@@ -562,6 +584,20 @@ public class Marriage extends SexRelation{
 		float i;
 		i = (n+0.0f)/getNum();
 		return (int) (i*100);
+	}
+
+
+	public static int getPerOfChidless(){
+		int n = getNumOfChildless();
+		float i;
+		i = (n+0.0f)/getNum();
+		return (int) (i*100);
+	}
+
+	public static int getAvgNumOfChildren(){
+		int n = getNumOfChildren();
+
+		return n/getNum();
 	}
 
 	public boolean isCousinUnion(){				return this.cousinUnion;				}

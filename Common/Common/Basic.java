@@ -30,7 +30,7 @@ public class Basic {
 		Religion.foundReligion();
 
 
- 		House.numberHouses();
+ 		House.numberNobleHouses();
 		Name.buildForenames();
 		House.buildNames();
 
@@ -45,9 +45,11 @@ public class Basic {
 		}
 		Basic.date.set(1000,0,1);
 
-		for (int x = 0; x < 90; x++){
+		for (int x = 0; x < 100; x++){
 			Human.createFamily();
 		}
+
+		House.ennobleFirst(10);
 
 		if (Man.singles.size() != 0 || Woman.singles.size() != 0){
 			Human w;
@@ -158,14 +160,14 @@ public class Basic {
 
 	public static String choice(String[] list){
 		if (list.length < 1 ){
-			System.out.println(roman[100]);
+			throw new RuntimeException();
 		}
 		return list[randomizer.nextInt(list.length)];
 	}
 
 	public static <T> T choice(List<T> list){
 		if (list.size() < 1 ){
-			System.out.println(roman[100]);
+			throw new RuntimeException();
 		}
 		return list.get(randomizer.nextInt(list.size()));
 	}
