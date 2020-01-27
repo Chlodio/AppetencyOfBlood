@@ -263,6 +263,18 @@ public class Basic {
 		return Character.toLowerCase(it.charAt(0))+it.substring(1);
 	}
 
+	public static boolean isLessThan(int a, int b){
+		return a < b;
+	}
+
+	public static boolean isAtLeast(int a, int b){
+		return a >= b;
+	}
+
+	public static boolean isNotZero(int a){
+		return a != 0;
+	}
+
 	public static void pause(int ms){
 		try{
 			Thread.sleep(ms);

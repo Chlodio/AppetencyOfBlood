@@ -109,13 +109,20 @@ public class Marriage extends SexRelation{
 			if (match(groom)){
 				marryFiancee(groom, bestMatch);
 			} else {
-			//	Human w = new Woman(15);
-			//	marryFiancee(groom, w);
-				if (Basic.randint(8) == 0){
-					Affair.begin(groom);
+				//	Human w = new Woman(15);
+				//	marryFiancee(groom, w);
+				if (groom.isNoble()){
+					//Morganatic marriage
+					if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
+						marryFiancee(groom, groom.getAffairs().get(0).getBelle());
+						groom.getSpouse().getHouse().ennoble();
+						System.out.println("morganatic ennoblement");
+					} else if (Basic.randint(5) == 0){
+						Affair.begin(groom);
+					}
+					//System.exit(0);
+					failedMarriageAttemp++;
 				}
-				//System.exit(0);
-				failedMarriageAttemp++;
 			}
 		}
 	}
@@ -302,9 +309,12 @@ public class Marriage extends SexRelation{
 
 	public void breed(){
 		Woman w = (Woman) this.doe;
-		/*if (this.stag.hasNumOfLivingSons(4)){
+
+		//multiple sons are only for noblemen
+		if (this.stag.isPeasant() && this.stag.hasNumOfLivingSons(4)){
 			return;
-		}*/
+		}
+
 		try{
 			if (Basic.randint(100) < this.procreation[this.anniversary] && !w.isPregnant()){
 				w.fillUterus(this);

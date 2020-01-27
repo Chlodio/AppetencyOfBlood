@@ -445,6 +445,22 @@ public class Writing {
 		return a;
 	}
 
+
+	//Adds the text inside of list item;
+	public static String addLi(String s){
+		return "<li>"+s+"</li>";
+	}
+
+	//Adds the text inside of unordered list;
+	public static String addUl(String s){
+		return "<ul>"+s+"</ul>";
+	}
+
+	//Adds the text inside of list item inside of unordered list;
+	public static String addUlLi(String s){
+		return addUl(addLi(s));
+	}
+
 	private static String[] ast = {"", "*", "**", "***", "****", "*****", "******", "*******", "********", "*********", "**********"};
 	private static String[] col = {"#ff0000", "#ff4000", "#ff8000", "#ffbf00", "#ffff00", "#bfff00", "#80ff00", "#40ff00", "#00ff00", "#00ff40", "#00ff80"};
 }

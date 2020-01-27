@@ -50,7 +50,6 @@ public class House {
     public House(Human head){
 		((House) this).handles(head);
 		this.legimate = true;
-		this.isNoble = false;
 		this.nameHouseLowborn();
     }
 
@@ -73,7 +72,7 @@ public class House {
 		this.branches = 						new ArrayList<>();
 		this.princes =							new ArrayList<>();
 		this.naming	=							Basic.randint(6);
-		this.coa =								Basic.randint(100)+1;
+		this.isNoble = false;
 		Basic.house.put(House.id, this);
 		this.addToPeasants();
 	}
@@ -798,6 +797,7 @@ public class House {
 	public void ennoble(){
 		this.nameHouseHighborn();
 		this.isNoble = true;
+		this.coa =									1+Basic.randint(100);
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
 		this.addToNobles();
 	}
