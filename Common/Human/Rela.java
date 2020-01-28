@@ -5,19 +5,21 @@ import java.util.ArrayList;
 
 //Short for relation
 public class Rela{
-	protected Human o;		//self owner
-    protected Human father;				//sociological father
-	protected Human genitor;			//biological father
-	protected Human mother;				//sociological/biological mother
+	protected Human o;						//Self owner
+    protected Human father;					//Sociological father
+	protected Human genitor;				//Biological father
+	protected Human mother;					//Sociological/biological mother
 	protected Human spouse;
 	protected List<Affair> affairs;
 	protected List<Affair> allAffairs;
 	protected List<Human> daughters;
 	protected List<Human> sons;
+	protected List<Human> legitSons;		//Will be included as a part of sons
+	protected List<Human> legitDaughters;//Will be included as a part of sons
 	protected List<Human> children;
-	protected List<Human> realChildren;		//sons+daughters are legal children, but not always real
+	protected List<Human> realChildren;		//Sons+daughters are legal children, but not always real
 	protected List<Marriage> marriages;
-	protected int numOfLivingSons;			//legimate sons
+	protected int numOfLivingSons;			//Legimate sons
 
 	//For starters who are adults
 	public Rela(Human o){
@@ -34,13 +36,7 @@ public class Rela{
 //Children
 
 	public boolean hasChild(){
-		List<Human> l = this.getChildren();
-		for(Human x: l){
-			if (x.isAlive()){
-				return true;
-			}
-		}
-		return false;
+		return Human.hasLiving(this.getChildren());
 	}
 
 	public void addChild(Human f, Human m){
@@ -67,13 +63,7 @@ public class Rela{
 
 	public List<Human> getLivingChildren(){
 		List<Human> lc = this.o.getChildren();
-		List<Human> l = new ArrayList<>(lc.size());
-		for(Human x: l){
-			if (x.isAlive()){
-				l.add(x);
-			}
-		}
-		return l;
+		return Human.getLiving(lc);
 	}
 
 	public boolean isChildOf(Human h){
@@ -90,36 +80,16 @@ public class Rela{
 
 	public boolean isSonless(){
 		List<Human> l = this.getSons();
-		for (Human x: l){
-			if (x.isAlive()){
-				return true;
-			}
-		}
-		return false;
+		return !Human.hasLiving(l);
 	}
 
 	public boolean hasSon(){
 		List<Human> l = this.getSons();
-		for (Human x: l){
-			if (x.isAlive()){
-				return true;
-			}
-		}
-		return false;
+		return Human.hasLiving(l);
 	}
 
 	public boolean hasSons(){
-		int c = 0;
-		List<Human> l = this.getSons();
-		for (Human x: l){
-			if (x.isAlive()){
-				c++;
-				if (c >= 2){
-					return true;
-				}
-			}
-		}
-		return false;
+		return this.getNumOfLivingSons() > 1;
 	}
 
 	public int getNumOfSons(){					return this.sons.size();					}
@@ -129,101 +99,77 @@ public class Rela{
 	public boolean hasNumOfLivingSons(int v){	return this.numOfLivingSons >= v;			}
 
 	public List<Human> getLivingSons(){
-		List<Human> l = this.getSons();
-		List<Human> nl = new ArrayList<>(l.size());
-		if (this.o.isAdult()){
-			for (Human x: l){
-				if (x.isAlive()){
-					nl.add(x);
-				}
-			}
-		}
-		return nl;
+		List<Human> l = this.getSons();					//Get all sons
+		List<Human> ll = Human.getLiving(l);			//Get rid of the dead
+		return ll;
 	}
 
-	public List<Human> getLegimateLivingSons(){
-		List<Human> nl = new ArrayList<>();
-		List<Human> l = this.getSons();
-		if (this.o.isAdult()){
-			for (Human x: l){
-				if (x.isAlive() && x.isLegimate()){
-					nl.add(x);
-				}
-			}
-		}
-		return nl;
+	public List<Human> getLegitLivingSons(){
+		List<Human> l = this.getLegitSons();			//Get only legimate sons
+		List<Human> ll = Human.getLiving(l);			//Get rid of the dead
+		return ll;
 	}
 
 	public Human getLivingSon(){
-		Human s = this.sons.get(0);
-		List<Human> l = this.getSons();
-		for (Human x: l){
-			if (x.isAlive()){
-				s = x;
-				break;
-			}
-		}
-		return s;
+		return Human.getFirstLiving(this.getSons());
 	}
 
-	public Human getOldestSon(){
-		List<Human> l = this.getSons();
-		for (Human x: l){
-			if (x.isAlive()){
-				return x;
-			}
-		}
-		return null;
-	}
 
 	public void addSon(Human f, Human m){
-		f.getRela().sons.add(this.o);
-		m.getRela().sons.add(this.o);
-		if (this.o.isLegimate()){
+		f.getRela().sons.add(this.getOwner());
+		m.getRela().sons.add(this.getOwner());
+		if (this.getOwner().isLegimate()){
 			f.addLivingSon();
+			f.getRela().addLegitSon(this.getOwner());
+			m.getRela().addLegitSon(this.getOwner());
 		}
 		m.addLivingSon();					//Mater semper certa est
 	}
 
+	public void addLegitSon(Human c){
+		this.legitSons.add(c);
+	}
+
+	public List<Human> getLegitSons(){
+		return new ArrayList<>(this.legitSons);
+	}
 
 //Daughters
 
 	public List<Human> getDaughters(){			return new ArrayList<>(this.daughters);	}
 
 	public List<Human> getLivingDaughters(){
-		List<Human> list = new ArrayList<>();
-		for (Human x: this.daughters){
-			if (x.isAlive()){
-				list.add(x);
-			}
-		}
-		return list;
+		List<Human> l = this.getDaughters();					//Get all daughters
+		List<Human> ll = Human.getLiving(l);					//Get rid of the dead
+		return ll;
 	}
 
-	public Human getOldestDaughter(){
-		for (Human x: this.daughters){
-			if (x.isAlive()){
-				return x;
-			}
-		}
-		return null;
+	public List<Human> getLegitLivingDaughters(){
+		List<Human> l = this.getLegitDaughters();				//Get only legimate daughters
+		List<Human> ll = Human.getLiving(l);					//Get rid of the dead
+		return ll;
 	}
 
-	public List<Human> getLegimateLivingDaughters(){
-		List<Human> list = new ArrayList<>();
-		for (Human x: this.daughters){
-			if (x.isAlive() && x.isLegimate()){
-				list.add(x);
-			}
-		}
-		return list;
+	public Human getLivingDaughter(){
+		return Human.getFirstLiving(this.getDaughters());
 	}
 
 	public void addDaughter(Human f, Human m){
-		f.getRela().daughters.add(this.o);
-		m.getRela().daughters.add(this.o);
+		f.getRela().daughters.add(this.getOwner());
+		m.getRela().daughters.add(this.getOwner());
+		if (this.getOwner().isLegimate()){
+			f.getRela().addLegitDaughter(this.getOwner());
+			m.getRela().addLegitDaughter(this.getOwner());
+		}
 	}
 
+	public void addLegitDaughter(Human c){
+		this.legitDaughters.add(c);
+	}
+
+	public List<Human> getLegitDaughters(){
+		return new ArrayList<>(this.legitDaughters);
+	}
 
 //Parents
 
@@ -299,22 +245,15 @@ public class Rela{
 	}
 
 
+	//Count living paternal siblings
 	public int getNumOfLivingSiblings(){
 		int n = 0;
+
 		if (this.hadFather()){
-			List<Human> l = this.getFather().getSons();
-			for (Human x: l){
-				if (x.isAlive()){
-					n++;
-				}
-			}
-			l = this.getDaughters();
-			for (Human x: l){
-				if (x.isAlive()){
-					n++;
-				}
-			}
+			n += Human.countLiving(this.getBrothers());
+			n += Human.countLiving(this.getSisters());
 		}
+
 		return n;
 	}
 
@@ -343,7 +282,7 @@ public class Rela{
 
 	public List<Human> getBrothers(){
 		List<Human> l = this.father.getSons();
-		l.remove(this);
+		l.remove(this);								//Remove himself
 		return l;
 	}
 
@@ -396,7 +335,7 @@ public class Rela{
 	public Human getUnwedBrother(){
 		List<Human> l = this.getFather().getSons();
 		for(Human x: l ){
-			if (x.isAlive() && x.isAdult()){
+			if (x.isLivingAdult()){
 				if (x.isFitForMarriage()){
 					return x;
 				}
@@ -407,6 +346,12 @@ public class Rela{
 
 
 //Sisters
+
+	public List<Human> getSisters(){
+		List<Human> l = this.father.getDaughters();
+		l.remove(this);									//Don't count yourself
+		return l;
+	}
 
 	public boolean isSisterOf(Human h){
 		return this.father == h.getFather() ||	this.mother == h.getMother();
@@ -436,7 +381,7 @@ public class Rela{
 	public Human getUnwedSister(){
 		List<Human> l = this.getFather().getDaughters();
 		for(Human x: l ){
-			if (x.isAlive() && x.isAdult()){
+			if (x.isLivingAdult()){
 				if (x.isFitForMarriage()){
 					return x;
 				}
@@ -756,11 +701,8 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 			l1 = new ArrayList<>(this.getFathersFather().getChildren());
 			for (Human x: l1){
 				if (x.isAdult() && x != this.getFather()){
-					l2 = new ArrayList<>(x.getChildren());
-					for (Human y: l2){
-						if (y.isAlive()){
-							return true;
-						}
+					if (Human.hasLiving(x.getChildren())){
+						return true;
 					}
 				}
 			}
@@ -768,11 +710,8 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 			l1 = this.getMothersFather().getChildren();
 			for (Human x: l1){
 				if (x.isAdult() && x != this.getMother()){
-					l2 = x.getChildren();
-					for (Human y: l2){
-						if (y.isAlive()){
-							return true;
-						}
+					if (Human.hasLiving(x.getChildren())){
+						return true;
 					}
 				}
 			}
@@ -789,24 +728,14 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 			l1 = new ArrayList<>(this.getFathersFather().getChildren());
 			for (Human x: l1){
 				if (x.isAdult() && x != this.getFather()){
-					l2 = new ArrayList<>(x.getChildren());
-					for (Human y: l2){
-						if (y.isAlive()){
-							l0.add(y);
-						}
-					}
+					l2 = Human.getLiving(x.getChildren());
 				}
 			}
 		} else if (this.hadMother() && this.hadMatGrandpa()){
 			l1 = this.getMothersFather().getChildren();
 			for (Human x: l1){
 				if (x.isAdult() && x != this.getMother()){
-					l2 = x.getChildren();
-					for (Human y: l2){
-						if (y.isAlive()){
-							l0.add(y);
-						}
-					}
+					l2 = Human.getLiving(x.getChildren());
 				}
 			}
 		}
@@ -925,9 +854,11 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 		this.marriages = 			new ArrayList<>();
 		this.sons = 				new ArrayList<>();
 		this.daughters = 			new ArrayList<>();
+		this.legitSons =			new ArrayList<>();
+		this.legitDaughters =	new ArrayList<>();
 		this.realChildren = 		new ArrayList<>();
 		this.children = 			new ArrayList<>();
-		this.numOfLivingSons = 		0;
+		this.numOfLivingSons = 		0;						//Legimate livings sons, bastard sons not
 	}
 
 	//How many generations of ancestry does the person have
@@ -948,6 +879,11 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 			return 1;
 		}
 		return 0;
+	}
+
+
+	private Human getOwner(){
+		return this.o;
 	}
 
 }

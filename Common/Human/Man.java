@@ -324,26 +324,59 @@ public class Man extends Human {
 	}
 
 	public boolean isMinor(){			return this.getAge() < 14; }
+
 	@Override
     public String widow(){ 				return "widower";}
+
     @Override
     public String getParent(){ 			return "father";}
+
     @Override
     public String getPibling(){ 		return "uncle";}
+
     @Override
     public String getNibling(){ 		return "nephew";}
+
     @Override
     public void becomeTaken(){			singles.remove(this);}
+
     @Override
     public String child(){				return "boy";}
+
     @Override
     public String getSibling(){			return "brother";}
+
 	@Override
     public String getLoverGroup(){		return "mistresses";}
+
 	@Override
 	public String getRelation(int v){	return relation[v];		}
+
 	@Override
 	public Human getLoverfromAffair(Affair h){	return h.getDoe();	}
+
+
+	//I.e 2 (of 4 sons)
+	@Override
+	public int getSexChildOrder(){
+		List<Human> l = this.getFather().getSons();
+		return l.indexOf(this);
+	}
+
+	//I.e second son or only son
+	@Override
+	public String getSexChildOrderName(){
+
+		List<Human> l = this.getFather().getLegitSons();
+
+		//If there is only one son, just return only son, otherwise [ordinal] son
+		if (l.size() == 1){
+			return "only son";
+		} else {
+			return Basic.getOrder(l.indexOf(this))+" son";
+		}
+
+	}
 
 	@Override
 	public Title getRoyalTitle(){		return Title.KING;}

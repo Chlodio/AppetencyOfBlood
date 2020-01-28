@@ -400,6 +400,25 @@ public class Woman extends Human {
 	@Override
 	public Human getLoverfromAffair(Affair h){	return h.getStag();	}
 
+	@Override
+	public int getSexChildOrder(){
+		List<Human> l = this.getFather().getDaughters();
+		return l.indexOf(this);
+	}
+
+	@Override
+	public String getSexChildOrderName(){
+		List<Human> l = this.getFather().getLegitDaughters();
+
+		//If there is only one daughter, just return only daughter, otherwise [ordinal] daughter
+		if (l.size() == 1){
+			return "only daughter";
+		} else {
+			return Basic.getOrder(l.indexOf(this))+" daughter";
+		}
+
+	}
+
 	public void addToElders(){							elders.add(this); 	 	}
 	public void removeFromElders(){						elders.remove(this); 	}
 	public static int getAmount(){						return women.size();	}

@@ -180,7 +180,7 @@ public class Human {
 	}
 
 	public List<String> getLivingSonsNames(){
-		List<Human> l =		this.getLegimateLivingSons();
+		List<Human> l =		this.getLegitLivingSons();
 		List<String> n = 	new ArrayList<>();
 		for(Human x: l){
 			n.add(x.getName().getName());
@@ -189,7 +189,7 @@ public class Human {
 	}
 
 	public List<String> getLivingDaughtersNames(){
-		List<Human> l =		this.getLegimateLivingDaughters();
+		List<Human> l =		this.getLegitLivingDaughters();
 		List<String> n = 	new ArrayList<>();
 		for(Human x: l){
 			n.add(x.getName().getName());
@@ -376,7 +376,7 @@ public class Human {
 		if (f.isRegnant()){
 			it.princify();
 		} else {
-			it.name.setFull(it.makeName());
+			it.setFullName(it.makeName());
 		}
 		Basic.print(this.getFullName()+" gave birth to "+it.getFullName());
 
@@ -568,10 +568,74 @@ public class Human {
 	public boolean isNoble(){					return this.getHouse().isNoble();				}
 	public boolean isPeasant(){					return !this.getHouse().isNoble();				}
 
-//Shortcuts
-	public static int getID(){					return id;										}
-	public static int getNumOfLiving(){			return living.size();							}
-	public static List<Human> getLiving(){		return new ArrayList<>(living);					}
+	//Will update all of people in the list
+	public static void updateNamesOf(List<Human> l){
+		for(Human x: l){
+			x.setFullName(x.makeName());				//Make name is different for each sex
+		}
+	}
+
+	//Check if human is alive and adult
+	public boolean isLivingAdult(){
+		return this.isAlive() && this.isAdult();
+	}
+
+	//Check if the list even a single living person
+	public static boolean hasLiving(List<Human> l){
+		for(Human x: l){
+			if (x.isAlive()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//Get living from the list
+	public static List<Human> getLiving(List<Human> l){
+		List<Human> n = new ArrayList<>(l.size());		//Short for new list
+		for(Human x: l){
+			if (x.isAlive()){
+				n.add(x);
+			}
+		}
+		return n;
+	}
+
+	//As opposed to filtering out the dead, just get the first living that can be detected
+	public static Human getFirstLiving(List<Human> l){
+		for(Human x: l){
+			if (x.isAlive()){
+				return x;
+			}
+		}
+		throw new RuntimeException();
+	}
+
+	//Will count the number of living
+	public static int countLiving(List<Human> l){
+		int c = 0;									//short for count
+		for(Human x: l){
+			if (x.isAlive()){
+				c++;
+			}
+		}
+		return c;
+	}
+
+//Legimate children (i.e children born from marriage)
+
+	public List<Human> getLegitLivingDaughters(){
+		return this.rela.getLegitLivingDaughters();
+	}
+
+	public List<Human> getLegitLivingSons(){
+		return this.rela.getLegitLivingSons();
+	}
+
+	//Shortcuts
+		public static int getID(){					return id;										}
+		public static int getNumOfLiving(){			return living.size();							}
+		public static List<Human> getLiving(){		return new ArrayList<>(living);					}
 
 	public boolean areCloselyRelated(Human i){	return this.rela.areCloselyRelated(i); 			}
 	public boolean canHaveLover(int h){			return this.rela.canHaveLover(h);				}
@@ -583,9 +647,6 @@ public class Human {
 	public boolean hadFather(){					return this.rela.hadFather();					}
 	public boolean hadGrandparents(){			return this.rela.hadGrandparents(); 			}
 	public boolean hadGreatGrandparents(){		return this.rela.hadGreatGrandparents(); 		}
-	public boolean isPaternalNephewOf(Human h){	return this.rela.isPaternalNephewOf(h); 		}
-	public boolean isNephewOf(Human h){			return this.rela.isNephewOf(h); 				}
-	public boolean isFatherOf(Human h){			return this.rela.isFatherOf(h);					}
 	public boolean hadMatGrandpa(){				return this.rela.hadMatGrandpa(); 				}
 	public boolean hadMother(){					return this.rela.hadMother();					}
 	public boolean hadParents(){				return this.rela.hadParents(); 					}
@@ -594,11 +655,13 @@ public class Human {
 	public boolean hasAdultBrother(){			return this.rela.hasAdultBrother(); 			}
 	public boolean hasAffairs(){				return this.rela.hasAffairs();					}
 	public boolean hasBrother(){				return this.rela.hasBrother(); 					}
+	public boolean hasChild(){					return this.rela.hasChild(); 					}
 	public boolean hasFather(){					return this.rela.hasFather();					}
 	public boolean hasFatherOrUncle(){			return this.rela.hasFatherOrUncle(); 			}
 	public boolean hasFirstCousin(){			return this.rela.hasFirstCousin(); 				}
 	public boolean hasGrandpaOrUncle(){			return this.rela.hasGrandpaOrUncle(); 			}
 	public boolean hasMaternalPibling(){		return this.rela.hasMaternalPibling(); 			}
+	public boolean hasNumOfLivingSons(int v){	return this.rela.hasNumOfLivingSons(v);			}
 	public boolean hasPaternalNephew(){			return this.rela.hasPaternalNephew(); 			}
 	public boolean hasPaternalPibling(){		return this.rela.hasPaternalPibling(); 			}
 	public boolean hasPatruus(){				return this.rela.hasPatruus(); 					}
@@ -611,32 +674,31 @@ public class Human {
 	public boolean hasUnwedSister(){			return this.rela.hasUnwedSister(); 				}
 	public boolean isActiveAdulterer(){			return this.rela.isActiveAdulterer();			}
 	public boolean isBrotherOf(Human h){		return this.rela.isBrotherOf(h);				}
-	public boolean isSisterOf(Human h){			return this.rela.isSisterOf(h);					}
 	public boolean isChildOf(Human h){			return this.rela.isChildOf(h); 					}
+	public boolean isFatherOf(Human h){			return this.rela.isFatherOf(h);					}
 	public boolean isFirstCousinOf(Human h){	return this.rela.isFirstCousinOf(h); 			}
+	public boolean isFullSiblingOf(Human i){	return this.rela.isFullSiblingOf(i); 			}
 	public boolean isIntimateWith(Human i){		return this.rela.isIntimateWith(i); 			}
 	public boolean isLoverOf(Human h){			return this.rela.isLoverOf(h);					}
 	public boolean isMarried(){ 				return this.rela.isMarried();					}
 	public boolean isMarriedTo(Human s){ 		return this.rela.isMarriedTo(s);				}
+	public boolean isNephewOf(Human h){			return this.rela.isNephewOf(h); 				}
+	public boolean isPaternalNephewOf(Human h){	return this.rela.isPaternalNephewOf(h); 		}
+	public boolean isRealBastard(){				return this.rela.isRealBastard();				}
+	public boolean isRealChildOf(Human p){		return this.rela.isRealChildOf(p);				}
 	public boolean isSiblingOf(Human i){		return this.rela.isSiblingOf(i); 				}
-	public boolean isFullSiblingOf(Human i){	return this.rela.isFullSiblingOf(i); 			}
-	public boolean isSonOf(Human h){			return this.rela.isSonOf(h); 					}
+	public boolean isSisterOf(Human h){			return this.rela.isSisterOf(h);					}
 	public boolean isSonless(){					return this.rela.isSonless(); 					}
-	public boolean hasChild(){					return this.rela.hasChild(); 					}
+	public boolean isSonOf(Human h){			return this.rela.isSonOf(h); 					}
 	public boolean isUnwed(){					return this.rela.isUnwed();						}
 	public boolean motherIsDead(){				return this.rela.motherIsDead(); 				}
 	public boolean wasAdulterer(){				return this.rela.wasAdulterer();				}
-	public boolean isRealBastard(){				return this.rela.isRealBastard();				}
+	public boolean wasMarried(){ 				return this.rela.wasMarried();					}
 	public Human getFather(){					return this.rela.getFather(); 					}
-	public void setGenitor(Human h){			this.rela.setGenitor(h); 						}
-	public Human getGenitor(){					return this.rela.getGenitor(); 					}
 	public Human getFathersFather(){			return this.rela.getFathersFather(); 			}
 	public Human getFathersMother(){			return this.rela.getFathersMother(); 			}
+	public Human getGenitor(){					return this.rela.getGenitor(); 					}
 	public Human getLatestHusband(){			return this.rela.getLatestHusband(); 			}
-	public int getNumOfLivingSons(){			return this.rela.getNumOfLivingSons();			}
-	public boolean hasNumOfLivingSons(int v){	return this.rela.hasNumOfLivingSons(v);			}
-	public void removeLivingSon(){				this.rela.removeLivingSon();					}
-	public void addLivingSon(){					this.rela.addLivingSon();						}
 	public Human getLatestWife(){				return this.rela.getLatestWife(); 				}
 	public Human getLivingSon(){				return this.rela.getLivingSon(); 				}
 	public Human getLoverfromAffair(Affair a){	return this.rela.getLoverfromAffair(a);			}
@@ -644,8 +706,6 @@ public class Human {
 	public Human getMothersFather(){			return this.rela.getMothersFather(); 			}
 	public Human getMothersMother(){			return this.rela.getMothersMother(); 			}
 	public Human getOldestBrother(){			return this.rela.getOldestBrother(); 			}
-	public Human getOldestDaughter(){			return this.rela.getOldestDaughter(); 			}
-	public Human getOldestSon(){				return this.rela.getOldestSon(); 				}
 	public Human getPaternalNephew(){			return this.rela.getPaternalNephew(); 			}
 	public Human getPatGreatGrandpa(){			return this.rela.getPatGreatGrandpa(); 			}
 	public Human getPatruus(){					return this.rela.getPatruus(); 					}
@@ -657,53 +717,58 @@ public class Human {
 	public Human[] getGrandparents(){			return this.rela.getGrandparents(); 			}
 	public Human[] getGreatGrandparents(){		return this.rela.getGreatGrandparents(); 		}
 	public Human[] getMothersParents(){			return this.rela.getMothersParents(); 			}
+	public int getAmbition(){ 					return this.getPersonality().getAmbition();		}
 	public int getAncestryRating(){				return this.rela.getAncestryRating(); 			}
+	public int getChastity(){ 					return this.getPersonality().getChastity();		}
+	public int getCunning(){ 					return this.getPersonality().getCunning();		}
+	public int getHonour(){ 					return this.getPersonality().getHonour();		}
+	public int getLibido(){						return this.getPersonality().getLibido();		}
 	public int getNumOfAffairs(){				return this.rela.getNumOfAffairs();				}
 	public int getNumOfLivingSiblings(){		return this.rela.getNumOfLivingSiblings(); 		}
+	public int getNumOfLivingSons(){			return this.rela.getNumOfLivingSons();			}
+	public int getNumOfMarriages(){ 			return this.rela.getNumOfMarriages();			}
 	public int getNumOfSons(){					return this.rela.sons.size();					}
 	public List<Affair> getAffairs(){			return this.rela.getAffairs();					}
 	public List<Affair> getAllAffairs(){		return this.rela.getAllAffairs();				}
 	public List<Human> getBastards(){			return this.rela.getBastards();					}
-	public List<Human> getChildren(){			return this.rela.getChildren();					}
-	public List<Human> getSiblings(){			return this.rela.getSiblings();					}
-	public List<Human> getRealChildren(){		return this.rela.getRealChildren();				}
 	public List<Human> getBrothers(){			return this.rela.getBrothers();					}
+	public List<Human> getSister(){				return this.rela.getSisters();					}
+	public List<Human> getChildren(){			return this.rela.getChildren();					}
 	public List<Human> getDaughters(){			return this.rela.getDaughters();				}
-	public List<Human> getLegimateLivingDaughters(){return this.rela.getLegimateLivingDaughters(); }
-	public List<Human> getLegimateLivingSons(){	return this.rela.getLegimateLivingSons(); 		}
+	public List<Human> getLegitDaughters(){		return this.rela.getLegitDaughters();			}
+	public List<Human> getLegitSons(){			return this.rela.getLegitSons();				}
 	public List<Human> getLivingChildren(){		return this.rela.getLivingChildren();			}
 	public List<Human> getLivingDaughters(){	return this.rela.getLivingDaughters(); 			}
 	public List<Human> getLivingFirstCousins(){	return this.rela.getLivingFirstCousins(); 		}
 	public List<Human> getLivingSons(){			return this.rela.getLivingSons(); 				}
 	public List<Human> getMistresses(){			return this.rela.getMistresses();				}
 	public List<Human> getPatrui(){				return this.rela.getPatrui(); 					}
+	public List<Human> getRealChildren(){		return this.rela.getRealChildren();				}
+	public List<Human> getSiblings(){			return this.rela.getSiblings();					}
 	public List<Human> getSons(){				return this.rela.getSons();						}
 	public List<Marriage> getMarriages(){		return this.rela.getMarriages();				}
+	public Marriage getFirstMarriage(){			return this.rela.getFirstMarriage(); 			}
 	public Marriage getLatestMarriage(){		return this.rela.getLatestMarriage(); 			}
 	public Marriage getMarriage(int i){			return this.rela.getMarriage(i); 				}
-	public Marriage getFirstMarriage(){			return this.rela.getFirstMarriage(); 			}
 	public void addAffair(Affair a){			this.rela.addAffair(a);							}
+	public void addChild(Human f, Human m){		this.rela.addChild(f, m);						}
+	public void addDaughter(Human f, Human m){	this.rela.addDaughter(f, m);					}
+	public void addLegitDaughter(Human h){		this.rela.addLegitDaughter(h);					}
+	public void addLegitSon(Human h){			this.rela.addLegitSon(h);						}
+	public void addLivingSon(){					this.rela.addLivingSon();						}
+	public void addMarriage(Marriage m){		this.rela.addMarriage(m);						}
+	public void addRealChild(Human f, Human m){	this.rela.addRealChild(f, m);					}
+	public void addSon(Human f, Human m){		this.rela.addSon(f, m);							}
 	public void becomeAdulter(Affair a){		this.rela.becomeAdulter(a);						}
+	public void clearAffairs(){					this.rela.clearAffairs();						}
 	public void endAffair(Affair a){			this.rela.endAffair(a);							}
 	public void removeAffair(Affair a){			this.rela.removeAffair(a);						}
+	public void removeLivingSon(){				this.rela.removeLivingSon();					}
 	public void setAffair(Affair a){			this.rela.setAffair(a);							}
-	public void setSpouseNull(){				this.rela.setSpouseNull();						}
-	public void setSpouse(Human h){				this.rela.setSpouse(h);							}
-	public void addMarriage(Marriage m){		this.rela.addMarriage(m);						}
+	public void setGenitor(Human h){			this.rela.setGenitor(h); 						}
 	public void setParents(Human f, Human m){	this.rela.setParents(f, m);						}
-	public void addSon(Human f, Human m){		this.rela.addSon(f, m);							}
-	public void addChild(Human f, Human m){		this.rela.addChild(f, m);						}
-	public void addRealChild(Human f, Human m){	this.rela.addRealChild(f, m);					}
-	public void addDaughter(Human f, Human m){	this.rela.addDaughter(f, m);					}
-	public void clearAffairs(){					this.rela.clearAffairs();						}
-	public int getNumOfMarriages(){ 			return this.rela.getNumOfMarriages();			}
-	public boolean wasMarried(){ 				return this.rela.wasMarried();					}
-	public boolean isRealChildOf(Human p){		return this.rela.isRealChildOf(p);				}
-	public int getChastity(){ 					return this.getPersonality().getChastity();		}
-	public int getHonour(){ 					return this.getPersonality().getHonour();		}
-	public int getAmbition(){ 					return this.getPersonality().getAmbition();		}
-	public int getCunning(){ 					return this.getPersonality().getCunning();		}
-	public int getLibido(){						return this.getPersonality().getLibido();		}
+	public void setSpouse(Human h){				this.rela.setSpouse(h);							}
+	public void setSpouseNull(){				this.rela.setSpouseNull();						}
 
 	public int getHair(){						return Character.getNumericValue(this.DNA.charAt(1));}
 	public int getEye(){						return Character.getNumericValue(this.DNA.charAt(0));}
@@ -715,6 +780,8 @@ public class Human {
 
 //Micro methods
 
+
+	public void setFullName(String n){			this.getName().setFull(n);	}
 	public void setLegitimacy(boolean b){		this.chaBox[0] = b;		}
 	public void setPosthumous(boolean b){		this.chaBox[1] = b;		}
 	public void setVirgin(){					this.chaBox[2] = false;	}
@@ -751,6 +818,8 @@ public class Human {
 	public String getNameS(String title){		return title;					}
 	public String getNibling(){ 				return "nibling";				}
 	public String getOffspring(){ 				return "son";					}
+	public int getSexChildOrder(){				return 0; }		//I.e 2 (of 4 sons)
+	public String getSexChildOrderName(){		return "";}		//second son
 	public String getParent(){ 					return "parent";				}
 	public String getPibling(){ 				return "pibling";				}
 	public String getPossessive(){				return "his"; 					}

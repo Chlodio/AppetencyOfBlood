@@ -71,28 +71,11 @@ public class Name{
 	}
 
 	public static void aSon(Human father, Human mother, Human child){
-
-//		if (father.sons.size() <= 10 && father.sons.size() >= Basic.randint(20)){
-//			child.setName(new Name(orderNames[father.sons.size()-1], true));
-//		}
-
 		child.setName(new Name(father.getHouse().getMemberNameM(child), false, child));
 		((Man) child).getName().setFull(((Man) child).makeName());
 	}
 
 	public static void aDaughter(Human father, Human mother, Human child){
-/*			if (father.daughters.size() <= 10){
-				child.setName(new Name(orderNames[father.daughters.size()-1], true, child));
-			}
-			else {
-				child.setName(new Name(getRandomName(), false, child));
-				//Basic.choice(names));
-			}
-	/*		if (father.isRegnant()){
-				if (!father.getOldestDaughter().getName().hasNick("Commod")){}
-				child.getName().setNick("Commod");
-			}*/
-			//((Woman) child).name.setFull(((Woman) child).makeName());
 			child.setName(new Name(father.getHouse().getMemberNameF(child), false, child));
 			((Woman) child).getName().setFull(((Woman) child).makeName());
 	}
@@ -101,6 +84,24 @@ public class Name{
 		this.nick = n;
 		this.setFull(this.getOwner().makeName());
 	}
+
+
+	public String getPatronymic(){
+		String n = this.getOwner().getBirthName();							//I.e Bob Smith
+
+		//Naturally fatherless people don't get a patronymic name
+		if (this.getOwner().hadFather()){
+			n += ", ";
+			if (this.getOwner().isLegimate()){
+				n += this.getOwner().getSexChildOrderName()+" of ";			//I.e first son of
+			} else {
+				n += "natural "+this.getOwner().getOffspring();				//I.e natural son/daughter
+			}
+			n += this.getOwner().getFather().getFormalName();
+		}
+		return n;
+	}
+
 
 	public boolean hasNick(String s){ 		return this.nick == s;	}
 	public boolean isSpecial(){ 			return this.special; 	}

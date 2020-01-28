@@ -794,12 +794,14 @@ public class House {
 		}
 	}
 
+	//A new family is promoted from privacy to nobility
 	public void ennoble(){
 		this.nameHouseHighborn();
 		this.isNoble = true;
-		this.coa =									1+Basic.randint(100);
+		this.coa = 1+Basic.randint(100);
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
 		this.addToNobles();
+		Human.updateNamesOf(this.getMembers());			//Updates the name of new nobility
 	}
 
 	public void addToNobles(){
@@ -866,6 +868,24 @@ public class House {
 	public boolean isActive(){						return this.isActive;		}
 
 
+//Memberships
+
+	public List<Human> getKinsmen(){
+		return new ArrayList<>(this.kinsmen);
+	}
+
+	public List<Human> getKinswomen(){
+		return new ArrayList<>(this.kinswomen);
+	}
+
+	public List<Human> getMembers(){
+		List<Human> l = this.getKinsmen();
+		l.addAll(this.getKinswomen());
+		return l;
+	}
+
+
+
 //Micro methods
 
 	public boolean hasHead(){						return this.head != null;	}
@@ -876,8 +896,8 @@ public class House {
 	public int getRanking(){						return this.ranking;		}
 	public int getCoA(){							return this.coa; 			}
 	public String getCoALink(){			return "<img src='../Input/CoAs/"+this.getCoA()+".svg'</img>";}
-	public List<Human> getKinsmen(){				return this.kinsmen;		}
-	public List<Human> getKinswomen(){				return this.kinsmen;		}
+
+
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
 	public List<String> getMaleNames(){				return this.maleNames;		}
 	public static House getHouse(int id){			return Basic.house.get(id);	}

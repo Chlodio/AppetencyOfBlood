@@ -68,7 +68,7 @@ public class Writing {
 					if (y.isCousinUnion()){
 						s1 += q.getPossessive()+" cousin, ";
 					}
-					s1 += Basic.getCardinal(y.getAgeAt(y.getSpouse(q)))+"-year-old "+y.getSpouse(q).getBirthName();
+					s1 += Basic.getCardinal(y.getAgeAt(y.getSpouse(q)))+"-year-old "+y.getSpouse(q).getName().getPatronymic();
 					writer.write(s1);
 						writer.write("; "+y.getHappinessDesc());
 					if (y.getOffspringNum() != 0){

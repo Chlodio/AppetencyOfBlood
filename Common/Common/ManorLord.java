@@ -1,3 +1,5 @@
+/*Currently unused intended to make economy-system more detailed*/
+
 package Common;
 import Human.Human;
 import java.util.ArrayList;

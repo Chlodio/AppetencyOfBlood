@@ -1,3 +1,5 @@
+/*Currently unused intended to make CoA-system more detailed*/
+
 package House;
 
 public class CoatOfArms {
