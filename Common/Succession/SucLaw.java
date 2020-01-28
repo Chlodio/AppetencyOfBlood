@@ -47,7 +47,7 @@ public class SucLaw{
 		this.lineage =		l;
 		this.sex = 			1;
 		this.preference = 	0;
-		this.tracing =		1;
+		this.tracing =		0;
 		this.purity = 		2;
 		this.bastardy = 	0;
 	}

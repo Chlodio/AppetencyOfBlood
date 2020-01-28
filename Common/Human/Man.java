@@ -368,14 +368,23 @@ public class Man extends Human {
 	public String getSexChildOrderName(){
 
 		List<Human> l = this.getFather().getLegitSons();
+		String s = "";
+		int i = l.indexOf(this);								//Index in the order
 
-		//If there is only one son, just return only son, otherwise [ordinal] son
+		//If there is only one son, just return only son, otherwise [ordinal] son or oldest/youngest
 		if (l.size() == 1){
-			return "only son";
+			s = "only";
 		} else {
-			return Basic.getOrder(l.indexOf(this))+" son";
+			if (i == 0){
+				s = "oldest";
+			} else if (i == l.size()-1){
+				s = "youngest";
+			} else {
+				s = Basic.getOrder(i);
+			}
 		}
 
+		return s+" son";
 	}
 
 	@Override

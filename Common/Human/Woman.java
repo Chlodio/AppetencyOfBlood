@@ -409,13 +409,23 @@ public class Woman extends Human {
 	@Override
 	public String getSexChildOrderName(){
 		List<Human> l = this.getFather().getLegitDaughters();
+		int i = l.indexOf(this);
+		String s = "";
 
 		//If there is only one daughter, just return only daughter, otherwise [ordinal] daughter
 		if (l.size() == 1){
-			return "only daughter";
+			s = "only";
 		} else {
-			return Basic.getOrder(l.indexOf(this))+" daughter";
+			if (i == 0){
+				s = "oldest";
+			} else if (i == l.size()-1){
+				s = "youngest";
+			} else {
+				s = Basic.getOrder(i);
+			}
 		}
+
+		return s+" daughter";
 
 	}
 

@@ -64,20 +64,16 @@ public class Primogeniture extends Succession {
 
 
 	public boolean hasPrimoCheck(Holder h){
-		Claim c = this.lineage.getIncumbent().getClaim();
+		Claim c = h.getClaim();
 		Human[] l;
 		int i;
-	//	List<Holder> hl = this.lineage.getList();
 
 		if (h.getClaim().isSpecial()){
 			return false;
 		} else {
 			l = c.getLineage();
 		}
-		if (l == null){
-			System.out.println("ERROR "+h.getPerson().getFullName());
-			return false;
-		}
+
 		if (l.length > 2){
 			i = l.length-1;
 			for (int x = i; x > 0; x--){

@@ -798,7 +798,8 @@ public class House {
 	public void ennoble(){
 		this.nameHouseHighborn();
 		this.isNoble = true;
-		this.coa = 1+Basic.randint(100);
+		this.coa = 1;
+		this.coa += Basic.randint(100);
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
 		this.addToNobles();
 		Human.updateNamesOf(this.getMembers());			//Updates the name of new nobility
@@ -894,7 +895,7 @@ public class House {
 	public int getGeneration(){						return this.generation;		}
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
-	public int getCoA(){							return this.coa; 			}
+	private int getCoA(){							return this.coa; 			}
 	public String getName(){						return name;				}
 	public String getCoALink(){			return "<img src='../Input/CoAs/"+this.getCoA()+".svg'</img>";}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
