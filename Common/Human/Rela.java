@@ -1,5 +1,6 @@
 package Human;
 import Relationship.*;
+import Common.Basic;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -486,6 +487,30 @@ public class Rela{
 		} else{
 			this.becomeAdulter(a);
 		}
+	}
+
+
+	//See if there a lover has a father, used for morganatic marriages
+	public boolean hasBornMistress(){
+		List<Affair> l = this.getAffairs();
+		for(Affair x: l){
+			if (x.getBelle().hadFather()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Human getRandomBornMistress(){
+		List<Affair> l = this.getAffairs();
+		List<Human> ll = new ArrayList<>(l.size());		//Born-mistressed will be stored here
+
+		for(Affair x: l){
+			if (x.getBelle().hadFather()){
+				ll.add(x.getBelle());
+			}
+		}
+		return Basic.choice(ll);						//Pick random amongst the filtered
 	}
 
 	//Determined by happiness vs num of affairs

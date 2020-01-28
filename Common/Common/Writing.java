@@ -5,6 +5,7 @@ import Relationship.*;
 import Ancestry.*;
 import Looks.*;
 import Common.Basic;
+import Common.HTML;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -14,29 +15,121 @@ import java.util.List;
 
 public class Writing {
 
+
 	public static void writeMonarchList(){
+		String t = recordMonarchList();
 		try {
 			FileWriter writer = new FileWriter("Output/ListOfMonarchs.html", false);
-			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
-			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
-			writer.write("</head><body>\n");
-			writer.write("</body></html>");
-			writer.write("\n<table style='text-align:center;'><r><th>Name</th><th>Birth</th><th>Marriage(s)</th><th>Death</th><th>Claim</th></tr>\n");
-			Human q;
-			for (Holder r: Realm.getLineage(0)){
-				q = r.getPerson();
-				writer.write("<tr><td>"+r.getName()+"<br>"+r.getReign()+"<br><i>"+r.getReignLength()+"</i></td>");
-				writer.write("<td>"+q.getBirth()+"</td>");
-				writer.write("<td>"+"</td>");
-				writer.write("<td>"+q.getPossibleDeath()+"<br>Aged "+q.aged()+"</td>");
-				writer.write("<td class='nameCol2'>"+r.getClaim().getClaimHTML()+"</td>");
-			}
-			writer.write("</table>");
+			writer.write(t);
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+	public static String recordMarriages(Human h){
+
+		//If character never reached adulthood, there is no marriages to be recorded
+		if (h.isAdult()){
+			List<Marriage> m = h.getMarriages();
+			String lt = "";			//Temporary list
+			for(Marriage x: m){
+				lt += x.getDoe().getBirthName();
+				lt += HTML.getBr();
+
+				lt += x.getTenureShort();			//When the marriage began and ended
+				lt += HTML.getBr();
+
+				if (x.getHadChildren()){
+					lt += x.getOffspringNum();
+				} else {
+					lt += "No";
+				}
+
+				lt += " children";
+
+				//If the marriage is the last, do not bother with hr
+				if (!x.isLastMarriageOf(h)){
+					lt += "<hr>";
+				}
+
+				HTML.getLi(lt);
+			}
+			return HTML.getUlClass(lt, "consort");
+		} else {
+			return "";
+		}
+	}
+
+	//Used to get a row of monarchs for Monarch List
+	public static String recordMonarchInvidual(Holder h){
+
+		String td = "";							//Temporary table cell
+		String tr = "";							//Temporary table row
+
+		Human q = h.getPerson();				//Every ruler is a person, serves to shorten
+
+		tr = ""; //emptry the row
+
+	//First cell for name and reign
+		td = h.getName();
+		td += HTML.getBr();
+		td += h.getReign();
+		td += HTML.getBr();
+		td += HTML.getI(h.getReignLength());			//Italize
+		tr += HTML.getTd(td);							//Add to table
+
+	//Cell for portraits
+		td = q.getPortrait();
+		tr += HTML.getTd(td);
+
+	//Cell for coat of arms
+		td = q.getHouseCoALink();
+		tr += HTML.getTd(td);
+
+	//Cell for birth
+		tr += HTML.getTd(q.getBirth());
+
+	//Cell for marriage
+		td = recordMarriages(q);
+		tr += HTML.getTd(td);
+
+	//Cell for age
+		td = q.getPossibleDeath();
+		td += HTML.getBr();
+		tr += HTML.getTd(td+"Aged "+q.aged());
+
+	//Cell for claims
+		tr += HTML.getTdClass(h.getClaim().getClaimHTML(), "nameCol2");
+
+		return tr;
+	}
+
+
+	public static String recordMonarchList(){
+		String t = "";							//Short for text the written text will be stored here
+		String te = "";							//Temporary table
+
+		t = HTML.getBeginning();
+
+		//The names of headers
+		String[] th = {"Name", "Prt.", "CoA", "Birth", "Marriage(s)", "Death", "Claim"};
+		te += HTML.createTableHeader(th);
+		te += HTML.getTr(t);
+
+		Human q;
+		for (Holder r: Realm.getLineage(0)){
+			te += HTML.getTr(recordMonarchInvidual(r));
+		}
+
+		t = HTML.getTable(te);				//Table is now added into the body
+		t += HTML.getEnding();
+		return t;
+	}
+
+//End of list of monarchs
+//Beginning of  monarchs info
+
 
 	public static void writeTable(){
 		Human q;
@@ -446,20 +539,6 @@ public class Writing {
 	}
 
 
-	//Adds the text inside of list item;
-	public static String addLi(String s){
-		return "<li>"+s+"</li>";
-	}
-
-	//Adds the text inside of unordered list;
-	public static String addUl(String s){
-		return "<ul>"+s+"</ul>";
-	}
-
-	//Adds the text inside of list item inside of unordered list;
-	public static String addUlLi(String s){
-		return addUl(addLi(s));
-	}
 
 	private static String[] ast = {"", "*", "**", "***", "****", "*****", "******", "*******", "********", "*********", "**********"};
 	private static String[] col = {"#ff0000", "#ff4000", "#ff8000", "#ffbf00", "#ffff00", "#bfff00", "#80ff00", "#40ff00", "#00ff00", "#00ff40", "#00ff80"};

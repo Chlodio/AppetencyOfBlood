@@ -125,21 +125,69 @@ public class SexRelation{
 			return i;
 		}
 
+//Offspring
 
-		public static String[] happyDesc = 		{"miserable", "joyless", "", "happy", "loving"};
-		public static String[] unionDesc = 		{"union", "couple", "wedlock", "marriage", "matrimony"};
+	public int getOffspringNum(){
+		return this.offspring.size();
+	}
 
-		public float getFertility(){ 				return this.fertility;					}
-		public int getHappiness(){ 					return this.sexSat+this.romance;		}
-		public boolean isActive(){					return this.active;						}
-		public Human getStag(){						return this.stag;						}
-		public Human getDoe(){						return this.doe;						}
-		public int getBeginning(){					return this.beginning.get(Calendar.YEAR);}
-		public int getEnding(){						return this.ending.get(Calendar.YEAR);}
-		public boolean hasEnded(){					return this.ending != null;				}
-		public int getOffspringNum(){				return this.offspring.size();			}
-		public List<Human> getOffspring(){			return new ArrayList<>(this.offspring);}
-		public void addOffspring(Human o){			this.offspring.add(o);					}
+	//If the union produced children
+	public boolean getHadChildren(){
+		return Basic.isNotZero(this.offspring.size());
+	}
+
+	public List<Human> getOffspring(){
+		return new ArrayList<>(this.offspring);
+	}
+
+	public void addOffspring(Human o){
+		this.offspring.add(o);
+	}
+
+
+	public String getTenure(){
+		String s = " (m. "+this.getBeginning();
+		if (this.hasEnded()){
+			return s+" d. "+this.getEnding()+")";
+		} else {
+			return s+")";
+		}
+	}
+
+//Shortened version of GetTenure
+
+	public String getTenureShort(){
+		int b = this.getBeginning();
+
+//If the relation has not ended there can't be end date...
+		if (this.hasEnded()){
+			int e = this.getEnding();
+
+//If the marriage began and ended during the same year there is no point in typing the same year twice
+			if (b != e){
+				return b+"–"+e;
+			}
+		}
+		return b+"";
+
+	}
+
+	public int getBeginning(){					return this.beginning.get(Calendar.YEAR);}
+	public int getEnding(){						return this.ending.get(Calendar.YEAR);}
+
+	public static String[] happyDesc = 		{"miserable", "joyless", "", "happy", "loving"};
+	public static String[] unionDesc = 		{"union", "couple", "wedlock", "marriage", "matrimony"};
+
+
+
+	public float getFertility(){ 				return this.fertility;					}
+	public int getHappiness(){ 					return this.sexSat+this.romance;		}
+	public boolean isActive(){					return this.active;						}
+	public Human getStag(){						return this.stag;						}
+	public Human getDoe(){						return this.doe;						}
+	public boolean hasEnded(){					return this.ending != null;				}
+
+
 
 
 }

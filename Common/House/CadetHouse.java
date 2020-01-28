@@ -31,7 +31,7 @@ public class CadetHouse extends House {
 	}
 
 	@Override
-	public String getFullName(){		return this.parentName+"-"+this.name; }
+	public String getFullName(){		return this.getParentName()+"-"+this.getName(); }
 
 
 	final String[] names = {

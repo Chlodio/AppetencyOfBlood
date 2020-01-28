@@ -565,6 +565,9 @@ public class Human {
 
 	public boolean hadHouse(){					return this.house != null;	}
 
+	public String getHouseCoALink(){			return this.getHouse().getCoALink();			}
+
+
 	public boolean isNoble(){					return this.getHouse().isNoble();				}
 	public boolean isPeasant(){					return !this.getHouse().isNoble();				}
 
@@ -632,10 +635,19 @@ public class Human {
 		return this.rela.getLegitLivingSons();
 	}
 
+	public boolean hasBornMistress(){
+		return this.rela.hasBornMistress();
+	}
+
+	public Human getRandomBornMistress(){
+		return this.rela.getRandomBornMistress();
+	}
+
+
 	//Shortcuts
-		public static int getID(){					return id;										}
-		public static int getNumOfLiving(){			return living.size();							}
-		public static List<Human> getLiving(){		return new ArrayList<>(living);					}
+	public static int getID(){					return id;										}
+	public static int getNumOfLiving(){			return living.size();							}
+	public static List<Human> getLiving(){		return new ArrayList<>(living);					}
 
 	public boolean areCloselyRelated(Human i){	return this.rela.areCloselyRelated(i); 			}
 	public boolean canHaveLover(int h){			return this.rela.canHaveLover(h);				}

@@ -50,7 +50,6 @@ public class House {
     public House(Human head){
 		((House) this).handles(head);
 		this.legimate = true;
-		this.nameHouseLowborn();
     }
 
 	public House(Human head, String s){
@@ -67,6 +66,7 @@ public class House {
 		this.head = 							head;
 		this.heads = 							new ArrayList<>();
 		this.heads.add(head);
+		this.nameHouseLowborn();
 		this.kinsmen = 							new ArrayList<>();
 		this.kinswomen = 						new ArrayList<>();
 		this.branches = 						new ArrayList<>();
@@ -895,17 +895,19 @@ public class House {
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
 	public int getCoA(){							return this.coa; 			}
+	public String getName(){						return name;				}
 	public String getCoALink(){			return "<img src='../Input/CoAs/"+this.getCoA()+".svg'</img>";}
-
-
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
 	public List<String> getMaleNames(){				return this.maleNames;		}
 	public static House getHouse(int id){			return Basic.house.get(id);	}
 	public static int getId(){						return id;					}
 	public static List<House> getList(){			return list;				}
 	public static String getSpareName(){			return spareName;			}
-	public String getFullName(){					return null;				}
-	public String getName(){						return name;				}
+	public String getFullName(){					return this.getName();		}
+	public String getParentName(){					return this.getParent().getName();		}
+
+
+
 	public void addKinsman(Human h){				this.kinsmen.add(h);		}
 	public void addKinswoman(Human h){				this.kinswomen.add(h);		}
 	public void addMaleName(String n){				this.maleNames.add(n);		}
@@ -922,7 +924,7 @@ public class House {
 
 	private static List<Integer> highbornNamesN = 		new ArrayList<>();
 	private static String[] highbornNames = 			new String[1111];
-	private static String[] lowbornNames = 				new String[145];
+	private static String[] lowbornNames = 				new String[144];
 	public static List<House> nobles = 					new ArrayList<>(20);
 	public static List<House> peasants = 				new ArrayList<>(100);
 

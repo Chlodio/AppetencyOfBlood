@@ -2,6 +2,7 @@ package Ancestry;
 import Human.Human;
 import Common.Basic;
 import Common.Writing;
+import Common.HTML;
 import Politics.Office;
 import Politics.Holder;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class Claim{
 
 		/*Additional information, secondary claim*/
 		if (this.isLineal()){
-			return Writing.addUlLi(this.getPrefix());
+			return HTML.getUlLi(this.getPrefix());
 		} else{
 			if (!this.lineageContainsWomen()){
 				return getUnilinealType();
@@ -79,13 +80,13 @@ public class Claim{
 
 	//As opposed to getAmbilinealType, intended to be more informative
 	private String getUnilinealType(){
-		String txt = Writing.addLi(this.getPrefix());
+		String txt = HTML.getLi(this.getPrefix());
 		Human p = this.getPredecessor().getPerson();							//predecessor
 		String r = Consanguinity.getPaternalRelation(p, this.getHolder());
 		r = Basic.capitalize(r);
 		r += " of "+p.getFullName();
-		r = Writing.addLi(r);
-		return Writing.addUl(txt+r);
+		r = HTML.getLi(r);
+		return HTML.getUl(txt+r);
 	}
 
 	//If the lineage includes women tracing gets bit more complicated so instead of dealing with mess, were are going to simply things just a bit
@@ -97,8 +98,8 @@ public class Claim{
 
 		//If rs is "" don't bother adding anything
 		if (Basic.isNotZero(rs.length())){
-			txt = Writing.addLi(txt);
-			txt += Writing.addLi(Basic.capitalize(rs)+" of "+p.getFullName());
+			txt = HTML.getLi(txt);
+			txt += HTML.getLi(Basic.capitalize(rs)+" of "+p.getFullName());
 		}
 
 		/*Intended result being something like:
@@ -106,7 +107,7 @@ public class Claim{
 			*Brother of Bob		[indirect relation to predecessor]
 		*/
 
-		return Writing.addUlLi(txt);
+		return HTML.getUlLi(txt);
 	}
 
 	//Brother- and-son-in-laws of the ruler
@@ -115,7 +116,7 @@ public class Claim{
 		r = Basic.capitalize(r);
 		r += "-in-law of ";
 		r += this.getUltimateAncestor().getFullName();						//e.g. Bob XI
-		return Writing.addUlLi(r);
+		return HTML.getUlLi(r);
 	}
 
 	//As opposed to CloseRelativeType
@@ -124,16 +125,16 @@ public class Claim{
 		String txt = this.getKinshipTypeStr()+" "+Basic.getOrdial(l-1);
 		txt = txt+" generation descendant of "+getThroughLine(l);
 		if (!this.isCoverture()){
-			return Writing.addUlLi(txt);
+			return HTML.getUlLi(txt);
 		} else{
 			txt = Basic.toLowerCase(txt);
-			return Writing.addUlLi("Spouse of "+txt);
+			return HTML.getUlLi("Spouse of "+txt);
 		}
 	}
 
 	/*As opposed to hereditary type*/
 	public String getElectedType(){
-		return Writing.addUlLi("Elected");
+		return HTML.getUlLi("Elected");
 	}
 
 	//return blood type as string

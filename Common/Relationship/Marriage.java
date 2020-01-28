@@ -114,13 +114,14 @@ public class Marriage extends SexRelation{
 				if (groom.isNoble()){
 					//Morganatic marriage
 					if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
-						marryFiancee(groom, groom.getAffairs().get(0).getBelle());
-						groom.getSpouse().getHouse().ennoble();
-						System.out.println("morganatic ennoblement");
+						if (groom.hasBornMistress()){
+							marryFiancee(groom, groom.getRandomBornMistress());
+							groom.getSpouse().getHouse().ennoble();
+							System.out.println("morganatic ennoblement");
+						}
 					} else if (Basic.randint(5) == 0){
 						Affair.begin(groom);
 					}
-					//System.exit(0);
 					failedMarriageAttemp++;
 				}
 			}
@@ -428,15 +429,6 @@ public class Marriage extends SexRelation{
 
 //Writing
 
-	public String getTenure(){
-		String s = " (m. "+this.getBeginning();
-		if (this.hasEnded()){
-			return s+" d. "+this.getEnding()+")";
-		} else {
-			return s+")";
-		}
-	}
-
 
 	public String getOffspringHTML(){
 		if (this.offspring.size() != 0){
@@ -608,6 +600,12 @@ public class Marriage extends SexRelation{
 		int n = getNumOfChildren();
 
 		return n/getNum();
+	}
+
+
+//See if this marriage is the same as the most recent marriage of parameter
+	public boolean isLastMarriageOf(Human h){
+		return this == h.getLatestMarriage();
 	}
 
 	public boolean isCousinUnion(){				return this.cousinUnion;				}
