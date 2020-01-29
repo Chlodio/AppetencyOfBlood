@@ -1,4 +1,4 @@
-import Common.Basic;
+import Code.Common.Basic;
 
 public class Main {
 
