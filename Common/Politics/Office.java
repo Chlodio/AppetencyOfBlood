@@ -119,7 +119,7 @@ public class Office{
 	}
 
 	public void manageSuccession(){
-		//this.getLineage().determinePrimogenitureHeir();
+
 		this.getLineage().determineSuccession();
 		Human s;
 		if (this.getLineage().getPriority() < 3){
@@ -135,7 +135,9 @@ public class Office{
 				throw new RuntimeException();
 			}
 		}
+
 		inaugurate(s);
+		
 	//	this.getLineage().determinePrimogenitureHeir();
 	//	this.getLineage().declareHeirStatus();
 

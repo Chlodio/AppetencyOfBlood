@@ -65,7 +65,6 @@ public class House {
 		this.founding = 						(Calendar) Basic.date.clone();
 		this.head = 							head;
 		this.heads = 							new ArrayList<>();
-		this.heads.add(head);
 		this.nameHouseLowborn();
 		this.kinsmen = 							new ArrayList<>();
 		this.kinswomen = 						new ArrayList<>();
@@ -78,6 +77,7 @@ public class House {
 	}
 
 
+	//Create names for the highborn and the lowborn
 	public static void buildNames(){
 		int c 		= 0;
 		String l 	= null;
@@ -113,13 +113,27 @@ public class House {
 		}
 	}
 
+	//Get the heir from the agnatic line, should not be used unless there is certainty of heirs existence
 	public Human getHeir(){
 		for(int x = this.heads.size()-1; x >= 0; x--){
 			if (((Man) this.heads.get(x)).hasAgnaticLine()){
 				return ((Man) this.heads.get(x)).getAgnaticHeir();
 			}
 		}
-		return null;
+		throw new RuntimeException();
+	}
+
+	//Used to see if person is descended from house head (every house member should)
+	public boolean descendsFromHead(Human h){
+		List<Human> l = getHeads();
+		Human t = h;					//Temporary
+		for (Human x: l){
+			if (l.contains(t) ){
+				return true;
+			}
+			t = t.getFather();
+		}
+		return false;
 	}
 
 	public void succession(Human h){
@@ -132,12 +146,18 @@ public class House {
 		*/
 		Human heir = h;
 		if (this.getKinsmen().size() > 0){
-			heir = getHeir();
+			heir = this.getHeir();
+			if (heir == null){
+				throw new RuntimeException();
+			}
 		}
 		if (heir != h){
+			if (heir == null){
+				throw new RuntimeException();
+			}
 			if (heir.getHouse() == this){
 				this.head = heir;
-				this.heads.add(this.head);
+				this.addHead(this.head);
 				if (this.head.isAdult()){
 					if (this.head.isSonless() && this.head.isUnwed()){
 						Marriage.prepare(this.head);
@@ -161,7 +181,7 @@ public class House {
 			this.returnToCirculation();
 		}
 		if (this.findNextHouse()){
-			this.handleRanking(nextHouse);
+			this.succeed(nextHouse);
 			Basic.print("The senior line of "+this.getFullName()+" went extinct, but was succeeded by "+nextHouse.getName());
 		} else{
 			Basic.print(this.getName()+" went extinct");
@@ -173,10 +193,15 @@ public class House {
 		}
 	}
 
-	public void handleRanking(House newHouse){
+	public void succeed(House newHouse){
 		if (this.hasHigherRanking(newHouse)){
 			newHouse.setRanking(this.ranking);
 		}
+
+		if (this.isNoble() && !newHouse.isNoble()){
+			newHouse.inheritNobleStatus(this);
+		}
+
 	}
 
 	public boolean hasHigherRanking(House newHouse){
@@ -191,52 +216,19 @@ public class House {
 		try{
 			while(h.getFather() != p){
 				h = h.getFather();
-				if (h.isPosthumous()){
-					System.out.println("posthum");
-				}
 			}
 		} catch (NullPointerException e){
-			h = this.getHead();
-			System.out.println(h.getHouse()==p.getHouse());
-			System.out.println("One of the heads is posthumous:"+this.hadPosthumousHead());
-			System.out.println("Senior branch not found");
-			System.out.println(this+" "+this.getHeads().get(this.getHeads().size()-1));
-			System.out.println("Living male members: "+this.getKinsmen().size());
-			System.out.println(this.getHead()+" "+p);
-			if (this.getHead().getFather().hadPatGrandpa()){
-				Consanguinity.printDes(p.getFather().getFathersFather(), 0);
-			} else{
-				Consanguinity.printDes(p.getFathersFather(), 0);
+			List<Human> l = this.getHeads();
+			if (l.get(0) == l.get(1)){
+				throw new RuntimeException();
 			}
-/*			System.out.print(o+" died");
-			System.out.println(", the current "+this.getHead()+" is his "+Consanguinity.getPaternalRelation(o, this.getHead()));
-			System.out.println(o.getBirth()+" "+o.isAlive());
-			System.out.println(this.getHead().getBirth()+" "+this.getHead().isAlive());
-			System.out.println(this.getHead().getFather().getBirth()+" "+this.getHead().getFather().isAlive());
-			System.out.println("Head has patruus: "+this.getHead().hasPatruus());
-			if (this.getHead().getFather().hasPatruus()){
-				System.out.println("Head has patruus");
-				System.out.println(this.getHead().getFather().getPatruus());
-				System.exit(0);
+			System.out.println("NAME\tIS POSTHUMOUS\tIS FOUNDER");
+			for(Human x: l){
+				System.out.print(x.getBirthName());
+				System.out.print("\t"+x.isPosthumous() );
+				System.out.println("\t"+x.getHouse().isFounder(x));
 			}
-			if(o.getFather().hadPatGrandpa()){
-				Consanguinity.printDes(o.getFather().getPatGrandpa(), 0);
-			} else{
-				Consanguinity.printDes(o.getPatGrandpa(), 0);
-			}
-			System.out.println("O-man's father is"+h+"\t"+Consanguinity.getPaternalRelation( this.getHead(), h)+" "+(this.getHead().getPatGrandpa()==h));
-			System.out.println(h.getPatGrandpa().isSiblingOf(this.getHead().getPatGrandpa()));
-			System.out.println( "O-man's grandfather is"+h.getFather()+"\t"+Consanguinity.getPaternalRelation( this.getHead(), h.getFather()));
-
-			for(Human it: this.getHeads()){
-				System.out.println(it+"\t"+it.getLifespan()+"\t"+Consanguinity.getPaternalRelation( this.getHead(), it));
-			}
-			son = this.getHead();
-			while(son.getFather() != h){
-				System.out.println(son);
-				son = son.getFather();
-			}	*/
-			System.exit(0);
+			throw new RuntimeException();
 		}
 
 		return this.getPatriarch().getSons().indexOf(h);
@@ -713,6 +705,10 @@ public class House {
 		joiner.setHouse(house);
 		if(joiner.isMale()){
 			house.addKinsman(joiner);
+			if (joiner.isPosthumous()){
+				throw new RuntimeException();
+			}
+
 		} else {
 			house.addKinswoman(joiner);
 		}
@@ -794,12 +790,22 @@ public class House {
 		}
 	}
 
+	//When a noble line goes extinct but their next of kin branch is lowborn they will inherit their status
+	public void inheritNobleStatus(House oldHouse){
+		this.isNoble = true;
+		this.coa = oldHouse.getCoA();
+		this.nameNum = oldHouse.getNameNum();
+		this.name = oldHouse.getName();
+		this.addToNobles();
+		Human.updateNamesOf(this.getMembers());
+	}
+
 	//A new family is promoted from privacy to nobility
 	public void ennoble(){
 		this.nameHouseHighborn();
 		this.isNoble = true;
-		this.coa = 1;
-		this.coa += Basic.randint(100);
+		this.coa = 1+Basic.randint(100);
+
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
 		this.addToNobles();
 		Human.updateNamesOf(this.getMembers());			//Updates the name of new nobility
@@ -895,7 +901,7 @@ public class House {
 	public int getGeneration(){						return this.generation;		}
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
-	private int getCoA(){							return this.coa; 			}
+	private int getCoA(){							return this.coa;			}
 	public String getName(){						return name;				}
 	public String getCoALink(){			return "<img src='../Input/CoAs/"+this.getCoA()+".svg'</img>";}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
@@ -906,10 +912,24 @@ public class House {
 	public static String getSpareName(){			return spareName;			}
 	public String getFullName(){					return this.getName();		}
 	public String getParentName(){					return this.getParent().getName();		}
+	public int getNameNum(){						return this.nameNum;		}
+	public void addHead(Human h){
+		if (this.heads.contains(h)){
+			throw new RuntimeException();
+		}
+		this.heads.add(h);
+	}
 
 
-
-	public void addKinsman(Human h){				this.kinsmen.add(h);		}
+	public void addKinsman(Human h){
+		this.kinsmen.add(h);
+		if (h.isPosthumous() && !h.isHouseHead() ){
+			throw new RuntimeException();
+		}
+		if (!h.isLegimate() && !h.isHouseHead() ){
+			throw new RuntimeException();
+		}
+	}
 	public void addKinswoman(Human h){				this.kinswomen.add(h);		}
 	public void addMaleName(String n){				this.maleNames.add(n);		}
 	public void addFemaleName(String n){			this.femaleNames.add(n);	}
@@ -920,7 +940,8 @@ public class House {
 	public void setRanking(int r){					this.ranking = r;			}
 	public List<Human> getHeads(){					return new ArrayList<>(this.heads);		}
 	public boolean isLegimate(){					return this.legimate;		}
-
+	public boolean isFounder(Human h){				return this.founder == h;	}
+	public String getFounding(){		return  Basic.format1.format(this.founding.getTime());	 }
 
 
 	private static List<Integer> highbornNamesN = 		new ArrayList<>();

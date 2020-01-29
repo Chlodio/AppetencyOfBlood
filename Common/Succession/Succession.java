@@ -47,8 +47,13 @@ public class Succession {
 	public void setSecondaryHeir(Human h){			this.secondaryHeir = h;				}
 
 	public static void addToLineage(Human h){
+
 		lineageT[lineageI] = h;
 		lineageI++;
+		if (!lineageT[0].isRegnant()){
+			System.out.println(lineageT[0].getFormalName());
+			throw new RuntimeException();
+		}
 	}
 
 	public static void removeFromLineage(){

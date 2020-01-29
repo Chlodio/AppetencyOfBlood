@@ -246,13 +246,16 @@ public class Human {
 		return false;
 	}
 
+	//Move the house member into another house
 	public void switchHouse(House h){
 		if (this.isAlive()){
 			this.getHouse().removeKinsman(this);
 			h.addKinsman(this);
 		}
 		if (this.isAdult()){
-			List<Human> l = this.getChildren();
+			//Posthumous daughters are still part of the house...
+			List<Human> l = this.getLegitNonPosthumousSons();
+			l.addAll(this.getLegitDaughters());
 			for (Human x: l){
 				x.switchHouse(h);
 			}
@@ -417,6 +420,10 @@ public class Human {
 		}
 		c.addChild(c.getFather(), this);
 		c.addRealChild(union.getStag(), this);
+
+		if(c.isMale() && c.isPosthumous() && c.getHouse() == c.getFather().getHouse()){
+			throw new RuntimeException();
+		}
 
 
 
@@ -583,7 +590,7 @@ public class Human {
 		return this.isAlive() && this.isAdult();
 	}
 
-	//Check if the list even a single living person
+	//Check if the list even has a single living person
 	public static boolean hasLiving(List<Human> l){
 		for(Human x: l){
 			if (x.isAlive()){
@@ -625,6 +632,28 @@ public class Human {
 		return c;
 	}
 
+	//Check if the list even has a single person non-posthumous person
+	public static boolean hasNonPosthumous(List<Human> l){
+		for(Human x: l){
+			if (!x.isPosthumous()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//Remove posthumous children from the list
+	public static List<Human> getNonPosthumous(List<Human> l){
+		List<Human> ll = new ArrayList<>(l.size());
+		for(Human x: l){
+			if (!x.isPosthumous()){
+				ll.add(x);
+			}
+		}
+		return ll;
+	}
+
+
 //Legimate children (i.e children born from marriage)
 
 	public List<Human> getLegitLivingDaughters(){
@@ -643,6 +672,19 @@ public class Human {
 		return this.rela.getRandomBornMistress();
 	}
 
+
+	public List<Human> getLegitNonPosthumousSons(){
+		return this.rela.getLegitNonPosthumousSons();
+	}
+
+	public boolean hasLegitNonPosthumousSon(){
+		return this.rela.hasLegitNonPosthumousSon();
+	}
+
+	//Living version of the previous
+	public boolean hadLegitNonPosthumousSon(){
+		return this.rela.hadLegitNonPosthumousSon();
+	}
 
 	//Shortcuts
 	public static int getID(){					return id;										}
@@ -681,6 +723,7 @@ public class Human {
 	public boolean hasSeniorPaternalRelative(){	return this.rela.hasSeniorPaternalRelative(); 	}
 	public boolean hasSister(){					return this.rela.hasSister(); 					}
 	public boolean hasSon(){					return this.rela.hasSon(); 						}
+	public boolean hasLegitSon(){				return this.rela.hasLegitSon(); 				}
 	public boolean hasSons(){					return this.rela.hasSons(); 					}
 	public boolean hasUnwedBrother(){			return this.rela.hasUnwedBrother(); 			}
 	public boolean hasUnwedSister(){			return this.rela.hasUnwedSister(); 				}
@@ -892,7 +935,7 @@ public class Human {
 			}
 		} if (this.isAdult() && this.wasMarried()){
 			h = this.getLatestHusband();
-			if (((Man) h).isHouseHead()){
+			if (((Man) h).isHouseHead() && h.getHouse().isNoble()){
 				return h.getHouse().getCoALink();
 			}
 		}

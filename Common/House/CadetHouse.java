@@ -19,14 +19,21 @@ public class CadetHouse extends House {
 		this.parentName =			parent.getName();
 		this.setPatriarch(founder);
 		parent.branches.add(this);
-		this.heads.add(founder);
-		this.heads.add(head);
-		List<Human> l = new ArrayList<>(founder.getChildren());
+		this.addHead(founder);
+		this.addHead(head);
 		if (parent.isNoble()){
 			this.ennoble();
 		}
+
+		//Move the children into the new house
+		List<Human> l = founder.getLegitNonPosthumousSons();
+		l.addAll(founder.getLegitDaughters());
 		for (Human x: l){
 			x.switchHouse(this);
+		}
+
+		if (this.heads.get(0) == this.heads.get(1)){
+			throw new RuntimeException();
 		}
 	}
 

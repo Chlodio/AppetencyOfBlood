@@ -78,7 +78,7 @@ public class Basic {
 		int dom = 1; 										//day of the month
 		int maom = 0;
 
-        for (int century = 0; century < 3; century++){
+        for (int century = 0; century < 4; century++){
 			for (int decade = 0; decade < 10; decade++){
 				census.add("<tr><td>"+Basic.sDate()+"</td><td>"+Man.getAmount()+"</td><td>"+Woman.getAmount()+"</td><td>"+Bastard.getAmount()+"</td></tr>");
 				for (int lustrum = 0; lustrum < 2; lustrum++){

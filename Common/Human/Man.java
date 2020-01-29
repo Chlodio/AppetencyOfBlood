@@ -151,15 +151,21 @@ public class Man extends Human {
 				f.getHouse().addPrince(this);
 			}
 
-		} else{								//posthumous birth
-
+		} else{								//Posthumous birth
 			this.cadency = 0;
 			((Man) this).setCadetStatus(0);
 			this.name = 		new Name(true, this);
 			this.house = 		new MainHouse(this);
-			//this.nameChild();
 			this.performPosthumousBirth(f, m);
 			this.addSon(f, m);
+			if (this.getHouse() == f.getHouse()){
+				throw new RuntimeException();
+			}
+			//Ennoble the house if its a noble origin
+			if (f.getHouse().isNoble()){
+				this.house.ennoble();
+			}
+
 		}
 	}
 
@@ -246,11 +252,11 @@ public class Man extends Human {
 	public boolean hasAgnaticLine(){
 		List<Human> l;
 		if (this.isAdult()){
-			if (this.hasSon()){
+			if (this.hasLegitNonPosthumousSon()){
 				return true;
 			}
 			else{
-				l = this.getSons();
+				l = this.getLegitNonPosthumousSons();
 				for (Human x: l ){
 					if (((Man) x).hasAgnaticLine()){
 						return true;
@@ -262,21 +268,22 @@ public class Man extends Human {
 		return false;
 	}
 
+
+	//Get their who is of legimate and not of posthumous descendent
 	public Human getAgnaticHeir(){
 		Human heir;
-		List<Human> l = this.getSons();
+		List<Human> l = this.getLegitNonPosthumousSons();
 		for(Human x: l ){
 			if(x.isAlive()){
 				return x;
 			}
 			else if (x.isAdult()){
-				heir = ((Man) x).getAgnaticHeir();
-				if (heir != null){
-					return heir;
+				if (((Man) x).hasAgnaticLine()){
+					return ((Man) x).getAgnaticHeir();
 				}
 			}
 		}
-		return null;
+		throw new RuntimeException();
 	}
 
 	public static void growUp(){

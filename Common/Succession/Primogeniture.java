@@ -76,11 +76,19 @@ public class Primogeniture extends Succession {
 
 		if (l.length > 2){
 			i = l.length-1;
+
+			System.out.println(i);
+			for (int x = 0; x < i; x++){
+				addToLineage(l[x]);
+			}
+
 			for (int x = i; x > 0; x--){
+
 				if (hasPrimoApparent(l[x])){
 					this.setPriority(2);
 					return true;
 				}
+				removeFromLineage();
 			}
 		}
 		return false;

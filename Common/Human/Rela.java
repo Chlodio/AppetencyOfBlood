@@ -79,6 +79,11 @@ public class Rela{
 
 	public List<Human> getSons(){				return new ArrayList<>(this.sons);			}
 
+	public List<Human> getLegitNonPosthumousSons(){
+		List<Human> l = this.getLegitSons();
+		return Human.getNonPosthumous(l);
+	}
+
 	public boolean isSonless(){
 		List<Human> l = this.getSons();
 		return !Human.hasLiving(l);
@@ -87,6 +92,23 @@ public class Rela{
 	public boolean hasSon(){
 		List<Human> l = this.getSons();
 		return Human.hasLiving(l);
+	}
+
+	public boolean hasLegitSon(){
+		List<Human> l = this.getLegitSons();
+		return Human.hasLiving(l);
+	}
+
+	public boolean hadLegitNonPosthumousSon(){
+		List<Human> l = this.getLegitSons();
+		return Human.hasNonPosthumous(l);
+	}
+
+	//Living version of the previous
+	public boolean hasLegitNonPosthumousSon(){
+		List<Human> l = this.getLegitSons();
+		l = Human.getLiving(l);
+		return Human.hasNonPosthumous(l);
 	}
 
 	public boolean hasSons(){
