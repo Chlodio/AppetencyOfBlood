@@ -158,7 +158,7 @@ public class Holder{
 	public String getNotes(){ 				return this.notes; }
 	public void addNotes(String n){ 		this.notes += n+"<br>"; }
 	public void resetConsort(){ 			this.consort = null; }
-	public void setRuler(Ruler r){ 			this.ruler = r; System.exit(0);}
+	public void setRuler(Ruler r){ 			this.ruler = r;}
 	public Calendar getStart(){				return (Calendar) this.start.clone();	}
 
 

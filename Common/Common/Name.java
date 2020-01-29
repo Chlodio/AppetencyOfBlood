@@ -47,9 +47,7 @@ public class Name{
 			buffy.close();
 		}
 		catch(IOException e){
-			System.out.println("f");
-			System.exit(0);
-
+			throw new RuntimeException();
 		}
 		c = 0;
 		try {

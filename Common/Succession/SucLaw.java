@@ -22,17 +22,17 @@ public class SucLaw{
 
 	*/
 
-	private int sex; 			/*0 = cognatic, 1 = agnatic, -1 = enatic	*/
-	private int preference;		/*0 = none, 1 = male, -1 = female*/
-	private int tracing;		/*0 = cognatic 1 = agnatic, -1 = -enatic 	*/
-	private int bastardy;		/*0 = banned, 1 = ultimate, 2 = ulterior, 3 = proximate, 4 = absolute*/
+	private byte sex; 			/*0 = cognatic, 1 = agnatic, -1 = enatic	*/
+	private byte preference;		/*0 = none, 1 = male, -1 = female*/
+	private byte tracing;		/*0 = cognatic 1 = agnatic, -1 = -enatic 	*/
+	private byte bastardy;		/*0 = banned, 1 = ultimate, 2 = ulterior, 3 = proximate, 4 = absolute*/
 	/*
 		ulmate: 	succeeds only upon complete extinction
 		ulterior: 	succeed before ultimate
 		proximate: 	only second to legimates
 		absolute: 	equal to legimates
 	*/
-	private int purity;
+	private byte purity;
 	/*
 		0:	core principle matters more than anything, i.e in primogeniture, daughter's son goes before her younger brother, unless tracing is agnatic
 		1:	core principle is respected, but takes second place, i.e in primogeniture, holder's all sons (and their sons) will be put before the holder's daughters (and their children)
@@ -46,23 +46,23 @@ public class SucLaw{
 	public SucLaw(Lineage l){
 		this.lineage =		l;
 		this.sex = 			1;
-		this.preference = 	0;
+		this.preference = 	1;
 		this.tracing =		0;
-		this.purity = 		2;
+		this.purity = 		1;
 		this.bastardy = 	0;
 	}
 
 	public List<Human> getHeirGroup(Human h){
 		List<Human> l;
-		switch(this.sex){
+		switch(this.getSex()){
 			case 1:
-				l = h.getSons();
+				l = this.getShouldGroupAgnatic(h);
 				break;
 			case 0:
-				l = this.getPreferenceGroup(h);
+				l = this.getPreferenceGroup(h);		//Possible method 'GroupCognatic', but not real need
 				break;
 			default:
-				l =  h.getDaughters();
+				l = this.getShouldGroupEnatic(h);
 		}
 		l.remove(this.getIncumbent());
 		return l;
@@ -71,15 +71,15 @@ public class SucLaw{
 /*both sexes can inherit, hence find preference*/
 	public List<Human> getPreferenceGroup(Human h){
 		List<Human> l;
-		switch(this.preference){
+		switch(this.getPreference()){
 			case 1:
-				l = new ArrayList<>(h.getSons());
+				l = h.getSons();
 				l.addAll(h.getDaughters());
 				return l;
 			case 0:
 				return h.getChildren();
 			default:
-				l = new ArrayList<>(h.getDaughters());
+				l = h.getDaughters();
 				l.addAll(h.getSons());
 				return l;
 		}
@@ -106,21 +106,27 @@ public class SucLaw{
 		return this.fitsPreference(h);
 	}
 
-	public boolean canPass(Human h){
-		if (canBeTraced(h)){
-			/*If the could immediately succedd, otherwise they are stored for later tracing*/
-			if (shouldBeTraced(h)){
-				return true;
-			} else {
-				this.addTransmitter(h);
-			}
+
+	//Determines what group should be checked after checking eligiblity
+	public List<Human> getShouldGroupAgnatic(Human h){
+		if (this.getTracing() == 1){
+			return h.getSons();
+		} else {
+			return h.getChildren();
 		}
-		return false;
+	}
+
+	public List<Human> getShouldGroupEnatic(Human h){
+		if (this.getTracing() == -1){
+			return h.getDaughters();
+		} else {
+			return h.getChildren();
+		}
 	}
 
 	/*If lineage should be traced through them*/
 	public boolean shouldBeTraced(Human h){
-		switch(this.purity){
+		switch(this.getPurity()){
 			case 2:
 				return this.fitsPreference(h);
 			case 1:
@@ -131,7 +137,7 @@ public class SucLaw{
 	}
 
 	public boolean fitsPreference(Human h){
-		switch(this.preference){
+		switch(this.getPreference()){
 			case 1:
 				return h.isMale();
 			case 0:
@@ -143,7 +149,7 @@ public class SucLaw{
 
 	/*If lineage can be traced through them*/
 	public boolean canBeTraced(Human h){
-		switch(this.tracing){
+		switch(this.getTracing()){
 			case 1:
 				return h.isMale();		//paternal lineage
 			case 0:
@@ -154,7 +160,7 @@ public class SucLaw{
 	}
 
 	public boolean isRightSex(Human h){
-		switch(this.sex){
+		switch(this.getSex()){
 			case 1:
 				return h.isMale();
 			case 0:
@@ -201,5 +207,11 @@ public class SucLaw{
 	public Human getIncumbent(){
 		return this.lineage.getIncumbent().getPerson();
 	}
+
+	public byte getTracing(){						return this.tracing;				}
+	public byte getPurity(){						return this.purity;					}
+	public byte getPreference(){					return this.preference;				}
+	public byte getSex(){							return this.sex;					}
+
 
 }

@@ -26,8 +26,7 @@ public class PolProfile {
 
 	public void handleDeath(){
 		Human w;
-	//	System.out.println(this.regnalTitles);
-	//	System.exit(0);
+
 		if (this.isRegnant()){
 			for(Office x: this.regnalTitles){
 				if (x.getHolder().getPerson().isAlive()){

@@ -60,7 +60,7 @@ public class SexRelation{
 			System.out.println("Wife age: "+w.getAge());
 			System.out.println("Adult: "+w.isAdult());
 			System.out.println("Wife fert: "+w.getFert());
-			System.exit(0);
+			throw new RuntimeException();
 		}
 		this.offspring = 	new ArrayList<>();
 		this.active = 		true;

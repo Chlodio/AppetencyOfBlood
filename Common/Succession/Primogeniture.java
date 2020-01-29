@@ -77,7 +77,6 @@ public class Primogeniture extends Succession {
 		if (l.length > 2){
 			i = l.length-1;
 
-			System.out.println(i);
 			for (int x = 0; x < i; x++){
 				addToLineage(l[x]);
 			}
@@ -193,9 +192,6 @@ public class Primogeniture extends Succession {
 							this.setSecondaryHeir(x);
 							return true;
 						} else {
-/*							if (!x.isChildOf(lineageT[lineageI-2])){
-								throw new RuntimeException();
-							}*/
 							this.law.addTransmitter(x);
 						}
 					} else if (this.law.canBeTraced(x)){

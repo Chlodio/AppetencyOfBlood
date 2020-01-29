@@ -28,7 +28,6 @@ public class RegnalName {
 	}
 
 	public static boolean isListed(String name, Office office){
-		System.out.println(office);
 		List<RegnalName> l = office.getRegnalNames();
 		for(RegnalName x: l){
 			if (x.name == name){

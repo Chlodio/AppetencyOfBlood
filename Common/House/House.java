@@ -94,8 +94,7 @@ public class House {
 			);
 		}
 		catch(IOException e){
-			System.out.println(e);
-			System.exit(1);
+			throw new RuntimeException();
 		}
 		c = 0;
 		try {
@@ -108,8 +107,7 @@ public class House {
 			buffy.close();
 		}
 		catch(IOException e){
-			System.out.println(e);
-			System.exit(1);
+			throw new RuntimeException();
 		}
 	}
 
@@ -311,9 +309,8 @@ public class House {
 			case 5:
 				return this.doAlteringNamingM(c);			//altering naming
 			default:
-				System.exit(0);
+				throw new RuntimeException();
 		}
-		return "?";
 	}
 
 	public String getMemberNameF(Human c){
@@ -331,9 +328,8 @@ public class House {
 			case 5:
 				return this.doAlteringNamingF(c);			//altering naming
 			default:
-				System.exit(0);
+				throw new RuntimeException();
 		}
-		return "?";
 	}
 
 	public String pickRandomNameM(){
@@ -444,13 +440,6 @@ public class House {
 		if (h.hasFather()){
 			n = h.getMother().getName().getName();
 			if (!h.getFather().hasDaughterWithTheName(n)){
-				/*if (n.charAt(n.length()-1) != 'a'){
-					System.out.println(h.getMother().getFullName());
-					System.out.println(h.getMother().isFemale());
-					System.out.println(n);
-					String o = names[500];
-					System.exit(0);
-				}*/
 				return n;
 			}
 		}
@@ -552,22 +541,6 @@ public class House {
 				pot.add(x);
 			}
 		}
-		/*if(h.isRegnant()){
-			System.out.println("Houn:");
-			for(String x: houN){
-				System.out.println(x);
-			}
-			System.out.println("Pot:");
-			for(String x: pot){
-				System.out.println(x);
-			}
-			System.out.println("l:");
-			for(String x: l){
-				System.out.println(x);
-			}
-			//Basic.pause(500);
-			//System.exit(0);
-		}*/
 		return pot;
 	}
 
@@ -680,24 +653,6 @@ public class House {
 		for (House x: nobles){
 			magnates.add(x.getHead());
 		}
-		/*
-		for (House x: list){
-			if (x.getRanking() >= 6){
-				magnates.add(x.head);
-			}
-		}
-
-		if (magnates.size() == 0){
-			for (House x: list){
-				if (x.getRanking() >= 5){
-					magnates.add(x.head);
-				}
-			}
-		}
-		if (magnates.size() == 0){
-			System.out.println("No living men.");
-			System.exit(0);
-		}*/
 		return magnates;
 	}
 
@@ -754,8 +709,7 @@ public class House {
 		try{
 			n = Basic.randint(highbornNamesN.size());
 		} catch (ArrayIndexOutOfBoundsException e){
-			System.out.println(highbornNamesN.size());
-			System.exit(0);
+			throw new RuntimeException();
 		}
 		int s = highbornNamesN.get(n);
 		highbornNamesN.remove(highbornNamesN.get(n));

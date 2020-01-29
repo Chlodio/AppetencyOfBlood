@@ -32,9 +32,6 @@ public class Marriage extends SexRelation{
 	//	this.anniversary += year;
 		this.cousinUnion =  false;
 		this.setMarriage();
-	/*	System.out.println(husband.getMarriages().size());
-		System.exit(0);*/
-		//marriages.put(Marriage.id, temp);
     }
 
 /*Used for regulars*/
@@ -65,7 +62,7 @@ public class Marriage extends SexRelation{
 			this.doe.setVirgin();
 		} else {
 			if (this.doe.getNumOfMarriages() == 1 ){
-				System.exit(0);
+				throw new RuntimeException();
 			}
 		}
 
@@ -333,7 +330,7 @@ public class Marriage extends SexRelation{
 				System.out.println("Began: "+x.getBeginning());
 				System.out.println("Name: "+x.getDoe());
 			}
-			System.exit(0);
+			throw new RuntimeException();
 		}
 	}
 

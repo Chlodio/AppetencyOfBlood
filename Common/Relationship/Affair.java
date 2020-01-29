@@ -26,7 +26,7 @@ public class Affair extends SexRelation {
 			Human w = findMistress(m);
 			if (w.isChildOf(m) || w.isSiblingOf(m)){
 				System.out.println("Daughter/sister seduction");
-				System.exit(0);
+				throw new RuntimeException();
 			}
 			new Affair(m, w);
 			Basic.print(m.getShortName()+" ("+m.getAge()+") began affair with "+w.getShortName()+" ("+w.getAge()+")");

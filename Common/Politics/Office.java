@@ -137,7 +137,7 @@ public class Office{
 		}
 
 		inaugurate(s);
-		
+
 	//	this.getLineage().determinePrimogenitureHeir();
 	//	this.getLineage().declareHeirStatus();
 
@@ -257,7 +257,7 @@ public class Office{
 	public void endGearingUp(){ 						this.gearingUp = false; 	}
 	public void endWar(){ 								this.atWar = false; 		}
 	public void goToWar(){ 								this.atWar = true; 			}
-	public void setRuler(Ruler r){						this.rule.setSeniorRuler(r); System.exit(0);}
+	public void setRuler(Ruler r){						this.rule.setSeniorRuler(r);}
 	public void addToConsortList(Human h){				this.consortList.add(h);	}
 	public int getConsortRank(Human h){					return this.consortList.indexOf(h);}
 
