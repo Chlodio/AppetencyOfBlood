@@ -34,6 +34,63 @@ public class Rela{
 	}
 
 
+
+	//Used for names
+	public List<Human> getMaleAncestryGroup(){
+		List<Human> l = new ArrayList<>();
+		boolean pf = false;					//Had paternal grandfather
+		boolean mf = false;					//Had maternal grandmother
+		if (this.hadFather()){
+			if (this.hadPatGrandpa()){
+				l.add(this.getFathersFather());
+				pf = true;
+			}
+			if (this.hadMatGrandpa()){
+				l.add(this.getMothersFather());
+				mf = true;
+			}
+
+			if (pf){
+				l.addAll(this.getPatrui());
+			}
+			if (mf){
+				l.addAll(this.getAvuncului());
+			}
+
+			l.add(this.getFather());
+		}
+		return l;
+	}
+
+	//Used for names
+	public List<Human> getFemaleAncestryGroup(){
+		List<Human> l = new ArrayList<>();
+		boolean pm = false;					//Had paternal grandfather
+		boolean mm = false;					//Had maternal grandmother
+		if (this.hadFather()){
+			if (this.hadPatGrandma()){
+				l.add(this.getFathersMother());
+				pm = true;
+
+			}
+			if (this.hadMatGrandma()){
+				l.add(this.getMothersMother());
+				mm = true;
+			}
+			l.add(this.getMother());
+
+			if (pm){
+				l.addAll(this.getAmitai());
+			}
+			if (mm){
+				l.addAll(this.getMaterterai());
+			}
+
+		}
+		return l;
+	}
+
+
 //Children
 
 	public boolean hasChild(){
@@ -623,13 +680,33 @@ public class Rela{
 		return l;
 	}
 
+	public boolean hadPatGrandma(){
+		if (this.hadFather()){
+			return this.getFather().hadMother();
+		}
+		return false;
+	}
 
 //Maternal grandfather
 
+public boolean hadMatGrandpa(){
+	if (this.hadFather()){
+		return this.getMother().hadFather();
+	}
+	return false;
+}
 
 public Human getMothersFather(){			return this.getMother().getFather(); }
 
 public Human getMothersMother(){			return this.getMother().getMother(); }
+
+
+public boolean hadMatGrandma(){
+	if (this.hadFather()){
+		return this.getMother().hadMother();
+	}
+	return false;
+}
 
 //Great-grandparents
 
@@ -703,15 +780,6 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 	}
 
 
-//Maternal grandfather
-
-
-	public boolean hadMatGrandpa(){
-		if (this.hadMother()){
-			return this.getMother().hadFather();
-		}
-		return false;
-	}
 
 	public Human getPatruus(){
 		Human u = this.getFathersFather();
@@ -822,7 +890,7 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 		return false;
 	}
 
-//Patruus
+//Patruus	i.e paternal uncles
 
 	//Does character's father have a living brother?
 	public boolean hasPatruus(){
@@ -832,13 +900,36 @@ public Human getMothersMother(){			return this.getMother().getMother(); }
 		return false;
 	}
 
-	//paternal uncles
+
 	public List<Human> getPatrui(){
 		List<Human> list = this.getFathersFather().getSons();
 		list.remove(this.getFather());
 		return list;
 	}
 
+
+//Mother's brothers
+	public List<Human> getAvuncului(){
+		List<Human> list = this.getMothersFather().getSons();
+		list.remove(this.getFather());
+		return list;
+	}
+
+//Father's sisterss
+
+public List<Human> getAmitai(){
+	List<Human> list = this.getFathersFather().getDaughters();
+	list.remove(this.getMother());
+	return list;
+}
+
+//Mother's sisters
+
+public List<Human> getMaterterai(){
+	List<Human> list = this.getMothersFather().getDaughters();
+	list.remove(this.getMother());
+	return list;
+}
 
 //Nephew
 

@@ -107,7 +107,7 @@ public class Claim{
 			*Brother of Bob		[indirect relation to predecessor]
 		*/
 
-		return HTML.getUlLi(txt);
+		return HTML.getUl(txt);
 	}
 
 	//Brother- and-son-in-laws of the ruler

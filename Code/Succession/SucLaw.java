@@ -48,7 +48,7 @@ public class SucLaw{
 		this.sex = 			1;
 		this.preference = 	1;
 		this.tracing =		0;
-		this.purity = 		1;
+		this.purity = 		2;
 		this.bastardy = 	0;
 	}
 

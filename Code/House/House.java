@@ -14,33 +14,33 @@ import java.io.IOException;
 
 public class House {
 	private static List<House> list = new ArrayList<>();
-	public static House nextHouse;
-    private static int id = 0;
+	public static House nextHouse;					//Used for temp. tracing
+    private static int id = 0;						//Number of created houses
+	protected static String spareName;				//Used for temp
 
-	protected boolean isActive;
-	protected Calendar founding;
-	protected House parent;
-	protected Human founder;
-	protected Human head;
-	protected Human patriarch;						//former head whose memory keeps the family together
-	protected int generation;
-	protected int naming;
-	protected int nameNum;
-	protected int coa;								//coat of arms
-	protected int prestige;
+	protected String name;							//Main name of the house
+	protected boolean legimate;						//false = bastard house
+	protected boolean isActive;						//Is house alive
+	protected Calendar founding;					//When the house was founded
+	protected House parent;							//From were the house orginated from
+	protected Human founder;						//Who founded the house
+	protected Human head;							//Who is leader of the house de jure primogeniture
+	protected Human patriarch;						//Former head whose memory keeps the family together
+	protected int generation;						//How ancestors the house has
+	protected int nameNum;							//Number for noble name because has to be unique
+	protected int coa;								//Coat of arms
+	protected int prestige;							//How
 	protected int ranking;
 	protected boolean isNoble;						//true = noble/false = lowborn
-	protected List<House> branches;
-	protected List<Human> heads;
-	protected List<Human> kinsmen;
-	protected List<Human> kinswomen;
-	protected List<Human> princes;					//living sons of the patriarch
-	protected List<String> femaleNames;
-	protected List<String> maleNames;
-	protected static String spareName;								//used for temp
-	protected String name;
-	protected boolean legimate;						//false = bastard house
+	protected List<House> branches;					//Cadet branches
+	protected List<Human> heads;					//List of the heads
+	protected List<Human> kinsmen;					//List of male members
+	protected List<Human> kinswomen;				//List of female members
+	protected List<Human> princes;				//Princes of the house, i.e living sons of the patriarch
+	protected List<String> femaleNames;				//Names used for women of the family
+	protected List<String> maleNames;				//Names used for men of the family
 
+	protected int naming;							//Naming pattern, with following inputs:
 	/*	0		orderly
 	 	1		weighted random
 		2		equal random
@@ -143,16 +143,11 @@ public class House {
 			5. from cousin to cousin while uncle is alive
 		*/
 		Human heir = h;
-		if (this.getKinsmen().size() > 0){
+		if (Basic.isNotZero(this.getKinsmen().size())){
 			heir = this.getHeir();
-			if (heir == null){
-				throw new RuntimeException();
-			}
 		}
+
 		if (heir != h){
-			if (heir == null){
-				throw new RuntimeException();
-			}
 			if (heir.getHouse() == this){
 				this.head = heir;
 				this.addHead(this.head);
@@ -174,24 +169,27 @@ public class House {
 			}
 		}
 		this.deactivate();
-		nextHouse = null;
+
 		if (this.isNoble() && !this.isLegimate()){
 			this.returnToCirculation();
 		}
+
+		this.handleSuccession();
+	}
+
+	//The main house died, does it have a cadet branch that could succeed it or it has it gone extinct?
+	public void handleSuccession(){
+
 		if (this.findNextHouse()){
-			this.succeed(nextHouse);
-			Basic.print("The senior line of "+this.getFullName()+" went extinct, but was succeeded by "+nextHouse.getName());
+			this.succeed(nextHouse);					//nexthouse is static
 		} else{
 			Basic.print(this.getName()+" went extinct");
 		}
 
-		if (list.contains(this)){
-			System.out.println("ERROR dead house is alive");
-			throw new RuntimeException();
-		}
 	}
 
 	public void succeed(House newHouse){
+		Basic.print("The senior line of "+this.getFullName()+" went extinct, but was succeeded by "+nextHouse.getName());
 		if (this.hasHigherRanking(newHouse)){
 			newHouse.setRanking(this.ranking);
 		}
@@ -367,8 +365,8 @@ public class House {
 
 	public String doFlatNamingM(Human h){
 		String n;
-		List<String> u = this.getUsableNamesM(h.getFather());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesM(h, this.getMaleNames());
+		if (Basic.isNotZero(u.size())){
 			return Basic.choice(u);
 		}
 		return this.pickRandomNameM();
@@ -376,8 +374,8 @@ public class House {
 
 	public String doFlatNamingF(Human h){
 		String n;
-		List<String> u = this.getUsableNamesF(h.getFather());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesF(h, this.getFemaleNames());
+		if (Basic.isNotZero(u.size())){
 			return Basic.choice(u);
 		}
 		return this.pickRandomNameF();
@@ -385,8 +383,8 @@ public class House {
 
 	public String doWeightNamingM(Human h){
 		String n;
-		List<String> u = this.getUsableNamesM(h.getFather());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesM(h, this.getMaleNames());
+		if (Basic.isNotZero(u.size())){
 			return Basic.choiceW(u);
 		}
 		return this.pickRandomNameM();
@@ -394,8 +392,8 @@ public class House {
 
 	public String doWeightNamingF(Human h){
 		String n;
-		List<String> u = this.getUsableNamesF(h.getFather());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesF(h, this.getFemaleNames());
+		if (Basic.isNotZero((u.size()))){
 			return Basic.choiceW(u);
 		}
 		return this.pickRandomNameF();
@@ -403,8 +401,8 @@ public class House {
 
 	public String doOrderlyNamingM(Human h){
 		String n;
-		List<String> u = this.getUsableNamesM(h.getFather());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesM(h, this.getMaleNames());
+		if (Basic.isNotZero(u.size())){
 			return u.get(0);
 		}
 		return this.pickRandomNameM();
@@ -412,8 +410,8 @@ public class House {
 
 	public String doOrderlyNamingF(Human h){
 		String n;
-		List<String> u = this.getUsableNamesF(h.getFather());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesF(h, this.getFemaleNames());
+		if (Basic.isNotZero(u.size())){
 			return u.get(0);
 		}
 		return this.pickRandomNameF();
@@ -428,8 +426,10 @@ public class House {
 				return n;
 			}
 		}
-		u = this.getUsableNamesM(h.getFather());
-		if (u.size() > 0){
+		u = this.getUsableNamesM(h, this.getMaleNames());
+
+
+		if (Basic.isNotZero(u.size())){
 			return Basic.choiceW(u);
 		}
 		return this.pickRandomNameM();
@@ -444,137 +444,61 @@ public class House {
 				return n;
 			}
 		}
-		u = this.getUsableNamesF(h.getFather());
-		if (u.size() > 0){
+		u = this.getUsableNamesF(h, this.getFemaleNames());
+		if (Basic.isNotZero(u.size())){
 			return Basic.choiceW(u);
 		}
 		return this.pickRandomNameF();
 	}
 
 	public String doAncestralNamingM(Human h){
-		String gfn;
-		List<String> u;
-		if (h.hadPatGrandpa()){
-			gfn = h.getFathersFather().getName().getName();
-			if (!h.getFather().hasSonWithTheName(gfn)){
-				return gfn;
-			}
-			else if (h.hadMatGrandpa()){
-				gfn = h.getMothersFather().getName().getName();
-				if (!h.getFather().hasSonWithTheName(gfn)){
-					if (!this.isMNameUsed(gfn)){
-						this.addMaleName(gfn);
-					}
-					return gfn;
-				} else {
-					u = this.getUsableNamesM(h.getFather());
-					u.remove(h.getFathersFather().getName().getName());
-				}
-			} else {
-				u = this.getUsableNamesM(h.getFather());
-				u.remove(gfn);
-			}
-		} else {
-			u = this.getUsableNamesM(h.getFather());
-		}
 
-		u.remove(h.getFather().getName().getName());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesM(h, h.getMaleAncestryGroupNames());
+
+		if (Basic.isNotZero(u.size())){
 			return Basic.choiceW(u);
 		}
 		return this.pickRandomNameM();
 	}
 
 	public String doAncestralNamingF(Human h){
-		String gfn;
-		List<String> u;
-		if (h.hadPatGrandpa()){
-			gfn = h.getFathersMother().getName().getName();
-			if (!h.getFather().hasDaughterWithTheName(gfn)){
-				return gfn;
-			}
-			else if (h.hadMatGrandpa()){
-				gfn = h.getMothersMother().getName().getName();
-				if (!h.getFather().hasDaughterWithTheName(gfn)){
-					if (!this.isFNameUsed(gfn)){
-						this.addFemaleName(gfn);
-					}
-					return gfn;
-				} else {
-					u = this.getUsableNamesF(h.getFather());
-					u.remove(h.getFathersMother().getName().getName());
-				}
-			} else {
-				u = this.getUsableNamesF(h.getFather());
-				u.remove(gfn);
-			}
-		} else {
-			u = this.getUsableNamesF(h.getFather());
-		}
 
-		u.remove(h.getFather().getName().getName());
-		if (u.size() > 0){
+		List<String> u = this.getUsableNamesF(h, h.getFemaleAncestryGroupNames());
+
+		if (Basic.isNotZero(u.size())){
 			return Basic.choiceW(u);
 		}
 		return this.pickRandomNameF();
 	}
 
-	public List<String> getUsableNamesM(Human h){
-		List<String> houN = 	new ArrayList<>(this.maleNames);
-		List<String> l = 		new ArrayList<>(h.getLivingSonsNames());
-		List<String> pot = 		new ArrayList<>();
-		for(String x: houN){
-			if(!l.contains(x)){
+//Filter out used names
+	public List<String> getUsableNamesM(Human h, List<String> l){
+
+		List<String> ln =		h.getFather().getLivingSonsNames();
+		List<String> pot = 		new ArrayList<>(l.size());
+
+		for(String x: l){
+			if(!ln.contains(x)){
 				pot.add(x);
 			}
 		}
 
-
 		return pot;
 	}
 
-	public List<String> getUsableNamesF(Human h){
-		List<String> houN = 	new ArrayList<>(this.femaleNames);
-		List<String> l = 		new ArrayList<>(h.getLivingDaughtersNames());
-		List<String> pot = 		new ArrayList<>();
-		for(String x: houN){
-			if(!l.contains(x)){
+//Filter out used names
+	public List<String> getUsableNamesF(Human h, List<String> l){
+
+		List<String> ln =		h.getFather().getLivingDaughtersNames();
+		List<String> pot = 		new ArrayList<>(l.size());
+
+		for(String x: l){
+			if(!ln.contains(x)){
 				pot.add(x);
 			}
 		}
+
 		return pot;
-	}
-
-	public boolean isSpareName(Human father){
-		spareName = null;
-		List<Human> temp = new ArrayList<>(father.getLivingSons());
-		List<String> houN = new ArrayList<>(this.maleNames);
-		List<Human> sons = new ArrayList<>();
-		List<String> pot = new ArrayList<>();
-		List<String> names = new ArrayList<>();
-		int comp = 0;
-
-		for(int x = 0; x < temp.size()-1; x++){
-			if(!temp.get(x).getName().isSpecial()){
-				sons.add(temp.get(x));
-			}
-		}
-		for(int x = 0; x < sons.size(); x++){
-			names.add(sons.get(x).getName().getName());
-		}
-
-		if (houN.size() > sons.size()){
-
-			for(String x: houN){
-				if(!names.contains(x)){
-					pot.add(x);
-				}
-			}
-			spareName = Basic.choiceW(pot);
-
-			return true;
-		}
-		return false;
 	}
 
 	public boolean isMNameUsed(String name){
@@ -584,7 +508,10 @@ public class House {
 	public boolean isFNameUsed(String name){
 		return this.femaleNames.contains(name);
 	}
-//Find members
+
+
+//Find members method
+
 
 	public boolean hasAdultKinsman(){
 		for(Human x: this.kinsmen){
@@ -593,7 +520,6 @@ public class House {
 		return false;
 	}
 
-	//anyone but this
 	public boolean hasAdultKinsman(Human person){
 		for(Human x: this.kinsmen){
 			if (x.isAdult() && x != person){ return true; }
@@ -608,8 +534,6 @@ public class House {
 		return this.kinsmen.get(0);
 	}
 
-
-	//anyone but this
 	public Human getAdultKinsman(Human person){
 		for(Human x: this.kinsmen){
 			if (x.isAdult() && person != x){ return x; }
@@ -618,7 +542,6 @@ public class House {
 	}
 
 
-	//anyone but this
 	public boolean hasAdultKinswoman(Human person){
 		for(Human x: this.kinswomen){
 			if (x.isAdult() && x != person){ return true; }
@@ -633,7 +556,6 @@ public class House {
 		return false;
 	}
 
-	//anyone but this
 	public Human getAdultKinswoman(Human person){
 		for(Human x: this.kinswomen){
 			if (x.isAdult() && person != x){ return x; }
@@ -657,6 +579,7 @@ public class House {
 		return magnates;
 	}
 
+
 	public static void addToHouse(Human joiner, House house){
 		joiner.setHouse(house);
 		if(joiner.isMale()){
@@ -677,14 +600,11 @@ public class House {
 		((Man) h).makeHousePrince();
 	}
 
-	/*House prince is removed from the house, if there are no further princes, andthe house has head, began house split*/
+	/*House prince is removed from the house, if there are no further princes, and the house has head, began house split*/
 	public void removePrince(Human h){
 		this.princes.remove(h);
 		if (!this.hasPrinces() && !this.hasPatriarchHead()){
 			if (this.isActive()){
-				//if (Consanguinity.getPaternalRelation(h, this.getPatriarchHead()));
-				/*Human p = this.getPatriarch();
-				Human he = this.getHead();*/
 				this.branch();
 			}
 		}
@@ -785,6 +705,19 @@ public class House {
 		h.ennoble();
 	}
 
+	//Used every time a branch dies
+	public void removeFromCaste(){
+		if (this.isNoble()){
+			this.removeFromNobles();
+			//There must always be nobles
+			if (!hasPlentyOfNobles()){
+				raiseNewNoble();
+			}
+		} else {
+			this.removeFromPeasants();		//Can only belong to one of the group at given time
+		}
+	}
+
 	public void addToPeasants(){					peasants.add(this);					}
 	private void removeFromPeasants(){				peasants.remove(this);				}
 
@@ -812,22 +745,13 @@ public class House {
 	}
 
 	public void deactivate(){
-		this.isActive = false;
-		list.remove(this);
-
-		if (this.isNoble()){
-			this.removeFromNobles();
-			//There must always be nobles
-			if (!hasPlentyOfNobles()){
-				raiseNewNoble();
-			}
-		} else {
-			this.removeFromPeasants();
-		}
-
+		this.isActive = false;				//Mark as non-active
+		list.remove(this);					//Remove from active house list
+		this.removeFromCaste();				//Either remove from noble or peasant families
+		nextHouse = null;					//Reset the static variable
 	}
 
-	public boolean isActive(){						return this.isActive;		}
+	public boolean isActive(){				return this.isActive;		}
 
 
 //Memberships

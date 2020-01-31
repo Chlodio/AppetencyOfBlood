@@ -179,6 +179,26 @@ public class Human {
 		}
 	}
 
+	//Get names non-offspring relatives used for naming
+	public List<String> getMaleAncestryGroupNames(){
+		List<Human> l =  this.getMaleAncestryGroup();
+		List<String> ll = new ArrayList<>();
+		for(Human x: l){
+			ll.add(x.getName().getName());
+		}
+		return ll;
+	}
+
+	//Get names non-offspring relatives used for naming
+	public List<String> getFemaleAncestryGroupNames(){
+		List<Human> l =  this.getFemaleAncestryGroup();
+		List<String> ll = new ArrayList<>();
+		for(Human x: l){
+			ll.add(x.getName().getName());
+		}
+		return ll;
+	}
+
 	public List<String> getLivingSonsNames(){
 		List<Human> l =		this.getLegitLivingSons();
 		List<String> n = 	new ArrayList<>();
@@ -786,6 +806,8 @@ public class Human {
 	public List<Affair> getAffairs(){			return this.rela.getAffairs();					}
 	public List<Affair> getAllAffairs(){		return this.rela.getAllAffairs();				}
 	public List<Human> getBastards(){			return this.rela.getBastards();					}
+	public List<Human> getMaleAncestryGroup(){  return this.rela.getMaleAncestryGroup();		}
+	public List<Human> getFemaleAncestryGroup(){ return this.rela.getFemaleAncestryGroup();		}
 	public List<Human> getBrothers(){			return this.rela.getBrothers();					}
 	public List<Human> getSister(){				return this.rela.getSisters();					}
 	public List<Human> getChildren(){			return this.rela.getChildren();					}
