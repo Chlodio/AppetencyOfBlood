@@ -3,6 +3,7 @@ import Code.Human.Human;
 import Code.Common.Basic;
 import Code.Common.Writing;
 import Code.Common.HTML;
+import Code.Succession.Succession;
 import Code.Politics.Office;
 import Code.Politics.Holder;
 import java.util.ArrayList;
@@ -122,7 +123,7 @@ public class Claim{
 	//As opposed to CloseRelativeType
 	private String getDistantRelativeType(){
 		int l = this.getLineageLength();
-		String txt = this.getKinshipTypeStr()+" "+Basic.getOrdial(l-1);
+		String txt = this.getBloodTypeStr()+" "+Basic.getOrdial(l-1);
 		txt = txt+" generation descendant of "+getThroughLine(l);
 		if (!this.isCoverture()){
 			return HTML.getUlLi(txt);
@@ -137,8 +138,8 @@ public class Claim{
 		return HTML.getUlLi("Elected");
 	}
 
-	//return blood type as string
-	public String getKinshipTypeStr(){
+	//Return blood type as string
+	public String getBloodTypeStr(){
 		return kinship[this.blood];
 	}
 
@@ -222,6 +223,20 @@ public class Claim{
 	public Human getPenultimateAncestor(){
 		return lineage[1];
 	}
+
+	//Creates a new permanent claim based on data from Lineage and Succession, called from Holder
+	public void combine(Holder h, Office o){
+		this.setSpecial(0);								//Claim is non-elected
+		this.setLineage(Lineage.getLineage());			//Get list of ancestors related to the claim
+		this.setLineal(Lineage.getLineal());			//If claim holder is direct descended of pred
+		this.setBlood(Succession.getBlood());			//If the claim included some women
+		this.setPredecessor(o.getLastHolder());			//The rulers predecessor
+		this.setOffice(o);								//What office the claim belongs to
+		this.setHolder(h.getPerson());					//What poltical figure does the claim belong to
+	}
+
+
+
 
 	public boolean hasOrigin(){						return this.origin != null;			}
 	public boolean isCoverture(){					return this.coverture; 				}

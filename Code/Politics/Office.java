@@ -61,60 +61,30 @@ public class Office{
 	public static Office create(){
 		id++;
 		office.put(id, new Office());
-//		Elective.callHeir();
-		Human founder = Basic.choice(House.getMagnates()); //Succession.heir;
+		Human founder = Basic.choice(House.getMagnates());
 		if (founder.isRegnant()){
-			throw new RuntimeException();		//the same
+			throw new RuntimeException();		//The same
 		}
 		office.get(offices.size()).inaugurate(founder);
-		//firstSovereign = founder;
 		return office.get(id);
 	}
 
 
 
 	public void inaugurate(Human person){
-/*		boolean brotherU = false;
-		boolean uncleU = false;
-		if (!Claim.getTemp().isSpecial()){
-			if (person.hasAdultBrother()){
-				if (person.getOldestBrother().isChildOf(Claim.getTemp().getFromLineage(1))){
-					brotherU = true;
-				}
-			}
-			if(Claim.getTemp().hasGrandparentClaimant()){
-				if (Claim.getTemp().getGrandparentClaimant().hasSon()){
-					uncleU = true;
-				}
-			}
-		}*/
+
 		String oldName =								person.getFullName();
 		if(person.getHouse().getRanking() != 8){		person.getHouse().setRanking(8);}
 		Office kingship = 								office.get(1);
 		this.rule = new Rule(this);
 		this.rule.createSoleRuler(this, person);
-		//Holder holder = 								Holder.regnafy(person, this);
 		this.addHolder(this.getRule().getSeniorHolder());
-	//	person.addRegnalTitle(this);
-		//holder.getPerson().title = 						holder.getPerson().getRoyalTitle();
-		//person.getName().setFull(holder.getName());
-	//	if(!person.isUnwed()){ 							holder.setConsort(person.spouse); }
 		System.out.println(oldName+" was inaugurated as "+person.getFullName()+" at the age of "+person.getAge()+".");
-
-		//this.getLineage().determinePrimogenitureHeir();
-		//System.out.println(this.getLineage().getHeir());
-		//System.out.println();
-//		if (brotherU){	holder.addNotes("Sibling civil war");		}
-//		if (uncleU){	holder.addNotes("Avunculate civil war");	}
 	}
 
 	public void endTenure(){
 		this.getRule().handleRegency();
 		this.rule.endReign();
-//		if (office.holder.getPerson() == office.ruler.getPerson()){
-//			Territory territory = office.territory;
-//			office.holder.addNotes("Size: "+Integer.toString(territory.getArea())+"|Funds:"+Double.toString(office.getFunds().getFunds())+"|Loan:"+Double.toString(office.getDebt().getAmount())+"|Forts:"+Integer.toString(territory.getForts())+"|Temples:"+Integer.toString(territory.getTemples())+"|Cathedral:"+Integer.toString(territory.getCathedrals())+"|Abbeys:"+Integer.toString(territory.getAbbeys())+"|Priories:"+Integer.toString(territory.getPriories())+"|Scriptoriums:"+Integer.toString(territory.getScriptoriums())+"|Schools:"+Integer.toString(territory.getSchools())+"|Collegas:"+Integer.toString(territory.getCollegas())+"|Monuments:"+Integer.toString(territory.getMonuments())+"|Renown:"+Integer.toString(office.getRuler().getRenown())+"|Poverty: "+Float.toString(((Realm) territory).getPoverty())+"|Tax: "+Float.toString(office.tax));
-//		}
 		this.manageSuccession();
 	}
 
@@ -130,25 +100,14 @@ public class Office{
 			s = this.getLineage().getHeir();
 		} else {
 			try {
-				s = Basic.choice(House.getMagnates());		//elect
+				s = Basic.choice(House.getMagnates());		//Elect
 			} catch (RuntimeException e){
 				throw new RuntimeException();
 			}
 		}
 
 		inaugurate(s);
-
-	//	this.getLineage().determinePrimogenitureHeir();
-	//	this.getLineage().declareHeirStatus();
-
-/*		if(AgnaticCognaticPrimogeniture.callHeir(this.getKey(), this.getFounder().getPerson())){
-			inaugurate(Succession.heir);
-		} else{
-			Elective.callHeir();
-			inaugurate(Succession.heir);
-		}*/
 	}
-
 
 
 	public RegnalName addRegnalNames(RegnalName rn){
@@ -162,30 +121,6 @@ public class Office{
 			if (ter.getPoverty() <= this.tax){ ter.gainPoverty(0.01f); }
 			else{ ter.losePoverty(0.01f); }
 		}
-	/*	this.getRuler().loseRenown(1);
-		if (this.hasDebt()){
-			this.debt.handleInterest();
-		}
-		/*If interest takes more than 33% of the revenue, no actions can be done*/
-//		if( this.debt.getInterestPer() < 0.33){
-//			if (!this.gearingUp && !this.isAtWar()){
-//				this.ruler.getInterest().getRandom().getType().consider(this);
-//				this.funds.receivePayment(this.territory.getRevenue());
-//			}
-//			else{
-//				this.military.getFunds().receivePayment(this.territory.getRevenue());
-//				if (this.military.getFunds().canAffordCost(5000.0)){
-//					this.endGearingUp();
-//					InterestImperialism.startConquest(this);
-//				}
-//			}
-//			for(Project x: this.projects){					x.progress(this);			}
-//			Project.drain(this);
-//		}
-//		else{
-//			this.funds.receivePayment(this.territory.getRevenue());
-//			this.getDebt().pay();
-//		}
 	}
 
 

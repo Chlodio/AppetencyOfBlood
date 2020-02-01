@@ -16,31 +16,21 @@ public class Holder{
 	private Calendar end;
 	private Calendar start;
 	private Claim claim;
-	private Human consort;				//to delete? um, no?
+	private Human consort;
 	private Human person;
 	private Office office;
 	private Ruler ruler;
 	private String name;
 	private String notes;
 
-//	public static ArrayList<Holder> sovereigns = new ArrayList<>();
-//	public static Human sovereign;
-
 	public Holder(Human person, Office office){
 		this.person = 	person;
 		this.claim = 	new Claim();
 		if (office.getLineage().getPriority() < 3){
-			this.claim.setSpecial(0);
-			this.claim.setLineage(Lineage.getLineage());
-			this.claim.setLineal(Lineage.getLineal());
-	//		Lineage.clearLineage();
-			this.claim.setPredecessor(office.getLastHolder());
-			this.claim.setOffice(office);
-			this.claim.setHolder(person);
+			this.claim.combine(this, office);
 		} else {
 			this.claim.setSpecial(1);
 		}
-//		Lineage.clearLineage();
 
 		this.start = 	(Calendar) Basic.date.clone();
 		this.notes = 	"";
@@ -57,30 +47,14 @@ public class Holder{
 		if (c.isFemale()){
 			c.setTitle(Title.QUEENCONSORT);
 			c.sRename(Title.QUEENCONSORT);
-		} /*else {
-			c.title = Title.PRINCECONSORT;
-			c.sRename(Title.PRINCECONSORT);
-		}*/
+		}
 	}
 
 	public static Holder regnafy(Human person, Office office){
 		Holder holder = new Holder(person, office);
 		Territory territory = holder.getOffice().getTerritory();
-		//office.setHolder(holder);
-//		Holder.sovereign = person;
-//		Holder.sovereigns.add(holder);
 		holder.name = RegnalName.regnafy(holder, office);
 		System.out.println(holder.name);
-//		office.setRuler(new Ruler(person));
-//		holder.setRuler(office.getRuler());
-//		if (!holder.getPerson().isAdult()){
-//			holder.addNotes("Child ruler");
-//			holder.events.add(Event.E201);
-//			holder.appointRegent();
-//		} else{
-//			office.setRuler(new Ruler(person));
-//			holder.setRuler(office.getRuler());
-//		}
 		return holder;
 	}
 

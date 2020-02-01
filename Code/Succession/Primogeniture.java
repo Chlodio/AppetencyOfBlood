@@ -200,9 +200,6 @@ public class Primogeniture extends Succession {
 								return true;
 							}
 						} else if (!this.hasSecondaryHeir()) {
-							/*if (!x.isChildOf(lineageT[lineageI-2])){
-								throw new RuntimeException();
-							}*/
 							this.law.addTransmitter(x);
 						}
 					}

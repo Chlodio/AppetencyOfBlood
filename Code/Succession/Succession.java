@@ -9,10 +9,12 @@ public class Succession {
 	public static int lineageSecI;
 	public static Human[] lineageSecT;
 	public static boolean lineal;
+	private static int blood;
 
 	protected Human secondaryHeir;
 	protected Lineage lineage;
 	protected SucLaw law;
+
 
 	public Succession(Lineage l, SucLaw s){
 		this.lineage = l;
@@ -83,13 +85,43 @@ public class Succession {
 	public void setLineage(){
 		Lineage.lineageZ = new Human[lineageI];
 		System.arraycopy(lineageT, 0, Lineage.lineageZ, 0, lineageI);
-	//	return lineageZ;
+		this.determineBlood();
 	}
 
 	public void installSecondaryHeir(){
 		promoteLineage();
 		this.setHeir(this.getSecondaryHeir());
 		this.setPriority(2);
+		this.setBlood(1);
+	}
+
+	public void determineBlood(){
+
+		//If priority is 3 it means there is no lineage and the blood hardly matters
+		if (lineageI > 1){
+			int n = this.countNumOfWomen();
+			if (n == 0){
+				this.setBlood(0);			//Agnatic
+			} else if (n == 1){
+				this.setBlood(1);			//Patrilineal
+			} else {
+				this.setBlood(2);			//Cognatic
+			}
+		} else {
+			this.setBlood(0);
+		}
+	}
+
+	//Count the number of women in the lineage for the sake determining blood type
+	public int countNumOfWomen(){
+		int i = 0;
+		Human[] a = this.getLineage();
+		for(int x = 0; x < lineageI;x++){
+			if (a[x].isFemale()){
+				i++;
+			}
+		}
+		return i;
 	}
 
 	public void setPriority(int v){
@@ -108,33 +140,20 @@ public class Succession {
 		}
 	}
 
-	/*
- 	public static Human heir;
-	public static ArrayList<Human> lineage = new ArrayList<>();
-	protected static boolean coverture;
-	protected static Holder origin;
-	protected static Human ancestor;
-	protected static int blood;
-	protected static int special;
-	public static void inform(){
-		Claim.temp = new Claim();
-		Claim.temp.setBlood(blood);
-//		Claim.temp.setLineage((ArrayList) lineage.clone());
-		Claim.temp.setCoverture(coverture);
-		Claim.temp.setSpecial(special);
-		Claim.temp.setHolder(heir);
-		Claim.temp.setOrigin(origin);
-		lineage.clear();
+	public static void resetBlood(){
+		blood = 0;
 	}
 
-	public static void doMaintenance(){
-		Succession.heir = 	null;
-		lineage.clear();
-		blood = 			0;
-		ancestor = 			null;
-		Claim.temp = 		null;
-		coverture = 		false;
-		special = 			0;
-		origin =			null;
-	}*/
+	public static void setBlood(int i){
+		blood = i;
+	}
+
+	public static int getBlood(){
+		return blood;
+	}
+
+	public Human[] getLineage(){
+		return this.lineageT;
+	}
+
 }
