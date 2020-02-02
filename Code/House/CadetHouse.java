@@ -23,6 +23,7 @@ public class CadetHouse extends House {
 		this.addHead(head);
 		if (parent.isNoble()){
 			this.ennoble();
+			this.setOrigin(parent.getOrigin());
 		}
 
 		//Move the children into the new house

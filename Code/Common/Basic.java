@@ -130,8 +130,10 @@ public class Basic {
 		Writing.writeTable();
 		Writing.writeSummary();
 		Writing.writeDemography();
+		Writing.writeNobility();
 		System.out.println(Marriage.failedMarriageAttemp);
 		System.out.println("COMPLETED");
+		System.out.println(House.getNumOfNobles());
 
 	/*	List<Holder> xt =  Realm.getLineage(1);
 		for(Holder x: xt){

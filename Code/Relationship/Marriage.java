@@ -111,9 +111,10 @@ public class Marriage extends SexRelation{
 				if (groom.isNoble()){
 					//Morganatic marriage
 					if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
-						if (groom.hasBornMistress()){
+						if (groom.hasBornMistress() && groom.getHouse().isActive()){
 							marryFiancee(groom, groom.getRandomBornMistress());
 							groom.getSpouse().getHouse().ennoble();
+							groom.getSpouse().getHouse().setOrigin(4);			//Set morganatic origin
 							System.out.println("morganatic ennoblement");
 						}
 					} else if (Basic.randint(5) == 0){

@@ -34,6 +34,8 @@ public class MainHouse extends House {
 		this.generation =						0;
 		this.addHead(founder);
 		this.maleNames.add(founder.getName().getName());
+		this.kinsmen.add(founder);
+
 	}
 
 	@Override

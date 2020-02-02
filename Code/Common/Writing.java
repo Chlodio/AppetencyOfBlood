@@ -4,6 +4,7 @@ import Code.Politics.*;
 import Code.Relationship.*;
 import Code.Ancestry.*;
 import Code.Looks.*;
+import Code.House.House;
 import Code.Common.Basic;
 import Code.Common.HTML;
 import java.io.FileWriter;
@@ -15,6 +16,43 @@ import java.util.List;
 
 public class Writing {
 
+
+	public static void writeNobility(){
+		String td;									//Table cell
+		String t;									//Table
+		String s = HTML.getBeginning();
+		String[] th = {"Name", "CoA", "Founded", "Origin", "Men", "Women", "Head"};
+		t = HTML.createTableHeader(th);
+		List<House> l = House.getNobles();
+		for(House x: l){
+
+			//Further debugging is needed to hide few living dead houses, hide them for now
+			if (x.getKinsmenCount() == 0){
+				continue;
+			}
+
+			td = "";
+			td += HTML.getTd(x.getName());
+			td += HTML.getTd(x.getCoALink());
+			td += HTML.getTd(x.getFounding());
+			td += HTML.getTd(x.getOriginString());
+			td += HTML.getTd(""+x.getKinsmenCount());
+			td += HTML.getTd(""+x.getKinswomenCount());
+			td += HTML.getTd(x.getHead().getFormalName()+" ("+x.getHead().getAge()+")" );
+			t += HTML.getTr(td);
+		}
+
+		s += HTML.getTable(t);
+
+		s += HTML.getEnding();
+		try {
+			FileWriter writer = new FileWriter("Output/NobleHouses.html", false);
+			writer.write(s);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void writeMonarchList(){
 		String t = recordMonarchList();

@@ -128,6 +128,9 @@ public class Man extends Human {
 		Name.aSon(f, m, it);
 		it.addSon(f, m);
 		f.getHouse().addPrince(it);
+		if (!f.getHouse().getKinsmen().contains(it)){
+			throw new RuntimeException();
+		}
 		return it;
 	}
 
@@ -156,6 +159,7 @@ public class Man extends Human {
 			((Man) this).setCadetStatus(0);
 			this.name = 		new Name(true, this);
 			this.house = 		new MainHouse(this);
+			this.getHouse().setOrigin(3);			//Set posthumous origin
 			this.performPosthumousBirth(f, m);
 			this.addSon(f, m);
 			if (this.getHouse() == f.getHouse()){
@@ -163,7 +167,8 @@ public class Man extends Human {
 			}
 			//Ennoble the house if its a noble origin
 			if (f.getHouse().isNoble()){
-				this.house.ennoble();
+				this.getHouse().ennoble();
+
 			}
 
 		}
@@ -176,6 +181,7 @@ public class Man extends Human {
 		//Name.createMaleName(this);
 		this.setName(new Name(true, this));
 		this.house = 		new MainHouse(this, f.getName().getName());
+		this.getHouse().setOrigin(2);							//Set bastardy
 		((Man) this).name.setFull(((Man) this).makeName());
 		this.addSon(f, m);
 	}
@@ -241,12 +247,11 @@ public class Man extends Human {
 				this.getHouse().removePrince(this);
 			}
 			this.getMother().removeLivingSon();
-/*	 		else if(this.getHouse().isActive() && !this.hasSeniorPaternalRelative()){
-				System.out.println("splitting after death of "+this);
-				this.getHouse().branch(this);
-			}*/
 		}
+
 	}
+
+
 
 	//Does character have living male descendants?
 	public boolean hasAgnaticLine(){

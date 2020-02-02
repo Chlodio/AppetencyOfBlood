@@ -39,6 +39,17 @@ public class House {
 	protected List<Human> princes;				//Princes of the house, i.e living sons of the patriarch
 	protected List<String> femaleNames;				//Names used for women of the family
 	protected List<String> maleNames;				//Names used for men of the family
+	protected byte origin;
+
+	/*Origin with following inputs:
+		0 = mystic (unknown, should not be used)
+		1 = ancient, houses that predate the realm
+		2 = bastardy, originates as off shoot fo another house
+		3 = posthumous, orginates as of shoot of posthumous house
+		4 = morgnatic, become nobilitya via marriagge
+		5 = humble, raised from privacy to fill in the ranks
+	*/
+
 
 	protected int naming;							//Naming pattern, with following inputs:
 	/*	0		orderly
@@ -142,39 +153,55 @@ public class House {
 			4. 	from uncle to nephew
 			5. from cousin to cousin while uncle is alive
 		*/
-		Human heir = h;
-		if (Basic.isNotZero(this.getKinsmen().size())){
-			heir = this.getHeir();
-		}
 
-		if (heir != h){
-			if (heir.getHouse() == this){
-				this.head = heir;
-				this.addHead(this.head);
-				if (this.head.isAdult()){
-					if (this.head.isSonless() && this.head.isUnwed()){
-						Marriage.prepare(this.head);
-					}
+		if (this.hasFittingHeir()){
+		} else {
+			this.deactivate();
+			if (this.isNoble() && !this.isLegimate()){
+				this.returnToCirculation();
+			}
+			this.handleSuccession();
+		}
+	}
+
+//Check if the late family head has a successor in mind and pass the torch if there is one
+	private boolean hasFittingHeir(){
+		Human h;
+		if (Basic.isNotZero(this.getKinsmenCount())){
+			h = this.getHeir();
+			if (!h.hadFather()){
+				throw new RuntimeException();
+			}
+			if (!h.isAlive()){
+				throw new RuntimeException();
+			}
+			if (h.getHouse() == this){
+				if (h != this.getHead()){
+					this.passTheTorchTo(h);
+					return true;
 				}
-				if (this.head.hasTitle()){
-					this.head.rename(Title.LORD);
-					if (this.head.isMarried()){
-						Human s = this.head.getSpouse();
-						if (!s.hasTitle() || Title.LORD.getPrestige() >= s.getTitle().getPrestige()){
-							s.rename(Title.LADY);
-						}
-					}
-				}
-				return;
 			}
 		}
-		this.deactivate();
+		return false;
+	}
 
-		if (this.isNoble() && !this.isLegimate()){
-			this.returnToCirculation();
+	private void passTheTorchTo(Human h){
+		this.head = h;
+		this.addHead(this.head);
+		if (this.head.isAdult()){
+			if (this.head.isSonless() && this.head.isUnwed()){
+				Marriage.prepare(this.head);
+			}
 		}
-
-		this.handleSuccession();
+		if (this.head.hasTitle()){
+			this.head.rename(Title.LORD);
+			if (this.head.isMarried()){
+				Human s = this.head.getSpouse();
+				if (!s.hasTitle() || Title.LORD.getPrestige() >= s.getTitle().getPrestige()){
+					s.rename(Title.LADY);
+				}
+			}
+		}
 	}
 
 	//The main house died, does it have a cadet branch that could succeed it or it has it gone extinct?
@@ -335,7 +362,7 @@ public class House {
 		String newN;
 		do {
 			newN = Name.getRandomMaleName();
-		} while(this.isMNameUsed(newN) && this.getKinsmen().size() < 100);
+		} while(this.isMNameUsed(newN));
 		this.addMaleName(newN);
 		return newN;
 	}
@@ -344,7 +371,7 @@ public class House {
 		String newN;
 		do {
 			newN = Name.getRandomFemaleName();
-		} while(this.isFNameUsed(newN) && this.getKinswomen().size() < 100);
+		} while(this.isFNameUsed(newN));
 		this.addFemaleName(newN);
 		return newN;
 	}
@@ -641,7 +668,7 @@ public class House {
 		highbornNamesN.add(this.nameNum);
 	}
 
-	//each noble house name must be unique, each number corresponds to a house name, so there is a list integers being used
+	//Each noble house name must be unique, each number corresponds to a house name, so there is a list integers being used
 	public static void numberNobleHouses(){
 		for(int x = 0; x < highbornNames.length; x++){
 			highbornNamesN.add(x);
@@ -662,6 +689,7 @@ public class House {
 	public static void ennobleFirst(int i){
 		for(int x = 0; x < i; x++){
 			list.get(x).ennoble();
+			list.get(x).setOrigin(1);			//Set to be ancient
 		}
 	}
 
@@ -671,6 +699,7 @@ public class House {
 		this.coa = oldHouse.getCoA();
 		this.nameNum = oldHouse.getNameNum();
 		this.name = oldHouse.getName();
+		this.origin = oldHouse.getOrigin();
 		this.addToNobles();
 		Human.updateNamesOf(this.getMembers());
 	}
@@ -697,18 +726,22 @@ public class House {
 
 	public boolean isNoble(){						return this.isNoble;		}
 	public static List<House> getNobles(){			return new ArrayList<>(nobles);		}
-	public int getNumOfNobles(){					return nobles.size();				}
+	public static int getNumOfNobles(){				return nobles.size();				}
 	private void removeFromNobles(){				nobles.remove(this);				}
 
 	private static void raiseNewNoble(){
 		House h = getRandomPeasant();
 		h.ennoble();
+		h.setOrigin(5);
 	}
 
 	//Used every time a branch dies
 	public void removeFromCaste(){
 		if (this.isNoble()){
 			this.removeFromNobles();
+			if (this.getNobles().contains(this)){
+				throw new RuntimeException();
+			}
 			//There must always be nobles
 			if (!hasPlentyOfNobles()){
 				raiseNewNoble();
@@ -754,22 +787,72 @@ public class House {
 	public boolean isActive(){				return this.isActive;		}
 
 
+
+//Origin
+
+	public void setOrigin(int i){
+		this.origin = (byte) i;
+	}
+
+	public byte getOrigin(){
+		return this.origin;
+	}
+
+	public String getOriginString(){
+		return originS[this.getOrigin()];
+	}
+
+	private final String[] originS = {"Mystical", "Ancient", "Bastardy", "Posthumous", "Morganatic", "Humble"};
+
+
 //Memberships
+
+		public List<Human> getMembers(){
+			List<Human> l = this.getKinsmen();
+			l.addAll(this.getKinswomen());
+			return l;
+		}
+
+//Kinsmen
+
+
+	public void addKinsman(Human h){
+		this.kinsmen.add(h);
+		if (h.isPosthumous() && !h.isHouseHead() ){
+			throw new RuntimeException();
+		}
+		if (!h.isLegimate() && !h.isHouseHead() ){
+			throw new RuntimeException();
+		}
+	}
+
+	public void removeKinsman(Human h){
+		this.kinsmen.remove(h);
+	}
 
 	public List<Human> getKinsmen(){
 		return new ArrayList<>(this.kinsmen);
 	}
 
+
+	public int getKinsmenCount(){
+		return this.kinsmen.size();
+	}
+
+
+//Kinswomen
+
+	public void addKinswoman(Human h){				this.kinswomen.add(h);		}
+
+	public void removeKinswoman(Human h){			this.kinswomen.remove(h);	}
+
 	public List<Human> getKinswomen(){
 		return new ArrayList<>(this.kinswomen);
 	}
 
-	public List<Human> getMembers(){
-		List<Human> l = this.getKinsmen();
-		l.addAll(this.getKinswomen());
-		return l;
+	public int getKinswomenCount(){
+		return this.kinswomen.size();
 	}
-
 
 
 //Micro methods
@@ -800,22 +883,11 @@ public class House {
 	}
 
 
-	public void addKinsman(Human h){
-		this.kinsmen.add(h);
-		if (h.isPosthumous() && !h.isHouseHead() ){
-			throw new RuntimeException();
-		}
-		if (!h.isLegimate() && !h.isHouseHead() ){
-			throw new RuntimeException();
-		}
-	}
-	public void addKinswoman(Human h){				this.kinswomen.add(h);		}
+
 	public void addMaleName(String n){				this.maleNames.add(n);		}
 	public void addFemaleName(String n){			this.femaleNames.add(n);	}
 	public void addPrestige(int v){					this.prestige += v;			}
 	public void gainPrestige(){						this.prestige++;			}
-	public void removeKinsman(Human h){				this.kinsmen.remove(h);		}
-	public void removeKinswoman(Human h){			this.kinswomen.remove(h);	}
 	public void setRanking(int r){					this.ranking = r;			}
 	public List<Human> getHeads(){					return new ArrayList<>(this.heads);		}
 	public boolean isLegimate(){					return this.legimate;		}
