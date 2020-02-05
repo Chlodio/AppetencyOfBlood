@@ -32,9 +32,9 @@ public class MainHouse extends House {
         this.founder = 							founder;
 		this.patriarch =						this.head;
 		this.generation =						0;
-		this.addHead(founder);
+	//	this.addHead(founder);
 		this.maleNames.add(founder.getName().getName());
-		this.kinsmen.add(founder);
+		this.addKinsman(founder);
 
 	}
 

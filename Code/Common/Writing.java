@@ -27,9 +27,6 @@ public class Writing {
 		for(House x: l){
 
 			//Further debugging is needed to hide few living dead houses, hide them for now
-			if (x.getKinsmenCount() == 0){
-				continue;
-			}
 
 			td = "";
 			td += HTML.getTd(x.getName());
@@ -42,6 +39,14 @@ public class Writing {
 			t += HTML.getTr(td);
 		}
 
+		//Final row for the total
+		td = HTML.getTh("TOTAL");
+		td += HTML.getThCoSpan("N/A", 3);				//Fill in the empty N&A
+		td += HTML.getTh(""+House.getNoblemenCount());	//Number of noblemen total
+		td += HTML.getTh(""+House.getNoblewomenCount());//Number of noblewomen total
+		td += HTML.getTh();								//Get empty
+
+		t += HTML.getTr(td);
 		s += HTML.getTable(t);
 
 		s += HTML.getEnding();

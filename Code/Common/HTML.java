@@ -23,6 +23,17 @@ public class HTML {
 		return "<th>"+s+"</th>";
 	}
 
+	//Get empty row
+	public static String getTh(){
+		return "<th></th>";
+	}
+
+	//Get th with colspan
+	public static String getThCoSpan(String s, int i){
+		return "<th colspan='"+i+"'>"+s+"</th>";
+	}
+
+	//Get td with a class assignment
 	public static String getTdClass(String s, String n){
 		return "<td class='"+n+"'>"+s+"</td>";
 	}

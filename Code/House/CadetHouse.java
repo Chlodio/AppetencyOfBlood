@@ -3,12 +3,13 @@ import Code.Human.Human;
 import Code.Common.Basic;
 import java.util.List;
 import java.util.ArrayList;
+import Code.Ancestry.Consanguinity;
 
 public class CadetHouse extends House {
 	protected String parentName;
 
 	public CadetHouse(House parent, Human head, Human founder){
-		super(head);
+		super(founder);
 		this.prestige = 			parent.getPrestige();
 		this.maleNames = 			new ArrayList<>(parent.getMaleNames());
 		this.femaleNames = 			new ArrayList<>(parent.getFemaleNames());
@@ -19,7 +20,6 @@ public class CadetHouse extends House {
 		this.parentName =			parent.getName();
 		this.setPatriarch(founder);
 		parent.branches.add(this);
-		this.addHead(founder);
 		this.addHead(head);
 		if (parent.isNoble()){
 			this.ennoble();
@@ -27,14 +27,33 @@ public class CadetHouse extends House {
 		}
 
 		//Move the children into the new house
+
+		if (!head.isAlive()){
+			throw new RuntimeException();
+		}
+
 		List<Human> l = founder.getLegitNonPosthumousSons();
 		l.addAll(founder.getLegitDaughters());
 		for (Human x: l){
 			x.switchHouse(this);
 		}
 
-		if (this.heads.get(0) == this.heads.get(1)){
-			throw new RuntimeException();
+		if (founder.hasLegitSon()){
+			this.setPatriarch(founder);
+		} else if ((head.getFather() == founder)){
+			if (!this.hasLivingPrince()){
+				throw new RuntimeException();
+			}
+		}
+		else {
+			if (!this.hasLivingPrince()){
+				System.out.println(this.getPatriarch().getLegitNonPosthumousSons().size());
+				this.resetPrinces();
+				this.branch();
+				if (!this.hasLivingPrince()){
+					throw new RuntimeException();
+				}
+			}
 		}
 	}
 

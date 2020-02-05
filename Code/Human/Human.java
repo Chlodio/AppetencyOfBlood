@@ -125,7 +125,7 @@ public class Human {
 	}
 
 	public void performPosthumousBirth(Human f, Human m){
-		Basic.print(m.getFullName()+" gave posthumous birth to "+f.getFullName());
+		Basic.print(m.getFullName()+" gave posthumous birth to son of "+f.getFullName());
 
 	}
 
@@ -280,7 +280,7 @@ public class Human {
 				x.switchHouse(h);
 			}
 		}
-		this.house = h;
+		this.setHouse(h);
 	}
 
 
@@ -428,7 +428,6 @@ public class Human {
 		} else{
 			if (union.getDoe().isMarried()){
 				c = this.deliverLegimate(union.getDoe().getLatestMarriage());
-				System.out.println(c.getFullName()+" was actually a bastard");
 				if (!(union.getDoe().getSpouse()).isFatherOf(c) ){
 					throw new RuntimeException();
 
@@ -684,12 +683,12 @@ public class Human {
 		return this.rela.getLegitLivingSons();
 	}
 
-	public boolean hasBornMistress(){
-		return this.rela.hasBornMistress();
+	public boolean hasMistress(){
+		return this.rela.hasMistress();
 	}
 
-	public Human getRandomBornMistress(){
-		return this.rela.getRandomBornMistress();
+	public Human getRandomMistress(){
+		return this.rela.getRandomMistress();
 	}
 
 
@@ -704,6 +703,16 @@ public class Human {
 	//Living version of the previous
 	public boolean hadLegitNonPosthumousSon(){
 		return this.rela.hadLegitNonPosthumousSon();
+	}
+
+	//Check chara is the head of a house
+	public boolean isHouseHead(){
+		if (this.hadFather()){
+			if (this.getHouse() != null && this.getHouse().getHeads().contains(this) ){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	//Shortcuts
@@ -756,6 +765,7 @@ public class Human {
 	public boolean isIntimateWith(Human i){		return this.rela.isIntimateWith(i); 			}
 	public boolean isLoverOf(Human h){			return this.rela.isLoverOf(h);					}
 	public boolean isMarried(){ 				return this.rela.isMarried();					}
+	public boolean isPatDescendantOf(Human h){	return this.rela.isPatDescendantOf(h);			}
 	public boolean isMarriedTo(Human s){ 		return this.rela.isMarriedTo(s);				}
 	public boolean isNephewOf(Human h){			return this.rela.isNephewOf(h); 				}
 	public boolean isPaternalNephewOf(Human h){	return this.rela.isPaternalNephewOf(h); 		}
@@ -947,7 +957,6 @@ public class Human {
 	public void addEvent(Event e){				this.events.add(e);				}
 	public void removeEvent(Event e){			this.events.remove(e);			}
 	public boolean isWidowed(){					return this.wasMarried() && this.isUnwed();	}
-	public boolean isHouseHead(){				return this.getHouse().getHeads().contains(this); }
 
 	public String getCoALink(){
 		Human h;

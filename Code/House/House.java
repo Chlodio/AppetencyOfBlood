@@ -73,9 +73,10 @@ public class House {
 	public void handles(Human head){
         id++;
 		this.activate();
+		head.setHouse(this);					//House of the house founders need to be assigned here
 		this.founding = 						(Calendar) Basic.date.clone();
-		this.head = 							head;
 		this.heads = 							new ArrayList<>();
+		this.addHead(head);
 		this.nameHouseLowborn();
 		this.kinsmen = 							new ArrayList<>();
 		this.kinswomen = 						new ArrayList<>();
@@ -186,8 +187,7 @@ public class House {
 	}
 
 	private void passTheTorchTo(Human h){
-		this.head = h;
-		this.addHead(this.head);
+		this.addHead(h);
 		if (this.head.isAdult()){
 			if (this.head.isSonless() && this.head.isUnwed()){
 				Marriage.prepare(this.head);
@@ -242,9 +242,9 @@ public class House {
 			}
 		} catch (NullPointerException e){
 			List<Human> l = this.getHeads();
-			if (l.get(0) == l.get(1)){
+		/*	if (l.get(0) == l.get(1)){
 				throw new RuntimeException();
-			}
+			}*/
 			System.out.println("NAME\tIS POSTHUMOUS\tIS FOUNDER\tTENURE");
 			for(Human x: l){
 				System.out.print(x.getBirthName());
@@ -255,23 +255,26 @@ public class House {
 			throw new RuntimeException();
 		}
 
-		return this.getPatriarch().getSons().indexOf(h);
+		return this.getPatriarch().getLegitNonPosthumousSons().indexOf(h);
 	}
 
 	//Cadet branch is formed, if cadet has living sons, his father is dead)
 	public void branch(){
 		int num = 			this.getSeniorBranchNum();
-		List<Human> sons = 	this.getPatriarch().getSons();
+		List<Human> sons = 	this.getPatriarch().getLegitNonPosthumousSons();
 		int sonN =			sons.size();
 		List<Human> list =	new ArrayList<>();
 		CadetHouse nHouse;
 		Human head;
+
+		Human og = this.getPatriarch();
 		this.setPatriarch(sons.get(num));
 		for(int x = num+1; x < sonN; x++){
 			if ( ((Man) sons.get(x)).hasAgnaticLine()){
 				list.add(sons.get(x));
 			}
 		}
+
 
 		for(Human x: list){
 			head = ((Man) x).getAgnaticHeir();
@@ -637,6 +640,15 @@ public class House {
 		}
 	}
 
+	public boolean hasLivingPrince(){
+		List<Human> l = this.getPrinces();
+		return Human.hasLiving(l);
+	}
+
+	public List<Human> getPrinces(){
+		return new ArrayList<>(this.princes);
+	}
+
 	//Naturally when the Patriarch changes so do the princes
 	public void setPatriarch(Human p){
 		this.patriarch = p;
@@ -646,10 +658,14 @@ public class House {
 	}
 
 	public void makePrinces(){
-		List<Human> l = this.getPatriarch().getLivingSons();
+		List<Human> l = this.getPatriarch().getLegitNonPosthumousSons();
 		for(Human x: l ){
 			this.addPrince(x);
 		}
+	}
+
+	public void resetPrinces(){
+		this.princes.clear();
 	}
 
 	public static int fetchName(){
@@ -713,6 +729,9 @@ public class House {
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
 		this.addToNobles();
 		Human.updateNamesOf(this.getMembers());			//Updates the name of new nobility
+		if (!this.getHead().isAlive()){
+			throw new RuntimeException();
+		}
 	}
 
 	public void addToNobles(){
@@ -725,14 +744,35 @@ public class House {
 	}
 
 	public boolean isNoble(){						return this.isNoble;		}
+
 	public static List<House> getNobles(){			return new ArrayList<>(nobles);		}
+
 	public static int getNumOfNobles(){				return nobles.size();				}
+
 	private void removeFromNobles(){				nobles.remove(this);				}
 
 	private static void raiseNewNoble(){
 		House h = getRandomPeasant();
 		h.ennoble();
 		h.setOrigin(5);
+	}
+
+	//Count living noblemen
+	public static int getNoblemenCount(){
+		int c = 0;							//(c)ount
+		for(House x: getNobles()){
+			c += x.getKinsmenCount();
+		}
+		return c;
+	}
+
+	//Count living noblewomen
+	public static int getNoblewomenCount(){
+		int c = 0;							//(c)ount
+		for(House x: getNobles()){
+			c += x.getKinswomenCount();
+		}
+		return c;
 	}
 
 	//Used every time a branch dies
@@ -817,6 +857,10 @@ public class House {
 
 
 	public void addKinsman(Human h){
+		if (this.kinsmen.contains(h)){
+			throw new RuntimeException();
+		}
+
 		this.kinsmen.add(h);
 		if (h.isPosthumous() && !h.isHouseHead() ){
 			throw new RuntimeException();
@@ -828,6 +872,9 @@ public class House {
 
 	public void removeKinsman(Human h){
 		this.kinsmen.remove(h);
+		if (this.kinsmen.contains(h)){
+			throw new RuntimeException();
+		}
 	}
 
 	public List<Human> getKinsmen(){
@@ -875,11 +922,13 @@ public class House {
 	public String getFullName(){					return this.getName();		}
 	public String getParentName(){					return this.getParent().getName();		}
 	public int getNameNum(){						return this.nameNum;		}
+
 	public void addHead(Human h){
-		if (this.heads.contains(h)){
+		this.heads.add(h);
+		this.head = h;
+		if (this != h.getHouse() && (h.getHouse().getParent() == h.getHouse())){
 			throw new RuntimeException();
 		}
-		this.heads.add(h);
 	}
 
 

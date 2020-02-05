@@ -111,12 +111,7 @@ public class Marriage extends SexRelation{
 				if (groom.isNoble()){
 					//Morganatic marriage
 					if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
-						if (groom.hasBornMistress() && groom.getHouse().isActive()){
-							marryFiancee(groom, groom.getRandomBornMistress());
-							groom.getSpouse().getHouse().ennoble();
-							groom.getSpouse().getHouse().setOrigin(4);			//Set morganatic origin
-							System.out.println("morganatic ennoblement");
-						}
+						marryMistress(groom);
 					} else if (Basic.randint(5) == 0){
 						Affair.begin(groom);
 					}
@@ -124,6 +119,22 @@ public class Marriage extends SexRelation{
 				}
 			}
 		}
+	}
+
+	//When a noble decides to marry a peasant or a mistress who likely is a peasant,
+	private static void marryMistress(Human g){
+		Human b = g.getRandomMistress();					//Bride who marries the (g)room
+
+		if (b.hadFather()){
+			if (b.getHouse().isActive()){
+				if (!b.getHouse().isNoble()){						//Just to be safe
+					b.getHouse().ennoble();
+					b.getHouse().setOrigin(4);						//Set morganatic origin
+					System.out.println("morganatic ennoblement");
+				}
+			}
+		}
+		marryFiancee(g, b);
 	}
 
 	public static boolean hasCousinMatch(Human groom){

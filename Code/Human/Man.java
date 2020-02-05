@@ -21,7 +21,7 @@ public class Man extends Human {
 		super(age);
 		setUp();
 		this.name = 		new Name(true, this);
-		this.house = 		new MainHouse(this);
+		new MainHouse(this);
 		this.name.setFull(this.makeName());
 		this.cadetStatus = 0;
 		this.becomeSingle();
@@ -123,7 +123,7 @@ public class Man extends Human {
 		Man.children.add(it);
 		it.setParents(f, m);
 		it.cadency = f.getNumOfLivingSons();
-		it.house = f.house;
+		it.setHouse(f.house);
 		it.addToHouse();
 		Name.aSon(f, m, it);
 		it.addSon(f, m);
@@ -140,11 +140,11 @@ public class Man extends Human {
 		return it;
 	}
 
+	//Part of regulart birth chain, not to be confused posthumous birth that includes them
 	public void handlePostBirth(Human f, Human m){
 		this.setParents(f, m);
-		//false && !this.isPosthumous() || this.hasBrother()
 		if (!this.isPosthumous()){
-			this.house = f.house;
+			this.setHouse(f.house);
 			this.addToHouse();
 			this.nameChild();
 			this.addSon(f, m);
@@ -158,9 +158,8 @@ public class Man extends Human {
 			this.cadency = 0;
 			((Man) this).setCadetStatus(0);
 			this.name = 		new Name(true, this);
-			this.house = 		new MainHouse(this);
+			new MainHouse(this);
 			this.getHouse().setOrigin(3);			//Set posthumous origin
-			this.performPosthumousBirth(f, m);
 			this.addSon(f, m);
 			if (this.getHouse() == f.getHouse()){
 				throw new RuntimeException();
@@ -168,9 +167,12 @@ public class Man extends Human {
 			//Ennoble the house if its a noble origin
 			if (f.getHouse().isNoble()){
 				this.getHouse().ennoble();
-
 			}
 
+			if (this.getHouse().getHead() != this && !this.getHouse().getKinsmen().contains(this)){
+				throw new RuntimeException();
+			}
+			this.performPosthumousBirth(f, m);
 		}
 	}
 
@@ -178,9 +180,8 @@ public class Man extends Human {
 		this.setParents(f, m);
 		this.cadency = 0;
 		((Man) this).setCadetStatus(0);
-		//Name.createMaleName(this);
 		this.setName(new Name(true, this));
-		this.house = 		new MainHouse(this, f.getName().getName());
+		new MainHouse(this, f.getName().getName());
 		this.getHouse().setOrigin(2);							//Set bastardy
 		((Man) this).name.setFull(((Man) this).makeName());
 		this.addSon(f, m);
@@ -248,7 +249,6 @@ public class Man extends Human {
 			}
 			this.getMother().removeLivingSon();
 		}
-
 	}
 
 

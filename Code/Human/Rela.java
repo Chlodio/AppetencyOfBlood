@@ -570,7 +570,7 @@ public class Rela{
 
 
 	//See if there a lover has a father, used for morganatic marriages
-	public boolean hasBornMistress(){
+	public boolean hasMistress(){
 		List<Affair> l = this.getAffairs();
 		for(Affair x: l){
 			if (x.getBelle().hadFather()){
@@ -580,14 +580,12 @@ public class Rela{
 		return false;
 	}
 
-	public Human getRandomBornMistress(){
+	public Human getRandomMistress(){
 		List<Affair> l = this.getAffairs();
-		List<Human> ll = new ArrayList<>(l.size());		//Born-mistressed will be stored here
+		List<Human> ll = new ArrayList<>(l.size());		// will be stored here
 
 		for(Affair x: l){
-			if (x.getBelle().hadFather()){
-				ll.add(x.getBelle());
-			}
+			ll.add(x.getBelle());
 		}
 		return Basic.choice(ll);						//Pick random amongst the filtered
 	}
@@ -1019,6 +1017,17 @@ public List<Human> getMaterterai(){
 		return 0;
 	}
 
+	//Check if character descends from the character (pat)ernally
+	public boolean isPatDescendantOf(Human h){
+		if (this.isSonOf(h)){
+			return true;
+		} else if (this.hadFather()){
+			if (this.getFather().isPatDescendantOf(h)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private Human getOwner(){
 		return this.o;
