@@ -16,7 +16,7 @@ public class Rela{
 	protected List<Human> daughters;
 	protected List<Human> sons;
 	protected List<Human> legitSons;		//Will be included as a part of sons
-	protected List<Human> legitDaughters;//Will be included as a part of sons
+	protected List<Human> legitDaughters;	//Will be included as a part of daughters
 	protected List<Human> children;
 	protected List<Human> realChildren;		//Sons+daughters are legal children, but not always real
 	protected List<Marriage> marriages;
@@ -138,7 +138,15 @@ public class Rela{
 
 	public List<Human> getLegitNonPosthumousSons(){
 		List<Human> l = this.getLegitSons();
-		return Human.getNonPosthumous(l);
+		List<Human> l2 = Human.getNonPosthumous(l);
+		return l2;
+	}
+
+	//Living version of the previous
+	public List<Human> getLegitNonPosthumousLivingSons(){
+		List<Human> l = this.getLegitLivingSons();
+		l = Human.getNonPosthumous(l);
+		return l;
 	}
 
 	public boolean isSonless(){
@@ -1019,7 +1027,7 @@ public List<Human> getMaterterai(){
 
 	//Check if character descends from the character (pat)ernally
 	public boolean isPatDescendantOf(Human h){
-		if (this.isSonOf(h)){
+		if (this.isChildOf(h)){
 			return true;
 		} else if (this.hadFather()){
 			if (this.getFather().isPatDescendantOf(h)){

@@ -25,9 +25,6 @@ public class Writing {
 		t = HTML.createTableHeader(th);
 		List<House> l = House.getNobles();
 		for(House x: l){
-
-			//Further debugging is needed to hide few living dead houses, hide them for now
-
 			td = "";
 			td += HTML.getTd(x.getName());
 			td += HTML.getTd(x.getCoALink());

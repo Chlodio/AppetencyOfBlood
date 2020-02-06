@@ -280,6 +280,11 @@ public class Human {
 				x.switchHouse(h);
 			}
 		}
+
+		if (!this.isPatDescendantOf(h.getPatriarch() ) ){
+			throw new RuntimeException();
+		}
+
 		this.setHouse(h);
 	}
 
@@ -369,6 +374,9 @@ public class Human {
 		}
 		it.addRealChild(f, this);
 		it.addChild(f, this);
+	/*	if (it.isMale() && !f.getHouse().getPrinces().contains(it)){
+			throw new RuntimeException();
+		}*/
 	}
 
 	public Human deliverBasic(SexRelation union){
@@ -402,9 +410,9 @@ public class Human {
 			it.setFullName(it.makeName());
 		}
 		Basic.print(this.getFullName()+" gave birth to "+it.getFullName());
-
 		return it;
 	}
+
 
 	public Human deliverIllegimate(SexRelation sx){
 		Human it = this.deliverBasic(sx);
@@ -439,11 +447,9 @@ public class Human {
 		}
 		c.addChild(c.getFather(), this);
 		c.addRealChild(union.getStag(), this);
-
-		if(c.isMale() && c.isPosthumous() && c.getHouse() == c.getFather().getHouse()){
+		if (c.isMale() && !c.isPosthumous() && c.isLegimate() && !c.getHouse().patriarchIsSuited()){
 			throw new RuntimeException();
 		}
-
 
 
 	}
@@ -691,10 +697,17 @@ public class Human {
 		return this.rela.getRandomMistress();
 	}
 
-
+	//Get the living and the dead
 	public List<Human> getLegitNonPosthumousSons(){
 		return this.rela.getLegitNonPosthumousSons();
 	}
+
+	//Living exclusive version of previous
+	public List<Human> getLegitNonPosthumousLivingSons(){
+		return this.rela.getLegitNonPosthumousLivingSons();
+	}
+
+
 
 	public boolean hasLegitNonPosthumousSon(){
 		return this.rela.hasLegitNonPosthumousSon();
@@ -707,10 +720,8 @@ public class Human {
 
 	//Check chara is the head of a house
 	public boolean isHouseHead(){
-		if (this.hadFather()){
-			if (this.getHouse() != null && this.getHouse().getHeads().contains(this) ){
-				return true;
-			}
+		if (this.getHouse() != null && this.getHouse().getHeads().contains(this) ){
+			return true;
 		}
 		return false;
 	}

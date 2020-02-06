@@ -22,8 +22,7 @@ public class CadetHouse extends House {
 		parent.branches.add(this);
 		this.addHead(head);
 		if (parent.isNoble()){
-			this.ennoble();
-			this.setOrigin(parent.getOrigin());
+			this.ennoble(parent.getOrigin());
 		}
 
 		//Move the children into the new house
@@ -39,7 +38,6 @@ public class CadetHouse extends House {
 		}
 
 		if (founder.hasLegitSon()){
-			this.setPatriarch(founder);
 		} else if ((head.getFather() == founder)){
 			if (!this.hasLivingPrince()){
 				throw new RuntimeException();
@@ -54,6 +52,14 @@ public class CadetHouse extends House {
 					throw new RuntimeException();
 				}
 			}
+		}
+
+		if (!this.workingMembers(this.getPatriarch())){
+			throw new RuntimeException();
+		}
+
+		if (!this.patriarchIsSuited()){
+			throw new RuntimeException();
 		}
 	}
 

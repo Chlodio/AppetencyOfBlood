@@ -128,8 +128,7 @@ public class Marriage extends SexRelation{
 		if (b.hadFather()){
 			if (b.getHouse().isActive()){
 				if (!b.getHouse().isNoble()){						//Just to be safe
-					b.getHouse().ennoble();
-					b.getHouse().setOrigin(4);						//Set morganatic origin
+					b.getHouse().ennoble(4);						//Origin being morganatic origin
 					System.out.println("morganatic ennoblement");
 				}
 			}

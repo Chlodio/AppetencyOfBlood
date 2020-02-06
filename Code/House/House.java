@@ -267,7 +267,6 @@ public class House {
 		CadetHouse nHouse;
 		Human head;
 
-		Human og = this.getPatriarch();
 		this.setPatriarch(sons.get(num));
 		for(int x = num+1; x < sonN; x++){
 			if ( ((Man) sons.get(x)).hasAgnaticLine()){
@@ -279,6 +278,11 @@ public class House {
 		for(Human x: list){
 			head = ((Man) x).getAgnaticHeir();
 			nHouse = new CadetHouse(this, head, x);
+		}
+
+		//See if patriarch is in the right postion, if not, do branching again, a progress which will find and appoint a new patriarch
+		if (!this.patriarchIsSuited()){
+			branch();
 		}
 
 	}
@@ -626,13 +630,28 @@ public class House {
 //House prince methods
 
 	public void addPrince(Human h){
+		if (!h.isAlive()){
+			throw new RuntimeException();
+		}
+		if (((Man) h).isHousePrince()){
+			throw new RuntimeException();
+		}
+		if (this.princes.contains(h)){
+			throw new RuntimeException();
+		}
 		this.princes.add(h);
 		((Man) h).makeHousePrince();
+		if (!h.isSonOf(this.getPatriarch())){
+			throw new RuntimeException();
+		}
 	}
 
 	/*House prince is removed from the house, if there are no further princes, and the house has head, began house split*/
 	public void removePrince(Human h){
 		this.princes.remove(h);
+		if (this.princes.contains(h)){
+			throw new RuntimeException();
+		}
 		if (!this.hasPrinces() && !this.hasPatriarchHead()){
 			if (this.isActive()){
 				this.branch();
@@ -651,14 +670,19 @@ public class House {
 
 	//Naturally when the Patriarch changes so do the princes
 	public void setPatriarch(Human p){
+		if (p == this.getPatriarch()){
+			throw new RuntimeException();
+		}
 		this.patriarch = p;
+
 		if (p.isAdult()){
 			this.makePrinces();
 		}
+
 	}
 
 	public void makePrinces(){
-		List<Human> l = this.getPatriarch().getLegitNonPosthumousSons();
+		List<Human> l = this.getPatriarch().getLegitNonPosthumousLivingSons();
 		for(Human x: l ){
 			this.addPrince(x);
 		}
@@ -704,8 +728,7 @@ public class House {
 
 	public static void ennobleFirst(int i){
 		for(int x = 0; x < i; x++){
-			list.get(x).ennoble();
-			list.get(x).setOrigin(1);			//Set to be ancient
+			list.get(x).ennoble(1);					//Argument for origin being 1 for ancient
 		}
 	}
 
@@ -721,10 +744,12 @@ public class House {
 	}
 
 	//A new family is promoted from privacy to nobility
-	public void ennoble(){
+	//O is the origin
+	public void ennoble(int o){
 		this.nameHouseHighborn();
 		this.isNoble = true;
 		this.coa = 1+Basic.randint(100);
+		this.setOrigin(o);
 
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
 		this.addToNobles();
@@ -753,8 +778,7 @@ public class House {
 
 	private static void raiseNewNoble(){
 		House h = getRandomPeasant();
-		h.ennoble();
-		h.setOrigin(5);
+		h.ennoble(5);
 	}
 
 	//Count living noblemen
@@ -901,6 +925,35 @@ public class House {
 		return this.kinswomen.size();
 	}
 
+	//Patriarch should almost always be dead and have living sons, but with some exceptions he is alive
+	public boolean patriarchIsSuited(){
+		Human p = this.getPatriarch();
+		if (p.isAlive() || (p.isAdult() && p.hasLegitNonPosthumousSon()) ) {
+			return true;
+		} else{
+			return false;
+		}
+	}
+
+	public boolean workingMembers(Human p){
+		List<Human> l = this.getKinsmen();
+		for(Human x: l){
+			if (!x.isPatDescendantOf(p)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public Human getWorkingMember(Human p){
+		List<Human> l = this.getMembers();
+		for(Human x: l){
+			if (!x.isPatDescendantOf(p)){
+				return x;
+			}
+		}
+		return null;
+	}
 
 //Micro methods
 

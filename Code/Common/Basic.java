@@ -131,15 +131,8 @@ public class Basic {
 		Writing.writeSummary();
 		Writing.writeDemography();
 		Writing.writeNobility();
-		System.out.println(Marriage.failedMarriageAttemp);
-		System.out.println("COMPLETED");
-		System.out.println(House.getNumOfNobles());
-
-	/*	List<Holder> xt =  Realm.getLineage(1);
-		for(Holder x: xt){
-			System.out.println(x.getPerson().getFullName());
-		}*/
-
+	//	System.out.println(Marriage.failedMarriageAttemp);
+		System.out.println("SIMULATION COMPLETED");
 	}
 
 	public static String sDate(){ 					return format1.format(date.getTime()); }
@@ -209,7 +202,7 @@ public class Basic {
 
 	public static String getOrdial(int i){
 		i++;
-        if (i > 11 && i < 20){
+        if (i > 10 && i < 20){
             return i+"th";
         } else{
             int l = getLastDigit(i);
@@ -236,10 +229,29 @@ public class Basic {
 		if (n1 >=  n2){ return n1; }
 		else{ return n2; }
 	}
+
+	public static boolean containsDuplicates(List<Human> l){
+		boolean n;
+		for(Human x:l){
+			n = false;
+			for(Human y:l){
+				if (x == y){
+					if (!n){
+						n = true;
+					} else{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public static double min(double n1, double n2){
 		if (n1 <=  n2){ return n1; }
 		else{ return n2; }
 	}
+
 	public static float max(float n1, float n2){
 		if (n1 >=  n2){ return n1; }
 		else{ return n2; }

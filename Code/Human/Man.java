@@ -127,7 +127,9 @@ public class Man extends Human {
 		it.addToHouse();
 		Name.aSon(f, m, it);
 		it.addSon(f, m);
-		f.getHouse().addPrince(it);
+		if (!f.hadFather()){
+			f.getHouse().addPrince(it);
+		}
 		if (!f.getHouse().getKinsmen().contains(it)){
 			throw new RuntimeException();
 		}
@@ -166,7 +168,7 @@ public class Man extends Human {
 			}
 			//Ennoble the house if its a noble origin
 			if (f.getHouse().isNoble()){
-				this.getHouse().ennoble();
+				this.getHouse().ennoble(3);
 			}
 
 			if (this.getHouse().getHead() != this && !this.getHouse().getKinsmen().contains(this)){
@@ -248,6 +250,9 @@ public class Man extends Human {
 				this.getHouse().removePrince(this);
 			}
 			this.getMother().removeLivingSon();
+			if (this.getHouse().isActive() && !this.getHouse().patriarchIsSuited()){
+				throw new RuntimeException();
+			}
 		}
 	}
 
@@ -413,7 +418,10 @@ public class Man extends Human {
 
 	public void makeHousePrince(){							this.cadetStatus = 1;			}
 	public int getCadetStatus(){							return this.cadetStatus;		}
-	public boolean isHousePrince(){							return this.cadetStatus == 1; 	}
+	public boolean isHousePrince(){
+		return this.getHouse().getPrinces().contains(this);
+		//return this.cadetStatus == 1;
+	}
 
 	public void addToElders(){								elders.add(this); 	  			}
 	public void removeFromElders(){							elders.remove(this); 			}
