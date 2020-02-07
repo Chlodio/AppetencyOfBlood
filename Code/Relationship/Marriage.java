@@ -117,7 +117,6 @@ public class Marriage extends SexRelation{
 					} else if (Basic.randint(5) == 0){
 						Affair.begin(groom);
 					}
-					groom.cnt++;
 					failedMarriageAttemp++;
 				}
 			}

@@ -959,8 +959,10 @@ public class House {
 		for(Human x: ll){
 			if (x.isMarried()){
 				t = x.getSpouse().getHouse();
-				if (t.isActive() && !l.contains(t) && t != this){
-					l.add(t.getName());
+				if (t.isActive() && t.isNoble()){
+					if (!l.contains(t) && t != this){
+						l.add(t.getName());
+					}
 				}
 			}
 		}

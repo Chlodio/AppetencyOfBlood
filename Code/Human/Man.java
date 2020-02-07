@@ -4,7 +4,6 @@ import Code.House.*;
 import Code.Common.Basic;
 import Code.Relationship.*;
 import Code.Politics.Title;
-import Code.Ancestry.Consanguinity;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;

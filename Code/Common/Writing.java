@@ -113,7 +113,7 @@ public class Writing {
 		tr = ""; //emptry the row
 
 	//First cell for name and reign
-		td = h.getName()+"<br>"+h.getPerson().cnt;
+		td = h.getName()+"<br>";
 		td += HTML.getBr();
 		td += h.getReign();
 		td += HTML.getBr();

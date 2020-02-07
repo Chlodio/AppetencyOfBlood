@@ -15,8 +15,6 @@ public class Human {
 	protected Calendar death;
 	protected Courtier courtier;
 	protected House house;  								//Mont of pregnancy
-
-	public int cnt;
 	protected int cadency;
 	protected int fertility;
 	protected int fund;
@@ -72,7 +70,6 @@ public class Human {
 		this.chaBox = 		new boolean[]{true, false, false};
 		this.personality =	new Personality();
 		Basic.human.put(Human.id, this);
-		this.cnt = 0;
     }
 
 //generated born
@@ -89,7 +86,6 @@ public class Human {
 	   this.fund = 		0;
 	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
-	   this.cnt = 0;
     }
 
 
@@ -107,7 +103,6 @@ public class Human {
 	   this.fund = 		0;
 	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
-	   this.cnt = 0;
     }
 
 
