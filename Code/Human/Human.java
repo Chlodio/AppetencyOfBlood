@@ -16,6 +16,7 @@ public class Human {
 	protected Courtier courtier;
 	protected House house;  								//Mont of pregnancy
 
+	public int cnt;
 	protected int cadency;
 	protected int fertility;
 	protected int fund;
@@ -24,16 +25,6 @@ public class Human {
 	protected int relSta; 									//relationship status
 	protected Rela rela; 									//relationship status
 	protected List<Event> events;
-
-/*	protected List<Affair> affairs;
-	protected List<Affair> allAffairs;
-	protected List<Human> daughters;
-	protected List<Human> sons;
-    protected List<Marriage> marriages;
-	protected Human mother;
-    protected Human father;
-	protected Human spouse;
-	*/
 	protected ManorLord manorLord;
 	protected Office office;
 	protected PolProfile polProfile;
@@ -81,6 +72,7 @@ public class Human {
 		this.chaBox = 		new boolean[]{true, false, false};
 		this.personality =	new Personality();
 		Basic.human.put(Human.id, this);
+		this.cnt = 0;
     }
 
 //generated born
@@ -97,6 +89,7 @@ public class Human {
 	   this.fund = 		0;
 	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
+	   this.cnt = 0;
     }
 
 
@@ -114,6 +107,7 @@ public class Human {
 	   this.fund = 		0;
 	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
+	   this.cnt = 0;
     }
 
 
@@ -695,6 +689,14 @@ public class Human {
 
 	public Human getRandomMistress(){
 		return this.rela.getRandomMistress();
+	}
+
+	public boolean hasUnmarriedMistress(){
+		return this.rela.hasUnmarriedMistress();
+	}
+
+	public Human getRandomUnmarriedMistress(){
+		return this.rela.getRandomUnmarriedMistress();
 	}
 
 	//Get the living and the dead

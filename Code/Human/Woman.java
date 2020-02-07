@@ -434,6 +434,7 @@ public class Woman extends Human {
 	public static int getAmount(){						return women.size();	}
 	public static List<Human> getWomen(){				return new ArrayList<>(women);}
 	public static int getSingleNum(){					return singles.size();  }
+	public static List<Human> getSingles(){				return new ArrayList<>(singles);  }
 
 	//Reproductive women
 	public static List<Human> getRepWoman(){

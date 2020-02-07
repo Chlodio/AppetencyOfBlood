@@ -21,7 +21,7 @@ public class Writing {
 		String td;									//Table cell
 		String t;									//Table
 		String s = HTML.getBeginning();
-		String[] th = {"Name", "CoA", "Founded", "Origin", "Men", "Women", "Head"};
+		String[] th = {"Name", "CoA", "Founded", "Origin", "Men", "Women", "Head", "Alliances"};
 		t = HTML.createTableHeader(th);
 		List<House> l = House.getNobles();
 		for(House x: l){
@@ -33,6 +33,7 @@ public class Writing {
 			td += HTML.getTd(""+x.getKinsmenCount());
 			td += HTML.getTd(""+x.getKinswomenCount());
 			td += HTML.getTd(x.getHead().getFormalName()+" ("+x.getHead().getAge()+")" );
+			td += HTML.getTd(""+x.getAlliances());
 			t += HTML.getTr(td);
 		}
 
@@ -112,7 +113,7 @@ public class Writing {
 		tr = ""; //emptry the row
 
 	//First cell for name and reign
-		td = h.getName();
+		td = h.getName()+"<br>"+h.getPerson().cnt;
 		td += HTML.getBr();
 		td += h.getReign();
 		td += HTML.getBr();

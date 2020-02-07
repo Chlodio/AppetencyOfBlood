@@ -588,6 +588,28 @@ public class Rela{
 		return false;
 	}
 
+	public boolean hasUnmarriedMistress(){
+		List<Affair> l = this.getAffairs();
+		for(Affair x: l){
+			if (!x.getBelle().isMarried()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Human getRandomUnmarriedMistress(){
+		List<Affair> l = this.getAffairs();
+		List<Human> ll = new ArrayList<>(l.size());		// will be stored here
+
+		for(Affair x: l){
+			if (!x.getBelle().isMarried()){
+				ll.add(x.getBelle());
+			}
+		}
+		return Basic.choice(ll);						//Pick random amongst the filtered
+	}
+
 	public Human getRandomMistress(){
 		List<Affair> l = this.getAffairs();
 		List<Human> ll = new ArrayList<>(l.size());		// will be stored here

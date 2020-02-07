@@ -51,15 +51,15 @@ public class Basic {
 
 		House.ennobleFirst(10);
 
-		if (Man.singles.size() != 0 || Woman.singles.size() != 0){
+		if (isNotZero(Man.singles.size()) || isNotZero(Woman.singles.size())){
 			Human w;
 			int d;
 			int dew = 0;
 			List<Human> ms = new ArrayList<>(Man.singles);
 			for (Human x: ms){
 				dew++;
-				if (Marriage.hasWomanSingles(x)){
-					w = Marriage.findWife(x);
+				w = Marriage.findWife(x);
+				if (isNotNull(w)){
 					d = x.getAgeDifference(w);
 					Marriage.marrySpecial(x, w, d);
 					for (int y = d; y >= 0; y--){
@@ -67,8 +67,6 @@ public class Basic {
 							w.deliverSpecial(x, y);
 						}
 					}
-				} else {
-					break;
 				}
 			}
 		}
@@ -288,6 +286,11 @@ public class Basic {
 	public static boolean isNotZero(int a){
 		return a != 0;
 	}
+
+	public static boolean isNotNull(Human v){
+		return v != null;
+	}
+
 
 	public static void pause(int ms){
 		try{

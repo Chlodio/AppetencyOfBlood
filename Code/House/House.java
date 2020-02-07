@@ -163,6 +163,12 @@ public class House {
 			}
 			this.handleSuccession();
 		}
+
+		if (this.isActive() && !this.hasPrinces()){
+			this.branch();
+			/*Strange situation where a grandon of the head succeed the house, but it has no princes, therefore split must be done here*/
+			//throw new RuntimeException();
+		}
 	}
 
 //Check if the late family head has a successor in mind and pass the torch if there is one
@@ -242,16 +248,6 @@ public class House {
 			}
 		} catch (NullPointerException e){
 			List<Human> l = this.getHeads();
-		/*	if (l.get(0) == l.get(1)){
-				throw new RuntimeException();
-			}*/
-			System.out.println("NAME\tIS POSTHUMOUS\tIS FOUNDER\tTENURE");
-			for(Human x: l){
-				System.out.print(x.getBirthName());
-				System.out.print("\t"+x.isPosthumous() );
-				System.out.print("\t"+x.getHouse().isFounder(x));
-				System.out.println("\t"+x.getLifespan());
-			}
 			throw new RuntimeException();
 		}
 
@@ -282,7 +278,7 @@ public class House {
 
 		//See if patriarch is in the right postion, if not, do branching again, a progress which will find and appoint a new patriarch
 		if (!this.patriarchIsSuited()){
-			branch();
+			this.branch();
 		}
 
 	}
@@ -955,6 +951,22 @@ public class House {
 		return null;
 	}
 
+
+	public List<String> getAlliances(){
+		List<String> l = new ArrayList<>();
+		List<Human> ll = this.getMembers();
+		House t;
+		for(Human x: ll){
+			if (x.isMarried()){
+				t = x.getSpouse().getHouse();
+				if (t.isActive() && !l.contains(t) && t != this){
+					l.add(t.getName());
+				}
+			}
+		}
+		return l;
+	}
+
 //Micro methods
 
 	public boolean hasHead(){						return this.head != null;	}
@@ -995,7 +1007,7 @@ public class House {
 	public boolean isLegimate(){					return this.legimate;		}
 	public boolean isFounder(Human h){				return this.founder == h;	}
 	public String getFounding(){		return  Basic.format1.format(this.founding.getTime());	 }
-
+	public Human getFounder(){						return this.founder;}
 
 	private static List<Integer> highbornNamesN = 		new ArrayList<>();
 	private static String[] highbornNames = 			new String[1111];

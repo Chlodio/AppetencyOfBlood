@@ -45,8 +45,6 @@ public class CadetHouse extends House {
 		}
 		else {
 			if (!this.hasLivingPrince()){
-				System.out.println(this.getPatriarch().getLegitNonPosthumousSons().size());
-				this.resetPrinces();
 				this.branch();
 				if (!this.hasLivingPrince()){
 					throw new RuntimeException();
@@ -59,6 +57,10 @@ public class CadetHouse extends House {
 		}
 
 		if (!this.patriarchIsSuited()){
+			this.branch();
+			if (!this.patriarchIsSuited()){
+				throw new RuntimeException();
+			}
 			throw new RuntimeException();
 		}
 	}

@@ -4,6 +4,7 @@ import Code.House.*;
 import Code.Common.Basic;
 import Code.Relationship.*;
 import Code.Politics.Title;
+import Code.Ancestry.Consanguinity;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -249,6 +250,7 @@ public class Man extends Human {
 			if (this.isHousePrince()){
 				this.getHouse().removePrince(this);
 			}
+
 			this.getMother().removeLivingSon();
 			if (this.getHouse().isActive() && !this.getHouse().patriarchIsSuited()){
 				throw new RuntimeException();

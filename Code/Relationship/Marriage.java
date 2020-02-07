@@ -111,10 +111,13 @@ public class Marriage extends SexRelation{
 				if (groom.isNoble()){
 					//Morganatic marriage
 					if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
-						marryMistress(groom);
+						if (groom.hasUnmarriedMistress()){
+							marryMistress(groom);
+						}
 					} else if (Basic.randint(5) == 0){
 						Affair.begin(groom);
 					}
+					groom.cnt++;
 					failedMarriageAttemp++;
 				}
 			}
@@ -123,7 +126,7 @@ public class Marriage extends SexRelation{
 
 	//When a noble decides to marry a peasant or a mistress who likely is a peasant,
 	private static void marryMistress(Human g){
-		Human b = g.getRandomMistress();					//Bride who marries the (g)room
+		Human b = g.getRandomUnmarriedMistress();					//Bride who marries the (g)room
 
 		if (b.hadFather()){
 			if (b.getHouse().isActive()){
@@ -236,13 +239,19 @@ public class Marriage extends SexRelation{
 		wife.becomeTaken();
 	}
 
+	//Used for pre-simulation setups
 	public static Human findWife(Human a){
-		for(Human x: Woman.singles){
-			if (a.getAge() >= x.getAge() && !a.isSiblingOf(x)){
-				return x;
+		List<Human> l = Woman.getSingles();
+		for(Human x: l){
+			if (a.getAge() >= x.getAge()){
+				if (!a.isSiblingOf(x)){
+					if (a.isFromSameEstate(x)){
+						return x;
+					}
+				}
 			}
 		}
-		return Woman.singles.get(0);
+		return null;
 	}
 
 	public static boolean hasWomanSingles(Human a){
