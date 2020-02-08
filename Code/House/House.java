@@ -960,7 +960,7 @@ public class House {
 			if (x.isMarried()){
 				t = x.getSpouse().getHouse();
 				if (t.isActive() && t.isNoble()){
-					if (!l.contains(t) && t != this){
+					if (!l.contains(t.getName()) && t != this){
 						l.add(t.getName());
 					}
 				}
@@ -1012,8 +1012,8 @@ public class House {
 	public Human getFounder(){						return this.founder;}
 
 	private static List<Integer> highbornNamesN = 		new ArrayList<>();
-	private static String[] highbornNames = 			new String[1111];
-	private static String[] lowbornNames = 				new String[144];
+	private static String[] highbornNames = 			new String[1083];
+	private static String[] lowbornNames = 				new String[166];
 	public static List<House> nobles = 					new ArrayList<>(20);
 	public static List<House> peasants = 				new ArrayList<>(100);
 
