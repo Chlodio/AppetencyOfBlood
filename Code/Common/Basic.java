@@ -139,6 +139,10 @@ public class Basic {
 		System.out.println(Basic.sDate()+": "+printable+".");
 	}
 
+	public static boolean coinFlip(){
+		return randomizer.nextInt(2) == 0;
+	}
+
 	public static int randint(int n){
 		return randomizer.nextInt(n);
 	}

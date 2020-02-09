@@ -22,3 +22,47 @@ td, th{
 .nameCol2 {
 	max-width: 175px;
 }
+
+.CoA {
+	display:inline;
+}
+
+
+.CoAT{
+	background: lightgray;
+}
+
+.escu{
+
+	background:gray;
+	position: black;
+	clip-path: path('m17.5 38.5s17.5-6.582 17.5-23.31v-15.15h-35v15.15c0 16.73 17.5 23.31 17.5 23.31z');
+}
+
+.or_e { background:yellow; }
+
+.argent_e { background:white; }
+
+.sable_e { background:black; }
+
+.vert_e { background:green; }
+
+.azure_e { background:#0000FF; }
+
+.gules_e { background:red; }
+
+.purpure_e { background:purple; }
+
+.or_o { filter: invert(.8) sepia(50) saturate(50) hue-rotate(0deg); }
+
+.argent_o { filter: invert(1) sepia(100) saturate(0) hue-rotate(0deg); }
+
+.sable_o { filter: invert(0.0) sepia(100) saturate(100) hue-rotate(100deg); }
+
+.vert_o { filter: invert(.35) sepia(30) saturate(30) hue-rotate(65deg); }
+
+.gules_o { filter: invert(0.1) sepia(100) saturate(100) hue-rotate(0deg); }
+
+.azure_o { filter: invert(0.1) sepia(50) saturate(50) hue-rotate(200deg); }
+
+.purpure_o { filter: invert(0.15) sepia(10) saturate(10) hue-rotate(270deg); }

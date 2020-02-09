@@ -37,7 +37,6 @@ Ilkeston
 Faversham
 Heanor
 Chorley
-Sandy
 Bourne
 Leven
 Braintree
@@ -46,7 +45,6 @@ Modbury
 Uttoxeter
 Wainfleet
 Campbell
-Sands
 Willenhall
 Darnley
 Ardmenach
@@ -59,7 +57,6 @@ Dysart
 Rowley
 Tetbury
 Gainsborough
-Much
 Lindsay
 Ramsey
 Helmsley
@@ -128,7 +125,6 @@ Exmouth
 Yeovil
 Burslem
 Leyland
-Mare
 Beaconsfield
 Hoddesdon
 Montagu
@@ -151,10 +147,8 @@ Coalville
 Langport
 Solihull
 Ormonde
-Hedge
 Maidenhead
 Portland
-Mere
 Crediton
 Malmesbury
 Elland
@@ -226,7 +220,6 @@ Daventry
 Godalming
 Abercorn
 Berkshire
-Marsh
 Conisbrough
 Halesowen
 Camelford
@@ -243,7 +236,6 @@ Waltham
 Bingley
 Selby
 Newton
-Clay
 Fareham
 Stockton
 Forth
@@ -355,13 +347,10 @@ Peterlee
 Kirkby
 Thames
 Edinburgh
-Wells
 Sawbridgeworth
 Gravesend
 Haltwhistle
 Crewkerne
-Royal
-West
 Ilford
 Winsford
 Upton
@@ -384,7 +373,6 @@ Dorchester
 Acton
 Shildon
 Selsey
-High
 Clevedon
 Ringwood
 Fife
@@ -533,7 +521,6 @@ Panmure
 Framlingham
 Royston
 Knaresborough
-Princes
 Breadalbane
 Clarence
 Tickhill
@@ -549,7 +536,6 @@ Shepton
 Aumale
 Hythe
 Blackburn
-North
 Clare
 Grange
 Lauderdale
@@ -583,7 +569,6 @@ Chagford
 Connaught
 Tenbury
 Brierley
-Earl
 Worthing
 Chorleywood
 Yateley
@@ -597,7 +582,6 @@ Billericay
 Swanley
 Easingwold
 Liskeard
-Fleet
 Thrapston
 Hartfell
 Cullompton
@@ -611,7 +595,6 @@ Ashfield
 Oakengates
 Yarm
 Hamilton
-Eye
 Devonshire
 Ware
 Windsor
@@ -645,7 +628,6 @@ Maltby
 Wareham
 Blandford
 Barnstaple
-Church
 Braunstone
 Henley
 Newlyn
@@ -666,7 +648,6 @@ Banbury
 Hendon
 Eastbourne
 Airlie
-Bury
 Midhurst
 Weybridge
 Flitwick
@@ -702,7 +683,6 @@ Radstock
 Ashford
 Essex
 Quedgeley
-Hull
 Dewsbury
 Fowey
 Morley
@@ -743,7 +723,6 @@ Aylesbury
 Stanhope
 Arden
 Horwich
-Wood
 Warwickshire
 Leek
 Kenilworth
@@ -821,7 +800,6 @@ Denholme
 Seaforth
 Shropshire
 Leslie
-East
 Burgess
 Malton
 Forfar
@@ -882,7 +860,6 @@ Frith
 Ramsgate
 Sittingbourne
 Heywood
-Edge
 Ilay
 Teignmouth
 Broughton
@@ -900,13 +877,11 @@ Wallasey
 Mansfield
 Tidworth
 Edgware
-Deal
 Inverness
 Thornaby
 Dumfries
 Surbiton
 Grafton
-Chapel
 Nantwich
 Hayle
 Brading
@@ -1064,7 +1039,6 @@ Wendover
 Fakenham
 Lutterworth
 Spennymoor
-Rye
 Ossett
 Middleton
 Huntingdonshire
@@ -1091,7 +1065,6 @@ Shipston
 Haverhill
 Annandale
 Staines
-Long
 Cromer
 Leatherhead
 Dunwich
@@ -1105,6 +1078,5 @@ Cornwall
 Belper
 Crosby
 Halifax
-Grays
 Carterton
 Douglas

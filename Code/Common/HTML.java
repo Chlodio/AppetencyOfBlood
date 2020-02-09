@@ -35,7 +35,7 @@ public class HTML {
 
 	//Get td with a class assignment
 	public static String getTdClass(String s, String n){
-		return "<td class='"+n+"'>"+s+"</td>";
+		return "<td class='"+s+"'>"+n+"</td>";
 	}
 
 	//Wrap inside of table row
@@ -50,6 +50,15 @@ public class HTML {
 
 	public static String getBr(){
 		return "<br>";
+	}
+
+	//Wrap div
+	public static String getDivClass(String c, String s){
+		return "<div class='"+c+"'>"+s+"</div>";
+	}
+
+	public static String getImgClass(String c, String s){
+		return "<img class='"+c+"' src='"+s+"'></img>";
 	}
 
 	public static String createTableHeader(String[] a){

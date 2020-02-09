@@ -27,7 +27,7 @@ public class Writing {
 		for(House x: l){
 			td = "";
 			td += HTML.getTd(x.getName());
-			td += HTML.getTd(x.getCoALink());
+			td += HTML.getTdClass("CoAT", x.getCoALink());
 			td += HTML.getTd(x.getFounding());
 			td += HTML.getTd(x.getOriginString());
 			td += HTML.getTd(""+x.getKinsmenCount());
@@ -126,7 +126,7 @@ public class Writing {
 
 	//Cell for coat of arms
 		td = q.getHouseCoALink();
-		tr += HTML.getTd(td);
+		tr += HTML.getTdClass("CoAT", td);
 
 	//Cell for birth
 		tr += HTML.getTd(q.getBirth());
@@ -141,7 +141,7 @@ public class Writing {
 		tr += HTML.getTd(td+"Aged "+q.aged());
 
 	//Cell for claims
-		tr += HTML.getTdClass(h.getClaim().getClaimHTML(), "nameCol2");
+		tr += HTML.getTdClass("nameCol2", h.getClaim().getClaimHTML());
 
 		return tr;
 	}

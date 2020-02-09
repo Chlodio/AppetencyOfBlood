@@ -4,6 +4,7 @@ import Code.Common.*;
 import Code.Politics.Title;
 import Code.Relationship.*;
 import Code.Ancestry.*;
+import Code.House.CoatOfArms;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +29,7 @@ public class House {
 	protected Human patriarch;						//Former head whose memory keeps the family together
 	protected int generation;						//How ancestors the house has
 	protected int nameNum;							//Number for noble name because has to be unique
-	protected int coa;								//Coat of arms
+	protected CoatOfArms coa;						//Coat of arms
 	protected int prestige;							//How
 	protected int ranking;
 	protected boolean isNoble;						//true = noble/false = lowborn
@@ -744,7 +745,7 @@ public class House {
 	public void ennoble(int o){
 		this.nameHouseHighborn();
 		this.isNoble = true;
-		this.coa = 1+Basic.randint(100);
+		this.coa = new CoatOfArms(); //1+Basic.randint(100);
 		this.setOrigin(o);
 
 		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
@@ -977,9 +978,9 @@ public class House {
 	public int getGeneration(){						return this.generation;		}
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
-	private int getCoA(){							return this.coa;			}
+	private CoatOfArms getCoA(){					return this.coa;			}
 	public String getName(){						return name;				}
-	public String getCoALink(){			return "<img src='../Input/CoAs/"+this.getCoA()+".svg'</img>";}
+	public String getCoALink(){						return this.getCoA().getHTML();}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
 	public List<String> getMaleNames(){				return this.maleNames;		}
 	public static House getHouse(int id){			return Basic.house.get(id);	}

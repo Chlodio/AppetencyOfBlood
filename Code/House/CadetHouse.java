@@ -61,7 +61,7 @@ public class CadetHouse extends House {
 			if (!this.patriarchIsSuited()){
 				throw new RuntimeException();
 			}
-			throw new RuntimeException();
+			//throw new RuntimeException();
 		}
 	}
 
