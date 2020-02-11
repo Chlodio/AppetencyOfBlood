@@ -116,7 +116,7 @@ public class Woman extends Human {
 	public void clean(){
 		if (this.isAdult() && this.relSta <= 1) {
 			this.becomeTaken();
-			if (this.relSta == 3){
+			if (this.isRelSta(3)){
 				this.removeFromElders();
 			}
 		}
@@ -149,7 +149,9 @@ public class Woman extends Human {
 		else {
 			this.drainUterus();
 			//Posthumous
-			if (this.relSta == 4){ this.becomeWidow(); }
+			if (this.isRelSta(4)){
+				this.becomeWidow();
+			}
 		}
 	}
 	public boolean isPregnant(){ 			return this.uterus != null; 	}
@@ -211,6 +213,7 @@ public class Woman extends Human {
 	@Override
 	public void becomeSingle(){
 		singles.add(this);
+		this.setSpouseNull();
 		this.mating = Mating.revaluateF(this);
 	}
 
@@ -221,10 +224,10 @@ public class Woman extends Human {
 			if (this.isMarriageable()){
 				this.handleWidowhood();
 			} else{
-				this.relSta = 3;
+				this.setRelSta(3);
 			} //Posthumous pregnancy
 		} else{
-			this.relSta = 4;
+			this.setRelSta(4);
 		}
 	}
 
@@ -232,7 +235,7 @@ public class Woman extends Human {
 	public void handleWidowhood(){
 		Human h = this.getLatestHusband();;
 		this.becomeSingle();
-		this.relSta = 1;
+		this.setRelSta(1);
 		if(h.hasUnwedSameSexSibling()){
 		//	Human d = h.getUnwedBrother();
 			Marriage.doLevirate(this, h);
@@ -493,5 +496,49 @@ public class Woman extends Human {
 		return (int) (i*100);
 	}
 
+	//Find a lowborn young woman to a noble, preferably unmarried
+	public static Human findWench(){
+		List<Human> l = filterWench(getSingles());
+		if (Basic.isNotZero(l.size())){
+			return Basic.choice(l);
+		} else {
+			l = filterSuitableWench(getWomen());
+			if(Basic.isNotZero(l.size())){
+				Human h = Basic.choice(l);
+				if (h.isMarried()){
+					h.getLatestMarriage().getDivorce();
+					return h;
+				} else {
+					throw new RuntimeException();
+				}
+				//return Basic.choice(l);
+			}
+		}
+		return null;
+	}
+
+	public static List<Human> filterWench(List<Human> l){
+		List<Human> ll = new ArrayList<>(l.size());
+		for (Human x: l){
+			if (x.isAdult() && x.getAge() < 20){
+				if (x.isPeasant()){
+					ll.add(x);
+				}
+			}
+		}
+		return ll;
+	}
+
+	//Filter out married women who are married to a nobleman
+	public static List<Human> filterSuitableWench(List<Human> l){
+		l = filterWench(l);
+		List<Human> ll = new ArrayList<>(l.size());
+		for (Human x: l){
+			if (x.getSpouse().isPeasant()){
+				ll.add(x);
+			}
+		}
+		return ll;
+	}
 
 }

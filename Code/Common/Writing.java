@@ -214,10 +214,7 @@ public class Writing {
 							writer.write("<td class='nameCol'>"+x.getShortName()+"</td>\n<td class='portrait'>");
 							writer.write(x.getPortrait());
 							writer.write("</td>\n");
-							writer.write("<td>");
-							writer.write(x.getCoALink());
-							writer.write("</td>\n");
-
+							writer.write(HTML.getTdClass("CoAT", x.getCoALink()));
 							writer.write("<td>"+x.getLifespan()+"<br>"+"Aged "+x.aged()+"</td>\n");
 							writer.write("<td>");
 							if (x.isAdult() && x.wasMarried()){

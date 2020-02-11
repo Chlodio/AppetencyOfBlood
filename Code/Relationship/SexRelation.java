@@ -73,7 +73,7 @@ public class SexRelation{
 			int wa = 			w.getAge();
 			int fmy = 			70-ha;
 			int ffy = 			50-wa;
-			float v = 			(this.getFertility()/10f)*(0.75f+(this.getHappiness()*0.1f));
+			float v = 			(this.getFertility()/10f)*(1.25f);
 			this.procreation =  new int[100-ha];
 			if (fmy > 0 && ffy > 0){
 				int tfy = Math.min(fmy, ffy);

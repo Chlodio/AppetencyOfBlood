@@ -6,6 +6,7 @@ import Code.Human.Human;
 import Code.Ancestry.*;
 import Code.Politics.*;
 import Code.House.House;
+import Code.Politics.Cabinet;
 import Code.Common.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,17 +25,15 @@ public class Office{
 	private List<Rule> ruleList;
 	private Lineage lineage;
 	private List<Human> consortList;
-	//private Holder holder;		 						//Who officially rulers
-	//private Ruler ruler;		 							//Who rules in fact
-//	private Laws laws;
 	private List<Project> projects;
 	private Military military;
 	private Territory territory;
 	private Treasury funds;									//Save funds
 	private List<RegnalName> regnalNames = 					new ArrayList<>();
 
-	public static List<Office> offices =					new ArrayList<>();
-//	public static Human firstSovereign;
+	private Cabinet cabinet;								//Collection of ministers
+
+	public static List<Office> offices =					new ArrayList<>();;
 	public static int id = 0;
 
 	public static Map<Integer, Office> office = 			new HashMap<>();
@@ -66,6 +65,7 @@ public class Office{
 			throw new RuntimeException();		//The same
 		}
 		office.get(offices.size()).inaugurate(founder);
+		office.get(offices.size()).handleCabinet();
 		return office.get(id);
 	}
 
@@ -195,5 +195,12 @@ public class Office{
 	public void setRuler(Ruler r){						this.rule.setSeniorRuler(r);}
 	public void addToConsortList(Human h){				this.consortList.add(h);	}
 	public int getConsortRank(Human h){					return this.consortList.indexOf(h);}
+
+	public Cabinet getCabinet(){						return this.cabinet;		}
+
+	public void handleCabinet(){
+		this.cabinet =				new Cabinet(this);	//Create cabinet
+		this.getCabinet().appointMinister();			//Appoint minister into the cabinet
+	}
 
 }

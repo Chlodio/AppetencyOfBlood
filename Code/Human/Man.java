@@ -109,7 +109,7 @@ public class Man extends Human {
 	public void clean(){
 		if (this.isAdult() &&  this.relSta <= 1) {
 			this.becomeTaken();
-			if (this.relSta == 3){
+			if (this.isRelSta(3)){
 				this.removeFromElders();
 			}
 		}
@@ -195,8 +195,8 @@ public class Man extends Human {
 
 	@Override
 	public void becomeSingle(){
-
 		singles.add(this);
+		this.setSpouseNull();
 		this.mating = Mating.revaluateM(this);
 	}
 
@@ -207,7 +207,7 @@ public class Man extends Human {
 			this.handleWidowhood();
 
 		} else{
-			this.relSta = 3;
+			this.setRelSta(3);
 		}
 	}
 
@@ -215,7 +215,7 @@ public class Man extends Human {
 	@Override
 	public void handleWidowhood(){
 		this.becomeSingle();
-		this.relSta = 1;
+		this.setRelSta(1);
 		Human w = this.getLatestWife();
 		if(w.hasUnwedSameSexSibling()){
 			Marriage.doSororate(this, w);
@@ -255,6 +255,7 @@ public class Man extends Human {
 				throw new RuntimeException();
 			}
 		}
+		this.handleRoleDeath();
 	}
 
 
@@ -357,6 +358,8 @@ public class Man extends Human {
 
     @Override
     public void becomeTaken(){			singles.remove(this);}
+
+	public static List<Human> getSingles(){ return singles;}
 
     @Override
     public String child(){				return "boy";}

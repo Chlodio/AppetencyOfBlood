@@ -23,7 +23,6 @@ public class Marriage extends SexRelation{
     protected static List<Marriage> list 				= new ArrayList<>();	//active marriages
     protected static Map<Integer, Marriage> marriages 	= new HashMap<>();
 	public static boolean activeCousin 					= false;
-	public static int failedMarriageAttemp				= 0;
 
 /*Used for starters*/
 	public Marriage(Human husband, Human wife, int year){
@@ -100,28 +99,33 @@ public class Marriage extends SexRelation{
 			activeCousin = true;
 			marryFiancee(groom, bestMatch);
 			activeCousin = false;
+			return;
 		}
 
 		if (groom.isUnwed()){
+
 			if (match(groom)){
 				marryFiancee(groom, bestMatch);
-			} else {
-				//	Human w = new Woman(15);
-				//	marryFiancee(groom, w);
-				if (groom.isNoble()){
-					//Morganatic marriage
-					if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
-						if (groom.hasUnmarriedMistress()){
-							marryMistress(groom);
-						}
-					} else if (Basic.randint(5) == 0){
-						Affair.begin(groom);
-					}
-					failedMarriageAttemp++;
+			} else if (groom.isNoble()){
+				Human w = Woman.findWench();
+				if (w != null){
+					marryFiancee(groom, w);
 				}
 			}
+
+			/*	if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
+					if (groom.hasUnmarriedMistress()){
+						marryMistress(groom);
+						ca++;
+					}
+				} else if (Basic.randint(5) == 0){
+					Affair.begin(groom);
+				}
+			}*/
 		}
 	}
+
+	public static int ca = 0;
 
 	//When a noble decides to marry a peasant or a mistress who likely is a peasant,
 	private static void marryMistress(Human g){
@@ -179,49 +183,8 @@ public class Marriage extends SexRelation{
 			brides.add(lass);
 		}
 		if (brides.size() != 0){
-			/*
-			List<Human> aBrides = new ArrayList<>();	// accepted brides
-			int aP = 1+bachelor.getHouse().getPrestige();
-			//Prestige of bride is more than groom's/hypergamy
-			for (int y = bachelor.getHouse().getRanking(); y > 0; y--){
-				if(aBrides.size() == 0){
-					for(Human x: brides){
-						aBrides.add(x);
-					}
-				}
-			}
-
-//			for (int y = 2; y < 11; y++){
-//				if(aBrides.size() == 0){
-//					for(Human x: brides){
-//						//&& aP >= x.house.prestige
-//						if (x.house.prestige >= aP/y ){
-//							aBrides.add(x);
-//						}
-//					}
-//				}
-//			}
-			if (aBrides.size() != 0){
-	//			int aP = (bachelor.house.prestige/4)*3; 		//accepted prestige
-	//			while(aBrides.size() == 0){
-	//				aP -= bachelor.house.prestige/4;
-	//				for(Human x: brides){
-	//					if (x.house.prestige >= aP){
-	//						aBrides.add(x);
-	//					}
-	//				}
-	//			}
-				bV = aBrides.get(0).getMating();
-				bC = aBrides.get(0);
-				for(Human x: aBrides){
-					if (x.getMating() > bV){
-						bV = x.getMating();
-						bC = x;
-					}
-				}*/
-				bestMatch = Basic.choice(brides); //bC;
+				bestMatch = Basic.choice(brides);
 				return true;
-			//}
 		}
 		return false;
 	}
@@ -287,19 +250,6 @@ public class Marriage extends SexRelation{
 		return this.beginning.get(Calendar.YEAR)-spouse.getBirthC().get(Calendar.YEAR);
 	}
 
-//No idea what was the point of this...
-//	public List<Human> getOffspring(){
-//		List<Human> list = new ArrayList<>();
-//		if (this.offspring.size() != 0){
-//			for (Human x: this.offspring){
-//				list.add(x);
-//			}
-//		}
-//		return list;
-//	}
-
-
-
 	/*Widow marries her brother-in-laws*/
 	public static void doLevirate(Human widow, Human departed){
 		marryFiancee(departed.getUnwedBrother(), widow);
@@ -324,32 +274,38 @@ public class Marriage extends SexRelation{
 		}
 	}
 
+	//Check if the marriage is active, to prevent cases where husband who died ealier in the same would impregnate their widow and where marriage ended in divorce
+	public boolean canBreed(){
+		if (this.isActive()){
+			//Multiple sons are only for noblemen
+			return true;
+		}
+		return false;
+	}
+
 	public void breed(){
 		Woman w = (Woman) this.doe;
 
-		//multiple sons are only for noblemen
-		if (this.stag.isPeasant() && this.stag.hasNumOfLivingSons(4)){
-			return;
-		}
-
-		try{
-			if (Basic.randint(100) < this.procreation[this.anniversary] && !w.isPregnant()){
-				w.fillUterus(this);
-				w.growFetus();
-				Woman.pregnant.add(this.doe);
+		if (this.canBreed()){
+			try{
+				if (Basic.randint(100) < this.procreation[this.anniversary] && !w.isPregnant()){
+					w.fillUterus(this);
+					w.growFetus();
+					Woman.pregnant.add(this.doe);
+				}
 			}
-		}
-		catch (ArrayIndexOutOfBoundsException e){
-			System.out.println("Husband alive: "+this.stag.isAlive()+"\nWife alive: "+this.doe.isAlive());
-			System.out.println("Active: "+this.isActive());
-			System.out.println("Wife had father:"+this.doe.hadFather());
-			System.out.println("Husband died:"+this.stag.getDeath());
-			List<Marriage> l = this.stag.getMarriages();
-			for(Marriage x: l) {
-				System.out.println("Began: "+x.getBeginning());
-				System.out.println("Name: "+x.getDoe());
+			catch (ArrayIndexOutOfBoundsException e){
+				System.out.println("Husband alive: "+this.stag.isAlive()+"\nWife alive: "+this.doe.isAlive());
+				System.out.println("Active: "+this.isActive());
+				System.out.println("Wife had father:"+this.doe.hadFather());
+				System.out.println("Husband died:"+this.stag.getDeath());
+				List<Marriage> l = this.stag.getMarriages();
+				for(Marriage x: l) {
+					System.out.println("Began: "+x.getBeginning());
+					System.out.println("Name: "+x.getDoe());
+				}
+				throw new RuntimeException();
 			}
-			throw new RuntimeException();
 		}
 	}
 

@@ -87,7 +87,7 @@ Sharp
 Barber
 Reeve
 Cross
-Mann
+Man
 Garner
 Farmer
 Much

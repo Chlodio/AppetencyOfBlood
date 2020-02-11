@@ -778,6 +778,11 @@ public class House {
 		h.ennoble(5);
 	}
 
+	public static House getRandomNoble(){
+		House h = Basic.choice(getNobles());
+		return h;
+	}
+
 	//Count living noblemen
 	public static int getNoblemenCount(){
 		int c = 0;							//(c)ount
@@ -819,9 +824,6 @@ public class House {
 
 	public static House getRandomPeasant(){
 		House h = Basic.choice(getPeasants());
-		if (!h.isActive()){
-			throw new RuntimeException();
-		}
 		return h;
 	}
 

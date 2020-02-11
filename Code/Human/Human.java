@@ -33,6 +33,7 @@ public class Human {
     protected Calendar birth;
     protected Name name;
 	protected Personality personality;
+	private Minister role;									//Character's career as minister
     protected static int id = 								0;
 
     public static List<Human> living = 				new ArrayList<>();
@@ -42,6 +43,7 @@ public class Human {
 		2 = husband/wife
 		3 = celibate
 		4 = grieving widow (posthumous pregnancy)
+		5 = divorcee
 	*/
 
 	protected boolean[] chaBox;
@@ -60,7 +62,7 @@ public class Human {
         this.birth = 		(Calendar) Basic.date.clone();
 		this.birth.add(Calendar.DATE, -365*age);
 		this.events =		 new ArrayList<>();
-		this.relSta = 		0;
+		this.setRelSta(0);
 		this.religion = 	Religion.getLatest();
 		this.fertility = 	Basic.randint(91)+10;
 		this.rela =			new Rela(this);
@@ -79,7 +81,7 @@ public class Human {
  	   this.birth = 	(Calendar) Basic.date.clone();
 	   this.birth.add(Calendar.DATE, -365*y);
  	   this.events = 	new ArrayList<>();
- 	   this.relSta = 	0;
+	   this.setRelSta(0);
  	   this.religion = 	Religion.getLatest();
 	   this.fertility = -1;
 	   this.rela =		new Rela(this, false);
@@ -96,7 +98,7 @@ public class Human {
  	   this.living.add(this);
  	   this.birth = 	(Calendar) Basic.date.clone();
  	   this.events = 	new ArrayList<>();
- 	   this.relSta = 	0;
+	   this.setRelSta(0);
  	   this.religion = 	Religion.getLatest();
 	   this.fertility = -1;
 	   this.rela =		new Rela(this, false);
@@ -590,7 +592,13 @@ public class Human {
 
 
 	public boolean isNoble(){					return this.getHouse().isNoble();				}
-	public boolean isPeasant(){					return !this.getHouse().isNoble();				}
+
+	public boolean isPeasant(){
+		if (this.hadFather()){
+			return !this.getHouse().isNoble();
+		}
+		return true;
+	}
 
 	//Will update all of people in the list
 	public static void updateNamesOf(List<Human> l){
@@ -721,6 +729,24 @@ public class Human {
 			return true;
 		}
 		return false;
+	}
+
+	public Minister getRole(){
+		return this.role;
+	}
+
+	public void setRole(Minister m){
+		this.role = m;
+	}
+
+	public boolean hasRole(){
+		return this.role != null;
+	}
+
+	public void handleRoleDeath(){
+		if (this.hasRole()){
+			this.getRole().getCabinet().appointMinister();
+		}
 	}
 
 	//Shortcuts
@@ -884,7 +910,6 @@ public class Human {
 	public boolean isLegimate(){				return this.chaBox[0];	}
 	public boolean isPosthumous(){				return this.chaBox[1];	}
 	public boolean isVirgin(){ 					return this.chaBox[2]; 	}
-
 	public boolean isFemaleAdult(){				return this.isFemale() && isAdult(); 	}
 	public boolean hasTitle(Title t){			return this.title == t;			}
 	public boolean hasTitle(){					return this.title != null;		}
@@ -959,6 +984,7 @@ public class Human {
 	public void setMating(int i){				this.mating = i;				}
 	public int getRelSta(){						return this.relSta;				}
 	public void setRelSta(int v){				this.relSta = v;				}
+	public boolean isRelSta(int v){				return (this.relSta == v);		}
 	public boolean getSex(){					return this.sex;				}
 	public void setTitle(Title t){				this.title = t;					}
 	public void setPolProfile(PolProfile p){	this.polProfile = p;			}
