@@ -301,7 +301,7 @@ public class Man extends Human {
 	public static void growUp(){
 		ArrayList<Human> rem = new ArrayList<>();
 		for (Human x: Man.children){
-			if (x.getAge() == 14){
+			if (x.isAtAgeOf(14)){
 				rem.add(x);
 			}
 		}
@@ -327,7 +327,7 @@ public class Man extends Human {
 	//Determines if man should marry, not if he can
 	@Override
 	public boolean isMarriageable(){
-		if (this.getAge() > 65 || this.hasNumOfLivingSons(3)){
+		if (this.isOverAgeOf(65) || this.hasNumOfLivingSons(3)){
 			return false;
 		}
 		return true;
@@ -342,7 +342,7 @@ public class Man extends Human {
 		this.clearAffairs();
 	}
 
-	public boolean isMinor(){			return this.getAge() < 14; }
+	public boolean isMinor(){			return this.isUnderAgeOf(14); }
 
 	@Override
     public String widow(){ 				return "widower";}

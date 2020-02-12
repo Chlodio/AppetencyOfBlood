@@ -22,7 +22,7 @@ public class Regent{
 			w = holder.getHouse().getAdultKinswoman(holder);
 		} else{
 			for(House x: House.getList()){
-				if (x.getHead().getAge() >= 20){
+				if (x.getHead().isOverAgeOf(20)){
 					runners.add(x.getHead());
 				}
 			}

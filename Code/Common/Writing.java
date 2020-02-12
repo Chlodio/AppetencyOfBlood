@@ -564,7 +564,7 @@ public class Writing {
 		int[] a = new int[10];
 		int sg 	= (l.get(0).getAge()/10)*10;
 		for(Human x: l){
-			if (x.getAge() >= sg){
+			if (x.isOverAgeOf(sg)){
 				c++;
 			} else{
 				a[sg/10] = c;

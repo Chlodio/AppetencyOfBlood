@@ -108,13 +108,6 @@ public class Human {
     }
 
 
-	public int aged(){
-		if (!this.isAlive()){
-			return this.death.get(Calendar.YEAR)-this.birth.get(Calendar.YEAR);
-		}
-		return this.getAge();
-	}
-
 	public void performPosthumousBirth(Human f, Human m){
 		Basic.print(m.getFullName()+" gave posthumous birth to son of "+f.getFullName());
 
@@ -280,12 +273,50 @@ public class Human {
 	}
 
 
+//Age methods
+
 	public int getAge(){
 		return Basic.getDaysLived(this.birth)/365;
 	}
 
 	public int getAgeDifference(Human a){
 		return this.getAge()-a.getAge();
+	}
+
+	public int aged(){
+		if (!this.isAlive()){
+			return this.death.get(Calendar.YEAR)-this.birth.get(Calendar.YEAR);
+		}
+		return this.getAge();
+	}
+
+	//If age is above
+	public boolean isOverAgeOf(int a){
+		return this.getAge() >= a;
+	}
+
+	//If age is below
+	public boolean isUnderAgeOf(int a){
+		return this.getAge() < a;
+	}
+
+	//Check if age is exact
+	public boolean isAtAgeOf(int a){
+		return this.getAge() == a;
+	}
+
+	public boolean isOlderThan(Human h){
+		return this.isOverAgeOf(h.getAge());
+	}
+
+	//Check if person is older than (h) plus additional years
+	public boolean isOlderThan(Human h, int i){;
+		return this.isOverAgeOf(h.getAge()+i);
+	}
+
+
+	public boolean isYoungerThan(Human h, int i){
+		return this.isUnderAgeOf(h.getAge()-i);
 	}
 
 	public String getPossibleDeath(){
@@ -529,7 +560,7 @@ public class Human {
 	public static int getNumOfElderly(List<Human> l){;
 		int c = 0;
 		for(Human x: l){
-			if (x.getAge() >= 55){
+			if (x.isOverAgeOf(55)){
 				c++;
 			}
 		}
@@ -539,7 +570,7 @@ public class Human {
 	public static int getNumOfChildren(List<Human> l){;
 		int c = 0;
 		for(Human x: l){
-			if (x.getAge() < 14){
+			if (x.isChild()){
 				c++;
 			}
 		}
@@ -794,6 +825,7 @@ public class Human {
 	public boolean isBrotherOf(Human h){		return this.rela.isBrotherOf(h);				}
 	public boolean isChildOf(Human h){			return this.rela.isChildOf(h); 					}
 	public boolean isFatherOf(Human h){			return this.rela.isFatherOf(h);					}
+	public boolean isMotherOf(Human h){			return this.rela.isMotherOf(h);					}
 	public boolean isFirstCousinOf(Human h){	return this.rela.isFirstCousinOf(h); 			}
 	public boolean isFullSiblingOf(Human i){	return this.rela.isFullSiblingOf(i); 			}
 	public boolean isIntimateWith(Human i){		return this.rela.isIntimateWith(i); 			}

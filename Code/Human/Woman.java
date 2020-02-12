@@ -273,7 +273,7 @@ public class Woman extends Human {
 				pregnant.remove(this);
 			}
 		} else{
-			if (this.getAge() >= 8){
+			if (this.isOverAgeOf(8)){
 				if (!this.isMarried()){
 					childBridePool.remove(this);
 				}
@@ -317,7 +317,7 @@ public class Woman extends Human {
 
 	@Override
 	public boolean isMarriageable(){
-		if (this.getAge() >= 40){ return false; }
+		if (this.isOverAgeOf(40)){ return false; }
 		else{ return true; }
 	}
 
@@ -374,7 +374,7 @@ public class Woman extends Human {
 	@Override
 	public Title getRoyalTitle(){						return Title.QUEENREGNANT;}
 
-	public boolean isMinor(){			return this.getAge() < 12; }
+	public boolean isMinor(){		return this.isUnderAgeOf(12); }
 
 	@Override
     public String widow(){ 			return "widow";}
@@ -444,7 +444,7 @@ public class Woman extends Human {
 		List<Human> l = getWomen();
 		List<Human> ll = new ArrayList<>(l.size());
 		for(Human x: l){
-			if (x.isAdult() && x.getAge() <= 45){
+			if (x.isAdult() && x.isUnderAgeOf(45)){
 				ll.add(x);
 			}
 		}
@@ -520,7 +520,7 @@ public class Woman extends Human {
 	public static List<Human> filterWench(List<Human> l){
 		List<Human> ll = new ArrayList<>(l.size());
 		for (Human x: l){
-			if (x.isAdult() && x.getAge() < 20){
+			if (x.isAdult() && x.isUnderAgeOf(20)){
 				if (x.isPeasant()){
 					ll.add(x);
 				}

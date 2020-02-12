@@ -144,13 +144,11 @@ public class Marriage extends SexRelation{
 
 	public static boolean hasCousinMatch(Human groom){
 		List<Human> l = new ArrayList<>();
-		int a;
 		if (groom.hasFirstCousin()){
 			l = groom.getLivingFirstCousins();
 			for (Human x: l){
 				if (x.isFemaleAdult()){
-					a = x.getAge();
-					if (x.isUnwed() && a <= (groom.getAge()+5) && a <= 40 ){
+					if (x.isUnwed() && groom.isYoungerThan(x, 10) && x.isUnderAgeOf(41) ){
 						bestMatch = x;
 						return true;
 					}
@@ -160,29 +158,23 @@ public class Marriage extends SexRelation{
 		return false;
 	}
 
-	public static boolean match(Human bachelor){
+	public static boolean match(Human b){
 		List<Human> brides = new ArrayList<>();
-		List<Human> pBrides = new ArrayList<>(Woman.singles);
-		Human lass;
-		int ba = bachelor.getAge();
-		int la = 0;
+		List<Human> pBrides = Woman.getSingles();
 		int bV; Human bC; 	//best value //best character
-		for (int x = 0; x < pBrides.size(); x++){
-			lass = pBrides.get(x);
+		for (Human x: pBrides){
 			//No old women
-			la = lass.getAge();
-			if (!bachelor.isFromSameEstate(lass)){	continue;	}
-			if (la > ba-5|| la > 40){ continue;}
+			if (!b.isFromSameEstate(x)){	continue;	}
+			if (b.isOlderThan(x, 10)|| x.isOverAgeOf(40)){ continue;}
 			//No parent-child marriages
-			if (bachelor.getMother() == lass){ continue; }
-			if (bachelor == lass.getFather() ){ continue; }
+			if (x.isMotherOf(b)){ continue; }
+			if (b.isFatherOf(x) ){ continue; }
 			//No siblin marriages
-			if (bachelor.getFather() != null && (bachelor.getFather() == lass.getFather())){ continue; }
-			if (bachelor.getMother() != null && (bachelor.getMother() == lass.getMother())){ continue; }
+			if (b.isSiblingOf(x) ){ continue; }
 			//
-			brides.add(lass);
+			brides.add(x);
 		}
-		if (brides.size() != 0){
+		if (Basic.isNotZero(brides.size())){
 				bestMatch = Basic.choice(brides);
 				return true;
 		}
@@ -205,7 +197,7 @@ public class Marriage extends SexRelation{
 	public static Human findWife(Human a){
 		List<Human> l = Woman.getSingles();
 		for(Human x: l){
-			if (a.getAge() >= x.getAge()){
+			if (a.isOlderThan(x)) {
 				if (!a.isSiblingOf(x)){
 					if (a.isFromSameEstate(x)){
 						return x;
@@ -218,7 +210,7 @@ public class Marriage extends SexRelation{
 
 	public static boolean hasWomanSingles(Human a){
 		for(Human x: Woman.singles){
-			if (a.getAge() >= x.getAge() && !a.isSiblingOf(x)){
+			if (a.isOlderThan(x) && !a.isSiblingOf(x)){
 				return true;
 			}
 		}

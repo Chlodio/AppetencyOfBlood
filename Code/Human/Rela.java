@@ -278,6 +278,7 @@ public class Rela{
 	public Human getMother(){					return this.mother; 					}
 	public void setGenitor(Human h){			this.genitor = h; 						}
 	public boolean isFatherOf(Human h){			return h.getRela().father == this.o;	}
+	public boolean isMotherOf(Human h){			return h.getRela().mother == this.o;	}
 
 
 	public boolean hasSeniorPaternalRelative(){
