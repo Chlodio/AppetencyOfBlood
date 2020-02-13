@@ -11,7 +11,7 @@ public class CoatOfArms {
 	private boolean onMetal;
 	private static final String[] metals = {"argent", "or"};
 	private static final String[] colors = {"gules", "sable", "azure", "purpure", "vert"};
-	private static final String[] ordinaries = {"cross_plain", "cross_annulety", "cross_bottony", "cross_calvatry", "cross_coptic", "cross_coptic", "cross_couped", "cross_crescenty", "cross_doubled", "cross_Jerusalem", "cross_latin", "cross_Lorraine", "cross_norse_sun", "cross_parted_fretted", "cross_patriarchal", "cross_pomelly", "cross_pommeled", "cross_potent", "cross_quarter-pierced", "cross_avellane", "cross_formerly", "cross_formerly_fitchy", "cross_clechy", "chief_plain", "chief_enarched", "chief_triangular", "chief_double-arched", "chief_pale", "base", "orle", "ford", "quarter"};
+	private static final String[] ordinaries = {"cross_plain", "cross_annulety", "cross_bottony", "cross_calvatry", "cross_coptic", "cross_coptic", "cross_couped", "cross_crescenty", "cross_doubled", "cross_Jerusalem", "cross_latin", "cross_Lorraine", "cross_norse_sun", "cross_parted_fretted", "cross_patriarchal", "cross_pomelly", "cross_pommeled", "cross_potent", "cross_quarter-pierced", "cross_avellane", "cross_formerly", "cross_formerly_fitchy", "cross_clechy", "chief_plain", "chief_enarched", "chief_triangular", "chief_double-arched", "chief_pale", "base", "orle", "ford", "quarter", "semy_roundels", "tierce_plain", "tierce_sinister", "wall_plain", "flaunches", "saltire_couped", "saltire", "pall_plain", "pall_inverted", "shakefork"};
 
 	public CoatOfArms(){
 		this.metal = Basic.randint(2);
