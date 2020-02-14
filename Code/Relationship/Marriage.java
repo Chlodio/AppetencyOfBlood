@@ -10,10 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Marriage extends SexRelation{
-	protected boolean cousinUnion;
 	private boolean sated;		//procreational sated
 	private byte PRO; 			//procreational optimism 0–20
 	private byte type;			//0 = regular, 1 = levirate, 2 = sororate
+
+	protected byte kinType;		//Define how and if the husband and the wife are related
+	/*with the following values:
+	0 = no relation
+	1 = father-daughter (unused)
+	2 = mother-son (unused)
+	3 = sibling (unused)
+	4 = uncle-niece
+	5 = aunt-nephew
+	6 = cousin
+	7 = cousin-once-removed (unused)
+	8 = second cousin
+	*/
+
 
 	protected static Human bestMatch;
 	protected static int numOfMonthlyWeddings 			= 0;
@@ -22,21 +35,17 @@ public class Marriage extends SexRelation{
 	public static int gen 								= 0;
     protected static List<Marriage> list 				= new ArrayList<>();	//active marriages
     protected static Map<Integer, Marriage> marriages 	= new HashMap<>();
-	public static boolean activeCousin 					= false;
 
 /*Used for starters*/
 	public Marriage(Human husband, Human wife, int year){
 		super(husband, wife);
 		this.beginning.add(Calendar.DATE, -365*year);
-	//	this.anniversary += year;
-		this.cousinUnion =  false;
 		this.setMarriage();
     }
 
 /*Used for regulars*/
     public Marriage(Human husband, Human wife){
 		super(husband, wife);
-		this.cousinUnion =  activeCousin;
 		this.anniversary = 	0;
 		this.setMarriage();
 		this.determineEndForFornication();
@@ -49,6 +58,64 @@ public class Marriage extends SexRelation{
 		list.add(this);
 		this.stag.addMarriage(this);
 		this.doe.addMarriage(this);
+		this.setKinType(this.defineKinType());
+	}
+
+	public void setKinType(byte i){
+		this.kinType = i;
+	}
+
+	//Try to to find relation
+	public byte defineKinType(){
+		Human h = this.getStag(); 	//Get husband
+		Human w = this.getDoe();	//Get wife
+		if (h.isFirstCousinOf(w)){
+			return 6;					//Return cousin
+		} else if (h.isSecondCousinOf(w)){
+			return 8;
+		} else if (h.isUncleOf(w)){
+			return 4;					//Return uncle-niece
+		} else if (w.isAuntOf(h)){
+			return 5;					//Return aunt-nephew
+		}
+
+		return 0;
+
+	}
+
+	public String getKinTypeHTML(Human h){
+		if (this.hasKinType()){
+			switch(this.getKinType()){
+				case 6:
+					return h.getPossessive()+" cousin, ";
+				case 8:
+					return h.getPossessive()+" second cousin, ";
+				case 4:
+					return h.getPossessive()+" "+this.getKinNibling(h)+", ";
+				case 5:
+					return h.getPossessive()+" "+this.getKinPibling(h)+", ";
+				default:
+					return "";
+			}
+		} else {
+			return "";
+		}
+	}
+
+	public String getKinNibling(Human h){
+		if (h.isMale()){
+			return "niece";
+		} else {
+			return "nephew";
+		}
+	}
+
+	public String getKinPibling(Human h){
+		if (h.isMale()){
+			return "aunt";
+		} else {
+			return "uncle";
+		}
 	}
 
 	public void consummate(){
@@ -95,34 +162,24 @@ public class Marriage extends SexRelation{
 	}
 
 	public static void prepare(Human groom){
-		if (hasCousinMatch(groom)){
-			activeCousin = true;
+		if (match(groom)){
 			marryFiancee(groom, bestMatch);
-			activeCousin = false;
-			return;
-		}
-
-		if (groom.isUnwed()){
-
-			if (match(groom)){
-				marryFiancee(groom, bestMatch);
-			} else if (groom.isNoble()){
-				Human w = Woman.findWench();
-				if (w != null){
-					marryFiancee(groom, w);
-				}
+		} else if (groom.isNoble()){
+			Human w = Woman.findWench();
+			if (w != null){
+				marryFiancee(groom, w);
 			}
-
-			/*	if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
-					if (groom.hasUnmarriedMistress()){
-						marryMistress(groom);
-						ca++;
-					}
-				} else if (Basic.randint(5) == 0){
-					Affair.begin(groom);
-				}
-			}*/
 		}
+
+		/*	if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
+				if (groom.hasUnmarriedMistress()){
+					marryMistress(groom);
+					ca++;
+				}
+			} else if (Basic.randint(5) == 0){
+				Affair.begin(groom);
+			}
+		}*/
 	}
 
 	public static int ca = 0;
@@ -140,22 +197,6 @@ public class Marriage extends SexRelation{
 			}
 		}
 		marryFiancee(g, b);
-	}
-
-	public static boolean hasCousinMatch(Human groom){
-		List<Human> l = new ArrayList<>();
-		if (groom.hasFirstCousin()){
-			l = groom.getLivingFirstCousins();
-			for (Human x: l){
-				if (x.isFemaleAdult()){
-					if (x.isUnwed() && groom.isYoungerThan(x, 10) && x.isUnderAgeOf(41) ){
-						bestMatch = x;
-						return true;
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	public static boolean match(Human b){
@@ -495,6 +536,21 @@ public class Marriage extends SexRelation{
 	}
 
 
+	public static int getPerOfSecondCousinUnions(){
+		List<Marriage> l = getList();
+		int n = 0;
+		float i;
+		for(Marriage x: l){
+			if (x.isSecondCousinUnion()){
+				n++;
+			}
+		}
+
+		i = (n+0.0f)/getNum();
+		return (int) (i*100);
+	}
+
+
 	public static int getNumOfLevirates(){
 		List<Marriage> l = getList();
 		int i = 0;
@@ -572,7 +628,10 @@ public class Marriage extends SexRelation{
 		return this == h.getLatestMarriage();
 	}
 
-	public boolean isCousinUnion(){				return this.cousinUnion;				}
+	public boolean isCousinUnion(){				return this.kinType == 6;				}
+	public boolean isSecondCousinUnion(){		return this.kinType == 8;				}
+	public boolean hasKinType(){				return this.kinType != 0;				}
+	public byte getKinType(){					return this.kinType;					}
 	public boolean isLevirate(){				return this.type == 1;					}
 	public boolean isSororate(){				return this.type == 2;					}
 	public static int getMonthlyWedding(){		return numOfMonthlyWeddings;			}

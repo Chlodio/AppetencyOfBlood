@@ -131,7 +131,7 @@ public class Rela{
 //Sons
 
 	public boolean isSonOf(Human h){
-		return this.father == h;
+		return this.father == h || this.mother == h;
 	}
 
 	public List<Human> getSons(){				return new ArrayList<>(this.sons);			}
@@ -223,6 +223,10 @@ public class Rela{
 	}
 
 //Daughters
+
+	public boolean isDaughterOf(Human h){
+		return this.father == h || this.mother == h;
+	}
 
 	public List<Human> getDaughters(){			return new ArrayList<>(this.daughters);	}
 
@@ -887,6 +891,30 @@ public boolean hadMatGrandma(){
 	}
 
 
+//Second cousin of
+
+
+//Test if humans are second cousin by seeing if they have a common great-grandparent
+	public boolean isSecondCousinOf(Human h){
+		Human[] l1;
+		Human[] l2;
+		if (this.hadPatGreatGrandpa() && h.hadPatGreatGrandpa()){
+			l1 = this.getGreatGrandparents();
+			l2 = h.getGreatGrandparents();
+			for(Human x: l1){
+				if (x != null){
+					for(Human y: l2){
+						if (x == y){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+
 //Piblings
 
 
@@ -919,6 +947,40 @@ public boolean hadMatGrandma(){
 		return false;
 	}
 
+
+//Uncle and aunt cognatic
+	public boolean isUncleOf(Human h){
+		if (h.hadPatGrandpa()){
+			if (this.isSonOf(h.getFathersFather())){
+				return true;
+			} else if (this.isSonOf(h.getFathersMother())){
+				return true;
+			}
+		} else if (h.hadMatGrandpa()){
+			if (this.isSonOf(h.getMothersFather())){
+				return true;
+			}  else if (this.isSonOf(h.getMothersMother())){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isAuntOf(Human h){
+		if (h.hadPatGrandpa()){
+			if (this.isDaughterOf(h.getFathersFather())){
+				return true;
+			}
+		} else if (h.hadMatGrandpa()){
+			if (this.isDaughterOf(h.getMothersFather())){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
 //Patruus	i.e paternal uncles
 
 	//Does character's father have a living brother?
@@ -946,19 +1008,19 @@ public boolean hadMatGrandma(){
 
 //Father's sisterss
 
-public List<Human> getAmitai(){
-	List<Human> list = this.getFathersFather().getDaughters();
-	list.remove(this.getMother());
-	return list;
-}
+	public List<Human> getAmitai(){
+		List<Human> list = this.getFathersFather().getDaughters();
+		list.remove(this.getMother());
+		return list;
+	}
 
 //Mother's sisters
 
-public List<Human> getMaterterai(){
-	List<Human> list = this.getMothersFather().getDaughters();
-	list.remove(this.getMother());
-	return list;
-}
+	public List<Human> getMaterterai(){
+		List<Human> list = this.getMothersFather().getDaughters();
+		list.remove(this.getMother());
+		return list;
+	}
 
 //Nephew
 

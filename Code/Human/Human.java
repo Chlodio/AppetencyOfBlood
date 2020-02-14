@@ -813,6 +813,9 @@ public class Human {
 	public boolean hasPaternalNephew(){			return this.rela.hasPaternalNephew(); 			}
 	public boolean hasPaternalPibling(){		return this.rela.hasPaternalPibling(); 			}
 	public boolean hasPatruus(){				return this.rela.hasPatruus(); 					}
+	public boolean isUncleOf(Human h){			return this.rela.isUncleOf(h); 					}
+	public boolean isAuntOf(Human h){			return this.rela.isAuntOf(h); 					}
+	public boolean isDaughterOf(Human h){		return this.rela.isDaughterOf(h);				}
 	public boolean hasPibling(){				return this.rela.hasPibling(); 					}
 	public boolean hasSeniorPaternalRelative(){	return this.rela.hasSeniorPaternalRelative(); 	}
 	public boolean hasSister(){					return this.rela.hasSister(); 					}
@@ -827,6 +830,7 @@ public class Human {
 	public boolean isFatherOf(Human h){			return this.rela.isFatherOf(h);					}
 	public boolean isMotherOf(Human h){			return this.rela.isMotherOf(h);					}
 	public boolean isFirstCousinOf(Human h){	return this.rela.isFirstCousinOf(h); 			}
+	public boolean isSecondCousinOf(Human h){	return this.rela.isSecondCousinOf(h); 			}
 	public boolean isFullSiblingOf(Human i){	return this.rela.isFullSiblingOf(i); 			}
 	public boolean isIntimateWith(Human i){		return this.rela.isIntimateWith(i); 			}
 	public boolean isLoverOf(Human h){			return this.rela.isLoverOf(h);					}

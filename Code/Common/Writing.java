@@ -199,9 +199,7 @@ public class Writing {
 				for (Marriage y: ml){
 					s1 = "";
 					s1 = "In "+y.getBeginning()+" "+q.getPronoun()+" married ";
-					if (y.isCousinUnion()){
-						s1 += q.getPossessive()+" cousin, ";
-					}
+					s1 += y.getKinTypeHTML(q);
 					s1 += Basic.getCardinal(y.getAgeAt(y.getSpouse(q)))+"-year-old "+y.getSpouse(q).getName().getPatronymic();
 					writer.write(s1);
 						writer.write("; "+y.getHappinessDesc());
@@ -421,7 +419,10 @@ public class Writing {
 			writer.write("</table><b>Marriages</b><table>");
 
 			writer.write("<tr><th>#</th><th>%</th><tr>\n");
-			writer.write("<tr><th>Cousin marriages</th><td>"+Marriage.getPerOfCousinUnions()+"%</td><tr>\n");
+
+			writer.write("<tr><th>First Cousin marriages</th><td>"+Marriage.getPerOfCousinUnions()+"%</td><tr>\n");
+
+			writer.write("<tr><th>Second Cousin marriages</th><td>"+Marriage.getPerOfSecondCousinUnions()+"%</td><tr>\n");
 
 			writer.write("<tr><th>Levirate marriages</th><td>"+Marriage.getPerOfLevirates()+"%</td><tr>\n");
 
