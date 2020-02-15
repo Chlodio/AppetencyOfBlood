@@ -14,7 +14,7 @@ public class SexRelation{
 	protected int anniversary;
 	protected int sexSat;			//sexual satisfaction
 	protected int romance;
-	protected int[] procreation;
+//	protected int[] procreation;
 	protected List<Human> offspring;
     protected static int id 								= 0;
 	protected Calendar beginning;
@@ -64,25 +64,18 @@ public class SexRelation{
 		}
 		this.offspring = 	new ArrayList<>();
 		this.active = 		true;
-		this.calcProcreation(m, w);
 	}
 
-	/*Calculate fertility array*/
-		public void calcProcreation(Human m, Human w){
-			int ha = 			m.getAge();
-			int wa = 			w.getAge();
-			int fmy = 			70-ha;
-			int ffy = 			50-wa;
-			float v = 			(this.getFertility()/10f)*(1.25f);
-			this.procreation =  new int[100-ha];
-			if (fmy > 0 && ffy > 0){
-				int tfy = Math.min(fmy, ffy);
-				for (int x = 0; x < tfy; x++){
-					this.procreation[x] = (int) (v*(fert[(wa-12)/10][(wa-12)%10]));
-					wa++;
-				}
-			}
-		}
+
+	public int calcProcreation(){
+		int ha = 			this.getStag().getAge();
+		int wa = 			this.getDoe().getAge();
+		int fmy = 			70-ha;
+		int ffy = 			50-wa;
+		float v = 			(this.getFertility()/10f)*(1.25f);
+		int tfy = Math.min(fmy, ffy);
+		return (int) (v*(fert[(wa-12)/10][(wa-12)%10]));
+	}
 
 		public static void doAnnual(){
 			List<Marriage> lm = Marriage.getList();

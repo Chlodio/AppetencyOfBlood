@@ -41,7 +41,7 @@ public class Affair extends SexRelation {
 
 	public void engageAdultery(){
 		Woman w = (Woman) this.doe;
-		if (Basic.randint(100) < this.procreation[this.anniversary] && !w.isPregnant()){
+		if (Basic.randint(100) < this.calcProcreation() && !w.isPregnant()){
 			w.fillUterus(this);
 			w.growFetus();
 			Woman.pregnant.add(this.doe);

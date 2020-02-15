@@ -318,26 +318,13 @@ public class Marriage extends SexRelation{
 
 	public void breed(){
 		Woman w = (Woman) this.doe;
-
-		if (this.canBreed()){
-			try{
-				if (Basic.randint(100) < this.procreation[this.anniversary] && !w.isPregnant()){
+		if (this.canBreed() && !w.isPregnant()){
+			if (w.isUnderAgeOf(46)){
+				if (Basic.randint(100) < this.calcProcreation() ){
 					w.fillUterus(this);
 					w.growFetus();
 					Woman.pregnant.add(this.doe);
 				}
-			}
-			catch (ArrayIndexOutOfBoundsException e){
-				System.out.println("Husband alive: "+this.stag.isAlive()+"\nWife alive: "+this.doe.isAlive());
-				System.out.println("Active: "+this.isActive());
-				System.out.println("Wife had father:"+this.doe.hadFather());
-				System.out.println("Husband died:"+this.stag.getDeath());
-				List<Marriage> l = this.stag.getMarriages();
-				for(Marriage x: l) {
-					System.out.println("Began: "+x.getBeginning());
-					System.out.println("Name: "+x.getDoe());
-				}
-				throw new RuntimeException();
 			}
 		}
 	}
