@@ -7,13 +7,16 @@ td, th{
 	padding:5 10;
 }
 
-.portrait{
-	padding: 0;
-	clip: rect(10px, 90px, 190px, 10px);
-
+th {
+	background:lightgrey;
 }
 
 
+.portrait{
+	padding: 0 0;
+	clip: rect(10px, 90px, 190px, 10px);
+
+}
 
 .nameCol {
 	max-width: 123px;
@@ -27,9 +30,10 @@ td, th{
 	display:inline;
 }
 
-
 .CoAT{
+
 	background: lightgray;
+	padding:0;
 }
 
 .escu{
@@ -53,16 +57,16 @@ td, th{
 
 .purpure_e { background:purple; }
 
-.or_o { filter: invert(.8) sepia(50) saturate(50) hue-rotate(0deg); }
+.or_o { filter: invert(89%) sepia(51%) saturate(1293%) hue-rotate(356deg) brightness(109%) contrast(105%); }
 
-.argent_o { filter: invert(1) sepia(100) saturate(0) hue-rotate(0deg); }
+.argent_o { filter: invert(100%) sepia(0%) saturate(6404%) hue-rotate(353deg) brightness(105%) contrast(108%);}
 
-.sable_o { filter: invert(0.0) sepia(100) saturate(100) hue-rotate(100deg); }
+.sable_o { filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(263deg) brightness(107%) contrast(107%); }
 
-.vert_o { filter: invert(.35) sepia(30) saturate(30) hue-rotate(65deg); }
+.vert_o { filter: invert(18%) sepia(98%) saturate(5569%) hue-rotate(118deg) brightness(99%) contrast(105%); }
 
-.gules_o { filter: invert(0.1) sepia(100) saturate(100) hue-rotate(0deg); }
+.gules_o { filter: invert(13%) sepia(96%) saturate(5276%) hue-rotate(1deg) brightness(106%) contrast(120%); }
 
-.azure_o { filter: invert(0.1) sepia(50) saturate(50) hue-rotate(200deg); }
+.azure_o { filter: invert(12%) sepia(94%) saturate(5075%) hue-rotate(245deg) brightness(88%) contrast(154%); }
 
-.purpure_o { filter: invert(0.15) sepia(10) saturate(10) hue-rotate(270deg); }
+.purpure_o { filter: invert(15%) sepia(86%) saturate(7263%) hue-rotate(296deg) brightness(62%) contrast(107%); }

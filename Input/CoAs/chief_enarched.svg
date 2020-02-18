@@ -39,39 +39,18 @@
      inkscape:window-height="1016"
      id="namedview25"
      showgrid="false"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="-66.771186"
-     inkscape:cy="105.10884"
+     inkscape:zoom="4"
+     inkscape:cx="34.725025"
+     inkscape:cy="96.300713"
      inkscape:window-x="52"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg23"
      showguides="true"
-     inkscape:guide-bbox="true">
-    <sodipodi:guide
-       position="-1.2374369,91.570328"
-       orientation="0,1"
-       id="guide928"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="100,73.333"
-       orientation="0,1"
-       id="guide930"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="25,125.375"
-       orientation="1,0"
-       id="guide1538"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="75,136.00391"
-       orientation="1,0"
-       id="guide1540"
-       inkscape:locked="false" />
-  </sodipodi:namedview>
+     inkscape:guide-bbox="true" />
   <path
      style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
-     d="M 0,1.8310547e-7 H 50 100 V 39.167 C 100,39.167 75,18.3335 50,18.3335 25,18.3335 0,39.167 0,39.167 Z"
+     d="M 0,-1.9999998 H 50 100 V 39.167 C 100,39.167 75,18.3335 50,18.3335 25,18.3335 0,39.167 0,39.167 Z"
      id="rect819"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccccscc" />
