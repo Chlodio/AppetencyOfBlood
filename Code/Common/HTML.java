@@ -23,9 +23,17 @@ public class HTML {
 		return "<th>"+s+"</th>";
 	}
 
+	public static String getThClass(String s, String n){
+		return "<th class='"+s+"'>"+n+"</th>";
+	}
+
 	//Get empty row
 	public static String getTh(){
 		return "<th></th>";
+	}
+
+	public static String getThColspan(int i){
+		return "<th colspan='"+i+"'></th>";
 	}
 
 	//Get th with colspan
@@ -69,6 +77,20 @@ public class HTML {
 		return s;
 	}
 
+	public static String createTableHeaderClass(String[][] a){
+		String s = "";
+		for(String[] x: a){
+			if (x[1] == ""){
+				s += getTh(x[0]);
+			} else {
+				s += getThClass(x[1], x[0]);
+			}
+		}
+		return s;
+	}
+
+
+
 	public static String getTable(String t){
 		String s = "<table style='text-align:center;'>";	//Start table
 		s += t;												//Add paragrap inside of table
@@ -94,6 +116,18 @@ public class HTML {
 	//Adds the text inside of list item inside of unordered list;
 	public static String getUlLi(String s){
 		return getUl(getLi(s));
+	}
+
+	public static String getH3(String s){
+		return "<h3>"+s+"</h3>";
+	}
+
+	public static String getHr(){
+		return "<hr>";
+	}
+
+	public static String getP(String s){
+		return "<p>"+s+"</p>";
 	}
 
 }

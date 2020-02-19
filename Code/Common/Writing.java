@@ -21,8 +21,11 @@ public class Writing {
 		String td;									//Table cell
 		String t;									//Table
 		String s = HTML.getBeginning();
-		String[] th = {"Name", "CoA", "Founded", "Origin", "Men", "Women", "Head", "Alliances"};
-		t = HTML.createTableHeader(th);
+		//[0] == Name of the th
+		//[1] == Name of css class
+		String[][] th = {{"Name", ""}, {"CoA", "CoAT"}, {"Founded", ""}, {"Origin", ""}, {"Men", ""}, {"Women", ""}, {"Head", ""}, {"Alliances", ""}};
+
+		t = HTML.createTableHeaderClass(th);
 		List<House> l = House.getNobles();
 		for(House x: l){
 			td = "";
@@ -42,7 +45,7 @@ public class Writing {
 		td += HTML.getThCoSpan("N/A", 3);				//Fill in the empty N&A
 		td += HTML.getTh(""+House.getNoblemenCount());	//Number of noblemen total
 		td += HTML.getTh(""+House.getNoblewomenCount());//Number of noblewomen total
-		td += HTML.getTh();								//Get empty
+		td += HTML.getThColspan(2);						//Get empty
 
 		t += HTML.getTr(td);
 		s += HTML.getTable(t);
@@ -122,14 +125,14 @@ public class Writing {
 
 	//Cell for portraits
 		td = q.getPortrait();
-		tr += HTML.getTd(td);
+		tr += HTML.getTdClass("portrait", td);
 
 	//Cell for coat of arms
 		td = q.getHouseCoALink();
 		tr += HTML.getTdClass("CoAT", td);
 
 	//Cell for birth
-		tr += HTML.getTd(q.getBirth());
+		tr += HTML.getTd(q.getBirthF());
 
 	//Cell for marriage
 		td = recordMarriages(q);
@@ -138,7 +141,7 @@ public class Writing {
 	//Cell for age
 		td = q.getPossibleDeath();
 		td += HTML.getBr();
-		tr += HTML.getTd(td+"Aged "+q.aged());
+		tr += HTML.getTd(td+"Aged "+q.getAged());
 
 	//Cell for claims
 		tr += HTML.getTdClass("nameCol2", h.getClaim().getClaimHTML());
@@ -154,8 +157,8 @@ public class Writing {
 		t = HTML.getBeginning();
 
 		//The names of headers
-		String[] th = {"Name", "Prt.", "CoA", "Birth", "Marriage(s)", "Death", "Claim"};
-		te += HTML.createTableHeader(th);
+		String[][] th = {{"Name", ""}, {"Prt.", "portrait"}, {"CoA", "CoAT"}, {"Birth", ""}, {"Marriage(s)", ""}, {"Death", ""}, {"Claim", ""}};
+		te += HTML.createTableHeaderClass(th);
 		te += HTML.getTr(t);
 
 		Human q;
@@ -163,7 +166,7 @@ public class Writing {
 			te += HTML.getTr(recordMonarchInvidual(r));
 		}
 
-		t = HTML.getTable(te);				//Table is now added into the body
+		t += HTML.getTable(te);				//Table is now added into the body
 		t += HTML.getEnding();
 		return t;
 	}
@@ -171,105 +174,36 @@ public class Writing {
 //End of list of monarchs
 //Beginning of  monarchs info
 
+	public static String writeMonarchsInfo(){
+		String s = HTML.getBeginning();
+		for (Holder h: Realm.getLineage(0)){
+			s += writeMonarchHolder(h);
+		}
+		s += HTML.getEnding();
+		return s;
+	}
+
+	public static String writeMonarchHolder(Holder r){
+		String s = "";
+		Human h = r.getPerson();
+
+		s += HTML.getH3(r.getName()+" ("+h.getLifespan()+")"+HTML.getHr());
+		s += HTML.getP(r.getReign());
+		s += HTML.getP(r.getClaim().getClaimHTML());
+		s += HTML.getP(r.getNotes());
+		s += HTML.getP(r.getBiography());
+	//	s += HTML.getP("Inbreeding: "+Consanguinity.countInbreed(h));
+
+		s = HTML.getUl(s);
+		return s;
+	}
+
 
 	public static void writeTable(){
-		Human q;
-		ArrayList<Human> tempA;
-		List<Human> lo;
-		int tid = -1;
-		String s1;
-		List<Marriage> ml;
-		int nOm;		//num of marriages
+		String s = writeMonarchsInfo();
 		try {
 			FileWriter writer = new FileWriter("Output/MonarchsInfo.html", false);
-			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
-			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
-			writer.write("</head><body>\n");
-			for (Holder r: Realm.getLineage(0)){
-				q = r.getPerson();
-				tid++;
-				writer.write("<h3>"+r.getName()+" ("+q.getLifespan()+")<hr></h3>\n");
-				writer.write("<p>"+r.getReign()+" "+r.getReignLength()+"</p>");
-				writer.write("<p>"+r.getClaim().getClaimHTML()+"</p>");
-				writer.write("<p>"+r.getNotes()+"</p>");
-				writer.write("<p>"+"Inbreeding: "+Consanguinity.countInbreed(q)+"</p>");
-				writer.write(r.getRegentsHTML());
-				if (q.isChild()){ continue;}
-				ml = q.getMarriages();
-				for (Marriage y: ml){
-					s1 = "";
-					s1 = "In "+y.getBeginning()+" "+q.getPronoun()+" married ";
-					s1 += y.getKinTypeHTML(q);
-					s1 += Basic.getCardinal(y.getAgeAt(y.getSpouse(q)))+"-year-old "+y.getSpouse(q).getName().getPatronymic();
-					writer.write(s1);
-						writer.write("; "+y.getHappinessDesc());
-					if (y.getOffspringNum() != 0){
-						writer.write(" produced "+y.buildOffspringHTML()+y.buildLivingOffspringHTML()+":<br>");
-						writer.write("\n<table><r><th>Name</th><th>Prt.</th><th>CoA</th><th>Lifespan</th><th>Notes</th></tr>\n");
-						lo = y.getOffspring();
-						for (Human x: lo ){
-							writer.write("<tr>");
-							writer.write("<td class='nameCol'>"+x.getShortName()+"</td>\n<td class='portrait'>");
-							writer.write(x.getPortrait());
-							writer.write("</td>\n");
-							writer.write(HTML.getTdClass("CoAT", x.getCoALink()));
-							writer.write("<td>"+x.getLifespan()+"<br>"+"Aged "+x.aged()+"</td>\n");
-							writer.write("<td>");
-							if (x.isAdult() && x.wasMarried()){
-								nOm = x.getNumOfMarriages();
-								if (x.isMale()){
-									if (nOm > 1){
-										writer.write("Wives:<ol>");
-										for(int z = 0; z < nOm; z++){
-											writer.write("<li>"+x.getMarriage(z).getDoe().getBirthName()+x.getMarriage(z).getTenure());
-											writer.write(x.getMarriage(z).getOffspringHTML()+"</li>\n");
-										}
-										writer.write("</ol>");
-									} else{
-										writer.write("Married "+x.getFirstMarriage().getDoe().getBirthName()+" in "+x.getFirstMarriage().getBeginning()+"\n");
-										writer.write(x.getFirstMarriage().getOffspringHTML());
-									}
-								} else{
-									if (nOm > 1){
-										writer.write("Husbands:<ol>");
-										for(int z = 0; z < nOm; z++){
-											writer.write("<li>"+x.getMarriage(z).getStag().getBirthName()+x.getMarriage(z).getTenure());
-											writer.write(x.getMarriage(z).getOffspringHTML()+"</li>\n");
-										}
-										writer.write("</ol>");
-									} else{
-										writer.write("Married "+x.getFirstMarriage().getStag().getBirthName()+" in "+x.getFirstMarriage().getBeginning()+"\n");
-										writer.write(x.getFirstMarriage().getOffspringHTML());
-									}
-								}
-							}
-							writer.write("</td></tr>");
-						}
-						writer.write("</table><br>");
-					}
-					else{
-						writer.write(" was childless.<br>");
-					}
-				}
-				if (q.wasAdulterer()) {
-					writer.write(Basic.capitalize(q.getPronoun())+" had following "+q.getLoverGroup()+":<br><ul>");
-					List<Affair> la = q.getAllAffairs();
-					List<Human> lh;
-					for( Affair x: la ) {
-						writer.write("<li>"+q.getLoverfromAffair(x).getFormalName());
-						lh = x.getOffspring();
-						writer.write("<ul>");
-						for(Human o: lh){
-							writer.write("<li>"+o.getFormalName()+" "+o.getLifespan()+"</li>");
-						}
-						writer.write("</ul>");
-					}
-				}
-
-				writer.write("</ul>");
-			}
-			//writer.write(Consanguinity.buildFamilyTree(Holder.sovereign));
-			writer.write("</body></html>");
+			writer.write(s);
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -489,7 +423,7 @@ public class Writing {
 		int NAW = 0; 	//number of adult women
 		for (Human x: Basic.human.values()){
 			if (x.isAlive() == false){
-				agy = x.aged();
+				agy = x.getAged();
 				atD0 += agy;
 				NoP0++;
 				if (x.isMale()){

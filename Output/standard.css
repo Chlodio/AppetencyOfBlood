@@ -28,19 +28,17 @@ th {
 
 .CoA {
 	display:inline;
+	width:36;
 }
 
 .CoAT{
-
 	background: lightgray;
 	padding:0;
 }
 
 .escu{
-
 	background:gray;
-	position: black;
-	clip-path: path('m17.5 38.5s17.5-6.582 17.5-23.31v-15.15h-35v15.15c0 16.73 17.5 23.31 17.5 23.31z');
+	clip-path: path('M 17.999999,39.658001 C 17.999999,39.658001 36,32.870977 36,15.621912 V 0 H 0 V 15.621912 C 0,32.87304 17.999999,39.658001 17.999999,39.658001 Z');
 }
 
 .or_e { background:yellow; }

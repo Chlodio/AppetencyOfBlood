@@ -283,11 +283,19 @@ public class Human {
 		return this.getAge()-a.getAge();
 	}
 
-	public int aged(){
+	public int getAged(){
 		if (!this.isAlive()){
 			return this.death.get(Calendar.YEAR)-this.birth.get(Calendar.YEAR);
 		}
 		return this.getAge();
+	}
+
+	public int getAgeIn(Calendar d){
+		return Basic.getDaysBetween(this.birth, d)/365;
+	}
+
+	public int getDaysIn(Calendar d){
+		return Basic.getDaysBetween(this.birth, d);
 	}
 
 	//If age is above
@@ -326,6 +334,8 @@ public class Human {
 			return "PRSN";
 		}
 	}
+
+	public Calendar getDeathDate(){	return this.death;	}
 
 //Title methods
 
@@ -594,7 +604,7 @@ public class Human {
 	public String getHairShort(){	return hairShort[this.getHair()]; 			}
 
 	public String getPortrait(){
-		int age = this.aged();
+		int age = this.getAged();
 		String s;
 		if (age >= 15){
 			s = "<img src='../Input/Portraits/";
@@ -929,7 +939,8 @@ public class Human {
 
 	public int getHair(){						return Character.getNumericValue(this.DNA.charAt(1));}
 	public int getEye(){						return Character.getNumericValue(this.DNA.charAt(0));}
-	public String getBirth(){					return Basic.format1.format(this.birth.getTime());	 }
+	public String getBirthF(){					return Basic.format1.format(this.birth.getTime());	 }
+	public Calendar getBirth(){					return this.birth; }
 	public String getDeath(){					return Basic.format1.format(this.death.getTime());	 }
 	public Calendar getBirthC(){				return (Calendar) this.birth.clone();				 }
 	public Personality getPersonality(){		return this.personality;	 						 }
@@ -969,6 +980,7 @@ public class Human {
 	public Office getOffice(){					return this.office;				}
 	public PolProfile getPolProfile(){			return this.polProfile;			}
 	public String child(){						return "";						}
+	public String getMaritalBio(){				return "";						}
 	public String getFormalName(){				return "?";						}
 	public String getFullName(){				return this.getName().getFull();}
 	public String getNameS(String title){		return title;					}

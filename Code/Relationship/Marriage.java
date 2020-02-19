@@ -468,7 +468,7 @@ public class Marriage extends SexRelation{
 	public String buildLivingOffspringHTML(){
 		int c = 0;
 		for(Human x: this.offspring){
-			if (x.aged() >= 20){ c++;}
+			if (x.getAged() >= 20){ c++;}
 		}
 		if (this.offspring.size() != c){
 			if (c > 0){
@@ -607,6 +607,38 @@ public class Marriage extends SexRelation{
 		int n = getNumOfChildren();
 
 		return n/getNum();
+	}
+
+	public String getHTMLInterfix(){
+		String s = "";
+		if (this.isActive()){
+			s =  ", the union has lasted ";
+			s += ""+Basic.getYearsAndDays(Basic.getDaysBetween(this.getBeginning(), Basic.getDate()));
+		} else {
+			s =  ", the union lasted ";
+			s += ""+Basic.getYearsAndDays(Basic.getDaysBetween(this.getBeginning(), this.getEnding()));
+		}
+		return s;
+	}
+
+	public String getHTMLPrefixM(){
+		String s = " In "+this.getBeginningYear()+", ";
+		s += "at the age of "+Basic.getCardinal(this.getStag().getAgeIn(this.getBeginning()));
+		s += " "+this.getStag().getPronoun()+" married ";
+		s += Basic.getCardinal(this.getDoe().getAgeIn(this.getBeginning()))+"-year-old ";
+		s += this.getDoe().getName().getPatronymic();
+		s += this.getHTMLInterfix();
+		return s+".";
+	}
+
+	public String getHTMLPrefixF(){
+		String s = " In "+this.getBeginningYear()+", ";
+		s += "at the age of "+Basic.getCardinal(this.getDoe().getAgeIn(this.getBeginning()));
+		s += " "+this.getDoe().getPronoun()+" married ";
+		s += Basic.getCardinal(this.getStag().getAgeIn(this.getBeginning()))+"-year-old ";
+		s += this.getStag().getName().getPatronymic();
+		s += this.getHTMLInterfix();
+		return s+".";
 	}
 
 

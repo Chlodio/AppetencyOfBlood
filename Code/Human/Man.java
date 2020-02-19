@@ -427,6 +427,21 @@ public class Man extends Human {
 		//return this.cadetStatus == 1;
 	}
 
+	@Override
+	public String getMaritalBio(){
+		String s = "";
+		List<Marriage> l;
+		if (this.isAdult()){
+			l = this.getMarriages();
+			for(Marriage x: l){
+				s += x.getHTMLPrefixM();
+			}
+		}
+		return s;
+	}
+
+
+
 	public void addToElders(){								elders.add(this); 	  			}
 	public void removeFromElders(){							elders.remove(this); 			}
 	public void setCadetStatus(int i){						this.cadetStatus = i;			}

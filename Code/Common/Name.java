@@ -85,7 +85,12 @@ public class Name{
 
 
 	public String getPatronymic(){
-		String n = this.getOwner().getBirthName();							//I.e Bob Smith
+		String n = "";
+		if (this.getOwner().isRegnant()){
+			n = this.getOwner().getFormalName();
+		} else {
+			n = this.getOwner().getBirthName();							//I.e Bob Smith
+		}
 
 		//Naturally fatherless people don't get a patronymic name
 		if (this.getOwner().hadFather()){

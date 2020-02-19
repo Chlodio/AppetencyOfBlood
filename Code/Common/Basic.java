@@ -43,7 +43,7 @@ public class Basic {
 			monthC.put(x, new ArrayList<>());
 			monthE.put(x, new ArrayList<>());
 		}
-		Basic.date.set(1000,0,1);
+		getDate().set(1000,0,1);
 
 		for (int x = 0; x < 100; x++){
 			Human.createFamily();
@@ -89,7 +89,7 @@ public class Basic {
 						for (Office x: Office.offices){ 						x.doAccounting();}
 						Mating.retire();
 						for (int month = 1; month != 13; month++){
-						   maom = Basic.date.getActualMaximum(Calendar.DAY_OF_MONTH);
+						   maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
 						   for (Office x: Office.offices){
 							   if(x.isAtWar()){
 								   InterestImperialism.handleSiege(x);
@@ -104,8 +104,8 @@ public class Basic {
 							   for (int x0 = 0; x0 != dayC.get(dom).size();x0++){
 								   dayC.get(dom).get(x0).saunter(dayE.get(dom).get(x0));
 							   }
-							   Basic.date.add(Calendar.DATE, 1);
-							   dom = Basic.date.get(Calendar.DAY_OF_MONTH);
+							   getDate().add(Calendar.DATE, 1);
+							   dom = getDate().get(Calendar.DAY_OF_MONTH);
 						   }
 						   for (int xc = 1; xc < 32; xc++){
 							   dayC.get(xc).clear();
@@ -115,8 +115,8 @@ public class Basic {
 							   monthC.get(xc).clear();
 							   monthE.get(xc).clear();
 				   			}
-						   Basic.date.add(Calendar.DATE, 1);
-						   dom = Basic.date.get(Calendar.DAY_OF_MONTH);
+						   getDate().add(Calendar.DATE, 1);
+						   dom = getDate().get(Calendar.DAY_OF_MONTH);
 			            }
 						Marriage.flushMonthlyWedding();
 					}
@@ -169,12 +169,49 @@ public class Basic {
 		return list.get(randomizer.nextInt(list.size()));
 	}
 
+	public static Calendar getDate(){
+		return date;
+	}
+
+	public static int getDateDate(){
+		return getDate().get(Calendar.DATE);
+	}
+
+	public static int getDateMonth(){
+		return getDate().get(Calendar.MONTH);
+	}
+
+	public static int getDateYear(){
+		return getDate().get(Calendar.YEAR);
+	}
+
+
 	public static int getDaysLived(Calendar c){
-		int d = Basic.date.get(Calendar.DATE)-c.get(Calendar.DATE);
-		int m = (Basic.date.get(Calendar.MONTH)-c.get(Calendar.MONTH));
+		int d = getDateDate()-c.get(Calendar.DATE);
+		int m = (getDateMonth()-c.get(Calendar.MONTH));
 		m = (int) (m * 30.416f);
-		int y = (Basic.date.get(Calendar.YEAR)-c.get(Calendar.YEAR))*365;
+		int y = (getDateYear()-c.get(Calendar.YEAR))*365;
 		return (y+m+d);
+	}
+
+	public static int getDaysBetween(Calendar a, Calendar b){
+		int d = b.get(Calendar.DATE)-a.get(Calendar.DATE);
+		int m = (b.get(Calendar.MONTH)-a.get(Calendar.MONTH));
+		m = (int) (m * 30.416f);
+		int y = (b.get(Calendar.YEAR)-a.get(Calendar.YEAR))*365;
+		return (y+m+d);
+	}
+
+	//Parameter argument is days
+	public static String getYearsAndDays(int i){
+		int y = i/365;
+		int d =  i-(y*365);
+		String s = getPlural(y, "year");
+		if (isNotZero(s.length())){
+			s += ", and ";
+		}
+		s += getPlural(d, "day");
+		return s;
 	}
 
 
@@ -277,6 +314,23 @@ public class Basic {
 
 	public static String toLowerCase(String it){
 		return Character.toLowerCase(it.charAt(0))+it.substring(1);
+	}
+
+	//Check if number is more than one, if so add -s
+	public static String getPlural(int i, String s){
+		if (i > 1){
+			if (i > 10){
+		 		return i+" "+s+"s";
+			} else {
+				return getCardinal(i)+" "+s+"s";
+			}
+		} else {
+			if (Basic.isNotZero(i)){
+				return "one "+s;
+			} else {
+				return "";
+			}
+		}
 	}
 
 	public static boolean isLessThan(int a, int b){

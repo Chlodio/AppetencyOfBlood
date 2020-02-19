@@ -541,4 +541,18 @@ public class Woman extends Human {
 		return ll;
 	}
 
+
+	@Override
+	public String getMaritalBio(){
+		String s = "";
+		List<Marriage> l;
+		if (this.isAdult()){
+			l = this.getMarriages();
+			for(Marriage x: l){
+				s += x.getHTMLPrefixF();
+			}
+		}
+		return s;
+	}
+
 }

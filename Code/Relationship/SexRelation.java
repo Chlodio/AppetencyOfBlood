@@ -150,11 +150,11 @@ public class SexRelation{
 //Shortened version of GetTenure
 
 	public String getTenureShort(){
-		int b = this.getBeginning();
+		int b = this.getBeginningYear();
 
 //If the relation has not ended there can't be end date...
 		if (this.hasEnded()){
-			int e = this.getEnding();
+			int e = this.getEndingYear();
 
 //If the marriage began and ended during the same year there is no point in typing the same year twice
 			if (b != e){
@@ -165,8 +165,12 @@ public class SexRelation{
 
 	}
 
-	public int getBeginning(){					return this.beginning.get(Calendar.YEAR);}
-	public int getEnding(){						return this.ending.get(Calendar.YEAR);}
+	public int getBeginningYear(){				return this.beginning.get(Calendar.YEAR);}
+	public int getEndingYear(){					return this.ending.get(Calendar.YEAR);}
+
+	public Calendar getBeginning(){				return this.beginning;}
+	public Calendar getEnding(){				return this.ending;}
+
 
 	public static String[] happyDesc = 		{"miserable", "joyless", "", "happy", "loving"};
 	public static String[] unionDesc = 		{"union", "couple", "wedlock", "marriage", "matrimony"};
