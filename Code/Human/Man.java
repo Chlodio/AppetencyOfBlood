@@ -52,12 +52,12 @@ public class Man extends Human {
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		}
-		return this.getName().getName();
+		return this.getForeName();
 	}
 
 	@Override
 	public String getFormalName(){
-		String n = this.getName().getName();
+		String n = this.getForeName();
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
@@ -72,7 +72,7 @@ public class Man extends Human {
 
 	@Override
     public String makeName(){
-		String name = this.getName().getName();
+		String name = this.getForeName();
 		String hn =	  this.getHouse().getName();
 		if (this.getName().getNick() != null){
 			name +=" "+this.getName().getNick();
@@ -100,7 +100,7 @@ public class Man extends Human {
 				if (this.isAlive()){ Marriage.prepare(this); }
                 break;
             case 0:
-                this.kill();
+                this.kill((byte) 0);
                 break;
         }
     }
@@ -183,7 +183,7 @@ public class Man extends Human {
 		this.cadency = 0;
 		((Man) this).setCadetStatus(0);
 		this.setName(new Name(true, this));
-		new MainHouse(this, f.getName().getName());
+		new MainHouse(this, f.getForeName());
 		this.getHouse().setOrigin(2);							//Set bastardy
 		((Man) this).name.setFull(((Man) this).makeName());
 		this.addSon(f, m);
@@ -240,7 +240,7 @@ public class Man extends Human {
 			if (this.isLegimate()){
 				this.getFather().removeLivingSon();
 				if(this.hasBrother()){
-					h = this.getFather().getLivingSons();
+					h = this.getFather().getLegitLivingSons();
 					for (int x = 0; x < h.size(); x++){
 						h.get(x).cadency = x;
 					}

@@ -62,9 +62,9 @@ public class Holder{
 
 	public void fixTheFirst(){
 		if (this.getPerson().isMale()){
-			this.name = (this.getPerson().getName().getName()+" I");
+			this.name = (this.getPerson().getForeName()+" I");
 		} else{
-			this.name = (this.getPerson().getName().getName()+" I");
+			this.name = (this.getPerson().getForeName()+" I");
 		}
 		this.person.getName().setFull(this.getName());
 	}

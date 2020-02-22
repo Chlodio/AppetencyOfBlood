@@ -1,7 +1,8 @@
-package Code.Common;
+package Code.Human;
 public class ChaBox{
 	private boolean legimate;
 	private boolean posthumous;
+
 
 	public ChaBox(boolean b){
 		this.legimate 	= b;
@@ -13,9 +14,7 @@ public class ChaBox{
 	}
 
 	public void setLegitimacy(boolean b){	this.legimate = b;				}
-	public boolean isLegimate(){			return this.legimate == true;	}
+	public boolean isLegimate(){			return this.legimate;			}
 	public void setPosthumous(boolean b){	this.posthumous = b;			}
-	public boolean isPosthumous(){			return this.posthumous == true;	}
-
-
+	public boolean isPosthumous(){			return this.posthumous;			}
 }

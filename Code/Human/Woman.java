@@ -51,12 +51,12 @@ public class Woman extends Human {
 
 	@Override
 	public String getShortName(){
-		return this.getName().getName();
+		return this.getForeName();
 	}
 
 	@Override
 	public String getFormalName(){
-		String n = this.getName().getName();
+		String n = this.getForeName();
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
@@ -104,10 +104,10 @@ public class Woman extends Human {
     public void saunter(int x){
         switch(x){
 			case 20:
-				if (this.isAlive() == true){ this.childbirth();}
+				if (this.isAlive()){ this.childbirth();}
 				break;
             case 0:
-				if (this.isAlive() == true){ this.kill();}
+				if (this.isAlive()){ this.kill((byte) 0);}
 				break;
         }
     }
@@ -143,7 +143,7 @@ public class Woman extends Human {
 			}
 		}
 		if (Basic.randint(50) == 0){					//Maternal death?
-			this.kill();
+			this.kill((byte) 10);
 		}
 
 		else {
@@ -340,7 +340,7 @@ public class Woman extends Human {
 	public void sRename(Title title){
 		this.title = title;
 		this.name.setFull(this.makeName());
-		//this.getName().setFull(this.getName().getName());
+		//this.getName().setFull(this.getForeName());
 	}
 
 

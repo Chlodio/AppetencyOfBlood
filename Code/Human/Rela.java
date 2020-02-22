@@ -97,6 +97,10 @@ public class Rela{
 		return Human.hasLiving(this.getChildren());
 	}
 
+	public boolean hadChild(){
+		return Basic.isNotZero(this.getChildren().size());
+	}
+
 	public void addChild(Human f, Human m){
 		f.getRela().children.add(this.o);
 		m.getRela().children.add(this.o);

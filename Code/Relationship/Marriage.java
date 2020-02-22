@@ -621,23 +621,74 @@ public class Marriage extends SexRelation{
 		return s;
 	}
 
+	//Offer explanation why no children were born fro
+	public String findReasonForInfertility(){
+		if (this.getDoe().wasBarren()){
+			if (this.getStag().hadChild()){
+				return this.getStag().getForeName()+" failed to impregnate his wife";
+			} else {
+				return this.getStag().getForeName()+" was incapable of breeding";
+			}
+		} else if (this.getStag().hadChild()){
+			return this.getDoe().getForeName()+" was barren";
+		 } else {
+			return "both the husband and the wife seem incapable of reproducing";
+		 }
+	}
+
+	public String getFirstbornHTML(){
+		Human h = this.getFirstborn();
+		return "; their first child, "+h.getFormalName()+" was born in "+h.getBirthYear();
+	}
+
+	public String getChildrenHTML(){
+		String s;
+		if (!this.wasChildless()){
+			return this.getFirstbornHTML();
+		} else if (!this.isActive()) {
+			s = ", but the union proved childless for ";
+			s += this.findReasonForInfertility();
+			return s;
+		}
+		return "";
+	}
+
+	//Used for men and women
+	public String getHTMLCommon(){
+		String s = this.getHTMLInterfix();
+		s += this.getChildrenHTML();
+		return s;
+	}
+
 	public String getHTMLPrefixM(){
 		String s = " In "+this.getBeginningYear()+", ";
-		s += "at the age of "+Basic.getCardinal(this.getStag().getAgeIn(this.getBeginning()));
+		int a = this.getStag().getAgeIn(this.getBeginning());
+		int b = this.getDoe().getAgeIn(this.getBeginning());
+		s += "at the age of "+Basic.getCardinal(a);
 		s += " "+this.getStag().getPronoun()+" married ";
-		s += Basic.getCardinal(this.getDoe().getAgeIn(this.getBeginning()))+"-year-old ";
+		if (a != b){
+			s += Basic.getCardinal(b)+"-year-old ";
+		} else {
+			s += "the same age ";
+		}
 		s += this.getDoe().getName().getPatronymic();
-		s += this.getHTMLInterfix();
+		s += this.getHTMLCommon();
 		return s+".";
 	}
 
 	public String getHTMLPrefixF(){
 		String s = " In "+this.getBeginningYear()+", ";
-		s += "at the age of "+Basic.getCardinal(this.getDoe().getAgeIn(this.getBeginning()));
+		int a = this.getDoe().getAgeIn(this.getBeginning());
+		int b = this.getStag().getAgeIn(this.getBeginning());
+		s += "at the age of "+Basic.getCardinal(a);
 		s += " "+this.getDoe().getPronoun()+" married ";
-		s += Basic.getCardinal(this.getStag().getAgeIn(this.getBeginning()))+"-year-old ";
+		if (a != b){
+			s += Basic.getCardinal(b)+"-year-old ";
+		} else {
+			s += "the same age ";
+		}
 		s += this.getStag().getName().getPatronymic();
-		s += this.getHTMLInterfix();
+		s += this.getHTMLCommon();
 		return s+".";
 	}
 

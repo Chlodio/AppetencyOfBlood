@@ -15,7 +15,7 @@ public class RegnalName {
 	}
 
 	public static String regnafy(Holder holder, Office office){
-		String name = holder.getPerson().getName().getName();
+		String name = holder.getPerson().getForeName();
 		holder.getPerson().getName().setRegnal();
 		if (isListed(name, office)){
 			int o = getListed(name, office).increase(holder);

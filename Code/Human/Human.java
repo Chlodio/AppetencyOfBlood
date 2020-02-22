@@ -53,6 +53,11 @@ public class Human {
 		2 = virgin?
 	*/
 
+	private byte deathCause;
+	/*What was the cause characters death
+	0 = natural
+	10 = childbirth/maternal death
+	*/
 
 
 //generated
@@ -113,7 +118,7 @@ public class Human {
 
 	}
 
-    public void kill(){
+    public void kill(byte i){
         Human.living.remove(this);
 		this.death = (Calendar) Basic.date.clone();
 		this.bury();
@@ -139,6 +144,7 @@ public class Human {
 		if (this.isManorLord()){
 			this.getManorLord().depart();
 		}
+		this.setDeathCause(i);
     }
 
 	public void review(){
@@ -157,10 +163,14 @@ public class Human {
 
 	public String getBirthName(){
 		if (this.hadFather()){
-			return this.getName().getName()+" "+this.getHouse().getName();
+			return this.getForeName()+" "+this.getHouse().getName();
 		} else {
-			return this.getName().getName();
+			return this.getForeName();
 		}
+	}
+
+	public String getForeName(){
+		return ""+this.getName().getName();
 	}
 
 	//Get names non-offspring relatives used for naming
@@ -168,7 +178,7 @@ public class Human {
 		List<Human> l =  this.getMaleAncestryGroup();
 		List<String> ll = new ArrayList<>();
 		for(Human x: l){
-			ll.add(x.getName().getName());
+			ll.add(x.getForeName());
 		}
 		return ll;
 	}
@@ -178,7 +188,7 @@ public class Human {
 		List<Human> l =  this.getFemaleAncestryGroup();
 		List<String> ll = new ArrayList<>();
 		for(Human x: l){
-			ll.add(x.getName().getName());
+			ll.add(x.getForeName());
 		}
 		return ll;
 	}
@@ -187,7 +197,7 @@ public class Human {
 		List<Human> l =		this.getLegitLivingSons();
 		List<String> n = 	new ArrayList<>();
 		for(Human x: l){
-			n.add(x.getName().getName());
+			n.add(x.getForeName());
 		}
 		return n;
 	}
@@ -196,7 +206,7 @@ public class Human {
 		List<Human> l =		this.getLegitLivingDaughters();
 		List<String> n = 	new ArrayList<>();
 		for(Human x: l){
-			n.add(x.getName().getName());
+			n.add(x.getForeName());
 		}
 		return n;
 	}
@@ -204,7 +214,7 @@ public class Human {
 	public boolean hasSonWithTheName(String n){
 		List<Human> l = this.getSons();
 		for (Human x: l){
-			if (x.isRegistered() && x.getName().getName().equals(n)){
+			if (x.isRegistered() && x.getForeName().equals(n)){
 				return true;
 			}
 		}
@@ -214,7 +224,7 @@ public class Human {
 	public boolean hasDaughterWithTheName(String n){
 		List<Human> l = this.getDaughters();
 		for (Human x: l){
-			if (x.isRegistered() && x.getName().getName().equals(n)){
+			if (x.isRegistered() && x.getForeName().equals(n)){
 				return true;
 			}
 		}
@@ -790,6 +800,12 @@ public class Human {
 		}
 	}
 
+	//Intended for women only, see if there is evidence that they could have reproduced
+	public boolean wasBarren(){
+		return !this.hadChild() && !this.diedInChildbirth();
+	}
+
+
 	//Shortcuts
 	public static int getID(){					return id;										}
 	public static int getNumOfLiving(){			return living.size();							}
@@ -814,6 +830,7 @@ public class Human {
 	public boolean hasAffairs(){				return this.rela.hasAffairs();					}
 	public boolean hasBrother(){				return this.rela.hasBrother(); 					}
 	public boolean hasChild(){					return this.rela.hasChild(); 					}
+	public boolean hadChild(){					return this.rela.hadChild(); 					}
 	public boolean hasFather(){					return this.rela.hasFather();					}
 	public boolean hasFatherOrUncle(){			return this.rela.hasFatherOrUncle(); 			}
 	public boolean hasFirstCousin(){			return this.rela.hasFirstCousin(); 				}
@@ -941,6 +958,8 @@ public class Human {
 	public int getEye(){						return Character.getNumericValue(this.DNA.charAt(0));}
 	public String getBirthF(){					return Basic.format1.format(this.birth.getTime());	 }
 	public Calendar getBirth(){					return this.birth; }
+	public int getBirthYear(){					return this.getBirth().get(Calendar.YEAR);			 }
+
 	public String getDeath(){					return Basic.format1.format(this.death.getTime());	 }
 	public Calendar getBirthC(){				return (Calendar) this.birth.clone();				 }
 	public Personality getPersonality(){		return this.personality;	 						 }
@@ -957,6 +976,11 @@ public class Human {
 	public boolean isLegimate(){				return this.chaBox[0];	}
 	public boolean isPosthumous(){				return this.chaBox[1];	}
 	public boolean isVirgin(){ 					return this.chaBox[2]; 	}
+	public void setDeathCause(byte i){			this.deathCause = i; 			}
+	public byte getDeathCause(){				return this.deathCause;			}
+	public boolean diedInChildbirth(){			return this.deathCause == 10;	}
+
+
 	public boolean isFemaleAdult(){				return this.isFemale() && isAdult(); 	}
 	public boolean hasTitle(Title t){			return this.title == t;			}
 	public boolean hasTitle(){					return this.title != null;		}

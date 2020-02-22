@@ -137,6 +137,13 @@ public class SexRelation{
 		this.offspring.add(o);
 	}
 
+	public boolean wasChildless(){
+		return !Basic.isNotZero(this.offspring.size());
+	}
+
+	public Human getFirstborn(){
+		return this.offspring.get(0);
+	}
 
 	public String getTenure(){
 		String s = " (m. "+this.getBeginning();

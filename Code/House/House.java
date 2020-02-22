@@ -452,7 +452,7 @@ public class House {
 		String n;
 		List<String> u;
 		if (h.hasFather()){
-			n = h.getFather().getName().getName();
+			n = h.getFather().getForeName();
 			if (!h.getFather().hasSonWithTheName(n)){
 				return n;
 			}
@@ -470,7 +470,7 @@ public class House {
 		String n;
 		List<String> u;
 		if (h.hasFather()){
-			n = h.getMother().getName().getName();
+			n = h.getMother().getForeName();
 			if (!h.getFather().hasDaughterWithTheName(n)){
 				return n;
 			}
