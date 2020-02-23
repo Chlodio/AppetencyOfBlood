@@ -30,7 +30,9 @@ public class RegnalName {
 	public static boolean isListed(String name, Office office){
 		List<RegnalName> l = office.getRegnalNames();
 		for(RegnalName x: l){
-			if (x.name == name){
+			if (x.name.equals(name)){
+				System.out.println(x.name+"..."+name+":"+x.name.equals(name));
+				Basic.pause(500);
 				return true;
 			}
 		}
@@ -40,7 +42,7 @@ public class RegnalName {
 	public static RegnalName getListed(String name, Office office){
 		List<RegnalName> l = office.getRegnalNames();
 		for(RegnalName x: l){
-			if (x.name == name){
+			if (x.name.equals(name)){
 				return x;
 			}
 		}
