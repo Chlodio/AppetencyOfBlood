@@ -1,28 +1,28 @@
-/*Currently unused intended to make CoA-system more detailed*/
 
 package Code.House;
 import Code.Common.Basic;
+import Code.House.Ordinary;
 import Code.Common.HTML;
 
 public class CoatOfArms {
 	private int metal;
 	private int color;
-	private int ordinary;
+	private String ordinary;
 	private boolean onMetal;
 	private static final String[] metals = {"argent", "or"};
 	private static final String[] colors = {"gules", "sable", "azure", "purpure", "vert"};
-	private static final String[] ordinaries = {"cross_plain", "cross_annulety", "cross_bottony", "cross_calvatry", "cross_coptic", "cross_coptic", "cross_couped", "cross_crescenty", "cross_doubled", "cross_Jerusalem", "cross_latin", "cross_Lorraine", "cross_norse_sun", "cross_parted_fretted", "cross_patriarchal", "cross_pomelly", "cross_pommeled", "cross_potent", "cross_quarter-pierced", "cross_avellane", "cross_formerly", "cross_formerly_fitchy", "cross_clechy", "chief_plain", "chief_enarched", "chief_triangular", "chief_double-arched", "chief_pale", "base", "orle", "ford", "quarter", "semy_roundels", "tierce_plain", "tierce_sinister", "wall_plain", "flaunches", "saltire_couped", "saltire", "pall_plain", "pall_inverted", "shakefork", "cross_patonce", "cross_bowen", "heart_ace", "heart_two", "heart_three", "heart_four", "heart_five", "heart_six", "heart_seven", "heart_eight", "heart_nine", "heart_ten", "roundel_ace", "roundel_two", "roundel_three", "roundel_four", "roundel_five", "roundel_six", "roundel_seven", "roundel_eight", "roundel_nine", "roundel_ten"};
+
 
 	public CoatOfArms(){
 		this.metal = Basic.randint(2);
 		this.color = Basic.randint(5);
-		this.ordinary = Basic.randint(ordinaries.length);
+		this.ordinary = Ordinary.getOrdinary();
 		this.onMetal = Basic.coinFlip();
 	}
 
 
 	public String getHTML(){
-		String c = "../Input/CoAs/"+this.fethCharge()+".svg";
+		String c = "../Input/CoAs/"+this.getOrdinary()+".svg";
 		String s = HTML.getImgClass(this.getChargeColor()+"_o", c);
 		s = HTML.getDivClass("escu "+this.getBackground()+"_e", s);
 		s = HTML.getDivClass("CoA", s);
@@ -38,12 +38,12 @@ public class CoatOfArms {
 	}*/
 
 	private boolean isOnMetal(){			return this.onMetal;	}
-	private int getMetal(){					return this.metal;		}
-	private int getColor(){					return this.color;		}
-	private int getOrdinary(){				return this.ordinary;	}
+	private int getMetal(){						return this.metal;		}
+	private int getColor(){						return this.color;		}
+	private String getOrdinary(){			return this.ordinary;	}
 	private String fetchMetal(){			return metals[this.getMetal()];}
 	private String fethColor(){				return colors[this.getColor()];}
-	private String fethCharge(){			return ordinaries[this.getOrdinary()];}
+//	private String fethCharge(){			return ordinaries[this.getOrdinary()];}
 
 	//The reverse of getBackground
 	private String getChargeColor(){

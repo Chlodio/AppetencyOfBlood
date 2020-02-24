@@ -31,8 +31,6 @@ public class RegnalName {
 		List<RegnalName> l = office.getRegnalNames();
 		for(RegnalName x: l){
 			if (x.name.equals(name)){
-				System.out.println(x.name+"..."+name+":"+x.name.equals(name));
-				Basic.pause(500);
 				return true;
 			}
 		}

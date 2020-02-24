@@ -130,7 +130,6 @@ public class Basic {
 		Writing.writeDemography();
 		Writing.writeNobility();
 		System.out.println("SIMULATION COMPLETED");
-		System.out.println(Marriage.ca);
 	}
 
 	public static String sDate(){ 					return format1.format(date.getTime()); }
