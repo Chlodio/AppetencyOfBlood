@@ -229,11 +229,13 @@ public class Man extends Human {
 	@Override
 	public void bury(){
 		List<Human> h;
-		this.house.removeKinsman(this);
+		this.getHouse().removeKinsman(this);
 		this.religion.getParish().remove(this);
 		men.remove(this);
-		if (this == this.getHouse().getHead()){
-			this.house.succession(this);
+		if (this.isCurrentHouseHead()){
+			this.getHouse().succession(this);
+		} else if (this.isHost()){
+			this.getHouse().findHost();
 		}
 
 		if (this.hadFather()){
@@ -313,8 +315,12 @@ public class Man extends Human {
 	@Override
 	public void reachAdulthood(){
 		Man.children.remove(this);
-		this.fertility = 			Basic.randint(101);
+		this.fertility = 				Basic.randint(101);
 		this.personality =			new Personality();
+		if (this.isCurrentHouseHead()){
+			this.getHouse().getHost().resetHost();
+			this.getHouse().setHost(this);
+		}
 		this.rela.reachAdulthood();
 		this.becomeSingle();
 		if (this.cadency == 0){

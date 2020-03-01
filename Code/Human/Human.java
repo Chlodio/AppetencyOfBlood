@@ -26,15 +26,16 @@ public class Human {
 	protected ManorLord manorLord;
 	protected Office office;
 	protected PolProfile polProfile;
+	protected House host;										//Character is the head of this famil
 	protected Religion religion;
 	protected String DNA;
 	protected Title title;
-    protected boolean sex;
-    protected Calendar birth;
-    protected Name name;
+  protected boolean sex;
+  protected Calendar birth;
+  protected Name name;
 	protected Personality personality;
 	private Minister role;									//Character's career as minister
-    protected static int id = 								0;
+  protected static int id = 								0;
 
     public static List<Human> living = 				new ArrayList<>();
 	/*
@@ -782,6 +783,10 @@ public class Human {
 		return false;
 	}
 
+	public boolean isCurrentHouseHead(){
+		return this.getHouse().getHead() == this;
+	}
+
 	public Minister getRole(){
 		return this.role;
 	}
@@ -805,6 +810,34 @@ public class Human {
 		return !this.hadChild() && !this.diedInChildbirth();
 	}
 
+//Host methods
+
+	public void setHost(House h){
+		this.host = h;
+	}
+
+	public House getHostHouse(){
+		return this.host;
+	}
+
+	public boolean isHost(){
+		return this.host != null;
+	}
+
+	public void resetHost(){
+		this.host = null;
+	}
+
+	public static Human getRandomPersonForHost(){
+		Human h;
+		for(int x = 10; x > 0; x--){
+			h = Basic.choice(Man.men);
+			if (h.isAdult() && !h.isHost()){
+				return h;
+			}
+		}
+		throw new RuntimeException();
+	}
 
 	//Shortcuts
 	public static int getID(){					return id;										}

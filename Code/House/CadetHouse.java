@@ -12,13 +12,14 @@ public class CadetHouse extends House {
 		super(founder);
 		this.prestige = 			parent.getPrestige();
 		this.maleNames = 			new ArrayList<>(parent.getMaleNames());
-		this.femaleNames = 			new ArrayList<>(parent.getFemaleNames());
+		this.femaleNames = 		new ArrayList<>(parent.getFemaleNames());
 		this.founder = 				founder;
 		this.generation =			parent.getGeneration() + 1;
-		this.parent =				parent;
+		this.parent =					parent;
 		this.ranking =				Basic.max(parent.ranking-1, 1);
 		this.parentName =			parent.getName();
 		this.setPatriarch(founder);
+		this.setHost(head);
 		parent.branches.add(this);
 		this.addHead(head);
 		if (parent.isNoble()){

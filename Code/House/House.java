@@ -41,6 +41,7 @@ public class House {
 	protected List<String> femaleNames;				//Names used for women of the family
 	protected List<String> maleNames;				//Names used for men of the family
 	protected byte origin;
+	protected Human host;									//Adult caretaker
 
 	/*Origin with following inputs:
 		0 = mystic (unknown, should not be used)
@@ -199,6 +200,8 @@ public class House {
 			if (this.head.isSonless() && this.head.isUnwed()){
 				Marriage.prepare(this.head);
 			}
+		} else {
+			this.findHost();
 		}
 		if (this.head.hasTitle()){
 			this.head.rename(Title.LORD);
@@ -217,9 +220,10 @@ public class House {
 		if (this.findNextHouse()){
 			this.succeed(nextHouse);					//nexthouse is static
 		} else{
+			this.getHost().resetHost();
+			this.resetHost();
 			Basic.print(this.getName()+" went extinct");
 		}
-
 	}
 
 	public void succeed(House newHouse){
@@ -971,6 +975,56 @@ public class House {
 		}
 		return l;
 	}
+
+//Host methods
+
+	public void setHost(Human h){
+		this.host = h;
+		h.setHost(this);
+	}
+
+	public Human getHost(){
+		return this.host;
+	}
+
+	public void resetHost(){
+		this.host = null;
+	}
+
+	//If setting host was succesful
+	public boolean sucSetHost(Human h){
+		if (h.isLivingAdult() && !h.isHost()){
+			this.setHost(h);
+			return true;
+		}
+		return false;
+	}
+
+	public void findHost(){
+
+		if (this.sucSetHost(this.getHead())){
+			return;
+		}
+
+		if (this.hasAdultKinsman()){
+			if (this.sucSetHost(this.getAdultKinsman())){
+				return;
+			} else if(this.hasAdultKinswoman()) {
+				if (this.sucSetHost(this.getAdultKinswoman())){
+					return;
+				}
+			}
+		}
+
+		if (this.sucSetHost(this.getHead().getMother())){
+			return;
+		}
+
+		this.sucSetHost(Human.getRandomPersonForHost());
+		//throw new RuntimeException();
+
+	}
+
 
 //Micro methods
 

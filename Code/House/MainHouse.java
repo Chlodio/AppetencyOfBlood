@@ -28,14 +28,13 @@ public class MainHouse extends House {
 	public void handle(Human founder){
 		this.prestige = 						0;
 		this.maleNames = 						new ArrayList<>();
-		this.femaleNames = 						new ArrayList<>();
-        this.founder = 							founder;
+		this.femaleNames = 					new ArrayList<>();
+    this.founder = 							founder;
 		this.patriarch =						this.head;
 		this.generation =						0;
 		this.maleNames.add(founder.getForeName());
 		this.addKinsman(founder);
-
-
+		this.findHost();
 	}
 
 	@Override

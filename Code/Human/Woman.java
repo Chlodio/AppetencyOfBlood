@@ -253,8 +253,8 @@ public class Woman extends Human {
 	@Override
 	public void bury(){
 		List<Human> h;
-		if (this.house != null){
-			this.house.removeKinswoman(this);
+		if (this.hadHouse()){
+			this.getHouse().removeKinswoman(this);
 			if (this.hasSister()){
 				h = this.getFather().getLivingDaughters();
 				for (int x = 0; x < h.size(); x++){
@@ -262,8 +262,13 @@ public class Woman extends Human {
 				}
 			}
 		}
+
 		this.religion.getParish().remove(this);
 		women.remove(this);
+		if (this.isHost()){
+			this.getHostHouse().findHost();
+		}
+
 	/*	if (this.title == Title.QUEEN){
 			Holder.getLatestSovereign().resetConsort();
 		}*/
