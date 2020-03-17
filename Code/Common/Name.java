@@ -118,9 +118,22 @@ public class Name{
 	public void setName(String n){ 			this.name = n; 			}
 	public void setOwner(Human h){ 			this.owner = h; 		}
 
+	public static String getPopular(String[] l){
+		int le = l.length;
+		if (Basic.randint(5) != 0){
+			//The popular choice is used 80% but uses only 20% of array items
+			return l[Basic.randint(le/5)];
+		} else {
+			return l[Basic.randint((le/5*4))+(le/5)];
+		}
+	}
 
-	public static String getRandomMaleName(){ 		return Basic.choice(maleNames); }
-	public static String getRandomFemaleName(){ 	return Basic.choice(femaleNames); }
+	public static String getRandomMaleName(){
+		return getPopular(maleNames);
+	}
+	public static String getRandomFemaleName(){
+		return getPopular(femaleNames);
+	}
 
 	static String[] maleNames = 	new String[93];
 	static String[] femaleNames = 	new String[48];

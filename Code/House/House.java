@@ -319,7 +319,7 @@ public class House {
 
 
 	public void nameHouseLowborn(){
-		this.name = lowbornNames[Basic.randint(lowbornNames.length)];
+		this.name = lowbornNames[Basic.randint(lowbornNames.length-1)];
 	}
 
 	public void nameHouseHighborn(){
@@ -751,14 +751,23 @@ public class House {
 		this.isNoble = true;
 		this.coa = new CoatOfArms(); //1+Basic.randint(100);
 		this.setOrigin(o);
+		this.ennobleOrigin(o);
 
-		Basic.print("The race of "+this.getHead().getFullName()+" became known as the House of "+this.getName());
+
 		this.addToNobles();
 		Human.updateNamesOf(this.getMembers());			//Updates the name of new nobility
 		if (!this.getHead().isAlive()){
 			throw new RuntimeException();
 		}
 	}
+
+	//Do things unique to the origin
+	public void ennobleOrigin(int o){
+		if (o > 3){
+			Basic.print("The race of "+this.getHead().getFullName()+" ascended the noble ranks as the House of "+this.getName());
+		}
+	}
+
 
 	public void addToNobles(){
 		peasants.remove(this);
