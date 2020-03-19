@@ -36,7 +36,7 @@ public class Rule {
 		if (!s.isPolitican()){
 			s.setPolProfile(new PolProfile(s));
 		}
-		s.getPolProfile().addRegnalTitle(o);
+		s.getPolProfile().addRegnalTitle(o.getHolder());
 	}
 
 	public void handleRegency(){

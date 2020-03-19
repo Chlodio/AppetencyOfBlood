@@ -117,6 +117,9 @@ public class Writing {
 
 	//First cell for name and reign
 		td = h.getName()+"<br>";
+		if (q.getName().hasNick()){
+			td += HTML.getI(q.getName().getNickname());
+		}
 		td += HTML.getBr();
 		td += h.getReign();
 		td += HTML.getBr();
@@ -187,14 +190,14 @@ public class Writing {
 		String s = "";
 		Human h = r.getPerson();
 
-		s += HTML.getH3(r.getName()+" ("+h.getLifespan()+")"+HTML.getHr());
+		s += HTML.wrapSummary(r.getName()+" ("+h.getLifespan()+")");
 		s += HTML.getP(r.getReign());
 		s += HTML.getP(r.getClaim().getClaimHTML());
 		s += HTML.getP(r.getNotes());
 		s += HTML.getP(r.getBiography());
 	//	s += HTML.getP("Inbreeding: "+Consanguinity.countInbreed(h));
 
-		s = HTML.getUl(s);
+		s = HTML.wrapDetails(s);
 		return s;
 	}
 

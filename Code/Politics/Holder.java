@@ -1,4 +1,5 @@
 package Code.Politics;
+import Code.Common.Nick;
 
 import Code.Common.Event;
 import Code.Human.Human;
@@ -102,6 +103,10 @@ public class Holder{
 		}
 	}
 
+	public int getReignLengthYears(){
+		return this.getReignLengthExact()/365;
+	}
+
 	public String getReignYearsAndDays(){
 		int d = this.getReignLengthExact();		//Days
 		int y = d/365;
@@ -118,8 +123,25 @@ public class Holder{
 		this.end = (Calendar) Basic.date.clone();
 	}
 
+//Nickname methods
 
-//Regent Methods
+	public void handleNickname(){
+		Human h = this.getPerson();
+		int a = h.getAged();
+		//There will be 33.3% a nick name will be used
+		if (Basic.drawStraws(2)){
+			if (a < 12){
+				h.getName().setNick(Nick.CHILD);
+			} else if (a < 24){
+				h.getName().setNick(Nick.YOUNG);
+			} else if (a > 60){
+				h.getName().setNick(Nick.OLD);
+			} else if (this.getReignLengthYears() >= 20){
+				h.getName().setNick(Nick.getRandom());
+			}
+		}
+	}
+//Regent methods
 
 	public void appointRegent(){
 		Ruler regent = Regent.make();

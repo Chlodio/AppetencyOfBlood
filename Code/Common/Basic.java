@@ -142,6 +142,10 @@ public class Basic {
 		return randomizer.nextInt(2) == 0;
 	}
 
+	public static boolean drawStraws(int i){
+		return randint(i) == 0;
+	}
+
 	public static int randint(int n){
 		return randomizer.nextInt(n);
 	}
@@ -166,6 +170,10 @@ public class Basic {
 			throw new RuntimeException();
 		}
 		return list.get(randomizer.nextInt(list.size()));
+	}
+
+	public static <T> T choice(T[] list){
+		return list[(randomizer.nextInt(list.length))];
 	}
 
 	public static Calendar getDate(){

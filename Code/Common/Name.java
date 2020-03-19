@@ -1,5 +1,6 @@
 package Code.Common;
 import Code.Human.*;
+import Code.Common.Nick;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -8,7 +9,7 @@ import java.io.IOException;
 
 public class Name{
 	private String name;
-	private String nick;
+	private Nick nick;
 	private String full;
 	private boolean special;			//is forename special
 	private Human owner;
@@ -78,9 +79,17 @@ public class Name{
 			((Woman) child).getName().setFull(((Woman) child).makeName());
 	}
 
-	public void setNick(String n){
+	public void setNick(Nick n){
+		if (this.hasNick()){
+			//If the old nick is rarer don't override
+			if (this.getNick().isRarerThan(n)){
+				return;
+			}
+		}
 		this.nick = n;
-		this.setFull(this.getOwner().makeName());
+		if (!this.getOwner().isPolitican()){
+			this.setFull(this.getOwner().makeName());
+		}
 	}
 
 
@@ -106,17 +115,19 @@ public class Name{
 	}
 
 
-	public boolean hasNick(String s){ 		return this.nick == s;	}
-	public boolean isSpecial(){ 			return this.special; 	}
-	public Human getOwner(){ 				return this.owner; 		}
-	public String getFull(){ 				return this.full; 		}
-	public String getName(){ 				return this.name; 		}
-	public String getNick(){ 				return this.nick; 		}
-	public boolean hasRegnal(){ 			return this.hasRegnal; 	}
-	public void setRegnal(){				this.hasRegnal = true; 	}
-	public void setFull(String n){ 			this.full = n; 			}
-	public void setName(String n){ 			this.name = n; 			}
-	public void setOwner(Human h){ 			this.owner = h; 		}
+	public boolean hasNick(Nick s){ 			return this.nick == s;		}
+	public boolean hasNick(){							return this.nick != null;	}
+	public boolean isSpecial(){ 					return this.special; 			}
+	public Human getOwner(){ 							return this.owner; 				}
+	public String getFull(){ 							return this.full; 				}
+	public String getName(){ 							return this.name; 				}
+	public Nick getNick(){ 								return this.nick; 				}
+	public String getNickname(){ 					return this.nick.getName(); }
+	public boolean hasRegnal(){ 					return this.hasRegnal; 		}
+	public void setRegnal(){							this.hasRegnal = true; 		}
+	public void setFull(String n){ 				this.full = n; 						}
+	public void setName(String n){ 				this.name = n; 						}
+	public void setOwner(Human h){ 				this.owner = h; 					}
 
 	public static String getPopular(String[] l){
 		int le = l.length;

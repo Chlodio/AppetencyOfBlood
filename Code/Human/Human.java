@@ -62,10 +62,10 @@ public class Human {
 
 
 //generated
-    public Human(int age){
-        this.id++;
-        this.living.add(this);
-        this.birth = 		(Calendar) Basic.date.clone();
+	public Human(int age){
+  	this.id++;
+		this.living.add(this);
+		this.birth = 		(Calendar) Basic.date.clone();
 		this.birth.add(Calendar.DATE, -365*age);
 		this.events =		 new ArrayList<>();
 		this.setRelSta(0);
@@ -78,7 +78,7 @@ public class Human {
 		this.chaBox = 		new boolean[]{true, false, false};
 		this.personality =	new Personality();
 		Basic.human.put(Human.id, this);
-    }
+}
 
 //generated born
 	public Human(int y, boolean b){
@@ -116,22 +116,20 @@ public class Human {
 
 	public void performPosthumousBirth(Human f, Human m){
 		Basic.print(m.getFullName()+" gave posthumous birth to son of "+f.getFullName());
-
+		this.getName().setNick(Nick.POSTHUMOUS);
 	}
 
-    public void kill(byte i){
-        Human.living.remove(this);
+	public void kill(byte i){
+  	Human.living.remove(this);
 		this.death = (Calendar) Basic.date.clone();
 		this.bury();
-        if (!this.isUnwed()){
+    if (!this.isUnwed()){
 			Human s = this.getSpouse();
-            Basic.print(String.format("%s deceased, leaving %s a %s",
-				this.getFullName(),
-				s.getFullName(),
-				s.widow()));
+    	Basic.print(String.format("%s deceased, leaving %s a %s",
+			this.getFullName(),s.getFullName(), s.widow()));
 			this.getLatestMarriage().terminate();
 			s.becomeWidow();
-        } else {
+    } else {
 			this.clean();
 			Basic.print(String.format("%s deceased", this.getFullName()));
 		}
@@ -146,7 +144,7 @@ public class Human {
 			this.getManorLord().depart();
 		}
 		this.setDeathCause(i);
-    }
+  }
 
 	public void review(){
 		if (this.isPolitican()){
@@ -378,7 +376,7 @@ public class Human {
 		} else if (!p.isRegnant()){
 			p.makeRegnant();
 		}
-		p.addRegnalTitle(o);
+		p.addRegnalTitle(o.getHolder());
 	}
 
 //Family
@@ -466,7 +464,7 @@ public class Human {
 		it.handleBastardBirth(sx.getStag(), sx.getDoe());
 		Bastard.add(it);
 		Basic.print(this.getFullName()+" gave birth to a bastard, "+it.getFullName());
-		it.getName().setNick("the Bastard");
+		it.getName().setNick(Nick.BASTARD);
 
 		return it;
 	}
@@ -1079,8 +1077,8 @@ public class Human {
 	public void setHouse(House n){				this.house = n; 				}
 	public void setOffice(Office o){			this.office = o;				}
 	public void sRename(Title title){}
-    public void saunter(int x){;}
-    public void handleBastardBirth(Human a, Human b){;}
+  public void saunter(int x){;}
+  public void handleBastardBirth(Human a, Human b){;}
 	public String getLoverGroup(){ 				return "lovers";				}
 	public void setCourtier(Courtier c){		this.courtier = c;				}
 	public Courtier getCourtier(){				return this.courtier;			}

@@ -77,6 +77,14 @@ public class HTML {
 		return s;
 	}
 
+	public static String wrapDetails(String s){
+		return "<details>"+s+"</details>";
+	}
+
+	public static String wrapSummary(String s){
+		return "<summary>"+s+"</summary>";
+	}
+
 	public static String createTableHeaderClass(String[][] a){
 		String s = "";
 		for(String[] x: a){

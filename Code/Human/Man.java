@@ -74,8 +74,8 @@ public class Man extends Human {
     public String makeName(){
 		String name = this.getForeName();
 		String hn =	  this.getHouse().getName();
-		if (this.getName().getNick() != null){
-			name +=" "+this.getName().getNick();
+		if (this.getName().hasNick()){
+			name +=" "+this.getName().getNickname();
 		}
 		if (this.title == null){
 			if (this.isLegimate()){

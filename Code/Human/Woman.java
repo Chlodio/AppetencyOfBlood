@@ -79,8 +79,8 @@ public class Woman extends Human {
 	@Override
     public String makeName(){
 		String s = this.getShortName();
-		if (this.getName().getNick() != null){
-			s +=" "+this.getName().getNick();
+		if (this.getName().hasNick()){
+			s +=" "+this.getName().getNickname();
 		}
 		if (this.house != null){
 			if (this.title == null){

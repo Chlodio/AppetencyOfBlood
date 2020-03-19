@@ -9,7 +9,7 @@ import java.util.ArrayList;
 //Political profile
 public class PolProfile {
 	private Human owner;					//Whose profile is this?
-	private List<Office> regnalTitles;
+	private List<Holder> regnalTitles;
 	private List<Office> nobleTitles;		//Peerages
 	private List<Office> offices;
 	private Interest interest;
@@ -25,16 +25,18 @@ public class PolProfile {
 	}
 
 	public void handleDeath(){
-		Human w;
-
+		Human h = this.getOwner();
+		int a;
 		if (this.isRegnant()){
-			for(Office x: this.regnalTitles){
-				if (x.getHolder().getPerson().isAlive()){
+			for(Holder x: this.regnalTitles){
+				/*if (x.getHolder().getPerson().isAlive()){
 					throw new RuntimeException();
-				}
-				x.endTenure();
-
+				}*/
+				x.getOffice().endTenure();
 			}
+			this.regnalTitles.get(0).handleNickname();
+
+
 	/*		if (owner.isMarried()){
 				w = owner.getSpouse();
 				if (this.isQueenMother(w)){
@@ -46,14 +48,14 @@ public class PolProfile {
 		}
 	}
 
-	public void addRegnalTitle(Office v){
+	public void addRegnalTitle(Holder v){
 		if (!this.isRegnant()){	this.makeRegnant();	}
 		this.getRegnal().add(v);
 	}
 
 	public boolean isQueenMother(Human h){
-		for(Office x: this.regnalTitles){
-			if (x.getHolder().getPerson().isChildOf(h)){
+		for(Holder x: this.getRegnal()){
+			if (x.getPerson().isChildOf(h)){
 				return true;
 			}
 		}
@@ -61,11 +63,12 @@ public class PolProfile {
 	}
 
 //Small methods
-	public void addRegnalTitles(Office o){		this.regnalTitles.add(o);				}
+	public void addRegnalTitles(Office o){		this.regnalTitles.add(o.getHolder());				}
 	public void makeRegnant(){					this.regnalTitles = new ArrayList<>();	}
 	public boolean isRegnant(){					return this.regnalTitles != null;		}
-	public List<Office> getRegnal(){			return this.regnalTitles;				}
+	public List<Holder> getRegnal(){			return this.regnalTitles;				}
 	public Interest getInterest(){ 				return this.interest;					}
-	public Skill getSkill(){ 					return this.skill;						}
+	public Skill getSkill(){ 					return this.skill;							}
+	public Human getOwner(){									return this.owner;			}
 
 }
