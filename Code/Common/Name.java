@@ -105,7 +105,7 @@ public class Name{
 		if (this.getOwner().hadFather()){
 			n += ", ";
 			if (this.getOwner().isLegimate()){
-				n += this.getOwner().getSexChildOrderName()+" of ";			//I.e first son of
+				n += this.getOwner().getAgnaticOrderStr()+" of ";			//I.e first son of
 			} else {
 				n += "natural "+this.getOwner().getOffspring()+" ";				//I.e natural son/daughter
 			}

@@ -51,12 +51,12 @@ public class Woman extends Human {
 
 	@Override
 	public String getShortName(){
-		return this.getForeName();
+		return this.getForename();
 	}
 
 	@Override
 	public String getFormalName(){
-		String n = this.getForeName();
+		String n = this.getForename();
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
@@ -345,7 +345,7 @@ public class Woman extends Human {
 	public void sRename(Title title){
 		this.title = title;
 		this.name.setFull(this.makeName());
-		//this.getName().setFull(this.getForeName());
+		//this.getName().setFull(this.getForename());
 	}
 
 
@@ -415,26 +415,23 @@ public class Woman extends Human {
 	}
 
 	@Override
-	public String getSexChildOrderName(){
-		List<Human> l = this.getFather().getLegitDaughters();
-		int i = l.indexOf(this);
-		String s = "";
+	public String getAgnaticOrderStr(){
+		return this.getBirthOrderRank(this.getAgnaticOrder())+" daughter";
+	}
 
-		//If there is only one daughter, just return only daughter, otherwise [ordinal] daughter
-		if (l.size() == 1){
-			s = "only";
-		} else {
-			if (i == 0){
-				s = "oldest";
-			} else if (i == l.size()-1){
-				s = "youngest";
-			} else {
-				s = Basic.getOrder(i);
-			}
-		}
+	@Override
+	public int getAgnaticOrder(){
+		return this.getBirthOrderRank(this.getFather().getLegitDaughters());
+	}
 
-		return s+" daughter";
+	@Override
+	public String getEnaticOrderStr(){
+		return getBirthOrderRank(this.getEnaticOrder())+" daughter";
+	}
 
+	@Override
+	public int getEnaticOrder(){
+		return this.getBirthOrderRank(this.getMother().getLegitDaughters());
 	}
 
 	public void addToElders(){							elders.add(this); 	 	}

@@ -625,12 +625,12 @@ public class Marriage extends SexRelation{
 	public String findReasonForInfertility(){
 		if (this.getDoe().wasBarren()){
 			if (this.getStag().hadChild()){
-				return this.getStag().getForeName()+" failed to impregnate his wife";
+				return this.getStag().getForename()+" failed to impregnate his wife";
 			} else {
-				return this.getStag().getForeName()+" was incapable of breeding";
+				return this.getStag().getForename()+" was incapable of breeding";
 			}
 		} else if (this.getStag().hadChild()){
-			return this.getDoe().getForeName()+" was barren";
+			return this.getDoe().getForename()+" was barren";
 		 } else {
 			return "both the husband and the wife seem incapable of reproducing";
 		 }

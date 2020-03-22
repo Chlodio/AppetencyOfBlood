@@ -162,13 +162,13 @@ public class Human {
 
 	public String getBirthName(){
 		if (this.hadFather()){
-			return this.getForeName()+" "+this.getHouse().getName();
+			return this.getForename()+" "+this.getHouse().getName();
 		} else {
-			return this.getForeName();
+			return this.getForename();
 		}
 	}
 
-	public String getForeName(){
+	public String getForename(){
 		return ""+this.getName().getName();
 	}
 
@@ -177,7 +177,7 @@ public class Human {
 		List<Human> l =  this.getMaleAncestryGroup();
 		List<String> ll = new ArrayList<>();
 		for(Human x: l){
-			ll.add(x.getForeName());
+			ll.add(x.getForename());
 		}
 		return ll;
 	}
@@ -187,7 +187,7 @@ public class Human {
 		List<Human> l =  this.getFemaleAncestryGroup();
 		List<String> ll = new ArrayList<>();
 		for(Human x: l){
-			ll.add(x.getForeName());
+			ll.add(x.getForename());
 		}
 		return ll;
 	}
@@ -196,7 +196,7 @@ public class Human {
 		List<Human> l =		this.getLegitLivingSons();
 		List<String> n = 	new ArrayList<>();
 		for(Human x: l){
-			n.add(x.getForeName());
+			n.add(x.getForename());
 		}
 		return n;
 	}
@@ -205,7 +205,7 @@ public class Human {
 		List<Human> l =		this.getLegitLivingDaughters();
 		List<String> n = 	new ArrayList<>();
 		for(Human x: l){
-			n.add(x.getForeName());
+			n.add(x.getForename());
 		}
 		return n;
 	}
@@ -213,7 +213,7 @@ public class Human {
 	public boolean hasSonWithTheName(String n){
 		List<Human> l = this.getSons();
 		for (Human x: l){
-			if (x.isRegistered() && x.getForeName().equals(n)){
+			if (x.isRegistered() && x.getForename().equals(n)){
 				return true;
 			}
 		}
@@ -223,7 +223,7 @@ public class Human {
 	public boolean hasDaughterWithTheName(String n){
 		List<Human> l = this.getDaughters();
 		for (Human x: l){
-			if (x.isRegistered() && x.getForeName().equals(n)){
+			if (x.isRegistered() && x.getForename().equals(n)){
 				return true;
 			}
 		}
@@ -773,6 +773,42 @@ public class Human {
 		return this.rela.hadLegitNonPosthumousSon();
 	}
 
+	public boolean hasSameBirthOrder(){
+		return this.getAgnaticOrder() == this.getEnaticOrder();
+	}
+
+
+	//Which order is child born, return -1 if only child, 0 if oldest and -2 if youngest
+	public int getBirthOrderRank(List<Human> l){
+		String s = "";
+		int i = l.indexOf(this);								//Index in the order
+
+		//If there is only one son, just return only son, otherwise [ordinal] son or oldest/youngest
+		if (l.size() == 1){
+			return -1;
+		} else {
+			if (i == l.size()-1){
+				return -2;									//youngest
+			} else {
+				return i;
+			}
+		}
+	}
+
+	public String getBirthOrderRank(int i){
+		switch(i){
+			case 0:
+				return "firstborn";
+			case -1:
+				return "only";
+			case -2:
+				return "youngest";
+			default:
+				 return Basic.getOrder(i);
+		}
+	}
+
+
 	//Check chara is the head of a house
 	public boolean isHouseHead(){
 		if (this.getHouse() != null && this.getHouse().getHeads().contains(this) ){
@@ -1042,7 +1078,10 @@ public class Human {
 	public String getNibling(){ 				return "nibling";				}
 	public String getOffspring(){ 				return "son";					}
 	public int getSexChildOrder(){				return 0; }		//I.e 2 (of 4 sons)
-	public String getSexChildOrderName(){		return "";}		//second son
+	public String getAgnaticOrderStr(){		return "";}		//I.e second son
+	public String getEnaticOrderStr(){		return "";}
+	public int getAgnaticOrder(){					return 0;}
+	public int getEnaticOrder(){					return 0;}
 	public String getParent(){ 					return "parent";				}
 	public String getPibling(){ 				return "pibling";				}
 	public String getPossessive(){				return "his"; 					}

@@ -1,5 +1,6 @@
 package Code.Politics;
 import Code.Common.Nick;
+import Code.Common.HTML;
 
 import Code.Common.Event;
 import Code.Human.Human;
@@ -63,9 +64,9 @@ public class Holder{
 
 	public void fixTheFirst(){
 		if (this.getPerson().isMale()){
-			this.name = (this.getPerson().getForeName()+" I");
+			this.name = (this.getPerson().getForename()+" I");
 		} else{
-			this.name = (this.getPerson().getForeName()+" I");
+			this.name = (this.getPerson().getForename()+" I");
 		}
 		this.person.getName().setFull(this.getName());
 	}
@@ -165,9 +166,9 @@ public class Holder{
 
 	public String getBiography(){
 		String s = "";
-		s += this.getEarlyLife();
-		s += this.getBiographyReign();
-		s += this.getBiographyMarriage();
+		s += this.getEarlyLife()+HTML.getBr();
+		s += this.getBiographyReign()+HTML.getBr();
+		s += this.getBiographyMarriage()+HTML.getBr();
 		return s;
 	}
 
@@ -181,9 +182,15 @@ public class Holder{
 		String s = "";
 		if (h.hadFather()){
 			if (!h.isPosthumous()){
-				s = Basic.capitalize(h.getPronoun())+" was born to ";
+				s = Basic.capitalize(h.getForename())+" was born in ";
+				s += Basic.sDateLong(h.getBirth())+" as ";
+				s += h.getAgnaticOrderStr()+" of ";
 				s += this.getParentNameAge(h.getFather());
-				s += " and "+this.getParentNameAge(h.getMother());
+				s += " and ";
+				if (!h.hasSameBirthOrder()){
+					s += h.getEnaticOrderStr()+" of ";
+				}
+				s += this.getParentNameAge(h.getMother());
 			} else {
 				s = Basic.capitalize(h.getPronoun())+" was posthumously born to ";
 				s += " "+this.getParentNameAge(h.getMother());

@@ -18,18 +18,16 @@ public class Basic {
 	public static Map<Integer, ArrayList<Human>> monthC = 			new HashMap<>();
 	public static Map<Integer, House> house = 						new HashMap<>();
 	public static String row = 										"%-23s %s–%s\t%s\t%s\t%s\n";
-    public static Map<Integer, ArrayList<Integer>> monthE = 		new HashMap<>();
-    public static Map<Integer, Human> human = 						new HashMap<>();
-    public static Map<Integer, List<Human>> dayC = 					new HashMap<>();
-    public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
-    public static Random randomizer = 								new Random();
-    public static SimpleDateFormat format1 = 						new SimpleDateFormat("yyyy-MM-dd");
-
+  public static Map<Integer, ArrayList<Integer>> monthE = 		new HashMap<>();
+  public static Map<Integer, Human> human = 						new HashMap<>();
+  public static Map<Integer, List<Human>> dayC = 					new HashMap<>();
+  public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
+  public static Random randomizer = 								new Random();
+  public static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+  public static SimpleDateFormat format2 = new SimpleDateFormat("d MMMM yyyy");
 	public static void performSetup(){
 
 		Religion.foundReligion();
-
-
  		House.numberNobleHouses();
 		Name.buildForenames();
 		House.buildNames();
@@ -132,9 +130,16 @@ public class Basic {
 		System.out.println("SIMULATION COMPLETED");
 	}
 
-	public static String sDate(){ 					return format1.format(date.getTime()); }
+	public static String sDate(){
+		return format1.format(date.getTime());
+	}
 
-    public static void print(String printable){
+	public static String sDateLong(Calendar c){
+		return format2.format(c.getTime());
+	}
+
+
+  public static void print(String printable){
 		System.out.println(Basic.sDate()+": "+printable+".");
 	}
 

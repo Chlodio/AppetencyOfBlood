@@ -52,12 +52,12 @@ public class Man extends Human {
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		}
-		return this.getForeName();
+		return this.getForename();
 	}
 
 	@Override
 	public String getFormalName(){
-		String n = this.getForeName();
+		String n = this.getForename();
 		if (this.getName().hasRegnal()){
 			return this.getFullName();
 		} else if (this.title == null){
@@ -72,7 +72,7 @@ public class Man extends Human {
 
 	@Override
     public String makeName(){
-		String name = this.getForeName();
+		String name = this.getForename();
 		String hn =	  this.getHouse().getName();
 		if (this.getName().hasNick()){
 			name +=" "+this.getName().getNickname();
@@ -183,7 +183,7 @@ public class Man extends Human {
 		this.cadency = 0;
 		((Man) this).setCadetStatus(0);
 		this.setName(new Name(true, this));
-		new MainHouse(this, f.getForeName());
+		new MainHouse(this, f.getForename());
 		this.getHouse().setOrigin(2);							//Set bastardy
 		((Man) this).name.setFull(((Man) this).makeName());
 		this.addSon(f, m);
@@ -392,26 +392,24 @@ public class Man extends Human {
 
 	//I.e second son or only son
 	@Override
-	public String getSexChildOrderName(){
+	public String getAgnaticOrderStr(){
+		return getBirthOrderRank(this.getAgnaticOrder())+" son";
+	}
 
-		List<Human> l = this.getFather().getLegitSons();
-		String s = "";
-		int i = l.indexOf(this);								//Index in the order
+	@Override
+	public int getAgnaticOrder(){
+		return this.getBirthOrderRank(this.getFather().getLegitSons());
+	}
 
-		//If there is only one son, just return only son, otherwise [ordinal] son or oldest/youngest
-		if (l.size() == 1){
-			s = "only";
-		} else {
-			if (i == 0){
-				s = "oldest";
-			} else if (i == l.size()-1){
-				s = "youngest";
-			} else {
-				s = Basic.getOrder(i);
-			}
-		}
+	//I.e traced via mother
+	@Override
+	public String getEnaticOrderStr(){
+		return getBirthOrderRank(this.getEnaticOrder())+" son";
+	}
 
-		return s+" son";
+	@Override
+	public int getEnaticOrder(){
+		return this.getBirthOrderRank(this.getMother().getLegitSons());
 	}
 
 	@Override
