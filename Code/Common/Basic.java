@@ -24,7 +24,7 @@ public class Basic {
   public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
   public static Random randomizer = 								new Random();
   public static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-  public static SimpleDateFormat format2 = new SimpleDateFormat("d MMMM yyyy");
+  public static SimpleDateFormat format2 = new SimpleDateFormat("d MMMM y");
 	public static void performSetup(){
 
 		Religion.foundReligion();
@@ -224,6 +224,17 @@ public class Basic {
 		}
 		s += getPlural(d, "day");
 		return s;
+	}
+
+	//Prefers to remove give just full months, otherwise returns days
+	public static String getMonthsOrDays(int i){
+		int m = i/31;
+
+		if (m != 0){
+			return getPlural(m, "month");
+		} else {
+			return getPlural((i-(m*31)), "day");
+		}
 	}
 
 

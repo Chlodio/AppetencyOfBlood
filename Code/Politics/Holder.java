@@ -72,7 +72,7 @@ public class Holder{
 	}
 
 	public String getReign(){
-		String x = Integer.toString(this.start.get(Calendar.YEAR));
+		String x = this.getStartYearStr();
 		if(this.hasEnded()){
 			if(this.start.get(Calendar.YEAR) != this.end.get(Calendar.YEAR)){
 				x += "–";
@@ -179,29 +179,27 @@ public class Holder{
 
 	public String getEarlyLife(){
 		Human h = this.getPerson();
-		String s = "";
+		String s = Basic.capitalize(h.getForename())+" was";
 		if (h.hadFather()){
-			if (!h.isPosthumous()){
-				s = Basic.capitalize(h.getForename())+" was born in ";
-				s += Basic.sDateLong(h.getBirth())+" as ";
-				s += h.getAgnaticOrderStr()+" of ";
-				s += this.getParentNameAge(h.getFather());
-				s += " and ";
-				if (!h.hasSameBirthOrder()){
-					s += h.getEnaticOrderStr()+" of ";
-				}
-				s += this.getParentNameAge(h.getMother());
-			} else {
-				s = Basic.capitalize(h.getPronoun())+" was posthumously born to ";
-				s += " "+this.getParentNameAge(h.getMother());
-				s += ", "+Basic.getDaysBetween(h.getFather().getDeathDate(), h.getBirth());
-				s += " days after the death of his father, ";
-				s += h.getFather().getName().getPatronymic();
-				s += h.getFather().getName().getPatronymic();
+			s += " born in ";
+			s += Basic.sDateLong(h.getBirth())+" as the ";
+			s += h.getAgnaticOrderStr()+" of ";
+			s += this.getParentNameAge(h.getFather());
+			s += " and ";
+			if (!h.hasSameBirthOrder()){
+				s += "the "+h.getEnaticOrderStr()+" of ";
 			}
-			return s+". ";
+			s += this.getParentNameAge(h.getMother());
+			if (h.isPosthumous()){
+				int d = Basic.getDaysBetween(h.getFather().getDeathDate(), h.getBirth());
+				String ds = Basic.getMonthsOrDays(d);
+				s += ", "+ds+" from his father's death";
+			}
+		} else {
+			s += " born around ";
+			s += h.getBirthYear();
 		}
-		return "";
+		return s+".";
 	}
 
 	public String getParentNameAge(Human p){
@@ -214,7 +212,8 @@ public class Holder{
 
 
 	public String getBiographyReign(){
-		String s = Basic.capitalize(this.getPerson().getPronoun());
+		String s = "In "+this.getStartYearStr();
+		s += " "+this.getPerson().getPronoun();
 		s += " ascended the throne "+this.getAgeOfAscensionS();
 		if (this.hasEnded()){
 			s += " and reigned the next ";
@@ -238,6 +237,10 @@ public class Holder{
 
 	public boolean hasEnded(){
 		return this.end != null;
+	}
+
+	public String getStartYearStr(){
+		return Integer.toString(this.getStart().get(Calendar.YEAR));
 	}
 
 //Simple Methods

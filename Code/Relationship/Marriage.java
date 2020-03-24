@@ -87,13 +87,13 @@ public class Marriage extends SexRelation{
 		if (this.hasKinType()){
 			switch(this.getKinType()){
 				case 6:
-					return h.getPossessive()+" cousin, ";
+					return h.getPossessive()+" cousin";
 				case 8:
-					return h.getPossessive()+" second cousin, ";
+					return h.getPossessive()+" second cousin";
 				case 4:
-					return h.getPossessive()+" "+this.getKinNibling(h)+", ";
+					return h.getPossessive()+" "+this.getKinNibling(h);
 				case 5:
-					return h.getPossessive()+" "+this.getKinPibling(h)+", ";
+					return h.getPossessive()+" "+this.getKinPibling(h);
 				default:
 					return "";
 			}
@@ -666,6 +666,11 @@ public class Marriage extends SexRelation{
 		int b = this.getDoe().getAgeIn(this.getBeginning());
 		s += "at the age of "+Basic.getCardinal(a);
 		s += " "+this.getStag().getPronoun()+" married ";
+
+		if (this.hasKinType()){
+			s += this.getKinTypeHTML(this.getStag())+" ";
+		}
+
 		if (a != b){
 			s += Basic.getCardinal(b)+"-year-old ";
 		} else {
