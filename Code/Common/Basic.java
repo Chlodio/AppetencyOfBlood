@@ -57,7 +57,7 @@ public class Basic {
 			for (Human x: ms){
 				dew++;
 				w = Marriage.findWife(x);
-				if (isNotNull(w)){
+				if (w != null){
 					d = x.getAgeDifference(w);
 					Marriage.marrySpecial(x, w, d);
 					for (int y = d; y >= 0; y--){
@@ -214,9 +214,13 @@ public class Basic {
 		return (y+m+d);
 	}
 
+	public static int getYears(int i){
+		return i/365;
+	}
+
 	//Parameter argument is days
 	public static String getYearsAndDays(int i){
-		int y = i/365;
+		int y = getYears(i);
 		int d =  i-(y*365);
 		String s = getPlural(y, "year");
 		if (isNotZero(s.length())){
@@ -368,10 +372,13 @@ public class Basic {
 		return a != 0;
 	}
 
-	public static boolean isNotNull(Human v){
-		return v != null;
+	public static boolean isZero(int a){
+		return a == 0;
 	}
 
+	public static boolean isNotNullZero(List<Human> v){
+		return v != null && isNotZero(v.size());
+	}
 
 	public static void pause(int ms){
 		try{

@@ -9,6 +9,7 @@ import Code.House.House;
 import Code.Looks.*;
 import Code.Ancestry.Bastard;
 import Code.Politics.*;
+import Code.Common.Nick;
 import Code.Relationship.*;
 
 public class Human {
@@ -338,13 +339,22 @@ public class Human {
 
 	public String getPossibleDeath(){
 		if (!this.isAlive()){
-			return this.getDeath();
+			return this.getDeathStr();
 		} else{
 			return "PRSN";
 		}
 	}
 
-	public Calendar getDeathDate(){	return this.death;	}
+	public Calendar getDeath(){	return this.death;	}
+
+	//If alive return current date, otherwise dead the death date
+	public Calendar getDeathPresent(){
+		if (this.isAlive()){
+			return Basic.getDate();
+		} else {
+			return this.getDeath();
+		}
+	}
 
 //Title methods
 
@@ -447,6 +457,11 @@ public class Human {
 
 		if (f.isRegnant()){
 			it.princify();
+			if (it.isMale() && it.isFirstbornSon()){
+				if (f.isOverAgeOf(45)){
+					it.getName().setNick(Nick.DESIRED);
+				}
+			}
 		} else {
 			it.setFullName(it.makeName());
 		}
@@ -683,6 +698,21 @@ public class Human {
 		return n;
 	}
 
+	//Get a list of humans who were alive in certain date
+	public static List<Human> getLivingIn(List<Human> l, Calendar c){
+		List<Human> n = new ArrayList<>();
+		for(Human x: l){
+			if (x.wasBornBefore(c) && x.wasAliveIn(c)){
+				n.add(x);
+			}
+		}
+		if (n.size() != 0){
+			return n;
+		} else {
+			return null;
+		}
+	}
+
 	//As opposed to filtering out the dead, just get the first living that can be detected
 	public static Human getFirstLiving(List<Human> l){
 		for(Human x: l){
@@ -808,6 +838,144 @@ public class Human {
 		}
 	}
 
+	public boolean wasBornBefore(Human m){
+		return this.getBirth().before(m.getBirth());
+	}
+
+	public boolean wasBornBefore(Calendar c){
+		return this.getBirth().before(c);
+	}
+
+	public boolean wasAliveIn(Calendar c){
+		if (this.isAlive()){
+			return true;
+		} else {
+				return c.before(this.getDeath());
+		}
+	}
+
+	public static int getRelativeRank(List<Human>[] l){
+		int i = 0;
+		if (Basic.isNotNullZero(l[0]) ){
+			//Has full relatives
+			i += 1;
+		}
+		if (Basic.isNotNullZero(l[1]) ){
+			//Has paternal relatives
+			i += 2;
+		}
+		if (Basic.isNotNullZero(l[2]) ){
+			//Has maternal relatives
+			i += 4;
+		}
+		return i;
+	}
+
+	public static String getRelativeStatus(String s, List<Human>[] l){
+		int i = getRelativeRank(l);
+		String p = " At the time he had ";
+		switch(i){
+			case 0:
+				//No relatives
+				return "";
+			case 1:
+				//Only full relatives;
+				return p+getRelativesInfo(s, l[0])+".";
+			case 2:
+				//Only paternal half-relatives
+				return p+getRelativesInfo("paternal half-"+s, l[1])+".";
+			case 4:
+				//Only maternal half-relatives
+				return p+getRelativesInfo("maternal half-"+s, l[2])+".";
+			case 3:
+				//Full + paterna relatives
+				 return p+getFullAndPatRelativesInfo(s, l)+".";
+			case 5:
+				//Full + maternal relatives
+				return p+getFullAndMatRelativesInfo(s, l)+".";
+			case 6:
+				//Only half-relatives
+				return p+getHalfRelativesInfo(s, l)+".";
+			default:
+				//aka. 7, all type of relatives
+				return p+getAllRelativesInfo(s, l)+".";
+		}
+	}
+
+	public static String getRelativesInfo(String s, List<Human> l){
+		if (l.size() == 1){
+			return " a "+s+", "+l.get(0).getShortName();
+		} else {
+			return " "+s+"s: "+Human.getNamesOnList(l);
+		}
+	}
+
+	public static String getFullAndPatRelativesInfo(String r, List<Human>[] l){
+		String s = getRelativesInfo(r, l[0]); 								//Get full relatives
+		s += "; "+getRelativesInfo("paternal half-"+r, l[1]); //Get pat. relatives
+		return s;
+	}
+
+	public static String getFullAndMatRelativesInfo(String r, List<Human>[] l){
+		String s = getRelativesInfo(r, l[0]); 									//Get full relatives
+		s += "; "+getRelativesInfo("maternal half-"+r, l[2]); 	//Get mat. relatives
+		return s;
+	}
+
+	public static String getHalfRelativesInfo(String r, List<Human>[] l){
+		String s = getRelativesInfo("paternal half-"+r, l[1]); 	//Get pat. relatives
+		s += "; "+getRelativesInfo("maternal half-"+r, l[2]); 	//Get mat. relatives
+		return s;
+	}
+
+	public static String getAllRelativesInfo(String r, List<Human>[] l){
+		String s = getRelativesInfo(r, l[0]); 								//Get full relatives
+		s += "; "+getRelativesInfo("paternal half-"+r, l[1]); //Get pat. relatives
+		s += "; "+getRelativesInfo("maternal half-"+r, l[2]);	//Get mat. relatives
+		return s;
+	}
+
+	//Get a list of brothers who were alive in certain date
+	public List<Human> getLivingPatBrothersIn(Calendar c){
+		return this.rela.getLivingPatBrothersIn(c);
+	}
+
+	public List<Human>[] getAllBrothersLivingIn(Calendar c){
+		return this.rela.getAllBrothersLivingIn(c);
+	}
+
+	public List<Human> getPatBrothersLivingIn(Calendar c){
+		return this.rela.getPatBrothersLivingIn(c);
+	}
+
+	public List<Human> getMatBrothersLivingIn(Calendar c){
+		return this.rela.getMatBrothersLivingIn(c);
+	}
+
+	public List<Human> getHalfBrothersFrom(List<Human> l1, List<Human> l2){
+		return this.rela.getHalfBrothersFrom(l1, l2);
+	}
+
+	public Human getFirstbornLegitSon(){
+		return this.rela.getLegitSons().get(0);
+	}
+
+	public static String getNamesOnList(List<Human> l){
+		String s = "";
+		switch(l.size()){
+			case 1:
+				return l.get(0).getShortName();
+			case 2:
+				return l.get(0).getShortName()+" and "+l.get(1).getShortName();
+			default:
+				for(int x = 0; x < l.size()-1; x++){
+					s += l.get(x).getShortName()+", ";
+				}
+				s += "and "+l.get(l.size()-1).getShortName();
+				return s;
+		}
+	}
+
 
 	//Check chara is the head of a house
 	public boolean isHouseHead(){
@@ -873,6 +1041,10 @@ public class Human {
 		throw new RuntimeException();
 	}
 
+	public boolean isPartOfDynasty(){
+		return this.getHouse().isDynastic();
+	}
+
 	//Shortcuts
 	public static int getID(){					return id;										}
 	public static int getNumOfLiving(){			return living.size();							}
@@ -884,7 +1056,7 @@ public class Human {
 	public boolean had2ndGreatGrandparents(){	return this.rela.had2ndGreatGrandparents(); 	}
 	public boolean had3rdGreatGrandparents(){	return this.rela.had3rdGreatGrandparents(); 	}
 	public boolean hadBastard(){				return this.rela.hadBastard();					}
-	public boolean hadBrother(){				return this.rela.hadBrother(); 					}
+	public boolean hadPatBrother(){				return this.rela.hadPatBrother(); 					}
 	public boolean hadFather(){					return this.rela.hadFather();					}
 	public boolean hadGrandparents(){			return this.rela.hadGrandparents(); 			}
 	public boolean hadGreatGrandparents(){		return this.rela.hadGreatGrandparents(); 		}
@@ -893,9 +1065,9 @@ public class Human {
 	public boolean hadParents(){				return this.rela.hadParents(); 					}
 	public boolean hadPatGrandpa(){				return this.rela.hadPatGrandpa(); 				}
 	public boolean hadPatGreatGrandpa(){		return this.rela.hadPatGreatGrandpa(); 			}
-	public boolean hasAdultBrother(){			return this.rela.hasAdultBrother(); 			}
+	public boolean hasAdultPatBrother(){			return this.rela.hasAdultPatBrother(); 			}
 	public boolean hasAffairs(){				return this.rela.hasAffairs();					}
-	public boolean hasBrother(){				return this.rela.hasBrother(); 					}
+	public boolean hasPatBrother(){				return this.rela.hasPatBrother(); 					}
 	public boolean hasChild(){					return this.rela.hasChild(); 					}
 	public boolean hadChild(){					return this.rela.hadChild(); 					}
 	public boolean hasFather(){					return this.rela.hasFather();					}
@@ -912,14 +1084,15 @@ public class Human {
 	public boolean isDaughterOf(Human h){		return this.rela.isDaughterOf(h);				}
 	public boolean hasPibling(){				return this.rela.hasPibling(); 					}
 	public boolean hasSeniorPaternalRelative(){	return this.rela.hasSeniorPaternalRelative(); 	}
-	public boolean hasSister(){					return this.rela.hasSister(); 					}
+	public boolean hasPatSister(){					return this.rela.hasPatSister(); 					}
 	public boolean hasSon(){					return this.rela.hasSon(); 						}
 	public boolean hasLegitSon(){				return this.rela.hasLegitSon(); 				}
 	public boolean hasSons(){					return this.rela.hasSons(); 					}
-	public boolean hasUnwedBrother(){			return this.rela.hasUnwedBrother(); 			}
-	public boolean hasUnwedSister(){			return this.rela.hasUnwedSister(); 				}
+	public boolean hasUnwedPatBrother(){			return this.rela.hasUnwedPatBrother(); 			}
+	public boolean hasUnwedPatSister(){			return this.rela.hasUnwedPatSister(); 				}
 	public boolean isActiveAdulterer(){			return this.rela.isActiveAdulterer();			}
 	public boolean isBrotherOf(Human h){		return this.rela.isBrotherOf(h);				}
+	public boolean isFirstbornSon(){				return this.rela.isFirstbornSon();	}
 	public boolean isChildOf(Human h){			return this.rela.isChildOf(h); 					}
 	public boolean isFatherOf(Human h){			return this.rela.isFatherOf(h);					}
 	public boolean isMotherOf(Human h){			return this.rela.isMotherOf(h);					}
@@ -954,13 +1127,13 @@ public class Human {
 	public Human getMother(){					return this.rela.getMother(); 					}
 	public Human getMothersFather(){			return this.rela.getMothersFather(); 			}
 	public Human getMothersMother(){			return this.rela.getMothersMother(); 			}
-	public Human getOldestBrother(){			return this.rela.getOldestBrother(); 			}
+	public Human getOldestLivingPatBrother(){			return this.rela.getOldestLivingPatBrother(); 			}
 	public Human getPaternalNephew(){			return this.rela.getPaternalNephew(); 			}
 	public Human getPatGreatGrandpa(){			return this.rela.getPatGreatGrandpa(); 			}
 	public Human getPatruus(){					return this.rela.getPatruus(); 					}
 	public Human getSpouse(){					return this.rela.getSpouse(); 					}
-	public Human getUnwedBrother(){				return this.rela.getUnwedBrother(); 			}
-	public Human getUnwedSister(){				return this.rela.getUnwedSister(); 				}
+	public Human getUnwedPatBrother(){				return this.rela.getUnwedPatBrother(); 			}
+	public Human getUnwedPatSister(){				return this.rela.getUnwedPatSister(); 				}
 	public Human[] get2ndGreatGrandparents(){	return this.rela.get2ndGreatGrandparents(); 	}
 	public Human[] getFathersParents(){			return this.rela.getFathersParents(); 			}
 	public Human[] getGrandparents(){			return this.rela.getGrandparents(); 			}
@@ -982,8 +1155,8 @@ public class Human {
 	public List<Human> getBastards(){			return this.rela.getBastards();					}
 	public List<Human> getMaleAncestryGroup(){  return this.rela.getMaleAncestryGroup();		}
 	public List<Human> getFemaleAncestryGroup(){ return this.rela.getFemaleAncestryGroup();		}
-	public List<Human> getBrothers(){			return this.rela.getBrothers();					}
-	public List<Human> getSister(){				return this.rela.getSisters();					}
+	public List<Human> getPatBrothers(){			return this.rela.getPatBrothers();					}
+	public List<Human> getSister(){				return this.rela.getPatSisters();					}
 	public List<Human> getChildren(){			return this.rela.getChildren();					}
 	public List<Human> getDaughters(){			return this.rela.getDaughters();				}
 	public List<Human> getLegitDaughters(){		return this.rela.getLegitDaughters();			}
@@ -1027,9 +1200,12 @@ public class Human {
 	public Calendar getBirth(){					return this.birth; }
 	public int getBirthYear(){					return this.getBirth().get(Calendar.YEAR);			 }
 
-	public String getDeath(){					return Basic.format1.format(this.death.getTime());	 }
-	public Calendar getBirthC(){				return (Calendar) this.birth.clone();				 }
+	public String getDeathStr(){					return Basic.format1.format(this.death.getTime());	 }
 	public Personality getPersonality(){		return this.personality;	 						 }
+
+
+	public boolean getSex(){						return this.sex;							}
+	public boolean isSameSex(Human h){	return this.sex == h.sex; 		}
 
 
 //Micro methods
@@ -1127,7 +1303,7 @@ public class Human {
 	public int getRelSta(){						return this.relSta;				}
 	public void setRelSta(int v){				this.relSta = v;				}
 	public boolean isRelSta(int v){				return (this.relSta == v);		}
-	public boolean getSex(){					return this.sex;				}
+
 	public void setTitle(Title t){				this.title = t;					}
 	public void setPolProfile(PolProfile p){	this.polProfile = p;			}
 	public void addEvent(Event e){				this.events.add(e);				}

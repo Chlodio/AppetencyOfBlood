@@ -1,13 +1,15 @@
 package Code.Human;
 import Code.Relationship.*;
 import Code.Common.Basic;
+import Code.Human.Human;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
 //Short for relation
 public class Rela{
 	protected Human o;						//Self owner
-    protected Human father;					//Sociological father
+  protected Human father;					//Sociological father
 	protected Human genitor;				//Biological father
 	protected Human mother;					//Sociological/biological mother
 	protected Human spouse;
@@ -218,6 +220,14 @@ public class Rela{
 		m.addLivingSon();					//Mater semper certa est
 	}
 
+	public Human getFirstbornLegitSon(){
+		return this.getLegitSons().get(0);
+	}
+
+	public boolean isFirstbornSon(){
+		return this.getFather().getFirstbornLegitSon() == this.o;
+	}
+
 	public void addLegitSon(Human c){
 		this.legitSons.add(c);
 	}
@@ -347,8 +357,8 @@ public class Rela{
 		int n = 0;
 
 		if (this.hadFather()){
-			n += Human.countLiving(this.getBrothers());
-			n += Human.countLiving(this.getSisters());
+			n += Human.countLiving(this.getPatBrothers());
+			n += Human.countLiving(this.getPatSisters());
 		}
 
 		return n;
@@ -372,24 +382,116 @@ public class Rela{
 		return false;
 	}
 
+//All Brothers
 
-//Brothers
-
-
-
-	public List<Human> getBrothers(){
-		List<Human> l = this.father.getSons();
-		l.remove(this);								//Remove himself
+	/*Returns full-brothers in [0],
+		paternal half-brothers in [1],
+		maternal half-brothers in [2],
+	*/
+	public List<Human>[] getAllBrothers(){
+		List<Human>[] l = new ArrayList[3];
+		l[0] = this.getFullBrothers();
+		l[1] = this.getHalfBrothersFrom(this.getPatBrothers(), l[0]);
+		l[2] = this.getHalfBrothersFrom(this.getMatBrothers(), l[0]);
 		return l;
 	}
 
-	public boolean hadBrother(){				return this.getFather().getNumOfSons() > 1; }
+//Same as prev, but limited ones living during certain date
+	public List<Human>[] getAllBrothersLivingIn(Calendar c){
+		List<Human>[] l = new ArrayList[3];
+		if (this.hadFather()){
+			l[0] = this.getLivingFullBrothersIn(c);
+			l[1] = this.getHalfBrothersFrom(this.getPatBrothersLivingIn(c), l[0]);
+			l[2] = this.getHalfBrothersFrom(this.getMatBrothersLivingIn(c), l[0]);
+			return l;
+		} else {
+			return null;
+		}
+	}
+
+	public List<Human> getPatBrothersLivingIn(Calendar c){
+		return Human.getLivingIn(this.getPatBrothers(), c);
+	}
+
+	public List<Human> getMatBrothersLivingIn(Calendar c){
+		return Human.getLivingIn(this.getMatBrothers(), c);
+	}
+
+	//Remove full brothers, i.ie brothers that aren't included in l2
+	public List<Human> getHalfBrothersFrom(List<Human> l1, List<Human> l2){
+		if (l1 != null && l2 != null){
+			List<Human> n = new ArrayList<>(l1.size());
+			for (Human x: l1){
+				if (!l2.contains(x)){
+					n.add(x);
+				}
+			}
+			return n;
+		}
+		return null;
+	}
 
 	public boolean isBrotherOf(Human h){
 		return this.father == h.getFather() || this.mother == h.getMother();
 	}
 
-	public boolean hasBrother(){
+
+
+//Brother (full brother)
+
+	public List<Human> getFullBrothers(){
+		List<Human> f  = this.getFather().getSons();
+		List<Human> m = this.getMother().getSons();
+		List<Human> l = new ArrayList<>();
+		for (Human x: f){
+			if (m.contains(x)){
+				l.add(x);
+			}
+		}
+		return l;
+	}
+
+	public List<Human> getLegitFullBrothers(){
+		List<Human> f  = this.getFather().getLegitSons();
+		List<Human> m = this.getMother().getLegitSons();
+		List<Human> l = new ArrayList<>();
+		for (Human x: f){
+			if (m.contains(x)){
+				l.add(x);
+			}
+		}
+		return l;
+	}
+
+	public List<Human> getLivingFullBrothersIn(Calendar c){
+		if (this.hadFather()){
+			List<Human> l = Human.getLivingIn(this.getFullBrothers(), c);
+			return l;
+		}
+		return null;
+	}
+
+
+
+//Paternal brothers (connected via father)
+
+	public List<Human> getPatBrothers(){
+		List<Human> l = this.father.getSons();
+		l.remove(this);								//Remove himself
+		return l;
+	}
+
+	public List<Human> getLivingPatBrothers(){
+		List<Human> l = this.father.getLivingSons();
+		l.remove(this);								//Remove himself
+		return l;
+	}
+
+	public boolean hadPatBrother(){
+		return this.getFather().getNumOfSons() > 1;
+	}
+
+	public boolean hasPatBrother(){
 		List<Human> sons = this.getFather().getLivingSons();
 		for (Human x: sons){
 			if (x != this.o){
@@ -399,20 +501,20 @@ public class Rela{
 		return false;
 	}
 
-	public Human getOldestBrother(){
-		List<Human> sons = this.getFather().getLivingSons();
+	public Human getOldestLivingPatBrother(){
+		List<Human> sons = this.getPatBrothers();
 		for (Human x: sons){
-			if (x != this.o){
+			if (x.isAlive()){
 				return x;
 			}
 		}
 		return null;
 	}
 
-	public boolean hasAdultBrother(){
+	public boolean hasAdultPatBrother(){
 		Human brother;
-		if (this.hadFather() && this.hasBrother()){
-			brother = this.getOldestBrother();
+		if (this.hadFather() && this.hasPatBrother()){
+			brother = this.getOldestLivingPatBrother();
 			if (brother.isAdult()){
 				return true;
 			}
@@ -420,41 +522,69 @@ public class Rela{
 		return false;
 	}
 
-	public boolean hasUnwedBrother(){
+	public boolean hasUnwedPatBrother(){
 		if (this.hadFather()){
-			for(Human x: this.getFather().getLivingSons()){
-				if (x.isAdult() && x.isFitForMarriage()){ return true;}
+			List<Human> l = this.getPatBrothers();
+			for(Human x: l ){
+				if (x.isLivingAdult() && x.isFitForMarriage()){
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 
-	public Human getUnwedBrother(){
-		List<Human> l = this.getFather().getSons();
+	public Human getUnwedPatBrother(){
+		List<Human> l = this.getPatBrothers();
 		for(Human x: l ){
-			if (x.isLivingAdult()){
-				if (x.isFitForMarriage()){
+			if (x.isLivingAdult() && x.isFitForMarriage()){
 					return x;
-				}
 			}
 		}
 		return null;
 	}
 
+	public List<Human> getLivingPatBrothersIn(Calendar c){
+		if (this.hadFather()){
+			List<Human> l = Human.getLivingIn(this.getPatBrothers(), c);
+			return l;
+		}
+		return null;
+	}
 
-//Sisters
+//Brothers (maternal)
 
-	public List<Human> getSisters(){
-		List<Human> l = this.father.getDaughters();
+	public List<Human> getMatBrothers(){
+		List<Human> l = this.mother.getSons();
+		l.remove(this);								//Remove himself
+		return l;
+	}
+
+	public List<Human> getLivingMatBrothersIn(Calendar c){
+		if (this.hadFather()){
+			List<Human> l = Human.getLivingIn(this.getMatBrothers(), c);
+			return l;
+		}
+		return null;
+	}
+
+
+//Sisters (full)
+
+public boolean isSisterOf(Human h){
+	return this.father == h.getFather() ||	this.mother == h.getMother();
+}
+
+//Sisters (paternal)
+
+	public List<Human> getPatSisters(){
+		List<Human> l = this.mother.getDaughters();
 		l.remove(this);									//Don't count yourself
 		return l;
 	}
 
-	public boolean isSisterOf(Human h){
-		return this.father == h.getFather() ||	this.mother == h.getMother();
-	}
 
-	public boolean hasSister(){
+	public boolean hasPatSister(){
 		List<Human> dau = this.getFather().getLivingDaughters();
 		for (Human x: dau){
 			if (x != this.o){
@@ -464,7 +594,7 @@ public class Rela{
 		return false;
 	}
 
-	public boolean hasUnwedSister(){
+	public boolean hasUnwedPatSister(){
 		if (this.hadFather()){
 			for(Human x: this.getFather().getLivingDaughters()){
 				if (x.isAdult() && x.isFitForMarriage()){
@@ -475,7 +605,7 @@ public class Rela{
 		return false;
 	}
 
-	public Human getUnwedSister(){
+	public Human getUnwedPatSister(){
 		List<Human> l = this.getFather().getDaughters();
 		for(Human x: l ){
 			if (x.isLivingAdult()){
@@ -700,7 +830,9 @@ public class Rela{
 		return false;
 	}
 
-	public Human getFathersFather(){	return this.getFather().getFather();	}
+	public Human getFathersFather(){
+		return this.getFather().getFather();
+	}
 
 	public Human getFathersMother(){	return this.getFather().getMother();	}
 
@@ -775,7 +907,8 @@ public boolean hadMatGrandma(){
 	}
 
 	public boolean hadGreatGrandparents(){
-		for(Human x: this.getGrandparents()){
+		Human[] l = this.getGrandparents();
+		for(Human x: l) {
 			if (!x.hadParents()){
 				return false;
 			}
@@ -784,7 +917,8 @@ public boolean hadMatGrandma(){
 	}
 
 	public boolean had2ndGreatGrandparents(){
-		for(Human x: this.getGreatGrandparents()){
+		Human[] l = this.getGreatGrandparents();
+		for(Human x: l){
 			if (!x.hadParents()){
 				return false;
 			}
@@ -807,6 +941,7 @@ public boolean hadMatGrandma(){
 
 	public boolean hadPatGreatGrandpa(){
 		if (this.hadFather()){
+			//System.out.println("!"+this.getFather().getFathersFather());
 			return this.getFather().hadPatGrandpa();
 		}
 		return false;
@@ -943,7 +1078,7 @@ public boolean hadMatGrandma(){
 	}
 
 	public boolean hasPibling(){
-		if (this.hasFather() && this.hadPatGrandpa()){
+		if (this.hadFather() && this.hadPatGrandpa()){
 			if (this.hasPaternalPibling() || this.hasMaternalPibling()){
 				return true;
 			}
@@ -990,7 +1125,7 @@ public boolean hadMatGrandma(){
 	//Does character's father have a living brother?
 	public boolean hasPatruus(){
 		if (this.hadPatGrandpa()){
-			return this.getFather().hasBrother();
+			return this.getFather().hasPatBrother();
 		}
 		return false;
 	}
@@ -1041,7 +1176,7 @@ public boolean hadMatGrandma(){
 	}
 
 	public boolean isPaternalNephewOf(Human h){
-		List<Human> l = h.getBrothers();
+		List<Human> l = h.getPatBrothers();
 		for (Human x: l){
 			if (h.isSonOf(x)){
 				return true;

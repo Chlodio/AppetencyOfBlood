@@ -189,7 +189,7 @@ public class Woman extends Human {
 		this.addDaughter(f, m);
 		this.house = f.house;
 		this.addToHouse();
-		if (f.isAlive() || this.hasSister()){
+		if (f.isAlive() || this.hasPatSister()){
 			this.cadency = f.getLivingDaughters().size()-1;
 		} else{
 			this.cadency = 0;
@@ -237,14 +237,14 @@ public class Woman extends Human {
 		this.becomeSingle();
 		this.setRelSta(1);
 		if(h.hasUnwedSameSexSibling()){
-		//	Human d = h.getUnwedBrother();
+		//	Human d = h.getUnwedPatBrother();
 			Marriage.doLevirate(this, h);
 		//	System.out.println(this.isMarriedTo(d));
 		//	Basic.pause(1000);
 		}
 	}
 
-	@Override public boolean hasUnwedSameSexSibling(){ return this.hasUnwedSister();}
+	@Override public boolean hasUnwedSameSexSibling(){ return this.hasUnwedPatSister();}
 
 
 	@Override
@@ -255,7 +255,7 @@ public class Woman extends Human {
 		List<Human> h;
 		if (this.hadHouse()){
 			this.getHouse().removeKinswoman(this);
-			if (this.hasSister()){
+			if (this.hasPatSister()){
 				h = this.getFather().getLivingDaughters();
 				for (int x = 0; x < h.size(); x++){
 					h.get(x).cadency = x;

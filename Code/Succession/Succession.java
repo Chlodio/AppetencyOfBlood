@@ -25,12 +25,12 @@ public class Succession {
 
 	public static void clearLineage(){
 		lineageI = 0;
-		lineageT = new Human[16];
+		lineageT = new Human[17];
 	}
 
 	public static void clearSLineage(){
 		lineageSecI = 0;
-		lineageSecT = new Human[16];
+		lineageSecT = new Human[17];
 	}
 
 	public static void lockSecLineage(){

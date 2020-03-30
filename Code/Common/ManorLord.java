@@ -110,7 +110,7 @@ public class ManorLord {
 				this.bequeathTo(this.getOwner().getLivingSon(), this.manors, this.getFund());
 			}
 		} else {
-			if (this.getOwner().hasBrother()){
+			if (this.getOwner().hasPatBrother()){
 
 			}
 		}

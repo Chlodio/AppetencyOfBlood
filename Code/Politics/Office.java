@@ -6,8 +6,10 @@ import Code.Human.Human;
 import Code.Ancestry.*;
 import Code.Politics.*;
 import Code.House.House;
+import Code.Politics.DynasticOffice;
 import Code.Politics.Cabinet;
 import Code.Common.*;
+import Code.House.Dynasty;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -29,6 +31,8 @@ public class Office{
 	private Military military;
 	private Territory territory;
 	private Treasury funds;									//Save funds
+	private List<Dynasty> dynasties;
+	private List<DynasticOffice> dOffices;
 	private List<RegnalName> regnalNames = 					new ArrayList<>();
 
 	private Cabinet cabinet;								//Collection of ministers
@@ -48,7 +52,9 @@ public class Office{
 		this.consortList =						new ArrayList<>();
 		this.military = 							new Military(this);
 		this.projects = 							new ArrayList<>();
+		this.dynasties =							new ArrayList<>();
 		this.regnalNames = 						new ArrayList<>();
+		this.dOffices =								new ArrayList<>();
 		this.territory = 							new Realm(this);
 		this.gearingUp = 							false;
 		this.atWar = 									false;
@@ -158,6 +164,34 @@ public class Office{
 		}
 	}
 
+//Dynasties
+	//is part of estabalished dynasty
+	public boolean hadDynasty(Dynasty d){
+		return this.getDynasties().contains(d);
+	}
+
+	public List<Dynasty> getDynasties(){
+		return new ArrayList<>(this.dynasties);
+	}
+
+	public DynasticOffice getRecentDynasticOffice(){
+		return this.dOffices.get(this.dOffices.size()-1);
+	}
+
+	public void addDynasty(Dynasty d){
+		this.dynasties.add(d);
+	}
+
+	public void addDynasticOffice(DynasticOffice d){
+		if (this.dOffices.size() != 0){
+			this.getRecentDynasticOffice().disable();
+		}
+		this.dOffices.add(d);
+	}
+
+	public List<DynasticOffice> getDynasticOffices(){
+		return this.dOffices;
+	}
 
 //shortcuts
 	public boolean isHolder(Holder h){					return this.lineage.isHolder(h); 	}

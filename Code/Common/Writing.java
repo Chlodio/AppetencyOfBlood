@@ -85,7 +85,7 @@ public class Writing {
 				lt += HTML.getBr();
 
 				if (x.getHadChildren()){
-					lt += x.getOffspringNum();
+					lt += x.getNumOfOffspring();
 				} else {
 					lt += "No";
 				}

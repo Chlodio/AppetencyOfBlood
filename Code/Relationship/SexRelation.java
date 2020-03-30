@@ -120,7 +120,7 @@ public class SexRelation{
 
 //Offspring
 
-	public int getOffspringNum(){
+	public int getNumOfOffspring(){
 		return this.offspring.size();
 	}
 
@@ -133,8 +133,77 @@ public class SexRelation{
 		return new ArrayList<>(this.offspring);
 	}
 
+	public List<Human> getSons(){
+		List<Human> l = new ArrayList<>();
+		for(Human x: this.offspring){
+			if (x.isMale()){
+				l.add(x);
+			}
+		}
+		return l;
+	}
+
+	public List<Human> getDaughters(){
+		List<Human> l = new ArrayList<>();
+		for(Human x: this.offspring){
+			if (x.isFemale()){
+				l.add(x);
+			}
+		}
+		return l;
+	}
+
+	public int getNumOfSons(){
+		int i = 0;
+		for(Human x: this.offspring){
+			if (x.isMale()){
+				i++;
+			}
+		}
+		return i;
+	}
+
+	public int getNumOfDaughters(){
+		int i = 0;
+		for(Human x: this.offspring){
+			if (x.isFemale()){
+				i++;
+			}
+		}
+		return i;
+	}
+
 	public void addOffspring(Human o){
 		this.offspring.add(o);
+	}
+
+	//Offspring that alive stag died
+	public List<Human> getSurvivingOffspring(){
+		Calendar c = this.getStag().getDeathPresent();
+		return Human.getLivingIn(this.getOffspring(), c);
+
+	}
+
+	public List<Human> getSurvivingSons(){
+		Calendar c = this.getStag().getDeathPresent();
+		return Human.getLivingIn(this.getSons(), c);
+	}
+
+	public List<Human> getSurvivingDaughters(){
+		Calendar c = this.getStag().getDeathPresent();
+		return Human.getLivingIn(this.getDaughters(), c);
+	}
+
+	public int getNumOfSurvivingOffspring(){
+		return this.getSurvivingOffspring().size();
+	}
+
+	public int getNumOfSurvivingSons(){
+		return this.getSurvivingSons().size();
+	}
+
+	public int getNumOfSurvivingDaughters(){
+		return this.getSurvivingDaughters().size();
 	}
 
 	public boolean wasChildless(){

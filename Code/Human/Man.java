@@ -224,7 +224,7 @@ public class Man extends Human {
 	}
 
 	@Override
-	public boolean hasUnwedSameSexSibling(){ return this.hasUnwedBrother(); }
+	public boolean hasUnwedSameSexSibling(){ return this.hasUnwedPatBrother(); }
 
 	@Override
 	public void bury(){
@@ -241,7 +241,7 @@ public class Man extends Human {
 		if (this.hadFather()){
 			if (this.isLegimate()){
 				this.getFather().removeLivingSon();
-				if(this.hasBrother()){
+				if(this.hasPatBrother()){
 					h = this.getFather().getLegitLivingSons();
 					for (int x = 0; x < h.size(); x++){
 						h.get(x).cadency = x;

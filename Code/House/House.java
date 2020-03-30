@@ -4,6 +4,7 @@ import Code.Common.*;
 import Code.Politics.Title;
 import Code.Relationship.*;
 import Code.Ancestry.*;
+import Code.House.Dynasty;
 import Code.House.CoatOfArms;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class House {
 	protected List<String> maleNames;				//Names used for men of the family
 	protected byte origin;
 	protected Human host;									//Adult caretaker
+	private Dynasty dynasty;						//Political dynasty
 
 	/*Origin with following inputs:
 		0 = mystic (unknown, should not be used)
@@ -1034,6 +1036,12 @@ public class House {
 
 	}
 
+//Dynasty methods
+	public void setDynasty(Dynasty d){  this.dynasty = d;					}
+
+	public boolean isDynastic(){				return this.dynasty != null;	}
+
+	public Dynasty getDynasty(){				return this.dynasty;	}
 
 //Micro methods
 

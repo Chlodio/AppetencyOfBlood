@@ -8,6 +8,8 @@ import Code.Relationship.Marriage;
 import Code.Politics.*;
 import Code.Ancestry.*;
 import Code.Common.*;
+import Code.House.Dynasty;
+import Code.House.House;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -26,12 +28,13 @@ public class Holder{
 	private Ruler ruler;
 	private String name;
 	private String notes;
+	private Dynasty dynasty;
 
-	public Holder(Human person, Office office){
+	public Holder(Human person, Office o){
 		this.person = 	person;
 		this.claim = 	new Claim();
-		if (office.getLineage().getPriority() < 3){
-			this.claim.combine(this, office);
+		if (o.getLineage().getPriority() < 3){
+			this.claim.combine(this, o);
 		} else {
 			this.claim.setSpecial(1);
 		}
@@ -40,9 +43,40 @@ public class Holder{
 		this.notes = 	"";
 		this.regents =	new ArrayList<>();
 		this.events = 	new ArrayList<>();
-		this.office = 	office;
+		this.office = 	o;
 		person.addEvent(Event.E101);
+
+		House h = person.getHouse();
+		Dynasty d;
+		if (h.isDynastic()){
+			d = h.getDynasty();
+			if (o.hadDynasty(d)){
+			} else {
+				//If holder is from estabalished dynasty, but hasn't ruled over office
+				o.addDynasty(d);
+				d.addOffice(o);
+				d.addDynasticOffice(o);
+				o.addDynasticOffice(d.getDynasticOffice(o));
+			}
+			if (!d.isDynast(this)){
+				d.addDynast(this, o);
+			}
+		} else {
+			//If holder isn't from dynasty create a new dynasty
+		 	d = new Dynasty(this);
+			h.setDynasty(d);
+			o.addDynasty(d);
+			d.addOffice(o);
+			d.addDynasticOffice(o);
+			o.addDynasticOffice(d.getDynasticOffice(o));
+		}
+		this.setDynasty(d);
 	}
+
+
+	public boolean isProgenitor(){
+    return this == this.getDynasty().getProgenitor();
+  }
 
 	public void setConsort(Human c){
 		c.setOffice(this.office);
@@ -166,15 +200,26 @@ public class Holder{
 
 	public String getBiography(){
 		String s = "";
-		s += this.getEarlyLife()+HTML.getBr();
-		s += this.getBiographyReign()+HTML.getBr();
+		s += this.getEarlyLife();
+		s += this.getChildhood()+HTML.getBr();
 		s += this.getBiographyMarriage()+HTML.getBr();
+		s += this.getBiographyReign()+HTML.getBr();
 		return s;
 	}
 
 	public String getBiographyMarriage(){
 		String s = this.getPerson().getMaritalBio();
 		return s;
+	}
+
+	public String getChildhood(){
+		Human h = this.getPerson();
+		List<Human>[] l = h.getAllBrothersLivingIn(h.getBirth());
+		if (l != null){
+			String s = Human.getRelativeStatus("brother", l);
+			return s;
+		}
+		return "";
 	}
 
 	public String getEarlyLife(){
@@ -191,7 +236,7 @@ public class Holder{
 			}
 			s += this.getParentNameAge(h.getMother());
 			if (h.isPosthumous()){
-				int d = Basic.getDaysBetween(h.getFather().getDeathDate(), h.getBirth());
+				int d = Basic.getDaysBetween(h.getFather().getDeath(), h.getBirth());
 				String ds = Basic.getMonthsOrDays(d);
 				s += ", "+ds+" from his father's death";
 			}
@@ -220,8 +265,43 @@ public class Holder{
 		} else {
 			s += " and has ruled ";
 		}
-		s += this.getReignYearsAndDays();
-		return s+". ";
+		s += this.getReignYearsAndDays()+".";
+		return s+getDynasticStanding();
+	}
+
+	public DynasticOffice getDynasticOffice(){
+		return this.getDynasty().getDynasticOffice(this.getOffice());
+	}
+
+	public boolean wasLastRulerOfDynasty(){
+		return this ==this.getDynasticOffice().getRecent();
+	}
+
+	public String getDynasticStanding(){
+		String s = " "+this.getName();
+		if (this.hasEnded()){
+			s += " was ";
+		} else {
+			s += " is ";
+		}
+		DynasticOffice dy = this.getDynasticOffice();
+		if (this.isProgenitor()){
+				if (!dy.hadOnlyOne()){
+					s += "the progenitor of";
+					s += dy.getPoeticTenure();		//I.e short-lived
+				} else {
+					s += "the only ruler from";
+				}
+		} else {
+			s += "the "+Basic.getOrdial(dy.getOrder(this));
+			if (this.hasEnded()){
+				if (this.wasLastRulerOfDynasty()){
+					s += " and last";
+				}
+			}
+			s += " ruler from";
+		}
+		return s+" "+this.getDynasty().getName()+".";
 	}
 
 	public String getAgeOfAscensionS(){
@@ -241,6 +321,14 @@ public class Holder{
 
 	public String getStartYearStr(){
 		return Integer.toString(this.getStart().get(Calendar.YEAR));
+	}
+
+//Dynastic
+
+	public Dynasty getDynasty(){			return this.dynasty; }
+
+	public void setDynasty(Dynasty d){
+		this.dynasty = d;
 	}
 
 //Simple Methods

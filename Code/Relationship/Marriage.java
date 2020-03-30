@@ -206,7 +206,7 @@ public class Marriage extends SexRelation{
 		for (Human x: pBrides){
 			//No old women
 			if (!b.isFromSameEstate(x)){	continue;	}
-			if (b.isOlderThan(x, 10)|| x.isOverAgeOf(40)){ continue;}
+			if (b.isOlderThan(x, 15)|| x.isOverAgeOf(40)){ continue;}
 			//No parent-child marriages
 			if (x.isMotherOf(b)){ continue; }
 			if (b.isFatherOf(x) ){ continue; }
@@ -280,18 +280,18 @@ public class Marriage extends SexRelation{
     }
 
 	public int getAgeAt(Human spouse){
-		return this.beginning.get(Calendar.YEAR)-spouse.getBirthC().get(Calendar.YEAR);
+		return this.beginning.get(Calendar.YEAR)-spouse.getBirth().get(Calendar.YEAR);
 	}
 
 	/*Widow marries her brother-in-laws*/
 	public static void doLevirate(Human widow, Human departed){
-		marryFiancee(departed.getUnwedBrother(), widow);
+		marryFiancee(departed.getUnwedPatBrother(), widow);
 		getRecentMarriage().setLevirate();
 	}
 
 	/*Widower marries his sister-in-laws*/
 	public static void doSororate(Human widower, Human departed){
-		marryFiancee(widower, departed.getUnwedSister());
+		marryFiancee(widower, departed.getUnwedPatSister());
 		getRecentMarriage().setSorotate();
 	}
 
@@ -632,19 +632,66 @@ public class Marriage extends SexRelation{
 		} else if (this.getStag().hadChild()){
 			return this.getDoe().getForename()+" was barren";
 		 } else {
-			return "both the husband and the wife seem incapable of reproducing";
+			return "both the husband and the wife appeared incapable of reproducing";
 		 }
 	}
 
 	public String getFirstbornHTML(){
 		Human h = this.getFirstborn();
-		return "; their first child, "+h.getFormalName()+" was born in "+h.getBirthYear();
+		String s = "child, "+h.getFormalName()+" was born in "+h.getBirthYear();
+		if (this.getNumOfOffspring() > 1){
+			return "; their first "+s;
+		} else {
+			return "; their only "+s;
+		}
+	}
+
+	public String getOffspringInfo(){
+	 	int s = this.getNumOfSons();
+		int d = this.getNumOfDaughters();
+		if (Basic.isNotZero(s)){
+			if (Basic.isNotZero(d)){
+				return Basic.getPlural(s, "son")+" and "+Basic.getPlural(d, "daughter");
+			} else {
+				return Basic.getPlural(s, "son");
+			}
+		} else {
+			return Basic.getPlural(d, "daughter");
+		}
+	}
+
+	public String getSurvivingOffspringInfo(){
+			List<Human> l = this.getSurvivingOffspring();
+			if (l != null){
+				String s = Human.getNamesOnList(this.getSurvivingOffspring());
+				if (l.size() > 1){
+					return ", the surviving children were: "+s;
+				} else if (this.getNumOfOffspring() > 1){
+					if(this.getFirstborn() != l.get(0)){
+						if (this.getFirstborn().isSameSex(l.get(0))){
+							return ", only their other "+l.get(0).getOffspring()+", "+s+" survived";
+						} else {
+							return ", only their other child, "+s+" survived";
+						}
+					} else {
+						return "";
+					}
+				} else {
+					return "";
+				}
+			} else if (this.getNumOfOffspring() > 1){
+				return ", alas no issue survived";
+			} else {
+				return ", but "+this.getFirstborn().getPronoun()+" didn't survive";
+			}
 	}
 
 	public String getChildrenHTML(){
 		String s;
 		if (!this.wasChildless()){
-			return this.getFirstbornHTML();
+			s = ", which resulted in "+this.getOffspringInfo();
+			s = s+this.getFirstbornHTML();
+			return s+""+this.getSurvivingOffspringInfo();
 		} else if (!this.isActive()) {
 			s = ", but the union proved childless for ";
 			s += this.findReasonForInfertility();
@@ -674,7 +721,7 @@ public class Marriage extends SexRelation{
 		if (a != b){
 			s += Basic.getCardinal(b)+"-year-old ";
 		} else {
-			s += "the same age ";
+			s += "same-aged ";
 		}
 		s += this.getDoe().getName().getPatronymic();
 		s += this.getHTMLCommon();
@@ -690,7 +737,7 @@ public class Marriage extends SexRelation{
 		if (a != b){
 			s += Basic.getCardinal(b)+"-year-old ";
 		} else {
-			s += "the same age ";
+			s += "same-aged ";
 		}
 		s += this.getStag().getName().getPatronymic();
 		s += this.getHTMLCommon();
