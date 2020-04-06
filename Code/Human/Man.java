@@ -25,7 +25,6 @@ public class Man extends Human {
 		this.name.setFull(this.makeName());
 		this.cadetStatus = 0;
 		this.becomeSingle();
-
 	}
 
 //children of generated
@@ -93,17 +92,19 @@ public class Man extends Human {
 	}
 
 
-    @Override
-    public void saunter(int x){
-        switch(x){
-			case 1:
-				if (this.isAlive()){ Marriage.prepare(this); }
-                break;
-            case 0:
-                this.kill((byte) 0);
-                break;
-        }
+	@Override
+	public void saunter(int x){
+		switch(x){
+			/*case 1:
+				if (this.isAlive()){
+					Marriage.prepare(this);
+				}
+        break;*/
+      case 0:
+        this.kill((byte) 0);
+        break;
     }
+  }
 
 	@Override
 	public void clean(){
@@ -122,7 +123,7 @@ public class Man extends Human {
 		Human it = new Man(y, false);
 		Man.children.add(it);
 		it.setParents(f, m);
-		it.cadency = f.getNumOfLivingSons();
+	//	it.cadency = f.getNumOfLivingSons();
 		it.setHouse(f.house);
 		it.addToHouse();
 		Name.aSon(f, m, it);
@@ -150,14 +151,14 @@ public class Man extends Human {
 			this.addToHouse();
 			this.nameChild();
 			this.addSon(f, m);
-			this.cadency = f.getNumOfLivingSons();
+//			this.cadency = f.getNumOfLivingSons();
 
 			if (((Man) f).isPatriarch()){
 				f.getHouse().addPrince(this);
 			}
 
 		} else{								//Posthumous birth
-			this.cadency = 0;
+//			this.cadency = 0;
 			((Man) this).setCadetStatus(0);
 			this.name = 		new Name(true, this);
 			new MainHouse(this);
@@ -180,7 +181,7 @@ public class Man extends Human {
 
 	public void handleBastardBirth(Human f, Human m){
 		this.setParents(f, m);
-		this.cadency = 0;
+//		this.cadency = 0;
 		((Man) this).setCadetStatus(0);
 		this.setName(new Name(true, this));
 		new MainHouse(this, f.getForename());
@@ -243,9 +244,9 @@ public class Man extends Human {
 				this.getFather().removeLivingSon();
 				if(this.hasPatBrother()){
 					h = this.getFather().getLegitLivingSons();
-					for (int x = 0; x < h.size(); x++){
+				/*	for (int x = 0; x < h.size(); x++){
 						h.get(x).cadency = x;
-					}
+					}*/
 				}
 			}
 			if (this.isHousePrince()){
@@ -323,10 +324,24 @@ public class Man extends Human {
 		}
 		this.rela.reachAdulthood();
 		this.becomeSingle();
-		if (this.cadency == 0){
+
+/*		if (this.cadency == 0){
 			Marriage.prepare(this);
-		}
+		}*/
 //			if (x.title == Title.KING){ Regent.lift(); }
+	}
+
+	@Override
+	public int getCadency(){
+		if (this.hadFather()){
+			if (this.isLegimate()){
+				return this.getFather().getLegitSons().indexOf(this);
+			} else {
+				return this.getFather().getSons().indexOf(this);
+			}
+		} else {
+			return 0;
+		}
 	}
 
 

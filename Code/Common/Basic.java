@@ -86,41 +86,46 @@ public class Basic {
 						for (Human x: Woman.singles){ 							Mating.revaluateF(x);}
 						for (Office x: Office.offices){ 						x.doAccounting();}
 						Mating.retire();
-						for (int month = 1; month != 13; month++){
-						   maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
-						   for (Office x: Office.offices){
-							   if(x.isAtWar()){
-								   InterestImperialism.handleSiege(x);
-							   }
-						   }
-						   for (Human x: Human.living){ 		Death.check(x, maom);		}
-						   for (Human x: Man.singles){ 			Marriage.propose(x, maom);	}
-						   Marriage.doBreeding();
-						   Affair.doAdultery();
-						   for (Human x: Woman.pregnant){x.ovulate(maom);}
-						   while(dom != maom){
-							   for (int x0 = 0; x0 != dayC.get(dom).size();x0++){
-								   dayC.get(dom).get(x0).saunter(dayE.get(dom).get(x0));
-							   }
+						for (int quarter = 0; quarter != 4; quarter++){
+							maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
+							Marriage.checkProposals(maom);
+							for (int month = 0; month != 3; month++){
+							  maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
+							  for (Office x: Office.offices){
+									 if(x.isAtWar()){
+										 InterestImperialism.handleSiege(x);
+									 }
+							  }
+							  for (Human x: Human.living){ 		Death.check(x, maom);		}
+
+						//	   for (Human x: Man.singles){ 			Marriage.propose(x, maom);	}
+							  Marriage.doBreeding();
+							  Affair.doAdultery();
+							  for (Human x: Woman.pregnant){x.ovulate(maom);}
+							  while(dom != maom){
+									for (int x0 = 0; x0 != dayC.get(dom).size();x0++){
+										dayC.get(dom).get(x0).saunter(dayE.get(dom).get(x0));
+									}
+									getDate().add(Calendar.DATE, 1);
+									dom = getDate().get(Calendar.DAY_OF_MONTH);
+							  }
+							  for (int xc = 1; xc < 32; xc++){
+								  dayC.get(xc).clear();
+								  dayE.get(xc).clear();
+							  }
+							  for (int xc = 1; xc != 13; xc++){
+								  monthC.get(xc).clear();
+								  monthE.get(xc).clear();
+					   		}
 							   getDate().add(Calendar.DATE, 1);
-							   dom = getDate().get(Calendar.DAY_OF_MONTH);
-						   }
-						   for (int xc = 1; xc < 32; xc++){
-							   dayC.get(xc).clear();
-							   dayE.get(xc).clear();
-						   }
-						   for (int xc = 1; xc != 13; xc++){
-							   monthC.get(xc).clear();
-							   monthE.get(xc).clear();
-				   			}
-						   getDate().add(Calendar.DATE, 1);
-						   dom = getDate().get(Calendar.DAY_OF_MONTH);
-			            }
-						Marriage.flushMonthlyWedding();
+								 dom = getDate().get(Calendar.DAY_OF_MONTH);
+								 Marriage.flushMonthlyWedding();
+							}
+						}
 					}
 				}
 			}
-        }
+    }
 
 		Writing.writeMonarchList();
 		Writing.writeTable();
@@ -128,6 +133,7 @@ public class Basic {
 		Writing.writeDemography();
 		Writing.writeNobility();
 		System.out.println("SIMULATION COMPLETED");
+		//System.out.println(Marriage.bs);
 	}
 
 	public static String sDate(){

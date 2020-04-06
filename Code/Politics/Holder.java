@@ -74,8 +74,8 @@ public class Holder{
 	}
 
 
-	public boolean isProgenitor(){
-    return this == this.getDynasty().getProgenitor();
+	public boolean isFounder(){
+    return this == this.getDynasty().getFounder();
   }
 
 	public void setConsort(Human c){
@@ -92,7 +92,6 @@ public class Holder{
 		Holder holder = new Holder(person, office);
 		Territory territory = holder.getOffice().getTerritory();
 		holder.name = RegnalName.regnafy(holder, office);
-		System.out.println(holder.name);
 		return holder;
 	}
 
@@ -285,9 +284,9 @@ public class Holder{
 			s += " is ";
 		}
 		DynasticOffice dy = this.getDynasticOffice();
-		if (this.isProgenitor()){
+		if (this.isFounder()){
 				if (!dy.hadOnlyOne()){
-					s += "the progenitor of";
+					s += "the founder of";
 					s += dy.getPoeticTenure();		//I.e short-lived
 				} else {
 					s += "the only ruler from";

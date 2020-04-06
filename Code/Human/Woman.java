@@ -100,17 +100,26 @@ public class Woman extends Human {
 
 
 
-    @Override
-    public void saunter(int x){
-        switch(x){
+  @Override
+	public void saunter(int x){
+    switch(x){
+			case 1:
+				if (this.isAlive()){
+					Marriage.prepare(this);
+				}
+        break;
 			case 20:
-				if (this.isAlive()){ this.childbirth();}
-				break;
-            case 0:
-				if (this.isAlive()){ this.kill((byte) 0);}
-				break;
-        }
-    }
+					if (this.isAlive()){
+						this.childbirth();
+					}
+					break;
+		    case 0:
+					if (this.isAlive()){
+						this.kill((byte) 0);
+					}
+					break;
+			}
+  }
 
 	@Override
 	public void clean(){
@@ -173,7 +182,7 @@ public class Woman extends Human {
 		Name.aDaughter(f, m, it);
 		it.addDaughter(f, m);
 		it.getName().setOwner(it);
-		it.cadency = f.getLivingDaughters().size()-1;
+//		it.cadency = f.getLivingDaughters().size()-1;
 		return it;
 	}
 
@@ -189,11 +198,11 @@ public class Woman extends Human {
 		this.addDaughter(f, m);
 		this.house = f.house;
 		this.addToHouse();
-		if (f.isAlive() || this.hasPatSister()){
+	/*	if (f.isAlive() || this.hasPatSister()){
 			this.cadency = f.getLivingDaughters().size()-1;
 		} else{
 			this.cadency = 0;
-		}
+		}*/
 	}
 
 	public void handleBastardBirth(Human f, Human m){
@@ -203,7 +212,7 @@ public class Woman extends Human {
 		//this.house = 		new MainHouse(this);
 		this.house = f.house;
 		this.addToHouse();
-		this.cadency = 0;
+		//this.cadency = 0;
 	}
 
 	public void nameChild(){;
@@ -257,9 +266,9 @@ public class Woman extends Human {
 			this.getHouse().removeKinswoman(this);
 			if (this.hasPatSister()){
 				h = this.getFather().getLivingDaughters();
-				for (int x = 0; x < h.size(); x++){
+			/*	for (int x = 0; x < h.size(); x++){
 					h.get(x).cadency = x;
-				}
+				}*/
 			}
 		}
 
@@ -318,6 +327,19 @@ public class Woman extends Human {
 		}
 
 	//	if (x.title == Title.QUEENREGNANT){ Regent.lift(); }
+	}
+
+	@Override
+	public int getCadency(){
+		if (this.hadFather()){
+			if (this.isLegimate()){
+				return this.getFather().getLegitDaughters().indexOf(this);
+			} else {
+				return this.getFather().getDaughters().indexOf(this);
+			}
+		} else {
+			return 0;
+		}
 	}
 
 	@Override

@@ -208,7 +208,6 @@ public class Rela{
 		return Human.getFirstLiving(this.getSons());
 	}
 
-
 	public void addSon(Human f, Human m){
 		f.getRela().sons.add(this.getOwner());
 		m.getRela().sons.add(this.getOwner());
@@ -234,6 +233,10 @@ public class Rela{
 
 	public List<Human> getLegitSons(){
 		return new ArrayList<>(this.legitSons);
+	}
+
+	public List<Human> getLegitSonsLink(){
+		return this.legitSons;
 	}
 
 //Daughters
@@ -424,6 +427,8 @@ public class Rela{
 			for (Human x: l1){
 				if (!l2.contains(x)){
 					n.add(x);
+					System.out.println(x.getBirthYear());
+					//throw new RuntimeException();
 				}
 			}
 			return n;

@@ -58,7 +58,7 @@ public class Dynasty {
     this.offices.add(o);
   }
 
-  public Holder getProgenitor(){
+  public Holder getFounder(){
     return this.dynasts.get(0);
   }
 

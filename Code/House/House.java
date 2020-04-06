@@ -17,7 +17,7 @@ import java.io.IOException;
 public class House {
 	private static List<House> list = new ArrayList<>();
 	public static House nextHouse;					//Used for temp. tracing
-    private static int id = 0;						//Number of created houses
+  private static int id = 0;						//Number of created houses
 	protected static String spareName;				//Used for temp
 
 	protected String name;							//Main name of the house
@@ -199,9 +199,9 @@ public class House {
 	private void passTheTorchTo(Human h){
 		this.addHead(h);
 		if (this.head.isAdult()){
-			if (this.head.isSonless() && this.head.isUnwed()){
+			/*if (this.head.isSonless() && this.head.isUnwed()){
 				Marriage.prepare(this.head);
-			}
+			}*/
 		} else {
 			this.findHost();
 		}
@@ -838,6 +838,9 @@ public class House {
 
 
 	public static House getRandomPeasant(){
+		if (getPeasants().size() == 0){
+			throw new RuntimeException();
+		}
 		House h = Basic.choice(getPeasants());
 		return h;
 	}

@@ -492,7 +492,6 @@ public class Writing {
 			l[9-x][0] = x*10;
 			l[9-x][1] = men[x];
 			l[9-x][2] = women[x];
-			//System.out.println((x*10)+";"+men[x]+";"+women[x]);
 		}
 		return l;
 	}

@@ -59,6 +59,9 @@ public class Marriage extends SexRelation{
 		this.stag.addMarriage(this);
 		this.doe.addMarriage(this);
 		this.setKinType(this.defineKinType());
+		if (doe.getAge() < 12){
+			throw new RuntimeException();
+		}
 	}
 
 	public void setKinType(byte i){
@@ -152,24 +155,51 @@ public class Marriage extends SexRelation{
 		}
 	}
 
-	public static void propose(Human bachelor, int maom){
-		if (Basic.randint(bachelor.getMating()) == 0){
-			int f = Basic.randint(maom)+1;
-			Basic.dayC.get(f).add(bachelor);
-			Basic.dayE.get(f).add(1);
-			addMonthlyWedding();
+	public static void checkProposals(int maom){
+		List<Human> w = Woman.getSingles();
+		if (w.size() >= 2){
+			List<Integer> l = new ArrayList<>(w.size());
+			int i = Basic.max(2, (int) (w.size()*0.05) );//(int) (w.size()*0.025);
+
+
+
+			int a;
+			while(l.size() < i){
+					a = Basic.randint(w.size());
+					if (!l.contains(a)){
+						l.add(a);
+					}
+			};
+			for(int x: l){
+				propose(w.get(x), maom);
+			}
 		}
 	}
 
-	public static void prepare(Human groom){
-		if (match(groom)){
-			marryFiancee(groom, bestMatch);
-		} else if (groom.isNoble()){
-			Human w = Woman.findWench();
+	public static void propose(Human h, int maom){
+		int f = Basic.randint(maom)+1;
+		Basic.dayC.get(f).add(h);
+		Basic.dayE.get(f).add(1);
+		addMonthlyWedding();
+	}
+
+	public static int bs = 0;
+
+	public static void prepare(Human b){
+		if (match(b)){
+			marryFiancee(bestMatch, b);
+		}
+
+		/*else if (b.isNoble()){
+			if (Basic.getDateYear() > 1100 ){
+				bs++;
+				//throw new RuntimeException();
+			}*/
+/*			Human w = Woman.findWench();
 			if (w != null){
 				marryFiancee(groom, w);
 			}
-		}
+		}*/
 
 		/*	if (groom.getAge() >= 30 && groom.isActiveAdulterer()){
 				if (groom.hasUnmarriedMistress()){
@@ -200,34 +230,82 @@ public class Marriage extends SexRelation{
 	}
 
 	public static boolean match(Human b){
-		List<Human> brides = new ArrayList<>();
-		List<Human> pBrides = Woman.getSingles();
-		int bV; Human bC; 	//best value //best character
-		for (Human x: pBrides){
-			//No old women
-			if (!b.isFromSameEstate(x)){	continue;	}
-			if (b.isOlderThan(x, 15)|| x.isOverAgeOf(40)){ continue;}
-			//No parent-child marriages
-			if (x.isMotherOf(b)){ continue; }
-			if (b.isFatherOf(x) ){ continue; }
-			//No siblin marriages
-			if (b.isSiblingOf(x) ){ continue; }
-			//
-			brides.add(x);
+		Human h;
+		if (b.isNoble()){
+			h = matchHighborn(b);
+		} else {
+			h = matchLowborn(b);
 		}
-		if (Basic.isNotZero(brides.size())){
-				bestMatch = Basic.choice(brides);
-				return true;
+		if (h != null){
+			bestMatch = h;
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
-    public static void marryBetrothed(Human husband, Human wife){
+	public static Human matchHighborn(Human b){
+		List<Human> l = b.getFromSameEstate(Man.getSingles());
+		List<Human> m = new ArrayList<>(l.size());
+
+		for(Human x: l){
+			if (!x.areCloselyRelated(b)){
+				m.add(x);
+			}
+		}
+
+		List<Human> s = new ArrayList<>(m.size());
+
+		for(Human x: m){
+			if (x.isPolitican()){
+				s.add(x);
+			}
+		}
+
+		if (s.size() > 0){
+			return Basic.choice(s);
+		} else {
+			for(Human x: m){
+				if (x.isSonless()){
+					s.add(x);
+				}
+			}
+			if (s.size() > 0){
+				return Basic.choice(s);
+			} else if (m.size() > 0){
+				return Basic.choice(m);
+			} else {
+				return null;
+			}
+		}
+	}
+
+	public static Human matchLowborn(Human b){
+		List<Human> l = b.getFromSameEstate(Man.getSingles());
+		List<Human> m = new ArrayList<>(l.size());
+
+		for(Human x: l){
+			if (!x.areCloselyRelated(b)){
+				m.add(x);
+			}
+		}
+
+		if (m.size() > 0){
+			return Basic.choice(m);
+		}
+		return null;
+	}
+
+
+  public static void marryBetrothed(Human husband, Human wife){
 		Marriage.marry(husband, wife);
-        Basic.print(husband.getFullName()+" gave "+wife.getFullName()+" a green gown.");
+    Basic.print(husband.getFullName()+" gave "+wife.getFullName()+" a green gown.");
 	}
 
 	public static void marryFiancee(Human husband, Human wife){
+		if (!husband.isMale() || wife.isMale() ){
+			throw new RuntimeException();
+		}
 		Marriage.marry(husband, wife);
 		Basic.print(husband.getFullName()+" married "+wife.getFullName());
 		husband.becomeTaken();
@@ -298,6 +376,8 @@ public class Marriage extends SexRelation{
 	public void terminate(){
 		this.ending = (Calendar) Basic.date.clone();
 		this.active = false;
+		this.getStag().setSpouseNull();
+		this.getDoe().setSpouseNull();
 		list.remove(this);
 	}
 
@@ -311,7 +391,9 @@ public class Marriage extends SexRelation{
 	public boolean canBreed(){
 		if (this.isActive()){
 			//Multiple sons are only for noblemen
-			return true;
+			if (this.getStag().isNoble() || this.getStag().getNumOfSons() <= 4){
+				return true;
+			}
 		}
 		return false;
 	}

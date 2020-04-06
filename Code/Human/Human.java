@@ -16,7 +16,7 @@ public class Human {
 	protected Calendar death;
 	protected Courtier courtier;
 	protected House house;  								//Mont of pregnancy
-	protected int cadency;
+//	protected int cadency;
 	protected int fertility;
 	protected int fund;
 	protected int gen;
@@ -27,7 +27,7 @@ public class Human {
 	protected ManorLord manorLord;
 	protected Office office;
 	protected PolProfile polProfile;
-	protected House host;										//Character is the head of this famil
+	protected House host;										//Character is the head of this family
 	protected Religion religion;
 	protected String DNA;
 	protected Title title;
@@ -38,7 +38,7 @@ public class Human {
 	private Minister role;									//Character's career as minister
   protected static int id = 								0;
 
-    public static List<Human> living = 				new ArrayList<>();
+  public static List<Human> living = 				new ArrayList<>();
 	/*
 		0 = single/virgin
 		1 = widower/widow
@@ -61,7 +61,6 @@ public class Human {
 	10 = childbirth/maternal death
 	*/
 
-
 //generated
 	public Human(int age){
   	this.id++;
@@ -79,7 +78,7 @@ public class Human {
 		this.chaBox = 		new boolean[]{true, false, false};
 		this.personality =	new Personality();
 		Basic.human.put(Human.id, this);
-}
+	}
 
 //generated born
 	public Human(int y, boolean b){
@@ -95,9 +94,7 @@ public class Human {
 	   this.fund = 		0;
 	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
-    }
-
-
+  }
 
 //naturally born
 	public Human(){
@@ -112,7 +109,7 @@ public class Human {
 	   this.fund = 		0;
 	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
-    }
+  }
 
 
 	public void performPosthumousBirth(Human f, Human m){
@@ -258,6 +255,10 @@ public class Human {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isLivingUnwedAdult(){
+		return this.isLivingAdult() && this.isUnwed();
 	}
 
 	//Move the house member into another house
@@ -656,7 +657,13 @@ public class Human {
 	public String getHouseCoALink(){			return this.getHouse().getCoALink();			}
 
 
-	public boolean isNoble(){					return this.getHouse().isNoble();				}
+	public boolean isNoble(){
+		if (this.getHouse() != null){
+			return this.getHouse().isNoble();
+		} else {
+			return false;
+		}
+	}
 
 	public boolean isPeasant(){
 		if (this.hadFather()){
@@ -698,6 +705,16 @@ public class Human {
 		return n;
 	}
 
+	public List<Human> getFromSameEstate(List<Human> l){
+		List<Human> n = new ArrayList<>(l.size());		//Short for new list
+		for(Human x: l){
+			if (x.isFromSameEstate(this)){
+				n.add(x);
+			}
+		}
+		return n;
+	}
+
 	//Get a list of humans who were alive in certain date
 	public static List<Human> getLivingIn(List<Human> l, Calendar c){
 		List<Human> n = new ArrayList<>();
@@ -713,6 +730,8 @@ public class Human {
 		}
 	}
 
+
+
 	//As opposed to filtering out the dead, just get the first living that can be detected
 	public static Human getFirstLiving(List<Human> l){
 		for(Human x: l){
@@ -722,6 +741,7 @@ public class Human {
 		}
 		throw new RuntimeException();
 	}
+
 
 	//Will count the number of living
 	public static int countLiving(List<Human> l){
@@ -880,6 +900,12 @@ public class Human {
 				return "";
 			case 1:
 				//Only full relatives;
+				Human ma = l[0].get(0).getMother();
+				for (Human x: l[0]){
+					if (x.getMother() != ma){
+						throw new RuntimeException();
+					}
+				}
 				return p+getRelativesInfo(s, l[0])+".";
 			case 2:
 				//Only paternal half-relatives
@@ -1032,12 +1058,13 @@ public class Human {
 
 	public static Human getRandomPersonForHost(){
 		Human h;
-		for(int x = 10; x > 0; x--){
+		for(int x = 25; x > 0; x--){
 			h = Basic.choice(Man.men);
 			if (h.isAdult() && !h.isHost()){
 				return h;
 			}
 		}
+		System.out.println(Man.men.size());
 		throw new RuntimeException();
 	}
 
@@ -1160,7 +1187,8 @@ public class Human {
 	public List<Human> getChildren(){			return this.rela.getChildren();					}
 	public List<Human> getDaughters(){			return this.rela.getDaughters();				}
 	public List<Human> getLegitDaughters(){		return this.rela.getLegitDaughters();			}
-	public List<Human> getLegitSons(){			return this.rela.getLegitSons();				}
+	public List<Human> getLegitSons(){	return this.rela.getLegitSons();				}
+	public List<Human> getLegitSonsLink(){return this.rela.getLegitSonsLink();	}
 	public List<Human> getLivingChildren(){		return this.rela.getLivingChildren();			}
 	public List<Human> getLivingDaughters(){	return this.rela.getLivingDaughters(); 			}
 	public List<Human> getLivingFirstCousins(){	return this.rela.getLivingFirstCousins(); 		}
@@ -1198,7 +1226,7 @@ public class Human {
 	public int getEye(){						return Character.getNumericValue(this.DNA.charAt(0));}
 	public String getBirthF(){					return Basic.format1.format(this.birth.getTime());	 }
 	public Calendar getBirth(){					return this.birth; }
-	public int getBirthYear(){					return this.getBirth().get(Calendar.YEAR);			 }
+	public int getBirthYear(){	return this.getBirth().get(Calendar.YEAR);		}
 
 	public String getDeathStr(){					return Basic.format1.format(this.death.getTime());	 }
 	public Personality getPersonality(){		return this.personality;	 						 }
@@ -1239,7 +1267,7 @@ public class Human {
 	public boolean isMinor(){					return false;					}	//blank
 	public boolean isPolitican(){				return this.polProfile != null; }
 	public House getHouse(){					return this.house; 				}
-	public int getCadency(){					return this.cadency;			}
+	public int getCadency(){					return 0;									}
 	public int getFund(){						return this.fund;				}
 	public int getGen(){						return this.gen;				}
 	public ManorLord getManorLord(){			return this.manorLord;			}
