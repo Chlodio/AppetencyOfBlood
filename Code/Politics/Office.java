@@ -20,7 +20,7 @@ public class Office{
 	private boolean atWar;
 	private boolean gearingUp;
 	private Court court;
-	private Debt debt;										//How much is owned
+	private Debt debt;											//How much is owned
 	private float tax;
 	private Rule rule;
 	private String name;
@@ -31,6 +31,7 @@ public class Office{
 	private Military military;
 	private Territory territory;
 	private Treasury funds;									//Save funds
+	private List<Human> claimants;					//people with claims
 	private List<Dynasty> dynasties;
 	private List<DynasticOffice> dOffices;
 	private List<RegnalName> regnalNames = 					new ArrayList<>();
@@ -55,6 +56,7 @@ public class Office{
 		this.dynasties =							new ArrayList<>();
 		this.regnalNames = 						new ArrayList<>();
 		this.dOffices =								new ArrayList<>();
+		this.claimants = 							new ArrayList<>();
 		this.territory = 							new Realm(this);
 		this.gearingUp = 							false;
 		this.atWar = 									false;
@@ -78,20 +80,34 @@ public class Office{
 
 
 	public void inaugurate(Human person){
-
 		String oldName =								person.getFullName();
 		if(person.getHouse().getRanking() != 8){		person.getHouse().setRanking(8);}
 		Office kingship = 								office.get(1);
 		this.rule = new Rule(this);
 		this.rule.createSoleRuler(this, person);
 		this.addHolder(this.getRule().getSeniorHolder());
+		person.hasClaimRemove(this);
 		System.out.println(oldName+" was inaugurated as "+person.getFullName()+" at the age of "+person.getAge()+".");
 	}
 
 	public void endTenure(){
 		this.getRule().handleRegency();
 		this.rule.endReign();
+		this.spreadClaims();
 		this.manageSuccession();
+	}
+
+	public void spreadClaims(){
+		Human h = this.getHolder().getPerson();
+		if (h.isAlive()){
+			Claim c;
+			List<Human> l = h.getLegitSons();
+			for (Human x: l){
+				if (x.isAlive()){
+					x.addClaim( new Claim( new Human[]{h, x} ) );
+				}
+			}
+		}
 	}
 
 	public void manageSuccession(){
@@ -191,6 +207,20 @@ public class Office{
 
 	public List<DynasticOffice> getDynasticOffices(){
 		return this.dOffices;
+	}
+
+//Claimants
+
+	public List<Human> getClaimants(){
+		return this.claimants;
+	}
+
+	public void addClaimant(Human h){
+		this.claimants.add(h);
+	}
+
+	public void removeClaimant(Human h){
+		this.claimants.remove(h);
 	}
 
 //shortcuts

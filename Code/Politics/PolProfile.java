@@ -14,9 +14,6 @@ public class PolProfile {
 	private List<Office> offices;
 	private Interest interest;
 	private Skill skill;
-
-
-
 //	this.interest 	= 	new Interest();
 //	this.skill 		= 	new Skill(this);
 

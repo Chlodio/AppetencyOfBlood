@@ -408,6 +408,8 @@ public class Writing {
 
 
 	public static int[] getLifeExpetency(){
+		return new int[7];
+		/*
 		int[] arr = new int[7];
 		int a = 0;
 		int oldest = 0;
@@ -459,7 +461,7 @@ public class Writing {
 		arr[4] = fLe/NoW;
 		arr[5] = AMLE/NAM;
 		arr[6] = AFLE/NAW;
-		return arr;
+		return arr;*/
 	}
 
 	public static int[] getEyeColorCensus(){

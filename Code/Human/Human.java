@@ -6,6 +6,7 @@ import java.util.Calendar;
 import Code.Common.*;
 import Code.Court.Courtier;
 import Code.House.House;
+import Code.Ancestry.Claim;
 import Code.Looks.*;
 import Code.Ancestry.Bastard;
 import Code.Politics.*;
@@ -36,6 +37,7 @@ public class Human {
   protected Name name;
 	protected Personality personality;
 	private Minister role;									//Character's career as minister
+	private List<Claim> claims;
   protected static int id = 								0;
 
   public static List<Human> living = 				new ArrayList<>();
@@ -77,7 +79,7 @@ public class Human {
 		this.fund = 		0;
 		this.chaBox = 		new boolean[]{true, false, false};
 		this.personality =	new Personality();
-		Basic.human.put(Human.id, this);
+//		Basic.human.put(Human.id, this);
 	}
 
 //generated born
@@ -92,7 +94,7 @@ public class Human {
 	   this.fertility = -1;
 	   this.rela =		new Rela(this, false);
 	   this.fund = 		0;
-	   Basic.human.put(Human.id, this);
+//	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
   }
 
@@ -107,7 +109,7 @@ public class Human {
 	   this.fertility = -1;
 	   this.rela =		new Rela(this, false);
 	   this.fund = 		0;
-	   Basic.human.put(Human.id, this);
+//	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
   }
 
@@ -145,6 +147,9 @@ public class Human {
   }
 
 	public void review(){
+		if (this.hadClaims()){
+			this.passClaims();
+		}
 		if (this.isPolitican()){
 			this.getPolProfile().handleDeath();
 		}
@@ -398,10 +403,10 @@ public class Human {
 		int wa = 15+my;								//wife age
 		Human f;
 		Human m;
-		new Man(ha);
-		new Woman(wa);
-		f = Basic.human.get(Human.getID()-1);
-		m = Basic.human.get(Human.getID());
+//		new Man(ha);
+//		new Woman(wa);
+		f = new Man(ha); //Basic.human.get(Human.getID()-1);
+		m = new Woman(wa); //Basic.human.get(Human.getID());
 		Marriage.marrySpecial(f, m, my);
 		for (int x = my; x >= 0; x--){
 			if (Basic.randint(4) == 0){
@@ -1070,6 +1075,43 @@ public class Human {
 
 	public boolean isPartOfDynasty(){
 		return this.getHouse().isDynastic();
+	}
+
+//Claim
+
+	public void hasClaimRemove(Office o){
+		if (this.hadClaims()){
+			List<Claim> l = new ArrayList<>(this.claims);
+			for(int x = 0; x < l.size(); x++){
+				if (l.get(x).getOffice() == o){
+					this.removeClaim(l.get(x));
+				}
+			}
+		}
+	}
+
+	public void passClaims(){
+		List<Claim> l = new ArrayList<>(this.claims);
+		this.claims.get(0).pass();
+	}
+
+	public boolean hadClaims(){
+		return this.claims != null;
+	}
+
+	public void addClaim(Claim c){
+		if (this.hadClaims()){
+			this.claims = new ArrayList<>(1);
+		}
+		if (!this.claims.contains(c)){
+			this.claims.add(c);
+			c.getOffice().addClaimant(this);
+		}
+	}
+
+	public void removeClaim(Claim c){
+		this.claims.remove(c);
+		c.getOffice().removeClaimant(this);
 	}
 
 	//Shortcuts

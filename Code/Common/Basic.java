@@ -19,7 +19,7 @@ public class Basic {
 	public static Map<Integer, House> house = 						new HashMap<>();
 	public static String row = 										"%-23s %s–%s\t%s\t%s\t%s\n";
   public static Map<Integer, ArrayList<Integer>> monthE = 		new HashMap<>();
-  public static Map<Integer, Human> human = 						new HashMap<>();
+//  public static Map<Integer, Human> human = 						new HashMap<>();
   public static Map<Integer, List<Human>> dayC = 					new HashMap<>();
   public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
   public static Random randomizer = 								new Random();
@@ -132,6 +132,11 @@ public class Basic {
 		Writing.writeSummary();
 		Writing.writeDemography();
 		Writing.writeNobility();
+
+	//	for(Human h:Office.offices.get(0).getClaimants()){
+	//		System.out.println(h.getFormalName()+" ");
+	//	}
+
 		System.out.println("SIMULATION COMPLETED");
 		//System.out.println(Marriage.bs);
 	}

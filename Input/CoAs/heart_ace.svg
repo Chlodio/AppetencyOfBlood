@@ -40,8 +40,8 @@
      id="namedview25"
      showgrid="false"
      inkscape:zoom="4"
-     inkscape:cx="-0.014172"
-     inkscape:cy="71.044208"
+     inkscape:cx="-50.014172"
+     inkscape:cy="70.044208"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -55,7 +55,7 @@
      transform="matrix(0.49057632,0,0,0.49057632,167.45342,55.729781)">
     <path
        d="m -272.15187,-80.156249 q 15.87206,0 24.94185,18.374146 3.28394,7.271464 3.44026,11.102673 h 0.23459 q 2.7366,-12.66643 9.92988,-21.032533 8.44429,-8.444286 18.99967,-8.444286 16.34123,0 26.19285,17.514075 2.50201,6.489595 2.50201,12.197302 0,19.546959 -16.26307,37.295603 l -41.36134,49.649271 h -0.46908 l -43.94161,-53.871414 q -13.13556,-16.028511 -13.13556,-33.07346 0,-16.497628 15.55941,-26.19292 6.56777,-3.518457 13.37014,-3.518457 z"
-       style="stroke:none;stroke-width:2.03841877;stroke-opacity:1"
+       style="stroke:none;stroke-width:10.19209407;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-linejoin:round;stroke-linecap:round"
        id="path1425"
        inkscape:connector-curvature="0" />
   </g>

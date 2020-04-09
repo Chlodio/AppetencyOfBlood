@@ -12,23 +12,45 @@ import java.util.Arrays;
 
 public class Claim{
 	private Human[] lineage;
-	private boolean coverture;									//If held via jure uxoris
-	private Holder origin;										//Original holder
+	private boolean coverture;							//If held via jure uxoris
+	private Holder origin;									//Original holder
 	private Human holder;										//Lhe owner of the claim
 	private int blood; 											//I.e. 0 = agnatic/1 = cognatic
 	private int special;										//I.e. 0 = regular/1 = elected
-	private Office office;										//The office claim belongs to
-	private Holder predecessor;									//Last predecessor
-	private boolean lineal;										//Lineal descendant predecessor
+	private Office office;									//The office claim belongs to
+	private Holder predecessor;							//Last predecessor
+	private boolean lineal;									//Lineal descendant predecessor
 
 	public final static String[] kinship = {"Agnatic", "Patrilineal", "Cognatic"};
-	public static Claim temp;									//Stored in succession
+	public static Claim temp;								//Stored in succession
 
+	public Claim(){
+	}
 
+	public Claim(Human[] h){
+		this.lineage = h;
+	}
 
 	public static Claim getTemp(){
 		Claim it = temp;
 		return it;
+	}
+
+	public static Human[] makeLineage(Human[] a, Human h){
+		Human[] n = Arrays.copyOf(a, a.length+1);
+		n[n.length-1] = h;
+		return n;
+	}
+
+	public void pass(){
+		if (this.holder.isAdult()){
+			List<Human> l = this.holder.getLegitSons();
+			for(Human x: l){
+				if (x.isAlive()){
+					x.addClaim( new Claim(makeLineage(this.getLineage(), x) ) );
+				}
+			}
+		}
 	}
 
 
