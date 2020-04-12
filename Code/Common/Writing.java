@@ -16,6 +16,42 @@ import java.util.List;
 
 public class Writing {
 
+	public static void writeClaims(){
+		String s = writeClaimsInfo();
+		try {
+			FileWriter writer = new FileWriter("Output/Claims.html", false);
+			writer.write(s);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String writeClaimsInfo(){
+		String s = HTML.getBeginning();
+		String[][] th = {{"Name", ""}, {"DoR", ""}, {"Ancestor", ""}, {"Birth", ""}};
+		String l = HTML.getTr(HTML.createTableHeaderClass(th));
+		String a;
+		int lh;
+		Human h;
+		Office.offices.get(0).sortClaims();
+		for(Claim x:Office.offices.get(0).getClaimants()){
+			h = x.getHolder();
+			lh = x.getLineageLength();
+			a = HTML.getTd(h.getFormalName());
+			a += HTML.getTd(""+(lh-1));
+			a += HTML.getTdTitle((x.getLineageString()), ""+(x.getUltimateAncestor().getFormalName()));
+			a += HTML.getTd(""+h.getBirthYear());
+			l += HTML.getTr(a);
+		}
+
+
+		s += HTML.getTable(l);
+		s += HTML.getEnding();
+		return s;
+	}
+
+
 
 	public static void writeNobility(){
 		String td;									//Table cell

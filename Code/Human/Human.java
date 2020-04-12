@@ -143,12 +143,21 @@ public class Human {
 		if (this.isManorLord()){
 			this.getManorLord().depart();
 		}
+		if (this.hadClaims()){
+			if (this.claims.size() > 0){
+				throw new RuntimeException();
+			}
+		}
 		this.setDeathCause(i);
   }
 
 	public void review(){
-		if (this.hadClaims()){
+		if (this.hasClaims()){
 			this.passClaims();
+			this.removeAllClaim();
+			if (this.claims.size() > 0){
+				throw new RuntimeException();
+			}
 		}
 		if (this.isPolitican()){
 			this.getPolProfile().handleDeath();
@@ -1087,7 +1096,15 @@ public class Human {
 					this.removeClaim(l.get(x));
 				}
 			}
+			if (this.claims.size() > 0){
+				throw new RuntimeException();
+			}
 		}
+	}
+
+
+	public Claim getClaim(int i){
+		return this.claims.get(i);
 	}
 
 	public void passClaims(){
@@ -1099,19 +1116,33 @@ public class Human {
 		return this.claims != null;
 	}
 
+	public boolean hasClaims(){
+		return this.hadClaims() && this.claims.size() > 0;
+	}
+
 	public void addClaim(Claim c){
-		if (this.hadClaims()){
+		if (this.isDead()){
+			throw new RuntimeException();
+		}
+		if (!this.hadClaims()){
 			this.claims = new ArrayList<>(1);
 		}
 		if (!this.claims.contains(c)){
+			System.out.println(c.getOffice());
 			this.claims.add(c);
-			c.getOffice().addClaimant(this);
+			c.getOffice().addClaimant(c);
 		}
 	}
 
 	public void removeClaim(Claim c){
 		this.claims.remove(c);
-		c.getOffice().removeClaimant(this);
+		c.getOffice().removeClaimant(c);
+	}
+
+	public void removeAllClaim(){
+		while(this.claims.size() > 0){
+			this.removeClaim(this.claims.get(0));
+		}
 	}
 
 	//Shortcuts
@@ -1301,6 +1332,7 @@ public class Human {
 	public boolean isAdult(){					return this.fertility != -1;	}
 	public boolean isChild(){					return !this.isAdult();			}
 	public boolean isAlive(){					return this.death == null;		}
+	public boolean isDead(){					return this.death != null;		}
 	public boolean isFemale(){					return this.sex == true;		}
 	public boolean isGen(){						return this.gen != 0;			}
 	public boolean isMale(){					return this.sex == false;		}

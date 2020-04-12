@@ -31,7 +31,7 @@ public class Office{
 	private Military military;
 	private Territory territory;
 	private Treasury funds;									//Save funds
-	private List<Human> claimants;					//people with claims
+	private List<Claim> claimants;					//people with claims
 	private List<Dynasty> dynasties;
 	private List<DynasticOffice> dOffices;
 	private List<RegnalName> regnalNames = 					new ArrayList<>();
@@ -99,12 +99,18 @@ public class Office{
 
 	public void spreadClaims(){
 		Human h = this.getHolder().getPerson();
-		if (h.isAlive()){
+		if (h.isAdult()){
 			Claim c;
 			List<Human> l = h.getLegitSons();
 			for (Human x: l){
 				if (x.isAlive()){
-					x.addClaim( new Claim( new Human[]{h, x} ) );
+					c = new Claim( new Human[]{h, x} , this);
+					x.addClaim(c);
+				}  else if (x.isAdult() && x.hasSon()){
+					c = new Claim( new Human[]{h, x} , this);
+					x.addClaim(c);
+					x.passClaims();
+					x.removeClaim(c);
 				}
 			}
 		}
@@ -122,6 +128,9 @@ public class Office{
 			s = this.getLineage().getHeir();
 		} else {
 			try {
+				if (this.getClaimants().size() > 0){
+					throw new RuntimeException();
+				}
 				s = Basic.choice(House.getMagnates());		//Elect
 			} catch (RuntimeException e){
 				throw new RuntimeException();
@@ -211,17 +220,39 @@ public class Office{
 
 //Claimants
 
-	public List<Human> getClaimants(){
+	public List<Claim> getClaimants(){
 		return this.claimants;
 	}
 
-	public void addClaimant(Human h){
+	public void addClaimant(Claim h){
+		if (this.claimants.contains(h)){
+			throw new RuntimeException();
+		}
 		this.claimants.add(h);
 	}
 
-	public void removeClaimant(Human h){
+	public void removeClaimant(Claim h){
 		this.claimants.remove(h);
 	}
+
+public void sortClaims(){
+	int[] a = Claim.getClaimLineageNum(this.claimants);
+	int t;		//Temporary int
+	Claim tc;	//Temporary claims
+	List<Claim> cl = this.claimants;
+	for(int x = 0; x < a.length; x++){
+			for(int y = x; y < a.length; y++){
+					if (a[y] < a[x]){
+							t = a[x];
+							tc = cl.get(x);
+							a[x] = a[y];
+							cl.set(x, cl.get(y));
+							a[y] = t;
+							cl.set(y, tc);
+					}
+			}
+	}
+}
 
 //shortcuts
 	public boolean isHolder(Holder h){					return this.lineage.isHolder(h); 	}

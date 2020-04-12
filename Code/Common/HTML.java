@@ -19,6 +19,11 @@ public class HTML {
 		return "<td>"+s+"</td>";
 	}
 
+	public static String getTdTitle(String t, String s){
+		return "<td title='"+t+"'>"+s+"</td>";
+	}
+
+
 	public static String getTh(String s){
 		return "<th>"+s+"</th>";
 	}

@@ -132,10 +132,8 @@ public class Basic {
 		Writing.writeSummary();
 		Writing.writeDemography();
 		Writing.writeNobility();
+		Writing.writeClaims();
 
-	//	for(Human h:Office.offices.get(0).getClaimants()){
-	//		System.out.println(h.getFormalName()+" ");
-	//	}
 
 		System.out.println("SIMULATION COMPLETED");
 		//System.out.println(Marriage.bs);

@@ -27,13 +27,23 @@ public class Claim{
 	public Claim(){
 	}
 
-	public Claim(Human[] h){
+	public Claim(Human[] h, Office o){
 		this.lineage = h;
+		this.office = o;
+		this.holder = h[h.length-1];
 	}
 
 	public static Claim getTemp(){
 		Claim it = temp;
 		return it;
+	}
+
+	public static int[] getClaimLineageNum(List<Claim> a){
+		int[] i = new int[a.size()];
+		for(int x = 0; x < a.size(); x++){
+			i[x] = a.get(x).getLineageLength();
+		}
+		return i;
 	}
 
 	public static Human[] makeLineage(Human[] a, Human h){
@@ -47,7 +57,13 @@ public class Claim{
 			List<Human> l = this.holder.getLegitSons();
 			for(Human x: l){
 				if (x.isAlive()){
-					x.addClaim( new Claim(makeLineage(this.getLineage(), x) ) );
+					Claim c = new Claim(makeLineage(this.getLineage(), x), this.office);
+					x.addClaim(c);
+				} else if (x.isAdult() && x.hasSon()){
+					Claim c = new Claim(makeLineage(this.getLineage(), x), this.office);
+					x.addClaim(c);
+					x.passClaims();
+					x.removeClaim(c);
 				}
 			}
 		}
@@ -257,7 +273,14 @@ public class Claim{
 		this.setHolder(h.getPerson());					//What poltical figure does the claim belong to
 	}
 
-
+	public String getLineageString(){
+		String s = "";
+		for(int x = 0; x < this.lineage.length-1; x++){
+			s += this.lineage[x].getFormalName()+" -> ";
+		}
+		s += this.lineage[this.lineage.length-1].getFormalName();
+		return s;
+	}
 
 
 	public boolean hasOrigin(){						return this.origin != null;			}
