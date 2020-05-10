@@ -86,6 +86,7 @@ public class Basic {
 						for (Human x: Woman.singles){ 							Mating.revaluateF(x);}
 						for (Office x: Office.offices){ 						x.doAccounting();}
 						Mating.retire();
+
 						for (int quarter = 0; quarter != 4; quarter++){
 							maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
 							Marriage.checkProposals(maom);
@@ -148,8 +149,8 @@ public class Basic {
 	}
 
 
-  public static void print(String printable){
-		System.out.println(Basic.sDate()+": "+printable+".");
+  public static void print(String p){
+		System.out.println(Basic.sDate()+": "+p+".");
 	}
 
 	public static boolean coinFlip(){
@@ -438,7 +439,7 @@ public class Basic {
 
 	private final static String[] roman = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX"};
 
-	final static String[] order = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelveth", "thirteenth"};
+	final static String[] order = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelveth", "thirteenth", "fourteenth", "fifteenth"};
 	final static String[] orderShort = {"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31st", "32nd", "33rd", "34th", "35th", "36th", "37th", "38th", "39th", "40th", "41st", "42nd", "43rd", "44th", "45th", "46th", "47th", "48th", "49th", "50th"};
 
 }

@@ -59,7 +59,7 @@ public class Marriage extends SexRelation{
 		this.stag.addMarriage(this);
 		this.doe.addMarriage(this);
 		this.setKinType(this.defineKinType());
-		if (doe.getAge() < 12){
+		if (doe.getAge() < 14){
 			throw new RuntimeException();
 		}
 	}
@@ -338,7 +338,7 @@ public class Marriage extends SexRelation{
 
 //Used for starting characters
 	public static void marrySpecial(Human husband, Human wife, int year){
-        Marriage temp = new Marriage(husband, wife, year);
+    Marriage temp = new Marriage(husband, wife, year);
 		husband.setRelSta(2);
 		wife.setRelSta(2);
 		if (husband.getTitle() == Title.KING){
@@ -348,14 +348,14 @@ public class Marriage extends SexRelation{
 		wife.becomeTaken();
     }
 
-    public static void marry(Human husband, Human wife){
-        Marriage temp = new Marriage(husband, wife);
-		husband.setRelSta(2);
-		wife.setRelSta(2);
-		if (husband.getTitle() == Title.KING){
-			Realm.getHolder(0).setConsort(wife);
-		}
-    }
+  public static void marry(Human husband, Human wife){
+      Marriage temp = new Marriage(husband, wife);
+			husband.setRelSta(2);
+			wife.setRelSta(2);
+			if (husband.getTitle() == Title.KING){
+				Realm.getHolder(0).setConsort(wife);
+			}
+  }
 
 	public int getAgeAt(Human spouse){
 		return this.beginning.get(Calendar.YEAR)-spouse.getBirth().get(Calendar.YEAR);

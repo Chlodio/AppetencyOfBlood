@@ -22,10 +22,10 @@ public class Lineage{
 	public static Human[] lineageZ;
 
 	public Lineage(Office o){
-		this.list = 	  new ArrayList<>();
+		this.list = 	 		new ArrayList<>();
 		this.office = 	  o;
-		this.law = 		  new SucLaw(this);
-		this.succession = new Primogeniture(this, this.law); //new Primogeniture(this, this.law);
+		this.law = 		  	new SucLaw(this);
+		this.succession = new AncestralElection(this);
 	}
 
 	public void determineSuccession(){
@@ -62,6 +62,14 @@ public class Lineage{
 	public void setPriority(int v){						this.priority = v;				}
 
 	public int getPriority(){							return this.priority;			}
+
+	public SucLaw getLaw(){
+		return this.law;
+	}
+
+	public Office getOffice(){
+		return this.office;
+	}
 
 	public void declareHeirStatus(){
 		switch(this.priority){

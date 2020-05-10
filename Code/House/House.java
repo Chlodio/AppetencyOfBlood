@@ -319,6 +319,9 @@ public class House {
 
 //Name methods
 
+	public void setName(String s){
+		this.name = s;
+	}
 
 	public void nameHouseLowborn(){
 		this.name = lowbornNames[Basic.randint(lowbornNames.length-1)];
@@ -1030,10 +1033,12 @@ public class House {
 			}
 		}
 
-		if (this.sucSetHost(this.getHead().getMother())){
-			return;
+		if (this.getHead().hadFather()){
+			if (this.sucSetHost(this.getHead().getMother())){
+				return;
+			}
 		}
-
+		
 		this.sucSetHost(Human.getRandomPersonForHost());
 		//throw new RuntimeException();
 
@@ -1045,6 +1050,8 @@ public class House {
 	public boolean isDynastic(){				return this.dynasty != null;	}
 
 	public Dynasty getDynasty(){				return this.dynasty;	}
+
+	public void resetDynasty(){				this.dynasty = null;	}
 
 //Micro methods
 

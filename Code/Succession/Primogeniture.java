@@ -3,14 +3,15 @@ import Code.Human.*;
 import Code.Ancestry.Lineage;
 import Code.Ancestry.Claim;
 import Code.Politics.Holder;
+//import Code.Politics.Office;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
 
 public class Primogeniture extends Succession {
-	public Primogeniture(Lineage l, SucLaw s){
-		super(l, s);
+	public Primogeniture(Lineage l){
+		super(l);
 	}
 
 	public int determine(){

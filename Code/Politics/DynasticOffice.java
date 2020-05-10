@@ -21,15 +21,33 @@ public class DynasticOffice{
   }
 
   public void addHolder(Holder h){
+    if (this.holders.contains(h)){
+      throw new RuntimeException();
+    }
     this.holders.add(h);
+  }
+
+  public void enable(){
+    this.isActive = true;
   }
 
   public void disable(){
     this.isActive = false;
   }
 
+  public void updateIf(Holder h, Dynasty d){
+    int i = this.holders.indexOf(h);
+    if (i != -1){
+      this.holders.remove(i);
+      this.office.addDynasty(d);
+      d.addOffice(this.office);
+      d.addDynasticOffice(this.office);
+      this.office.addDynasticOffice(d.getDynasticOffice(this.office));
+    }
+  }
+
   public List<Holder> getHolders(){
-    return this.holders;
+    return new ArrayList<>(this.holders);
   }
 
   public Dynasty getDynasty(){

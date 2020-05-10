@@ -719,6 +719,16 @@ public class Human {
 		return n;
 	}
 
+	public static List<Integer> getAdultsInt(List<Human> l){
+		List<Integer> n = new ArrayList<>(l.size());		//Short for new list
+		for(int x = 0; x < l.size(); x++){
+			if (l.get(x).isAdult()){
+				n.add(x);
+			}
+		}
+		return n;
+	}
+
 	public List<Human> getFromSameEstate(List<Human> l){
 		List<Human> n = new ArrayList<>(l.size());		//Short for new list
 		for(Human x: l){
@@ -1121,9 +1131,6 @@ public class Human {
 	}
 
 	public void addClaim(Claim c){
-		if (this.isDead()){
-			throw new RuntimeException();
-		}
 		if (!this.hadClaims()){
 			this.claims = new ArrayList<>(1);
 		}

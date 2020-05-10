@@ -303,7 +303,7 @@ public class Woman extends Human {
 				case 8:
 					childBridePool.add(x);
 					break;
-				case 12:
+				case 14:
 					rem.add(x);
 					break;
 			}
@@ -401,7 +401,7 @@ public class Woman extends Human {
 	@Override
 	public Title getRoyalTitle(){						return Title.QUEENREGNANT;}
 
-	public boolean isMinor(){		return this.isUnderAgeOf(12); }
+	public boolean isMinor(){		return this.isUnderAgeOf(14); }
 
 	@Override
     public String widow(){ 			return "widow";}

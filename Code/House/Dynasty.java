@@ -1,6 +1,7 @@
 package Code.House;
 import Code.House.House;
 import Code.Politics.Holder;
+import Code.Human.Human;
 import Code.Common.Basic;
 import Code.Politics.Office;
 import Code.Politics.DynasticOffice;
@@ -45,6 +46,28 @@ public class Dynasty {
     this.ending = Basic.getDate();
   }
 
+  public void switchHouse(House h){
+    System.out.println(h+" "+this.house);
+    this.house.resetDynasty();
+    this.house = h;
+    h.setDynasty(this);
+  }
+
+
+  public void update(int i){
+    Holder h = this.dynasts.get(i);
+
+    Dynasty d = new Dynasty(h);
+    this.dynasts.remove(h);
+    h.getPerson().getHouse().setDynasty(d);
+    for(DynasticOffice o: dOffices){
+      o.updateIf(h, d);
+    }
+
+
+
+  }
+
   public boolean isDynast(Holder h){
     return this.dynasts.contains(h);
   }
@@ -52,6 +75,7 @@ public class Dynasty {
   public void addDynast(Holder h, Office o){
     this.dynasts.add(h);
     this.getDynasticOffice(o).addHolder(h);
+    this.getDynasticOffice(o).enable();
   }
 
   public void addOffice(Office o){
@@ -68,6 +92,18 @@ public class Dynasty {
 
   public String getName(){
     return this.getHouse().getName()+" dynasty";
+  }
+
+  public List<Holder> getDynasts(){
+    return new ArrayList<>(this.dynasts);
+  }
+
+  public List<Human> getDynastsPerson(){
+    List<Human> l = new ArrayList<>(this.dynasts.size());
+    for(Holder x: this.dynasts){
+      l.add(x.getPerson());
+    }
+    return l;
   }
 
   public Calendar getFounding(){   return this.founding;  }

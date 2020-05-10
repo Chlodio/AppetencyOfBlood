@@ -1,5 +1,6 @@
 package Code.Succession;
 import Code.Human.Human;
+import Code.Politics.Office;
 import Code.Ancestry.Lineage;
 
 public class Succession {
@@ -14,11 +15,12 @@ public class Succession {
 	protected Human secondaryHeir;
 	protected Lineage lineage;
 	protected SucLaw law;
+	protected Office office;
 
-
-	public Succession(Lineage l, SucLaw s){
+	public Succession(Lineage l){
+		this.office = l.getOffice();
 		this.lineage = l;
-		this.law = s;
+		this.law = l.getLaw();
 	}
 
 	public int determine(){ return 0; }
@@ -88,6 +90,12 @@ public class Succession {
 		this.determineBlood();
 	}
 
+	public void setLineage(Human[] a){
+		Lineage.lineageZ = new Human[a.length];
+		System.arraycopy(a, 0, Lineage.lineageZ, 0, a.length);
+		this.determineBlood();
+	}
+
 	public void installSecondaryHeir(){
 		promoteLineage();
 		this.setHeir(this.getSecondaryHeir());
@@ -154,6 +162,10 @@ public class Succession {
 
 	public Human[] getLineage(){
 		return this.lineageT;
+	}
+
+	public Office getOffice(){
+		return this.office;
 	}
 
 }

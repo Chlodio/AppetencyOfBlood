@@ -35,7 +35,7 @@ public class Writing {
 		int lh;
 		Human h;
 		Office.offices.get(0).sortClaims();
-		for(Claim x:Office.offices.get(0).getClaimants()){
+		for(Claim x:Office.offices.get(0).getClaims()){
 			h = x.getHolder();
 			lh = x.getLineageLength();
 			a = HTML.getTd(h.getFormalName());
@@ -184,7 +184,6 @@ public class Writing {
 
 	//Cell for claims
 		tr += HTML.getTdClass("nameCol2", h.getClaim().getClaimHTML());
-
 		return tr;
 	}
 

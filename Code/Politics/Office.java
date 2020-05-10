@@ -31,7 +31,7 @@ public class Office{
 	private Military military;
 	private Territory territory;
 	private Treasury funds;									//Save funds
-	private List<Claim> claimants;					//people with claims
+	private List<Claim> claims;					//people with claims
 	private List<Dynasty> dynasties;
 	private List<DynasticOffice> dOffices;
 	private List<RegnalName> regnalNames = 					new ArrayList<>();
@@ -45,24 +45,7 @@ public class Office{
 
 
 	public Office(){
-		this.court =									new Court(this);
-		this.debt = 									new Debt(this);
-		this.funds = 									new Treasury(this, this.debt);
-		this.lineage = 								new Lineage(this);
-		this.ruleList =								new ArrayList<>();
-		this.consortList =						new ArrayList<>();
-		this.military = 							new Military(this);
-		this.projects = 							new ArrayList<>();
-		this.dynasties =							new ArrayList<>();
-		this.regnalNames = 						new ArrayList<>();
-		this.dOffices =								new ArrayList<>();
-		this.claimants = 							new ArrayList<>();
-		this.territory = 							new Realm(this);
-		this.gearingUp = 							false;
-		this.atWar = 									false;
-		this.tax = 										0.5f;
-		offices.add(this);
-		this.name =										"#"+offices.size();
+		this.setUp();
 	}
 
 	public static Office create(){
@@ -77,7 +60,26 @@ public class Office{
 		return office.get(id);
 	}
 
-
+	public void setUp(){
+		this.court =									new Court(this);
+		this.debt = 									new Debt(this);
+		this.funds = 									new Treasury(this, this.debt);
+		this.lineage = 								new Lineage(this);
+		this.ruleList =								new ArrayList<>();
+		this.consortList =						new ArrayList<>();
+		this.military = 							new Military(this);
+		this.projects = 							new ArrayList<>();
+		this.dynasties =							new ArrayList<>();
+		this.regnalNames = 						new ArrayList<>();
+		this.dOffices =								new ArrayList<>();
+		this.claims = 							new ArrayList<>();
+		this.territory = 							new Realm(this);
+		this.gearingUp = 							false;
+		this.atWar = 									false;
+		this.tax = 										0.5f;
+		offices.add(this);
+		this.name =										"#"+offices.size();
+	}
 
 	public void inaugurate(Human person){
 		String oldName =								person.getFullName();
@@ -121,20 +123,9 @@ public class Office{
 		this.getLineage().determineSuccession();
 		Human s;
 		if (this.getLineage().getPriority() < 3){
-			if (this.getLineage().getHeir() == null){
-				System.out.println(this.getLineage().getPriority());
-				throw new RuntimeException();
-			}
 			s = this.getLineage().getHeir();
 		} else {
-			try {
-				if (this.getClaimants().size() > 0){
-					throw new RuntimeException();
-				}
-				s = Basic.choice(House.getMagnates());		//Elect
-			} catch (RuntimeException e){
-				throw new RuntimeException();
-			}
+			s = Basic.choice(House.getMagnates());		//Elect
 		}
 
 		inaugurate(s);
@@ -218,28 +209,36 @@ public class Office{
 		return this.dOffices;
 	}
 
-//Claimants
+//claims
 
-	public List<Claim> getClaimants(){
-		return this.claimants;
+public List<Claim> getClaims(){
+	return new ArrayList<>(this.claims);
+}
+
+	public List<Human> getClaimants(){
+		List<Human> l = new ArrayList<>(this.claims.size());
+		for(Claim x: this.claims){
+			l.add(x.getHolder());
+		}
+		return l;
 	}
 
 	public void addClaimant(Claim h){
-		if (this.claimants.contains(h)){
+		if (this.claims.contains(h)){
 			throw new RuntimeException();
 		}
-		this.claimants.add(h);
+		this.claims.add(h);
 	}
 
 	public void removeClaimant(Claim h){
-		this.claimants.remove(h);
+		this.claims.remove(h);
 	}
 
 public void sortClaims(){
-	int[] a = Claim.getClaimLineageNum(this.claimants);
+	int[] a = Claim.getClaimLineageNum(this.claims);
 	int t;		//Temporary int
 	Claim tc;	//Temporary claims
-	List<Claim> cl = this.claimants;
+	List<Claim> cl = this.claims;
 	for(int x = 0; x < a.length; x++){
 			for(int y = x; y < a.length; y++){
 					if (a[y] < a[x]){

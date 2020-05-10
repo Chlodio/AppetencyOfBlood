@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import Code.House.CadetHouse;
 
 public class Holder{
 	private ArrayList<Event> events;
@@ -28,7 +29,7 @@ public class Holder{
 	private Ruler ruler;
 	private String name;
 	private String notes;
-	private Dynasty dynasty;
+	//private Dynasty dynasty;
 
 	public Holder(Human person, Office o){
 		this.person = 	person;
@@ -70,7 +71,10 @@ public class Holder{
 			d.addDynasticOffice(o);
 			o.addDynasticOffice(d.getDynasticOffice(o));
 		}
-		this.setDynasty(d);
+		if (!h.isDynastic()){
+			throw new RuntimeException();
+		}
+	//	this.setDynasty(d);
 	}
 
 
@@ -164,7 +168,7 @@ public class Holder{
 		int a = h.getAged();
 		//There will be 33.3% a nick name will be used
 		if (Basic.drawStraws(2)){
-			if (a < 12){
+			if (a < 14){
 				h.getName().setNick(Nick.CHILD);
 			} else if (a < 24){
 				h.getName().setNick(Nick.YOUNG);
@@ -269,7 +273,15 @@ public class Holder{
 	}
 
 	public DynasticOffice getDynasticOffice(){
-		return this.getDynasty().getDynasticOffice(this.getOffice());
+		Dynasty d = this.getDynasty();
+		if (d != null){
+			return d.getDynasticOffice(this.getOffice());
+		} else{
+			System.out.println(this.getPerson().getFathersFather().getName().getPatronymic());
+			System.out.println(this.getPerson().getHouse().getParent().getDynasty().getDynasts().contains(this));
+			System.out.println(this.getPerson().getHouse()+"->"+this.getPerson().getFather().getHouse()+"->"+this.getPerson().getFathersFather().getHouse());
+			throw new RuntimeException();
+		}
 	}
 
 	public boolean wasLastRulerOfDynasty(){
@@ -324,11 +336,13 @@ public class Holder{
 
 //Dynastic
 
-	public Dynasty getDynasty(){			return this.dynasty; }
-
-	public void setDynasty(Dynasty d){
-		this.dynasty = d;
+	public Dynasty getDynasty(){
+		return this.getPerson().getHouse().getDynasty();
 	}
+
+/*	public void setDynasty(Dynasty d){
+		this.dynasty = d;
+	}*/
 
 //Simple Methods
 
