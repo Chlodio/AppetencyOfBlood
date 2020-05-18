@@ -71,12 +71,13 @@ public class Holder{
 			d.addDynasticOffice(o);
 			o.addDynasticOffice(d.getDynasticOffice(o));
 		}
-		if (!h.isDynastic()){
-			throw new RuntimeException();
+		if (o.getDynasticOffices().size() > 1){
+			Dynasty d1 = o.getLineage().getPrev().getDynasty();
+			if (d1 != this.getDynasty()){
+				d1.getDynasticOffice(o).disable();
+			}
 		}
-	//	this.setDynasty(d);
 	}
-
 
 	public boolean isFounder(){
     return this == this.getDynasty().getFounder();
@@ -333,6 +334,23 @@ public class Holder{
 	public String getStartYearStr(){
 		return Integer.toString(this.getStart().get(Calendar.YEAR));
 	}
+
+//Claim
+
+public String getClaimName(String o){
+	if (this.getClaim().getLineage() != null){
+		int i = this.getClaim().getLineageLength()-2;
+		Human[] l = this.getClaim().getLineage();
+		String s = o+", "+this.getPerson().getOffspring()+" of ";
+		for(int x = i; x > 0; x--){
+			s += l[x].getShortName()+", "+l[x].getOffspring()+" of ";
+		}
+		s += l[0].getFullName();
+		return s;
+	} else {
+		return o;
+	}
+}
 
 //Dynastic
 

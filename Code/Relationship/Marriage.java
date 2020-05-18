@@ -105,6 +105,26 @@ public class Marriage extends SexRelation{
 		}
 	}
 
+	public String getTypeHTML(Human h){
+		switch(this.getType()){
+			case 1:
+				if(h.isMale()){
+					return "his brotherꞌs widow";
+				} else {
+					return "her previous husbandꞌs brother";
+				}
+			case 2:
+				if(h.isMale()){
+					return "his previous wifeꞌs sister";
+				} else {
+					return "her sisterꞌs widower";
+				}
+			default:
+				return "";
+		}
+	}
+
+
 	public String getKinNibling(Human h){
 		if (h.isMale()){
 			return "niece";
@@ -307,7 +327,7 @@ public class Marriage extends SexRelation{
 			throw new RuntimeException();
 		}
 		Marriage.marry(husband, wife);
-		Basic.print(husband.getFullName()+" married "+wife.getFullName());
+		Basic.annals.recordMarriage(husband, wife);
 		husband.becomeTaken();
 		wife.becomeTaken();
 	}
@@ -832,17 +852,21 @@ public class Marriage extends SexRelation{
 		return this == h.getLatestMarriage();
 	}
 
-	public boolean isCousinUnion(){				return this.kinType == 6;				}
+	public boolean isCousinUnion(){					return this.kinType == 6;				}
 	public boolean isSecondCousinUnion(){		return this.kinType == 8;				}
-	public boolean hasKinType(){				return this.kinType != 0;				}
-	public byte getKinType(){					return this.kinType;					}
-	public boolean isLevirate(){				return this.type == 1;					}
-	public boolean isSororate(){				return this.type == 2;					}
-	public static int getMonthlyWedding(){		return numOfMonthlyWeddings;			}
-	public static int getNum(){					return list.size(); 					}
-	public static List<Marriage> getList(){		return new ArrayList<>(list); 			}
-	public static Marriage getRecentMarriage(){	return list.get(list.size()-1);			}
-	public static void addMonthlyWedding(){		numOfMonthlyWeddings++;					}
+	public boolean hasKinType(){						return this.kinType != 0;				}
+	public byte getKinType(){								return this.kinType;						}
+	public boolean isLevirate(){						return this.type == 1;					}
+	public boolean isSororate(){						return this.type == 2;					}
+	public boolean isRegular(){							return this.type == 0;					}
+	public int getType(){										return this.type;								}
+	public static int getMonthlyWedding(){	return numOfMonthlyWeddings;		}
+	public static int getNum(){							return list.size(); 						}
+	public static List<Marriage> getList(){	return new ArrayList<>(list); 	}
+	public static Marriage getRecentMarriage(){
+		return list.get(list.size()-1);
+	}
+	public static void addMonthlyWedding(){		numOfMonthlyWeddings++;				}
 	public void setLevirate(){					this.type = 1;							}
 	public void setSorotate(){					this.type = 2;							}
 

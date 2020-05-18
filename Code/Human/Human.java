@@ -115,7 +115,7 @@ public class Human {
 
 
 	public void performPosthumousBirth(Human f, Human m){
-		Basic.print(m.getFullName()+" gave posthumous birth to son of "+f.getFullName());
+		//Basic.annals.recordPosthumousBirth(m.getFullName()+" gave posthumous birth to son of "+f.getFullName());
 		this.getName().setNick(Nick.POSTHUMOUS);
 	}
 
@@ -125,13 +125,12 @@ public class Human {
 		this.bury();
     if (!this.isUnwed()){
 			Human s = this.getSpouse();
-    	Basic.print(String.format("%s deceased, leaving %s a %s",
-			this.getFullName(),s.getFullName(), s.widow()));
+    	Basic.annals.recordWidowDeath(this, s);
 			this.getLatestMarriage().terminate();
 			s.becomeWidow();
     } else {
 			this.clean();
-			Basic.print(String.format("%s deceased", this.getFullName()));
+			Basic.annals.recordSingleDeath(this);
 		}
 		if (this.isActiveAdulterer()){
 			this.clearLovers();
@@ -480,7 +479,7 @@ public class Human {
 		} else {
 			it.setFullName(it.makeName());
 		}
-		Basic.print(this.getFullName()+" gave birth to "+it.getFullName());
+		Basic.annals.writeLegitBirth(it);
 		return it;
 	}
 
@@ -723,6 +722,17 @@ public class Human {
 		List<Integer> n = new ArrayList<>(l.size());		//Short for new list
 		for(int x = 0; x < l.size(); x++){
 			if (l.get(x).isAdult()){
+				n.add(x);
+			}
+		}
+		return n;
+	}
+
+	//Similar to getAdultsInt, but will get everyone above 14, adult tick is only once a year, thus for a short time there are children who are 14 but not counted as adults
+	public static List<Integer> getMajorsInt(List<Human> l){
+		List<Integer> n = new ArrayList<>(l.size());		//Short for new list
+		for(int x = 0; x < l.size(); x++){
+			if (l.get(x).isOverAgeOf(14)){
 				n.add(x);
 			}
 		}
@@ -1083,12 +1093,27 @@ public class Human {
 	public static Human getRandomPersonForHost(){
 		Human h;
 		for(int x = 25; x > 0; x--){
-			h = Basic.choice(Man.men);
+			h = Basic.choice(Woman.women);
 			if (h.isAdult() && !h.isHost()){
 				return h;
 			}
 		}
-		System.out.println(Man.men.size());
+		int as = 0;
+		for(House x: House.getList()){
+			if (x.getHost() != x.getHead()){
+				as++;
+			}
+		}
+		int ad = 0;
+		int ac = 0;
+		for(Human x: Man.getMen()){
+			if (x.isAdult()){
+				ad++;
+				if (!x.isHost()){
+					ac++;
+				}
+			}
+		}
 		throw new RuntimeException();
 	}
 
@@ -1135,7 +1160,6 @@ public class Human {
 			this.claims = new ArrayList<>(1);
 		}
 		if (!this.claims.contains(c)){
-			System.out.println(c.getOffice());
 			this.claims.add(c);
 			c.getOffice().addClaimant(c);
 		}
@@ -1370,6 +1394,7 @@ public class Human {
 	public String getParent(){ 					return "parent";				}
 	public String getPibling(){ 				return "pibling";				}
 	public String getPossessive(){				return "his"; 					}
+	public String getPossessiveRev(){			return "her"; 					}
 	public String getPronoun(){					return "he"; 					}
 	public String getRelation(int v){ 			return ""; 						}
 	public Rela getRela(){ 						return this.rela; 				}

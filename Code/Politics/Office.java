@@ -34,6 +34,7 @@ public class Office{
 	private List<Claim> claims;					//people with claims
 	private List<Dynasty> dynasties;
 	private List<DynasticOffice> dOffices;
+	private Dynasty dynasty;										//incumbent's dynasty
 	private List<RegnalName> regnalNames = 					new ArrayList<>();
 
 	private Cabinet cabinet;								//Collection of ministers
@@ -82,14 +83,15 @@ public class Office{
 	}
 
 	public void inaugurate(Human person){
-		String oldName =								person.getFullName();
+		String on =				person.getFullName();		//Old name
 		if(person.getHouse().getRanking() != 8){		person.getHouse().setRanking(8);}
 		Office kingship = 								office.get(1);
 		this.rule = new Rule(this);
 		this.rule.createSoleRuler(this, person);
-		this.addHolder(this.getRule().getSeniorHolder());
+		Holder h = this.getRule().getSeniorHolder();
+		this.addHolder(h);
 		person.hasClaimRemove(this);
-		System.out.println(oldName+" was inaugurated as "+person.getFullName()+" at the age of "+person.getAge()+".");
+		Basic.annals.recordAscension(h, on);
 	}
 
 	public void endTenure(){
@@ -191,7 +193,7 @@ public class Office{
 	}
 
 	public DynasticOffice getRecentDynasticOffice(){
-		return this.dOffices.get(this.dOffices.size()-1);
+		return this.dOffices.get(this.dOffices.size()-2);
 	}
 
 	public void addDynasty(Dynasty d){
@@ -199,14 +201,19 @@ public class Office{
 	}
 
 	public void addDynasticOffice(DynasticOffice d){
-		if (this.dOffices.size() != 0){
-			this.getRecentDynasticOffice().disable();
-		}
 		this.dOffices.add(d);
 	}
 
 	public List<DynasticOffice> getDynasticOffices(){
 		return this.dOffices;
+	}
+
+	public void setDynasty(Dynasty d){
+		this.dynasty = d;
+	}
+
+	public Dynasty getDynasty(){
+		return this.dynasty;
 	}
 
 //claims

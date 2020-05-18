@@ -413,10 +413,13 @@ public class Woman extends Human {
 	public String getPossessive(){ 	return "her";}
 
 	@Override
+	public String getPossessiveRev(){ 	return "his";}
+
+	@Override
     public String child(){ 			return "girl";}
 
 	@Override
-    public String getOffspring(){ 	return "daughter";}
+  public String getOffspring(){ 	return "daughter";}
 
 	@Override
 	public String getParent(){ 		return "mother";}

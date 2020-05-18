@@ -4,11 +4,12 @@ import Code.Common.*;
 import Code.House.House;
 import Code.Human.*;
 import Code.Interest.*;
+import Code.Politics.*;
+import Code.Relationship.*;
+import Code.History.Annals;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import Code.Politics.*;
-import Code.Relationship.*;
 
 
 
@@ -22,17 +23,21 @@ public class Basic {
 //  public static Map<Integer, Human> human = 						new HashMap<>();
   public static Map<Integer, List<Human>> dayC = 					new HashMap<>();
   public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
-  public static Random randomizer = 								new Random();
+  public static Random randomizer = 											new Random();
   public static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
   public static SimpleDateFormat format2 = new SimpleDateFormat("d MMMM y");
+	public static Annals annals = new Annals(1000);
 	public static void performSetup(){
+		long seed = randomizer.nextLong();
+		randomizer.setSeed(seed);
+		System.out.println("Seed: "+seed);
 
 		Religion.foundReligion();
  		House.numberNobleHouses();
 		Name.buildForenames();
 		House.buildNames();
 
-        for (int x = 1; x != 32; x++){
+    for (int x = 1; x != 32; x++){
 			dayC.put(x, new ArrayList<>());
 			dayE.put(x, new ArrayList<>());
 		}
@@ -123,6 +128,7 @@ public class Basic {
 								 Marriage.flushMonthlyWedding();
 							}
 						}
+						annals.publishAnnal(Basic.getDateYear()-1);
 					}
 				}
 			}
@@ -137,7 +143,6 @@ public class Basic {
 
 
 		System.out.println("SIMULATION COMPLETED");
-		//System.out.println(Marriage.bs);
 	}
 
 	public static String sDate(){

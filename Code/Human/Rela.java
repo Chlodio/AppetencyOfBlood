@@ -427,8 +427,6 @@ public class Rela{
 			for (Human x: l1){
 				if (!l2.contains(x)){
 					n.add(x);
-					System.out.println(x.getBirthYear());
-					//throw new RuntimeException();
 				}
 			}
 			return n;
@@ -810,7 +808,10 @@ public boolean isSisterOf(Human h){
 //Grandparents
 
 	public boolean hadGrandparents(){
-		return this.getFather().hadParents() && this.getMother().hadParents();
+		if (this.hadParents()){
+			return this.getFather().hadParents() && this.getMother().hadParents();
+		}
+		return false;
 	}
 
 	public Human[] getFathersParents(){
@@ -885,6 +886,8 @@ public boolean hadMatGrandma(){
 //Great-grandparents
 
 
+//Paternal
+
 	public Human[] getGreatGrandparents(){
 		Human[] l = new Human[8];
 		Human[] l1 = this.getFather().getGrandparents();
@@ -946,7 +949,6 @@ public boolean hadMatGrandma(){
 
 	public boolean hadPatGreatGrandpa(){
 		if (this.hadFather()){
-			//System.out.println("!"+this.getFather().getFathersFather());
 			return this.getFather().hadPatGrandpa();
 		}
 		return false;
@@ -966,6 +968,15 @@ public boolean hadMatGrandma(){
 			}
 		}
 		return null;
+	}
+
+//Maternal grandfather
+
+	public boolean hadMatGreatGrandpa(){
+		if (this.hadMother()){
+			return this.getMother().hadPatGrandpa();
+		}
+		return false;
 	}
 
 
@@ -1042,7 +1053,7 @@ public boolean hadMatGrandma(){
 	public boolean isSecondCousinOf(Human h){
 		Human[] l1;
 		Human[] l2;
-		if (this.hadPatGreatGrandpa() && h.hadPatGreatGrandpa()){
+		if (this.hadGrandparents() && h.hadGrandparents()){
 			l1 = this.getGreatGrandparents();
 			l2 = h.getGreatGrandparents();
 			for(Human x: l1){

@@ -28,7 +28,7 @@ public class CadetHouse extends House {
 		}
 
 		//If founder is a ruler from parent dynasty, update his dynasty
-		if (parent.isDynastic()){
+		/*if (parent.isDynastic()){
 			List<Human> l = parent.getDynasty().getDynastsPerson();
 			int i = l.indexOf(founder);
 			if (i != -1){
@@ -38,7 +38,7 @@ public class CadetHouse extends House {
 					parent.getDynasty().update(i);
 				}
 			}
-		}
+		}*/
 
 		//Move the children into the new house
 		List<Human> l = founder.getLegitNonPosthumousSons();
@@ -76,7 +76,7 @@ public class CadetHouse extends House {
 			//throw new RuntimeException();
 		}
 
-		if (parent.isDynastic()){
+	/*	if (parent.isDynastic()){
 			for(Human x: this.getKinsmen()){
 				try {
 				l = parent.getDynasty().getDynastsPerson();
@@ -90,9 +90,9 @@ public class CadetHouse extends House {
 				throw new RuntimeException();
 			}
 			}
-		}
+		}*/
 
-		Basic.print("Cadet house of "+this.getName()+" emerged from "+this.parent.getName());
+		//Basic.print("Cadet house of "+this.getName()+" emerged from "+this.parent.getName());
 	}
 
 	@Override

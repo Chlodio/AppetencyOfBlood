@@ -14,7 +14,7 @@ public class AncestralElection extends Succession {
 	}
 
 	public int determine(){
-    List<Integer> l = Human.getAdultsInt(this.getOffice().getClaimants());
+    List<Integer> l = Human.getMajorsInt(this.getOffice().getClaimants());
     if (l.size() > 0){
       Claim c = this.getOffice().getClaims().get(Basic.choice(l));
       this.setHeir(c.getHolder());

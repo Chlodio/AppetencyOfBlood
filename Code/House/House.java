@@ -6,6 +6,9 @@ import Code.Relationship.*;
 import Code.Ancestry.*;
 import Code.House.Dynasty;
 import Code.House.CoatOfArms;
+import Code.Politics.Office;
+import Code.Politics.Holder;
+import Code.Politics.DynasticOffice;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -224,12 +227,13 @@ public class House {
 		} else{
 			this.getHost().resetHost();
 			this.resetHost();
-			Basic.print(this.getName()+" went extinct");
+			Basic.annals.recordExtinction(this);
 		}
 	}
 
 	public void succeed(House newHouse){
-		Basic.print("The senior line of "+this.getFullName()+" went extinct, but was succeeded by "+nextHouse.getName());
+		Basic.annals.recordExtinctSeniorSuc(this, nextHouse);
+
 		if (this.hasHigherRanking(newHouse)){
 			newHouse.setRanking(this.ranking);
 		}
@@ -283,13 +287,46 @@ public class House {
 			nHouse = new CadetHouse(this, head, x);
 		}
 
+		if (this.isDynastic()){
+			Holder h = Office.getOffice(0).getHolder();
+			Dynasty d = this.getDynasty(); //Office.getOffice(0).getDynasty();
+
+				if (!d.isEmpty()){
+					List<Holder> l = d.getNonDynastics();
+					for(Holder x: l){
+						if (x.getDynasty() == null){
+							d.branch(x);
+							if (d.getDynasts().contains(x)){
+								throw new RuntimeException();
+							}
+						} else {
+							d.adjust(x);
+						}
+					}
+					if (this.getDynasty() != Office.getOffice(0).getDynasty()){
+						this.getDynasty().getDynasticOffice(Office.getOffice(0)).disable();
+					}
+				} else {
+					List<Holder> l = d.getNonDynastics();
+					d.switchHouse(l.get(0).getPerson().getHouse());
+				}
+		}
 		//See if patriarch is in the right postion, if not, do branching again, a progress which will find and appoint a new patriarch
 		if (!this.patriarchIsSuited()){
 			this.branch();
 		}
-
 	}
 
+	public static int containsDynast(List<Human> l1, List<Human> l2){
+		for(Human x: l1){
+			for(int y = 0; y < l2.size(); y++){
+				if (x == l2.get(y)){
+					return y;
+				}
+			}
+		}
+		return -1;
+	}
 
 	public boolean findNextHouse(){
 		if (this.findNextHouseDirect()){ 			return 	true; 	}
@@ -1038,7 +1075,7 @@ public class House {
 				return;
 			}
 		}
-		
+
 		this.sucSetHost(Human.getRandomPersonForHost());
 		//throw new RuntimeException();
 

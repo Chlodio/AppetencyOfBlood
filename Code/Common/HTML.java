@@ -131,6 +131,12 @@ public class HTML {
 		return getUl(getLi(s));
 	}
 
+	//Get underline
+	public static String getU(String s){
+		return "<u>"+s+"</u>";
+	}
+
+
 	public static String getH3(String s){
 		return "<h3>"+s+"</h3>";
 	}
@@ -141,6 +147,10 @@ public class HTML {
 
 	public static String getP(String s){
 		return "<p>"+s+"</p>";
+	}
+
+	public static String getPTitle(String a, String b){
+		return "<p title='"+a+"'>"+b+"</p>";
 	}
 
 }

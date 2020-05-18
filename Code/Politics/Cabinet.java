@@ -23,7 +23,7 @@ public class Cabinet{
 
 	public void appointMinister(){
 		Minister m = findMinister(this);
-		Basic.print(m.getPerson().getFullName()+" became a great officer");
+		Basic.annals.recordOfficeEntrace(m.getPerson());
 		this.setMinister(m);
 	}
 

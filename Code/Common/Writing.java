@@ -113,9 +113,17 @@ public class Writing {
 		if (h.isAdult()){
 			List<Marriage> m = h.getMarriages();
 			String lt = "";			//Temporary list
+			String n;
 			for(Marriage x: m){
-				lt += x.getDoe().getBirthName();
-				lt += HTML.getBr();
+				n = x.getDoe().getBirthName();
+
+				if (x.hasKinType()){
+					lt += HTML.getPTitle(x.getKinTypeHTML(h), n+" †");
+				} else if (!x.isRegular()) {
+					lt += HTML.getPTitle(x.getTypeHTML(h), n+" ‡");
+				} else {
+					lt += HTML.getP(n);
+				}
 
 				lt += x.getTenureShort();			//When the marriage began and ended
 				lt += HTML.getBr();
@@ -135,7 +143,7 @@ public class Writing {
 
 				HTML.getLi(lt);
 			}
-			return HTML.getUlClass(lt, "consort");
+			return HTML.getP(lt);
 		} else {
 			return "";
 		}
@@ -160,7 +168,7 @@ public class Writing {
 		td += h.getReign();
 		td += HTML.getBr();
 		td += HTML.getI(h.getReignLength());			//Italize
-		tr += HTML.getTd(td);							//Add to table
+		tr += HTML.getTd(td);											//Add to table
 
 	//Cell for portraits
 		td = q.getPortrait();
@@ -184,6 +192,9 @@ public class Writing {
 
 	//Cell for claims
 		tr += HTML.getTdClass("nameCol2", h.getClaim().getClaimHTML());
+
+	//Cell for dynasty
+		tr += HTML.getTdClass("nameCol2", q.getHouse().getDynasty().getName());
 		return tr;
 	}
 
@@ -195,7 +206,7 @@ public class Writing {
 		t = HTML.getBeginning();
 
 		//The names of headers
-		String[][] th = {{"Name", ""}, {"Prt.", "portrait"}, {"CoA", "CoAT"}, {"Birth", ""}, {"Marriage(s)", ""}, {"Death", ""}, {"Claim", ""}};
+		String[][] th = {{"Name", ""}, {"Prt.", "portrait"}, {"CoA", "CoAT"}, {"Birth", ""}, {"Marriage(s)", ""}, {"Death", ""}, {"Claim", ""}, {"Dynasty", ""}};
 		te += HTML.createTableHeaderClass(th);
 		te += HTML.getTr(t);
 

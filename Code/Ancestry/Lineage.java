@@ -45,11 +45,11 @@ public class Lineage{
 
 	public List<Holder> getList(){					return new ArrayList<>(this.list);	}
 
-	public static Human[] getLineage(){				return lineageZ.clone();}
+	public static Human[] getLineage(){			return lineageZ.clone();}
 
-	public static boolean getLineal(){				return Succession.lineal;}
+	public static boolean getLineal(){			return Succession.lineal;}
 
-	public boolean isHolder(Holder h){					return this.list.contains(h); 	}
+	public boolean isHolder(Holder h){			return this.list.contains(h); 	}
 
 	public void addTo(Holder h){						this.list.add(h); 				}
 
@@ -57,11 +57,17 @@ public class Lineage{
 
 	public Holder getIncumbent(){						return this.office.getHolder(); }
 
-	public Human getHeir(){								return this.heir;				}
+	public Human getHeir(){									return this.heir;				}
 
-	public void setPriority(int v){						this.priority = v;				}
+	public Holder getLineage(int i){				return this.list.get(i);	}
 
-	public int getPriority(){							return this.priority;			}
+	public Holder getPrev(){
+		return this.list.get(this.list.size()-1);
+	}
+
+	public void setPriority(int v){					this.priority = v;				}
+
+	public int getPriority(){								return this.priority;			}
 
 	public SucLaw getLaw(){
 		return this.law;

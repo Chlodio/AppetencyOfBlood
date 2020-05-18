@@ -47,39 +47,88 @@ public class Dynasty {
   }
 
   public void switchHouse(House h){
-    System.out.println(h+" "+this.house);
     this.house.resetDynasty();
     this.house = h;
     h.setDynasty(this);
   }
 
 
-  public void update(int i){
-    Holder h = this.dynasts.get(i);
+  public void branch(Holder h){
+    Dynasty d = new Dynasty(h);
+    this.dynasts.remove(h);
+    h.getPerson().getHouse().setDynasty(d);
+    List<DynasticOffice> l = this.getDynasticOffice();
+    for(DynasticOffice x: l){
+      x.remove(h);
+    }
+/*    for(DynasticOffice o: dOffices){
+      o.branch(h, d);
+    }*/
+  }
 
+  //Adjust for obsolute dynasties
+  public void adjust(Holder h){
+    Dynasty d = h.getDynasty();
+    this.dynasts.remove(h);
+    for(DynasticOffice x: this.dOffices){
+      x.swap(h);
+    }
+    d.addDynast(h);
+  }
+
+  /*public void update(int i){
+    Holder h = this.dynasts.get(i);
     Dynasty d = new Dynasty(h);
     this.dynasts.remove(h);
     h.getPerson().getHouse().setDynasty(d);
     for(DynasticOffice o: dOffices){
       o.updateIf(h, d);
     }
-
-
-
-  }
+  }*/
 
   public boolean isDynast(Holder h){
     return this.dynasts.contains(h);
   }
 
   public void addDynast(Holder h, Office o){
+    if (this.dynasts.contains(h)){
+      throw new RuntimeException();
+    }
     this.dynasts.add(h);
-    this.getDynasticOffice(o).addHolder(h);
-    this.getDynasticOffice(o).enable();
+    DynasticOffice d = this.getDynasticOffice(o);
+    d.addHolder(h);
+    if (!d.isActive()){
+      this.getDynasticOffice(o).enable();
+    }
+  }
+
+  public void addDynast(Holder h){
+    this.dynasts.add(h);
   }
 
   public void addOffice(Office o){
     this.offices.add(o);
+  }
+
+  //Get holders who lack dynasties as result of newly created cadet dynasties
+  public List<Holder> getNonDynastics(){
+    List<Holder> l = new ArrayList<>(this.dynasts.size());
+    for(Holder x: this.dynasts){
+      if (x.getDynasty() == null){
+        l.add(x);
+      }
+    }
+    return l;
+  }
+
+  //Check if none of the dynasts have correct house
+  public boolean isEmpty(){
+    for(Holder x: this.dynasts){
+      if (x.getDynasty() == this){
+        return false;
+      }
+    }
+    return true;
   }
 
   public Holder getFounder(){
@@ -88,6 +137,14 @@ public class Dynasty {
 
   public DynasticOffice getDynasticOffice(Office o){
     return this.dOffices.get(this.getOfficeNum(o));
+  }
+
+  public DynasticOffice getDynasticOffice(int i){
+    return this.dOffices.get(i);
+  }
+
+  public List<DynasticOffice> getDynasticOffice(){
+    return new ArrayList<>(this.dOffices);
   }
 
   public String getName(){

@@ -17,7 +17,6 @@ public class DynasticOffice{
     this.office = o;
     this.dynasty = d;
     this.holders = new ArrayList<>();
-    this.isActive = true;
   }
 
   public void addHolder(Holder h){
@@ -29,20 +28,25 @@ public class DynasticOffice{
 
   public void enable(){
     this.isActive = true;
+    this.office.setDynasty(this.dynasty);
   }
 
   public void disable(){
     this.isActive = false;
   }
 
-  public void updateIf(Holder h, Dynasty d){
-    int i = this.holders.indexOf(h);
-    if (i != -1){
-      this.holders.remove(i);
-      this.office.addDynasty(d);
-      d.addOffice(this.office);
-      d.addDynasticOffice(this.office);
-      this.office.addDynasticOffice(d.getDynasticOffice(this.office));
+  public void branch(Holder h, Dynasty d){
+    this.holders.remove(h);
+  }
+
+  public void remove(Holder h){
+    this.holders.remove(h);
+  }
+
+  public void swap(Holder h){
+    if (this.holders.contains(h)){
+      this.holders.remove(h);
+      h.getDynasty().getDynasticOffice(0).addHolder(h);
     }
   }
 
@@ -84,9 +88,9 @@ public class DynasticOffice{
     Calendar c = this.getFirst().getStart();
     int i;
     if (!this.isActive()){
-      i = Basic.getDaysBetween( c, this.getRecent().getEnd());
+      i = Basic.getDaysBetween(c, this.getRecent().getEnd());
     } else {
-      i = Basic.getDaysBetween( c, Basic.getDate());
+      i = Basic.getDaysBetween(c, Basic.getDate());
     }
     return Basic.getYears(i);
   }
