@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
-public class Claim{
+public class Claim  implements Cloneable{
 	private Human[] lineage;
 	private boolean coverture;							//If held via jure uxoris
 	private Holder origin;									//Original holder
 	private Human holder;										//Lhe owner of the claim
-	private int blood; 											//I.e. 0 = agnatic/1 = cognatic
+	private int blood; 											//I.e. 0 = agnatic/2 = cognatic
 	private int special;										//I.e. 0 = regular/1 = elected
 	private Office office;									//The office claim belongs to
 	private Holder predecessor;							//Last predecessor
 	private boolean lineal;									//Lineal descendant predecessor
 
-	public final static String[] kinship = {"Agnatic", "Patrilineal", "Cognatic"};
+	public final static String[] kinship = {"Agnatic", "Quasi-agnatic", "Cognatic"};
 	public static Claim temp;								//Stored in succession
 
 	public Claim(){
@@ -31,6 +31,13 @@ public class Claim{
 		this.lineage = h;
 		this.office = o;
 		this.holder = h[h.length-1];
+	}
+
+	public Claim(Human[] h, Claim c){
+		this.lineage = h;
+		this.office = c.getOffice();
+		this.holder = h[h.length-1];
+		this.blood = c.getBlood();
 	}
 
 	public static Claim getTemp(){
@@ -52,19 +59,28 @@ public class Claim{
 		return n;
 	}
 
+
+
 	public void pass(){
 		if (this.holder.isAdult()){
 			List<Human> l = this.holder.getLegitSons();
-			for(Human x: l){
-				if (x.isAlive()){
-					Claim c = new Claim(makeLineage(this.getLineage(), x), this.office);
-					x.addClaim(c);
-				} else if (x.isAdult() && x.hasSon()){
-					Claim c = new Claim(makeLineage(this.getLineage(), x), this.office);
-					x.addClaim(c);
-					x.passClaims();
-					x.removeClaim(c);
+			try {
+				Claim c = (Claim) this.clone();
+				if (this.holder.isFemale()){
+					c.diludeBlood();
 				}
+				for(Human x: l){
+					if (x.isAlive()){
+						x.addClaim(new Claim(makeLineage(this.getLineage(), x), c));
+					} else if (x.isAdult() && x.hasSon()){
+						Claim cn = new Claim(makeLineage(this.getLineage(), x), c);
+						x.addClaim(cn);
+						x.passClaims();
+						x.removeClaim(cn);
+					}
+				}
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -121,53 +137,50 @@ public class Claim{
 	private String getUnilinealType(){
 		String txt = HTML.getLi(this.getPrefix());
 		Human p = this.getPredecessor().getPerson();							//predecessor
-		String r = Consanguinity.getPaternalRelation(p, this.getHolder());
+		String r = Affinity.getPaternalRelation(p, this.getHolder());
 		r = Basic.capitalize(r);
 		r += " of "+p.getFullName();
-		r = HTML.getLi(r);
-		return HTML.getUl(txt+r);
+		return HTML.getUl(txt+HTML.getLi(r));
 	}
 
 	//If the lineage includes women tracing gets bit more complicated so instead of dealing with mess, were are going to simply things just a bit
 	private String getAmbilinealType(){
-		String txt = this.getPrefix();
+		String txt = HTML.getLi(this.getPrefix());
 		Human p = this.getPredecessor().getPerson();					//predecessor
 		Human h = this.getHolder();
-		String rs = Consanguinity.getCognaticRelation(p, h);			//daughter/grandaughter, etc
+		String rs = Affinity.getCognaticRelation(p, h);			//daughter/grandaughter, etc
 
 		//If rs is "" don't bother adding anything
 		if (Basic.isNotZero(rs.length())){
-			txt = HTML.getLi(txt);
-			txt += HTML.getLi(Basic.capitalize(rs)+" of "+p.getFullName());
+			txt += HTML.getLi(rs + " of " + p.getFullName());
 		}
 
 		/*Intended result being something like:
 			*Son of Alphon		[direct relation]
 			*Brother of Bob		[indirect relation to predecessor]
 		*/
-
 		return HTML.getUl(txt);
 	}
 
 	//Brother- and-son-in-laws of the ruler
 	private String getAffinityType(){
 		String r = this.getHolder().getRelation(this.getLineageLength());	//son/brother,etc
-		r = Basic.capitalize(r);
-		r += "-in-law of ";
-		r += this.getUltimateAncestor().getFullName();						//e.g. Bob XI
+		Basic.capitalize(r);
+		r += "-in-law of "+this.getUltimateAncestor().getFullName();						//e.g. Bob XI
 		return HTML.getUlLi(r);
 	}
 
 	//As opposed to CloseRelativeType
 	private String getDistantRelativeType(){
 		int l = this.getLineageLength();
-		String txt = this.getBloodTypeStr()+" "+Basic.getOrdial(l-1);
-		txt = txt+" generation descendant of "+getThroughLine(l);
+		StringBuffer txt = new StringBuffer(this.getBloodTypeStr());
+		txt.append(" ").append(Basic.getOrdial(l-1));
+		txt.append(" generation descendant of ").append(getThroughLine(l));
 		if (!this.isCoverture()){
-			return HTML.getUlLi(txt);
+			return HTML.getUlLi(String.valueOf(txt));
 		} else{
 			txt = Basic.toLowerCase(txt);
-			return HTML.getUlLi("Spouse of "+txt);
+			return HTML.getUlLi(String.valueOf(txt.insert(0, "Spouse of ")));
 		}
 	}
 
@@ -176,9 +189,32 @@ public class Claim{
 		return HTML.getUlLi("Elected");
 	}
 
+	//Decrease the qyality of blood
+	public void diludeBlood(){
+		switch(this.blood){
+			case 0:
+				this.setBlood(1);
+				return;
+			case 1:
+				this.setBlood(2);
+				return;
+			default:
+				return;
+		}
+	}
+
+	//Set set blood
+	public void setBlood(int b){
+		this.blood = b;
+	}
+
 	//Return blood type as string
 	public String getBloodTypeStr(){
 		return kinship[this.blood];
+	}
+
+	public int getBlood(){
+		return this.blood;
 	}
 
 	//If lineage has certain amount of links, get long form, if not just the name of the ancestor
@@ -191,7 +227,7 @@ public class Claim{
 		if (Basic.isAtLeast(ll, 3)){
 			return s+getThroughLine(ll);	//e.g 'Grandson of Walkelin, through his son, Benedict'
 		} else{
-			return s+this.getUltimateAncestor().getFullName();		//e.g "Son of Bob"
+			return s += this.getUltimateAncestor().getFullName();		//e.g "Son of Bob"
 		}
 	}
 
@@ -200,10 +236,11 @@ public class Claim{
 	private String getThroughLine(int i){
 		Human a1 =  this.getUltimateAncestor();
 		Human a2 =	this.getPenultimateAncestor();
-		String s =	a1.getFullName()+", through ";
-		s +=		a1.getPossessive()+" "+a2.getOffspring();
-		s +=		", "+a2.getFullName();
-		return s;
+		StringBuffer s = new StringBuffer(a1.getFullName());
+		s.append(", through ");
+		s.append(a1.getPossessive()).append(" ").append(a2.getOffspring());
+		s.append(", ").append(a2.getFullName());
+		return String.valueOf(s);
 	}
 
 
@@ -274,14 +311,17 @@ public class Claim{
 	}
 
 	public String getLineageString(){
-		String s = "";
+		StringBuffer s = new StringBuffer("");
 		for(int x = 0; x < this.lineage.length-1; x++){
-			s += this.lineage[x].getFormalName()+" -> ";
+			s.append(this.lineage[x].getFormalName()).append(" -> ");
 		}
-		s += this.lineage[this.lineage.length-1].getFormalName();
-		return s;
+		s.append(this.lineage[this.lineage.length-1].getFormalName());
+		return String.valueOf(s);
 	}
 
+	public Object clone() throws CloneNotSupportedException {
+			return super.clone();
+	}
 
 	public boolean hasOrigin(){						return this.origin != null;			}
 	public boolean isCoverture(){					return this.coverture; 				}
@@ -294,7 +334,6 @@ public class Claim{
 	public Human getFromLineage(int v){				return this.lineage[v]; 			}
 	public Human getHolder(){						return this.holder;					}
 	public Office getOffice(){						return this.office;					}
-	public void setBlood(int b){					this.blood = b;						}
 	public void setCoverture(boolean c){			this.coverture = c;					}
 	public void setHolder(Human h){					this.holder = h;					}
 	public void setLineage(Human[] l){				this.lineage = l.clone();			}

@@ -4,7 +4,7 @@ import Code.Human.Human;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Consanguinity{
+public class Affinity{
 	private static List<Human> list = new ArrayList<>();
 
 	public static String countInbreed(Human h){
@@ -54,16 +54,20 @@ public class Consanguinity{
 	}
 
 	public static String buildFamilyTree(Human h){
-		String s = "<svg height='500' width='1000'>";
+		StringBuffer s = new StringBuffer("<svg height='500' width='1000'>");
 		int y = 460;
-		s += "<text x='50%' y='"+(y)+"' text-anchor='middle'>"+h.getFullName()+"</text>";
-		s += buildLineage(h.getFather(), y-15, 2, 33);
-		s += buildLineage(h.getMother(), y-15, 0, 66);
-		s += buildLineage(h.getFathersMother(), y-65, 0, 66);
-		s += buildLineage(h.getFathersFather().getMother(), y-115, 0, 66);
-		s += "<line x1='45%' y1='"+(y-45)+"'x2='55%' y2='"+(y-45)+"' style='stroke:rgb(0,0,0);stroke-width:2'/>";
-		s += "</svg>";
-		return s;
+		s.append("<text x='50%' y='").append(y);
+		s.append("' text-anchor='middle'>");
+		s.append(h.getFullName()).append("</text>");
+		s.append(buildLineage(h.getFather(), y-15, 2, 33));
+		s.append(buildLineage(h.getMother(), y-15, 0, 66));
+		s.append(buildLineage(h.getFathersMother(), y-65, 0, 66));
+		s.append(buildLineage(h.getFathersFather().getMother(), y-115, 0, 66));
+		s.append("<line x1='45%' y1='").append(y-45).append("'x2='55%' y2='");
+		s.append(y-45);
+		s.append("' style='stroke:rgb(0,0,0);stroke-width:2'/>");
+		s.append("</svg>");
+		return String.valueOf(s);
 	}
 
 	public static String buildLineage(Human h, int y, int n, int x){

@@ -25,7 +25,7 @@ public class Lineage{
 		this.list = 	 		new ArrayList<>();
 		this.office = 	  o;
 		this.law = 		  	new SucLaw(this);
-		this.succession = new AncestralElection(this);
+		this.succession = new Primogeniture(this); //AncestralElection(this);
 	}
 
 	public void determineSuccession(){

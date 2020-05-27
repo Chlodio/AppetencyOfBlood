@@ -10,9 +10,9 @@ public class Annals {
   private int firstYear;      //When the recording started
   private Annal[] annals;     //Invidual year and its events
 
-  public Annals(int y){
+  public Annals(int y, int l){
     this.firstYear = y;
-    this.annals = new Annal[500];
+    this.annals = new Annal[l*100];
   }
 
   public void publishAnnal(int i){

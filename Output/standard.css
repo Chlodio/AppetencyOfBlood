@@ -11,6 +11,14 @@ th {
 	background:lightgrey;
 }
 
+p {
+	margin:0
+}
+
+ul {
+	margin: 0;
+
+}
 
 .portrait{
 	padding: 0 0;

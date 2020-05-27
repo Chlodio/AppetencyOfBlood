@@ -351,11 +351,12 @@ public class Human {
 		return this.isUnderAgeOf(h.getAge()-i);
 	}
 
-	public String getPossibleDeath(){
+	public StringBuffer getPossibleDeath(){
+		StringBuffer s = new StringBuffer();
 		if (!this.isAlive()){
-			return this.getDeathStr();
+			return s.append(this.getDeathStr());
 		} else{
-			return "PRSN";
+			return s.append("PRSN");
 		}
 	}
 
@@ -643,19 +644,19 @@ public class Human {
 
 	public String getPortrait(){
 		int age = this.getAged();
-		String s;
+		StringBuffer s = new StringBuffer("");
 		if (age >= 15){
-			s = "<img src='../Input/Portraits/";
-			s += this.getEyeShort();
-			s += this.getHairShort();
+			s.append("<img src='../Input/Portraits/");
+			s.append(this.getEyeShort());
+			s.append(this.getHairShort());
 			if (this.isMale()){
-				s += "_M.png'</img>";
+				s.append("_M.png'</img>");
 			} else {
-				s += "_F.png'</img>";
+				s.append("_F.png'</img>");
 			}
-			return s;
+			return String.valueOf(s);
 		}
-		return "";
+		return String.valueOf(s);
 	}
 
 	public boolean isFromSameEstate(Human h){
@@ -667,7 +668,9 @@ public class Human {
 
 	public boolean hadHouse(){					return this.house != null;	}
 
-	public String getHouseCoALink(){			return this.getHouse().getCoALink();			}
+	public String getHouseCoALink(){
+		return this.getHouse().getCoALink();
+	}
 
 
 	public boolean isNoble(){
@@ -1338,7 +1341,7 @@ public class Human {
 
 	public boolean getSex(){						return this.sex;							}
 	public boolean isSameSex(Human h){	return this.sex == h.sex; 		}
-
+	public boolean wasOnlyChild(){			return this.getRela().wasOnlyChild();	}
 
 //Micro methods
 

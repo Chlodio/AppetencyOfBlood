@@ -5,7 +5,7 @@ import Code.House.Dynasty;
 import Code.Common.Basic;
 import java.util.List;
 import java.util.ArrayList;
-import Code.Ancestry.Consanguinity;
+import Code.Ancestry.Affinity;
 
 public class CadetHouse extends House {
 	protected String parentName;

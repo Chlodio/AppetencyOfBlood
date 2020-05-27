@@ -168,7 +168,8 @@ public class Holder{
 		Human h = this.getPerson();
 		int a = h.getAged();
 		//There will be 33.3% a nick name will be used
-		if (Basic.drawStraws(2)){
+		if (this.handleDefinedNickname(h, a)){
+		} else if (Basic.drawStraws(2)){
 			if (a < 14){
 				h.getName().setNick(Nick.CHILD);
 			} else if (a < 24){
@@ -180,6 +181,17 @@ public class Holder{
 			}
 		}
 	}
+
+	public boolean handleDefinedNickname(Human h, int a){
+		if (a >= 30){
+			if (h.wasOnlyChild()){
+				h.getName().setNick(Nick.FORTUNATE);
+				return true;
+			}
+		}
+		return false;
+	}
+
 //Regent methods
 
 	public void appointRegent(){
@@ -203,8 +215,7 @@ public class Holder{
 	}
 
 	public String getBiography(){
-		String s = "";
-		s += this.getEarlyLife();
+		String s = this.getEarlyLife();
 		s += this.getChildhood()+HTML.getBr();
 		s += this.getBiographyMarriage()+HTML.getBr();
 		s += this.getBiographyReign()+HTML.getBr();
@@ -228,27 +239,26 @@ public class Holder{
 
 	public String getEarlyLife(){
 		Human h = this.getPerson();
-		String s = Basic.capitalize(h.getForename())+" was";
+		StringBuffer s =  new StringBuffer(Basic.capitalize(h.getForename()));
+		s.append(" was");
 		if (h.hadFather()){
-			s += " born in ";
-			s += Basic.sDateLong(h.getBirth())+" as the ";
-			s += h.getAgnaticOrderStr()+" of ";
-			s += this.getParentNameAge(h.getFather());
-			s += " and ";
+			s.append(" born in ");
+			s.append(Basic.sDateLong(h.getBirth())).append(" as the ");
+			s.append(h.getAgnaticOrderStr()).append(" of ");
+			s.append(this.getParentNameAge(h.getFather())).append(" and ");
 			if (!h.hasSameBirthOrder()){
-				s += "the "+h.getEnaticOrderStr()+" of ";
+				s.append("the ").append(h.getEnaticOrderStr()).append(" of ");
 			}
-			s += this.getParentNameAge(h.getMother());
+			s.append(this.getParentNameAge(h.getMother()));
 			if (h.isPosthumous()){
 				int d = Basic.getDaysBetween(h.getFather().getDeath(), h.getBirth());
 				String ds = Basic.getMonthsOrDays(d);
-				s += ", "+ds+" from his father's death";
+				s.append(", ").append(ds).append(" from his father's death");
 			}
 		} else {
-			s += " born around ";
-			s += h.getBirthYear();
+			s.append(" born around ").append(h.getBirthYear());
 		}
-		return s+".";
+		return String.valueOf(s.append("."));
 	}
 
 	public String getParentNameAge(Human p){
@@ -290,30 +300,32 @@ public class Holder{
 	}
 
 	public String getDynasticStanding(){
-		String s = " "+this.getName();
+		StringBuffer s = new StringBuffer(" ");
+		s.append(this.getName());
 		if (this.hasEnded()){
-			s += " was ";
+			s.append(" was ");
 		} else {
-			s += " is ";
+			s.append(" is ");
 		}
 		DynasticOffice dy = this.getDynasticOffice();
 		if (this.isFounder()){
 				if (!dy.hadOnlyOne()){
-					s += "the founder of";
-					s += dy.getPoeticTenure();		//I.e short-lived
+					s.append("the founder of");
+					s.append(dy.getPoeticTenure());		//I.e short-lived
 				} else {
-					s += "the only ruler from";
+					s.append("the only ruler from");
 				}
 		} else {
-			s += "the "+Basic.getOrdial(dy.getOrder(this));
+			s.append("the ").append(Basic.getOrdial(dy.getOrder(this)));
 			if (this.hasEnded()){
 				if (this.wasLastRulerOfDynasty()){
-					s += " and last";
+					s.append(" and last");
 				}
 			}
-			s += " ruler from";
+			s.append(" ruler from");
 		}
-		return s+" "+this.getDynasty().getName()+".";
+		s.append(" ").append(this.getDynasty().getName());
+		return String.valueOf(s)+".";
 	}
 
 	public String getAgeOfAscensionS(){
@@ -356,6 +368,10 @@ public String getClaimName(String o){
 
 	public Dynasty getDynasty(){
 		return this.getPerson().getHouse().getDynasty();
+	}
+
+	public boolean hasDynasty(){
+		return this.getDynasty() != null;
 	}
 
 /*	public void setDynasty(Dynasty d){

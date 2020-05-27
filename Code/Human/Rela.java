@@ -95,6 +95,23 @@ public class Rela{
 
 //Children
 
+	public List<Human> getLegitChildren(){
+		List<Human> l = this.getLegitSons();
+		l.addAll(this.getLegitDaughters());
+		return l;
+	}
+
+	public boolean hasLegitChild(){
+		if (this.hasLegitSon()){
+			return true;
+		} else if (this.hasLegitDaughter()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
 	public boolean hasChild(){
 		return Human.hasLiving(this.getChildren());
 	}
@@ -109,7 +126,14 @@ public class Rela{
 	}
 
 	public List<Human> getRealChildren(){
-		return this.realChildren;
+		return new ArrayList<>(this.realChildren);
+	}
+
+	public boolean wasOnlyChild(){
+		if (this.hadFather()){
+			return this.getFather().getRealChildren().size() == 1;
+		}
+		return false;
 	}
 
 	public void addRealChild(Human f, Human m){
@@ -245,7 +269,9 @@ public class Rela{
 		return this.father == h || this.mother == h;
 	}
 
-	public List<Human> getDaughters(){			return new ArrayList<>(this.daughters);	}
+	public List<Human> getDaughters(){
+		return new ArrayList<>(this.daughters);
+	}
 
 	public List<Human> getLivingDaughters(){
 		List<Human> l = this.getDaughters();					//Get all daughters
@@ -278,6 +304,11 @@ public class Rela{
 
 	public List<Human> getLegitDaughters(){
 		return new ArrayList<>(this.legitDaughters);
+	}
+
+	public boolean hasLegitDaughter(){
+		List<Human> l = this.getLegitDaughters();
+		return Human.hasLiving(l);
 	}
 
 //Parents

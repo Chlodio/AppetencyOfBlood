@@ -105,13 +105,16 @@ public class Office{
 		Human h = this.getHolder().getPerson();
 		if (h.isAdult()){
 			Claim c;
-			List<Human> l = h.getLegitSons();
+			List<Human> l = h.getRela().getLegitChildren(); //h.getLegitSons();
 			for (Human x: l){
 				if (x.isAlive()){
-					c = new Claim( new Human[]{h, x} , this);
+					c = new Claim(new Human[]{h, x} , this);
 					x.addClaim(c);
 				}  else if (x.isAdult() && x.hasSon()){
-					c = new Claim( new Human[]{h, x} , this);
+					c = new Claim(new Human[]{h, x} , this);
+					if (x.isFemale()){
+						c.diludeBlood();
+					}
 					x.addClaim(c);
 					x.passClaims();
 					x.removeClaim(c);

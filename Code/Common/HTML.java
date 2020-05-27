@@ -1,12 +1,11 @@
+
 package Code.Common;
 
 public class HTML {
 
 	//Intended for every HTML
-	public static String getBeginning(){
-		String s = "<html>\n<head><meta charset='UTF-8'>\n";
-		s += "<link type='text/css' rel='stylesheet' href='standard.css'/>\n";
-		s += "</head><body>\n";
+	public static StringBuffer getBeginning(){
+		StringBuffer s = new StringBuffer("<html>\n<head><meta charset='UTF-8'>\n<link type='text/css' rel='stylesheet' href='standard.css'/>\n</head><body>\n");
 		return s;
 	}
 

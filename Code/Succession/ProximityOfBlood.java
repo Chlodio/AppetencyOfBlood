@@ -30,7 +30,7 @@ public class ProximityOfBlood extends Succession {
 			return 2;
 		} else {
 			/*if (House.nextHouse != null && House.nextHouse.getHead().isfromRegnantPaternalLine()){
-				System.out.println(Consanguinity.getPaternalRelation(House.nextHouse.getHead(), h));
+				System.out.println(Affinity.getPaternalRelation(House.nextHouse.getHead(), h));
 				System.out.println("*"+House.nextHouse.getFullName());
 				Human x = House.nextHouse.getHead();
 				while(x.hadFather()){

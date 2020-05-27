@@ -122,7 +122,7 @@ public class House {
 			while((l = buffy.readLine()) != null) {
 				highbornNames[c] = l;
 				c++;
-            }
+      }
 			buffy.close();
 		}
 		catch(IOException e){
@@ -289,26 +289,32 @@ public class House {
 
 		if (this.isDynastic()){
 			Holder h = Office.getOffice(0).getHolder();
-			Dynasty d = this.getDynasty(); //Office.getOffice(0).getDynasty();
+			Dynasty d = this.getDynasty();
+			Dynasty da = d;								//Stored in the case of switch
+				List<Holder> l = d.getNonDynastics();
+				if (this.getDynasty().isEmpty() && l.size() > 0){
+					d.switchHouse(l.get(0).getPerson().getHouse());
+					da = l.get(0).getDynasty();
+				}
+				l = d.getNonDynastics(); //rebuild;
 
-				if (!d.isEmpty()){
-					List<Holder> l = d.getNonDynastics();
 					for(Holder x: l){
 						if (x.getDynasty() == null){
 							d.branch(x);
-							if (d.getDynasts().contains(x)){
-								throw new RuntimeException();
-							}
 						} else {
 							d.adjust(x);
 						}
 					}
-					if (this.getDynasty() != Office.getOffice(0).getDynasty()){
-						this.getDynasty().getDynasticOffice(Office.getOffice(0)).disable();
+					if (da != Office.getOffice(0).getDynasty()){
+						da.getDynasticOffice(Office.getOffice(0)).disable();
 					}
-				} else {
-					List<Holder> l = d.getNonDynastics();
-					d.switchHouse(l.get(0).getPerson().getHouse());
+				for(Holder x: Office.getOffice(0).getLineage().getList()){
+					if (!x.getPerson().getHouse().isDynastic()){
+						System.out.println(this.getName());
+						System.out.println(x.getName()+" "+x.getPerson().getHouse().getName());
+						System.out.println(this.getDynasty().getDynasts().size());
+						throw new RuntimeException();
+					}
 				}
 		}
 		//See if patriarch is in the right postion, if not, do branching again, a progress which will find and appoint a new patriarch
@@ -366,8 +372,8 @@ public class House {
 
 	public void nameHouseHighborn(){
 		int n = 								fetchName();
-		this.name = 							highbornNames[n];
-		this.nameNum =							n;
+		this.name = 						highbornNames[n];
+		this.nameNum =					n;
 	}
 
 	public String getMemberNameM(Human c){
@@ -793,7 +799,7 @@ public class House {
 		this.isNoble = true;
 		this.coa = new CoatOfArms(); //1+Basic.randint(100);
 		this.setOrigin(o);
-		this.ennobleOrigin(o);
+	//	this.ennobleOrigin(o);
 
 
 		this.addToNobles();
@@ -1099,8 +1105,8 @@ public class House {
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
 	private CoatOfArms getCoA(){					return this.coa;			}
-	public String getName(){						return name;				}
-	public String getCoALink(){						return this.getCoA().getHTML();}
+	public String getName(){						return name;						}
+	public String getCoALink(){					return this.getCoA().getHTML();}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
 	public List<String> getMaleNames(){				return this.maleNames;		}
 	public static House getHouse(int id){			return Basic.house.get(id);	}
@@ -1133,7 +1139,7 @@ public class House {
 	public Human getFounder(){						return this.founder;}
 
 	private static List<Integer> highbornNamesN = 		new ArrayList<>();
-	private static String[] highbornNames = 			new String[1083];
+	private static String[] highbornNames = 			new String[1082];
 	private static String[] lowbornNames = 				new String[166];
 	public static List<House> nobles = 					new ArrayList<>(20);
 	public static List<House> peasants = 				new ArrayList<>(100);

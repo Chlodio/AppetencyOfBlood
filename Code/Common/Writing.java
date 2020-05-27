@@ -17,7 +17,7 @@ import java.util.List;
 public class Writing {
 
 	public static void writeClaims(){
-		String s = writeClaimsInfo();
+		String s = writeClaimsInfo().toString();
 		try {
 			FileWriter writer = new FileWriter("Output/Claims.html", false);
 			writer.write(s);
@@ -27,10 +27,10 @@ public class Writing {
 		}
 	}
 
-	public static String writeClaimsInfo(){
-		String s = HTML.getBeginning();
-		String[][] th = {{"Name", ""}, {"DoR", ""}, {"Ancestor", ""}, {"Birth", ""}};
-		String l = HTML.getTr(HTML.createTableHeaderClass(th));
+	public static StringBuffer writeClaimsInfo(){
+		StringBuffer s = HTML.getBeginning();
+		String[][] th = {{"Name", ""}, {"DoR", ""}, {"Ancestor", ""}, {"Birth", ""}, {"Lineage", ""}};
+		StringBuffer l = new StringBuffer(HTML.getTr(HTML.createTableHeaderClass(th)));
 		String a;
 		int lh;
 		Human h;
@@ -39,57 +39,51 @@ public class Writing {
 			h = x.getHolder();
 			lh = x.getLineageLength();
 			a = HTML.getTd(h.getFormalName());
-			a += HTML.getTd(""+(lh-1));
-			a += HTML.getTdTitle((x.getLineageString()), ""+(x.getUltimateAncestor().getFormalName()));
-			a += HTML.getTd(""+h.getBirthYear());
-			l += HTML.getTr(a);
+			a += (HTML.getTd(""+(lh-1)));
+			a += (HTML.getTdTitle((x.getLineageString()), ""+(x.getUltimateAncestor().getFormalName())));
+			a += (HTML.getTd(""+h.getBirthYear()));
+			a += (HTML.getTd(x.getBloodTypeStr()));
+			l.append(HTML.getTr(a));
 		}
 
-
-		s += HTML.getTable(l);
-		s += HTML.getEnding();
+		s.append(HTML.getTable(String.valueOf(l))).append(HTML.getEnding());
 		return s;
 	}
 
 
 
 	public static void writeNobility(){
-		String td;									//Table cell
-		String t;									//Table
-		String s = HTML.getBeginning();
+		StringBuffer s = HTML.getBeginning();
 		//[0] == Name of the th
 		//[1] == Name of css class
 		String[][] th = {{"Name", ""}, {"CoA", "CoAT"}, {"Founded", ""}, {"Origin", ""}, {"Men", ""}, {"Women", ""}, {"Head", ""}, {"Alliances", ""}};
 
-		t = HTML.createTableHeaderClass(th);
+		StringBuffer t = new StringBuffer(HTML.createTableHeaderClass(th));		//Table
 		List<House> l = House.getNobles();
 		for(House x: l){
-			td = "";
-			td += HTML.getTd(x.getName());
-			td += HTML.getTdClass("CoAT", x.getCoALink());
-			td += HTML.getTd(x.getFounding());
-			td += HTML.getTd(x.getOriginString());
-			td += HTML.getTd(""+x.getKinsmenCount());
-			td += HTML.getTd(""+x.getKinswomenCount());
-			td += HTML.getTd(x.getHead().getFormalName()+" ("+x.getHead().getAge()+")" );
-			td += HTML.getTd(""+x.getAlliances());
-			t += HTML.getTr(td);
+			StringBuffer td = new StringBuffer(HTML.getTd(x.getName()));
+			td.append(HTML.getTdClass("CoAT", x.getCoALink()));
+			td.append(HTML.getTd(x.getFounding()));
+			td.append(HTML.getTd(x.getOriginString()));
+			td.append(HTML.getTd(String.valueOf(x.getKinsmenCount())));
+			td.append(HTML.getTd(String.valueOf(x.getKinswomenCount())));
+			td.append(HTML.getTd(x.getHead().getFormalName()+" ("+x.getHead().getAge()+")" ));
+			td.append(HTML.getTd(""+x.getAlliances()));
+			t.append(HTML.getTr(String.valueOf(td)));
 		}
 
 		//Final row for the total
-		td = HTML.getTh("TOTAL");
-		td += HTML.getThCoSpan("N/A", 3);				//Fill in the empty N&A
-		td += HTML.getTh(""+House.getNoblemenCount());	//Number of noblemen total
-		td += HTML.getTh(""+House.getNoblewomenCount());//Number of noblewomen total
-		td += HTML.getThColspan(2);						//Get empty
-
-		t += HTML.getTr(td);
-		s += HTML.getTable(t);
-
-		s += HTML.getEnding();
+		StringBuffer td = new StringBuffer(HTML.getTh("TOTAL"));
+		td.append(HTML.getThCoSpan("N/A", 3));				//Fill in the empty N&A
+		td.append(HTML.getTh(String.valueOf(House.getNoblemenCount())));	//Number of noblemen total
+		td.append(HTML.getTh(String.valueOf(House.getNoblewomenCount())));//Number of noblewomen total
+		td.append(String.valueOf(HTML.getThColspan(2)));						//Get empty
+		t.append(HTML.getTr(String.valueOf(td)));
+		s.append(HTML.getTable(String.valueOf(t)));
+		s.append(HTML.getEnding());
 		try {
 			FileWriter writer = new FileWriter("Output/NobleHouses.html", false);
-			writer.write(s);
+			writer.write(String.valueOf(s));
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,7 +94,7 @@ public class Writing {
 		String t = recordMonarchList();
 		try {
 			FileWriter writer = new FileWriter("Output/ListOfMonarchs.html", false);
-			writer.write(t);
+			writer.write(String.valueOf(t));
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -109,150 +103,137 @@ public class Writing {
 
 	public static String recordMarriages(Human h){
 
+		StringBuffer lt = new StringBuffer();			//Temporary list
 		//If character never reached adulthood, there is no marriages to be recorded
 		if (h.isAdult()){
 			List<Marriage> m = h.getMarriages();
-			String lt = "";			//Temporary list
 			String n;
 			for(Marriage x: m){
 				n = x.getDoe().getBirthName();
 
 				if (x.hasKinType()){
-					lt += HTML.getPTitle(x.getKinTypeHTML(h), n+" †");
+					lt.append(HTML.getPTitle(x.getKinTypeHTML(h), n+" †"));
 				} else if (!x.isRegular()) {
-					lt += HTML.getPTitle(x.getTypeHTML(h), n+" ‡");
+					lt.append(HTML.getPTitle(x.getTypeHTML(h), n+" ‡"));
 				} else {
-					lt += HTML.getP(n);
+					lt.append(HTML.getP(n));
 				}
 
-				lt += x.getTenureShort();			//When the marriage began and ended
-				lt += HTML.getBr();
+				lt.append(x.getTenureShort());			//When the marriage began and ended
+				lt.append(HTML.getBr());
 
 				if (x.getHadChildren()){
-					lt += x.getNumOfOffspring();
+					lt.append(x.getNumOfOffspring());
 				} else {
-					lt += "No";
+					lt.append("No ");
 				}
 
-				lt += " children";
+				lt.append(" children");
 
 				//If the marriage is the last, do not bother with hr
 				if (!x.isLastMarriageOf(h)){
-					lt += "<hr>";
+					lt.append("<hr>");
 				}
 
-				HTML.getLi(lt);
+			//	lt = HTML.getLi(String.valueOf(lt));
 			}
-			return HTML.getP(lt);
+			return HTML.getP(String.valueOf(lt));
 		} else {
-			return "";
+			return String.valueOf(lt);
 		}
 	}
 
 	//Used to get a row of monarchs for Monarch List
 	public static String recordMonarchInvidual(Holder h){
 
-		String td = "";							//Temporary table cell
-		String tr = "";							//Temporary table row
+		StringBuffer td = new StringBuffer("");							//Temporary table cell
+		StringBuffer tr = new StringBuffer("");							//Temporary table row
 
 		Human q = h.getPerson();				//Every ruler is a person, serves to shorten
 
-		tr = ""; //emptry the row
-
 	//First cell for name and reign
-		td = h.getName()+"<br>";
+		td.append(h.getName()).append("<br>");
 		if (q.getName().hasNick()){
-			td += HTML.getI(q.getName().getNickname());
+			td.append(HTML.getI(q.getName().getNickname()));
 		}
-		td += HTML.getBr();
-		td += h.getReign();
-		td += HTML.getBr();
-		td += HTML.getI(h.getReignLength());			//Italize
-		tr += HTML.getTd(td);											//Add to table
+		td.append(HTML.getBr());
+		td.append(h.getReign());
+		td.append(HTML.getBr());
+		td.append(HTML.getI(h.getReignLength()));			//Italize
+		tr.append(HTML.getTd(String.valueOf(td)));											//Add to table
 
 	//Cell for portraits
-		td = q.getPortrait();
-		tr += HTML.getTdClass("portrait", td);
+		tr.append(HTML.getTdClass("portrait", q.getPortrait()));
 
 	//Cell for coat of arms
-		td = q.getHouseCoALink();
-		tr += HTML.getTdClass("CoAT", td);
+		tr.append(HTML.getTdClass("CoAT", q.getHouseCoALink()));
 
 	//Cell for birth
-		tr += HTML.getTd(q.getBirthF());
+		tr.append(HTML.getTd(q.getBirthF()));
 
 	//Cell for marriage
-		td = recordMarriages(q);
-		tr += HTML.getTd(td);
+		tr.append(HTML.getTd(recordMarriages(q)));
 
 	//Cell for age
-		td = q.getPossibleDeath();
-		td += HTML.getBr();
-		tr += HTML.getTd(td+"Aged "+q.getAged());
+		tr.append(HTML.getTd(q.getPossibleDeath()+"<br>Aged "+(q.getAged())));
 
 	//Cell for claims
-		tr += HTML.getTdClass("nameCol2", h.getClaim().getClaimHTML());
+		tr.append(HTML.getTdClass("nameCol2", h.getClaim().getClaimHTML()));
 
 	//Cell for dynasty
-		tr += HTML.getTdClass("nameCol2", q.getHouse().getDynasty().getName());
-		return tr;
+		tr.append(HTML.getTdClass("nameCol2", q.getHouse().getDynasty().getName()));
+		return String.valueOf(tr);
 	}
 
 
 	public static String recordMonarchList(){
-		String t = "";							//Short for text the written text will be stored here
-		String te = "";							//Temporary table
+		StringBuffer te = new StringBuffer("");							//Temporary table
 
-		t = HTML.getBeginning();
+		StringBuffer t  = HTML.getBeginning();	//Short for text the written text will be stored here
 
 		//The names of headers
 		String[][] th = {{"Name", ""}, {"Prt.", "portrait"}, {"CoA", "CoAT"}, {"Birth", ""}, {"Marriage(s)", ""}, {"Death", ""}, {"Claim", ""}, {"Dynasty", ""}};
-		te += HTML.createTableHeaderClass(th);
-		te += HTML.getTr(t);
+		te.append(HTML.createTableHeaderClass(th));
 
 		Human q;
 		for (Holder r: Realm.getLineage(0)){
-			te += HTML.getTr(recordMonarchInvidual(r));
+			te.append(HTML.getTr(recordMonarchInvidual(r)));
 		}
 
-		t += HTML.getTable(te);				//Table is now added into the body
-		t += HTML.getEnding();
-		return t;
+		t.append(HTML.getTable(String.valueOf(te)));				//Table is now added into the body
+		t.append(HTML.getEnding());
+		return String.valueOf(t);
 	}
 
 //End of list of monarchs
 //Beginning of  monarchs info
 
-	public static String writeMonarchsInfo(){
-		String s = HTML.getBeginning();
+	public static StringBuffer writeMonarchsInfo(){
+		StringBuffer s = HTML.getBeginning();
 		for (Holder h: Realm.getLineage(0)){
-			s += writeMonarchHolder(h);
+			s.append(writeMonarchHolder(h));
 		}
-		s += HTML.getEnding();
+		s.append(HTML.getEnding());
 		return s;
 	}
 
 	public static String writeMonarchHolder(Holder r){
-		String s = "";
 		Human h = r.getPerson();
-
-		s += HTML.wrapSummary(r.getName()+" ("+h.getLifespan()+")");
-		s += HTML.getP(r.getReign());
-		s += HTML.getP(r.getClaim().getClaimHTML());
-		s += HTML.getP(r.getNotes());
-		s += HTML.getP(r.getBiography());
-	//	s += HTML.getP("Inbreeding: "+Consanguinity.countInbreed(h));
-
-		s = HTML.wrapDetails(s);
-		return s;
+		StringBuffer s;
+		s = new StringBuffer(HTML.wrapSummary(r.getName()+" ("+h.getLifespan()+")"));
+		s.append(HTML.getP(r.getReign()));
+		s.append(HTML.getP(r.getClaim().getClaimHTML()));
+		s.append(HTML.getP(r.getNotes()));
+		s.append(HTML.getP(r.getBiography()));
+		return HTML.wrapDetails(String.valueOf(s));
 	}
 
 
 	public static void writeTable(){
-		String s = writeMonarchsInfo();
+		StringBuffer s = writeMonarchsInfo();
 		try {
 			FileWriter writer = new FileWriter("Output/MonarchsInfo.html", false);
-			writer.write(s);
+			writer.write(String.valueOf(s));
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

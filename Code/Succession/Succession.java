@@ -27,12 +27,12 @@ public class Succession {
 
 	public static void clearLineage(){
 		lineageI = 0;
-		lineageT = new Human[17];
+		lineageT = new Human[20];
 	}
 
 	public static void clearSLineage(){
 		lineageSecI = 0;
-		lineageSecT = new Human[17];
+		lineageSecT = new Human[20];
 	}
 
 	public static void lockSecLineage(){
@@ -111,7 +111,7 @@ public class Succession {
 			if (n == 0){
 				this.setBlood(0);			//Agnatic
 			} else if (n == 1){
-				this.setBlood(1);			//Patrilineal
+				this.setBlood(1);			//Quasi-agnatic
 			} else {
 				this.setBlood(2);			//Cognatic
 			}

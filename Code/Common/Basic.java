@@ -26,11 +26,15 @@ public class Basic {
   public static Random randomizer = 											new Random();
   public static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
   public static SimpleDateFormat format2 = new SimpleDateFormat("d MMMM y");
-	public static Annals annals = new Annals(1000);
+	public static Annals annals;
 	public static void performSetup(){
 		long seed = randomizer.nextLong();
 		randomizer.setSeed(seed);
 		System.out.println("Seed: "+seed);
+
+
+		int cntl = 5;										//Century length
+		annals = new Annals(1000, cntl);
 
 		Religion.foundReligion();
  		House.numberNobleHouses();
@@ -79,7 +83,7 @@ public class Basic {
 		int dom = 1; 										//day of the month
 		int maom = 0;
 
-        for (int century = 0; century < 5; century++){
+      for (int century = 0; century < cntl; century++){
 			for (int decade = 0; decade < 10; decade++){
 				census.add("<tr><td>"+Basic.sDate()+"</td><td>"+Man.getAmount()+"</td><td>"+Woman.getAmount()+"</td><td>"+Bastard.getAmount()+"</td></tr>");
 				for (int lustrum = 0; lustrum < 2; lustrum++){
@@ -354,8 +358,18 @@ public class Basic {
 		return Character.toUpperCase(it.charAt(0))+it.substring(1);
 	}
 
+	public static StringBuffer capitalize(StringBuffer it){
+		String s = Character.toString(Character.toUpperCase(it.charAt(0)));
+		return it.replace(0, 1, s);
+	}
+
 	public static String toLowerCase(String it){
 		return Character.toLowerCase(it.charAt(0))+it.substring(1);
+	}
+
+	public static StringBuffer toLowerCase(StringBuffer it){
+		String s = Character.toString(Character.toLowerCase(it.charAt(0)));
+		return it.replace(0, 1, s);
 	}
 
 	//Check if number is more than one, if so add -s
