@@ -2,108 +2,56 @@ package Code.House;
 import Code.Common.Basic;
 import Code.Common.HTML;
 
-  public enum Ordinary{
-    ANCHOR("anchor", false),
-    BASE("base", false),
-    CHIEFDOUBLEARCHED("chief_double-arched", false),
-    CHIEFENARCHED("chief_enarched", false),
-    CHIEFPALE("chief_pale", false),
-    CHIEFPLAIN("chief_plain", false),
-    CHIEFTRIANGULAR("chief_triangular", false),
-    CROSSANNULETSBRACED("cross_annulets_braced", false),
-    CROSSANNULETY("cross_annulety", false),
-    CROSSAVELLANE("cross_avellane", false),
-    CROSSBOTTONY("cross_bottony", false),
-    CROSSBOWEN("cross_bowen", false),
-    CROSSCALVATRY("cross_calvatry", false),
-    CROSSCANTERBURY("cross_canterbury", false),
-    CROSSCLECHY("cross_clechy", false),
-    CROSSCOLDHARBOUR("cross_coldharbour", false),
-    CROSSCOPTIC("cross_coptic", false),
-    CROSSCOUPED("cross_couped", false),
-    CROSSCRESCENTY("cross_crescenty", false),
-    CROSSDOUBLED("cross_doubled", false),
-    CROSSFORMERLY("cross_formerly", false),
-    CROSSFORMERLYFITCH("cross_formerly_fitchy", false),
-    CROSSFUSILS("cross_fusils", false),
-    CROSSJERUSALEM("cross_Jerusalem", false),
-    CROSSLATIN("cross_latin", false),
-    CROSSLORRAINE("cross_Lorraine", false),
-    CROSSLOZENGES("cross_lozenges", false),
-    CROSSMASCLES("cross_mascles", false),
-    CROSSNORSESUN("cross_norse_sun", false),
-    CROSSPARTEDFRETTED("cross_parted_fretted", false),
-    CROSSPATONCE("cross_patonce", false),
-    CROSSPATRIARCHAL("cross_patriarchal", false),
-    CROSSPLAIN("cross_plain", false),
-    CROSSPOMELLY("cross_pomelly", false),
-    CROSSPOMMELED("cross_pommeled", false),
-    CROSSPOTENT("cross_potent", false),
-    CROSSQUARTERPIERCED("cross_quarter-pierced", false),
-    CROSSSIXANNULETSINTERLACED("cross_six_annulets_interlaced", false),
-    CROWN("crown", true),
-    DIAMOND("diamond", true),
-    FLAUNCHES("flaunches", false),
-    FORD("ford", false),
-    PILESFOUR("piles_four", false),
-    PILESTEN("piles_ten", false),
-    GEMEL("gemel", false),
-    HEART("heart", true),
-    ORLE("orle", false),
-    PALESTHREE("pales_three", false),
-    PALESFOUR("pales_four", false),
-    PALESFIVE("pales_five", false),
-    GYRONEIGHT("gyron_eight", false),
-    PALLINVERTED("pall_inverted", false),
-    PALLPLAIN("pall_plain", false),
-    QUARTER("quarter", false),
-    MOUNT("mount", false),
-    ROUNDEL("roundel", true),
-    SALTIRE("saltire", false),
-    SALTIRECOUPED("saltire_couped", false),
-    SHAKEFORK("shakefork", false),
-    SPADE("spade", true),
-    TIERCEPLAIN("tierce_plain", false),
-    TIERCESINISTER("tierce_sinister", false),
-    WALLPLAIN("wall_plain", false),
-    WHEEL("wheel", false);
+public class Ordinary extends Charge {
 
-  private static final Ordinary[] ordinaries = {CROSSPLAIN, CROSSANNULETY, CROSSBOTTONY, CROSSCALVATRY, CROSSCOPTIC, CROSSCOUPED, CROSSCRESCENTY, CROSSDOUBLED, CROSSJERUSALEM, CROSSLATIN, CROSSLORRAINE, CROSSNORSESUN, CROSSPARTEDFRETTED, CROSSPATRIARCHAL, CROSSPOMELLY, CROSSPOMMELED, CROSSPOTENT, CROSSQUARTERPIERCED, CROSSAVELLANE, CROSSFORMERLY, CROSSFORMERLYFITCH, CROSSCLECHY, CROSSMASCLES, CROSSSIXANNULETSINTERLACED, CROSSANNULETSBRACED, CROSSCANTERBURY, CROSSCOLDHARBOUR, PILESFOUR, PILESTEN, ANCHOR, CHIEFPLAIN, CHIEFENARCHED, CHIEFTRIANGULAR, CHIEFDOUBLEARCHED, CROSSFUSILS, CHIEFPALE, PALESTHREE, PALESFOUR, PALESFIVE, MOUNT, GYRONEIGHT, BASE, ORLE, FORD, QUARTER, TIERCEPLAIN, TIERCESINISTER, WALLPLAIN, FLAUNCHES, SALTIRECOUPED, SALTIRE, PALLPLAIN, PALLINVERTED, SHAKEFORK, CROSSPATONCE, CROSSBOWEN, HEART, ROUNDEL, CROWN, DIAMOND, SPADE, GEMEL};
+  public Ordinary(boolean isOnMetal){
+      super(isOnMetal);
+      this.type = Type.values()[Basic.randint(Type.values().length)];
+      this.subtype = this.type.pickSubtype();
+  }
 
-  private String[] semis = {"ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+  public String getPath(){
+    return this.type.getType()+"/"+this.type.getSubtype(subtype)+".svg";
+  }
+
+  public enum Type{
+    BAR("Bar", new String[]{"two", "three", "wavy_two", "wavy_three"}),
+    BARR("Barry", new String[]{"five", "eight", "ten"}),
+    BEND("Bend", new String[]{"dexter", "sinister", "cotised_dexter", "cotised_sinister"}),
+    BENDLET("Bendlet", new String[]{"dexter", "sinister"}),
+    CANTON("Canton", new String[]{"dexter", "sinister"}),
+    CHEVRON("Chevron", new String[]{"plain", "inverted", "interlaced"}),
+    CHIEF("Chief", new String[]{"plain", "triangular", "enarched", "double-arched"}),
+    CROSS("Cross", new String[]{"plain", "quarter-pierced"}),
+    FESS("Fess", new String[]{"plain", "cottised", "dancetty", "doubly_cottised"}),
+    FLAUNCHES("Flaunches", new String[]{"plain"}),
+    GYRON("Gyron", new String[]{"dexter", "sinister"}),
+    ORLE("Orle", new String[]{"plain"}),
+    PALE("Pale", new String[]{"plain", "chief"}),
+    PALL("Pall", new String[]{"plain", "inverted", "shakefork"}),
+    QUARTER("Quarter", new String[]{"dexter", "sinister"}),
+    SALTIRE("Saltire", new String[]{"plain", "couped"}),
+    TIERCE("Tierce", new String[]{"dexter", "plain"});
 
   private String type;
-  private boolean semi;
+  private String[] subtype;
 
-  private Ordinary(String s, boolean b){
+  private Type(String s, String[] b){
       this.type = s;
-      this.semi = b;
+      this.subtype = b;
   }
 
   public String getType(){
     return this.type;
   }
 
-  public boolean isSemi(){
-    return this.semi;
+  public String getSubtype(int i){
+    return this.subtype[i];
   }
 
-  public String getSemi(){
-    return semis[1+Basic.randint(9)];
+  public int pickSubtype(){
+    return Basic.randint(this.subtype.length);
   }
 
-  public static String getOrdinary(){
-      Ordinary o = ordinaries[Basic.randint(ordinaries.length)];
-      if (o.isSemi()){
-        if (Basic.coinFlip()){
-          return o.getType()+"_ace";
-        }
-        else {
-          return o.getType()+"_"+o.getSemi();
-        }
-      } else {
-        return o.getType();
-      }
   }
-
 }

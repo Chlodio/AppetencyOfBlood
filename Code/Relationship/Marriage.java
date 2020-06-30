@@ -181,8 +181,6 @@ public class Marriage extends SexRelation{
 			List<Integer> l = new ArrayList<>(w.size());
 			int i = Basic.max(2, (int) (w.size()*0.05) );//(int) (w.size()*0.025);
 
-
-
 			int a;
 			while(l.size() < i){
 					a = Basic.randint(w.size());

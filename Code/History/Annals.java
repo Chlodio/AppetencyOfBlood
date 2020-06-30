@@ -25,7 +25,7 @@ public class Annals {
   public void writeLegitBirth(Human h){
     if (h.isNoble()){
       Annal a = this.secureEntry();
-      String s = String.format("%s was born for %s and %s", h.getFullName(), h.getFather().getFullName(), h.getMother().getFullName());
+      String s = String.format("%s was born to %s and %s", h.getFullName(), h.getFather().getFullName(), h.getMother().getFullName());
       a.add(s);
     }
   }

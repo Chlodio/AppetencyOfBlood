@@ -174,7 +174,7 @@ public class Holder{
 				h.getName().setNick(Nick.CHILD);
 			} else if (a < 24){
 				h.getName().setNick(Nick.YOUNG);
-			} else if (a > 60){
+			} else if (a > 65){
 				h.getName().setNick(Nick.OLD);
 			} else if (this.getReignLengthYears() >= 20){
 				h.getName().setNick(Nick.getRandom());

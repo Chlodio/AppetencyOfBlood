@@ -152,7 +152,7 @@ public class Claim  implements Cloneable{
 
 		//If rs is "" don't bother adding anything
 		if (Basic.isNotZero(rs.length())){
-			txt += HTML.getLi(rs + " of " + p.getFullName());
+			txt += HTML.getLi(Basic.capitalize(rs) + " of " + p.getFullName());
 		}
 
 		/*Intended result being something like:
