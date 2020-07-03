@@ -4,7 +4,7 @@ table{
 }
 td, th{
 	border:1px solid black;
-	padding:5 10;
+	padding:5px 10px;
 }
 
 th {
@@ -18,6 +18,11 @@ p {
 ul {
 	margin: 0;
 
+}
+
+#odd {
+	width:10px;
+	display:block;
 }
 
 .portrait{
@@ -34,19 +39,28 @@ ul {
 	max-width: 175px;
 }
 
+
+
 .CoA {
-	display:inline;
-	width:36;
+	height:55px;
+	width:50px;
+
+	position:relative;
+	display:block;
 }
 
 .CoAT{
 	background: lightgray;
 	padding:0;
+
 }
 
-.escu{
-	background:gray;
-	clip-path: path('M 17.999999,39.658001 C 17.999999,39.658001 36,32.870977 36,15.621912 V 0 H 0 V 15.621912 C 0,32.87304 17.999999,39.658001 17.999999,39.658001 Z');
+
+.CoA img {
+	position: absolute;
+	top: 0px;
+	right:0px;
+
 }
 
 .or_e { background:yellow; }

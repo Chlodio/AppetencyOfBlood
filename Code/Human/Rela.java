@@ -406,7 +406,7 @@ public class Rela{
 	}
 
 	public boolean areCloselyRelated(Human h){
-		return this.isSiblingOf(h) && !h.isChildOf(this.o) && !this.isChildOf(h);
+		return this.isSiblingOf(h) || h.isChildOf(this.o) || this.isChildOf(h);
 	}
 
 	public boolean isIntimateWith(Human h){

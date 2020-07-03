@@ -73,6 +73,11 @@ public class HTML {
 		return "<img class='"+c+"' src='"+s+"'></img>";
 	}
 
+
+	public static String getImg(String s){
+		return "<img src='"+s+"'></img>";
+	}
+
 	public static String createTableHeader(String[] a){
 		String s = "";
 		for(String x: a){

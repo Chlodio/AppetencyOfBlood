@@ -696,7 +696,7 @@ public class Marriage extends SexRelation{
 	}
 
 
-	public static int getPerOfChidless(){
+	public static int getPerOfChildless(){
 		int n = getNumOfChildless();
 		float i;
 		i = (n+0.0f)/getNum();

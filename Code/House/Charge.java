@@ -5,12 +5,12 @@ import Code.House.Ordinary;
 
 public class Charge {
 
-	protected Ordinary.Type type;
   protected int subtype;
 	protected String tincture;
 
 	private static final String[] metals = {"argent", "or"};
 	private static final String[] colors = {"gules", "sable", "azure", "purpure", "vert"};
+  private static final String[] tinctures = {"argent", "or", "gules", "sable", "azure", "purpure", "vert"};
 
 
 	public Charge(boolean isOnMetal){
@@ -20,6 +20,11 @@ public class Charge {
 			this.tincture = pickMetal();
 		}
 	}
+
+  public Charge(String a, String b){
+    this.tincture = getUnusedincture(a, b);
+	}
+
 
 	public static String pickMetal(){
 		return metals[Basic.randint(2)];
@@ -32,5 +37,14 @@ public class Charge {
 	public String getTincture(){
 		return this.tincture;
 	}
+
+  //Pick tincture that isn't neither of parameter
+  public static String getUnusedincture(String a, String b){
+    String n;
+    do {
+      n = Basic.choice(tinctures);
+    } while (n == a || n == b);
+    return n;
+  }
 
 }

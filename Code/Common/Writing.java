@@ -392,7 +392,7 @@ public class Writing {
 
 			writer.write("<tr><th>Sororate marriages</th><td>"+Marriage.getPerOfSororates()+"%</td><tr>\n");
 
-			writer.write("<tr><th>Chidless marriages</th><td>"+Marriage.getPerOfChidless()+"%</td><tr>\n");
+			writer.write("<tr><th>Childless marriages</th><td>"+Marriage.getPerOfChildless()+"%</td><tr>\n");
 
 			writer.write("<tr><th>Avg. num. of children</th><td>"+Marriage.getAvgNumOfChildren()+"</td><tr>\n");
 
