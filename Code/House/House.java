@@ -353,7 +353,7 @@ public class House {
 	}
 
 	public boolean findNextHouseIndirect(){
-		if(this.parent != null){
+		if(this.isCadet()){
 			if (this.parent.findNextHouseDirect()){ 		return true; }
 			else if (this.parent.findNextHouseIndirect()){ 	return true; }
 		}
@@ -797,7 +797,7 @@ public class House {
 	public void ennoble(int o){
 		this.nameHouseHighborn();
 		this.isNoble = true;
-		this.coa = new CoatOfArms(); //1+Basic.randint(100);
+		this.coa = new CoatOfArms(this.getParent()); //1+Basic.randint(100);
 		this.setOrigin(o);
 	//	this.ennobleOrigin(o);
 
@@ -1100,11 +1100,12 @@ public class House {
 
 	public boolean hasHead(){						return this.head != null;	}
 	public House getParent(){						return this.parent;			}
+	public boolean isCadet(){						return this.parent != null;}
 	public Human getHead(){							return this.head;			}
 	public int getGeneration(){						return this.generation;		}
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
-	private CoatOfArms getCoA(){					return this.coa;			}
+	public CoatOfArms getCoA(){					return this.coa;			}
 	public String getName(){						return name;						}
 	public String getCoALink(){					return this.getCoA().getHTML();}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}

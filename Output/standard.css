@@ -39,8 +39,6 @@ ul {
 	max-width: 175px;
 }
 
-
-
 .CoA {
 	height:55px;
 	width:50px;
@@ -55,12 +53,42 @@ ul {
 
 }
 
-
 .CoA img {
 	position: absolute;
 	top: 0px;
 	right:0px;
+}
 
+.qurTopLeft {
+	top: 0%;
+  right:0px;
+  position: absolute;
+  width:50%;
+  height:50%;
+}
+
+.qurTopRight {
+	top: 0%;
+  left:0px;
+  position: absolute;
+  width:50%;
+  height:50%;
+}
+
+.qurBottomRight {
+	bottom: 0%;
+  left:0px;
+  position: absolute;
+  width:50%;
+  height:50%;
+}
+
+.qurBottomLeft {
+	bottom: 0%;
+  right:0px;
+  position: absolute;
+  width:50%;
+  height:50%;
 }
 
 .or_e { background:yellow; }

@@ -25,6 +25,7 @@ public class NonOrdinary extends Charge {
 	public static final String[] order = new String[]{"ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "semy"};
 
   public enum Type{
+    ORLE("Orle", new String[]{"plain", "tressure"}),
     CROSS("Cross", new String[]{
       "annulets_braced", "coptic", "mascles", "annulety", "crescenty", "patonce", "avellane", "doubled", "patriarchal", "bottony", "formerly_fitchy", "pomelly", "bowen", "formerly", "pommeled", "calvatry", "let", "potent", "canterbury", "lorraine", "jerusalem", "latin", "norse_sun"
     }),

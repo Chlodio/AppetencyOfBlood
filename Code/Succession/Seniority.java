@@ -1,4 +1,4 @@
-/*
+
 package Code.Succession;
 import Code.Human.Human;
 import Code.Ancestry.Lineage;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Seniority extends Succession {
 
 	public List<Human> princes;
-	//public List<int[]> pClaims;
 	public Seniority(Lineage l, SucLaw s){
 		super(l, s);
 		this.princes = new ArrayList<>();
@@ -17,20 +16,16 @@ public class Seniority extends Succession {
 
 	public int determine(){
 		Human h = this.lineage.getIncumbent().getPerson();
-		if (this.hasDirectHeir(h)){ /*
-			/*System.out.println("1");*/
-	/*		setLineage();
-			System.out.println("1");
+		if (this.hasDirectHeir(h)){
+			setLineage();
 			return 1;
-		} else if (this.hasGeneration(h) && this.hasPrinceHeir(h)){/*
-			/*System.out.println("2");
+		} else if (this.hasGeneration(h) && this.hasPrinceHeir(h)){
 			for(Human x: this.princes){
 				System.out.println(x+" "+this.law.canInherit(x));
-			}*/
-		/*	setLineage();
+			}
+			setLineage();
 			return 1;
 		} else {
-			System.out.println("3");
 			return 3;
 		}
 	}
@@ -40,7 +35,7 @@ public class Seniority extends Succession {
 			if (this.hasPrinceHeir(h)){
 				return true;
 			} else if (this.hasNextHeir()){
-				System.exit(0); //return true;
+				System.exit(0);
 			}
 		}
 		return false;
@@ -106,4 +101,3 @@ public class Seniority extends Succession {
 	}
 
 }
-*/

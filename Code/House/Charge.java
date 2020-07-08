@@ -42,7 +42,7 @@ public class Charge {
   public static String getUnusedincture(String a, String b){
     String n;
     do {
-      n = Basic.choice(tinctures);
+      n = Basic.choice(colors);
     } while (n == a || n == b);
     return n;
   }

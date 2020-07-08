@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="six.svg"
+   sodipodi:docname="voider.svg"
    id="svg23"
    version="1.1"
    viewBox="0 0 100 110">
@@ -20,7 +20,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -28,18 +28,15 @@
      id="defs27" />
   <sodipodi:namedview
      inkscape:document-rotation="0"
-     inkscape:snap-grids="false"
-     inkscape:snap-to-guides="false"
-     inkscape:snap-bbox="false"
      inkscape:guide-bbox="true"
      showguides="true"
      inkscape:current-layer="svg23"
      inkscape:window-maximized="1"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:cy="33.614768"
-     inkscape:cx="21.221885"
-     inkscape:zoom="5.6568542"
+     inkscape:cy="93.636563"
+     inkscape:cx="7.1744551"
+     inkscape:zoom="2.8284271"
      showgrid="false"
      id="namedview25"
      inkscape:window-height="1020"
@@ -53,45 +50,15 @@
      bordercolor="#666666"
      pagecolor="#ffffff" />
   <circle
-     transform="rotate(-90)"
-     r="10.89"
-     cy="22.646133"
-     cx="-33.139256"
-     id="path828"
-     style="fill:#000000;stroke-width:0.512471" />
+     r="55"
+     cy="49"
+     cx="-35"
+     id="path1687"
+     style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill" />
   <circle
-     transform="rotate(-90)"
-     r="10.89"
-     cy="77.326126"
-     cx="-33.139256"
-     id="path828-5"
-     style="fill:#000000;stroke-width:0.512471" />
-  <circle
-     transform="rotate(-90)"
-     r="10.89"
-     cy="22.646133"
-     cx="-59.239254"
-     id="path828-7"
-     style="fill:#000000;stroke-width:0.512471" />
-  <circle
-     transform="rotate(-90)"
-     r="10.89"
-     cy="77.326126"
-     cx="-59.239254"
-     id="path828-5-6"
-     style="fill:#000000;stroke-width:0.512471" />
-  <circle
-     transform="scale(-1)"
-     r="10.89"
-     cy="-69.238998"
-     cx="-49.98613"
-     id="path828-0"
-     style="fill:#000000;stroke-width:0.512471" />
-  <circle
-     transform="scale(-1)"
-     r="10.89"
-     cy="-21.639"
-     cx="-49.98613"
-     id="path828-5-68"
-     style="fill:#000000;stroke-width:0.512471" />
+     r="55"
+     cy="49"
+     cx="135"
+     id="path1687-0"
+     style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill" />
 </svg>

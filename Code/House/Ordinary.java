@@ -26,14 +26,16 @@ public class Ordinary extends Charge {
     CHIEF("Chief", new String[]{"plain", "triangular", "enarched", "double-arched"}),
     CROSS("Cross", new String[]{"plain", "quarter-pierced", "parted_fretted", "coldharbour", "fusils"}),
     FESS("Fess", new String[]{"plain", "cottised", "dancetty", "doubly_cottised"}),
-    FLAUNCHES("Flaunches", new String[]{"plain"}),
-    GYRON("Gyron", new String[]{"dexter", "sinister"}),
-    ORLE("Orle", new String[]{"plain", "bordure"}),
+    FLAUNCHES("Flaunches", new String[]{"plain", "flasque", "voider"}),
+    GORE("Gore", new String[]{"dexter", "sinister"}),
+    BORDURE("Bordure", new String[]{"plain", "engrelee"}),
     PALE("Pale", new String[]{"plain", "chief"}),
     PALL("Pall", new String[]{"plain", "inverted", "shakefork"}),
     QUARTER("Quarter", new String[]{"dexter", "sinister"}),
     SALTIRE("Saltire", new String[]{"plain", "couped"}),
     TIERCE("Tierce", new String[]{"dexter", "sinister"}),
+		FRET("Fret", new String[]{"plain"}),
+		BASE("Base", new String[]{"plain", "doventailed", "wavy", "embattled"}),
 		PILES("Piles", new String[]{"four", "ten"});
 
   private String type;
