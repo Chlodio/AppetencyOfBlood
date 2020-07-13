@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="anvil.svg"
+   id="svg36"
+   version="1.1"
+   viewBox="0 0 100 110">
+  <metadata
+     id="metadata42">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs40">
+    <clipPath
+       id="ordi2-0">
+      <circle
+         id="circle19-4"
+         r="3.75"
+         cy="21.921255"
+         cx="204.90433" />
+      <circle
+         id="circle21-8"
+         r="3.75"
+         cy="81.921257"
+         cx="204.90433" />
+      <circle
+         id="circle23-8"
+         r="3.75"
+         cy="51.921257"
+         cx="174.90433" />
+      <circle
+         id="circle25-8"
+         r="3.75"
+         cy="51.921257"
+         cx="234.90433" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     inkscape:guide-bbox="true"
+     showguides="true"
+     inkscape:current-layer="svg36"
+     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:cy="32.129379"
+     inkscape:cx="16.243846"
+     inkscape:zoom="4.2909091"
+     showgrid="false"
+     id="namedview38"
+     inkscape:window-height="1020"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <clipPath
+     id="escu">
+    <rect
+       id="rect2"
+       height="120"
+       width="100" />
+  </clipPath>
+  <path
+     sodipodi:nodetypes="cccasccsccccc"
+     d="m 18.56589,18.3335 v 5.90271 c 28.78752,14.43337 24.83973,25.88081 3.97814,35.01877 7.60971,-0.42316 24.48371,-0.36539 36.72625,-0.33059 3.14429,0.009 6.68778,0.0876 9.43191,0.13852 5.17065,0.096 8.61703,0.19207 8.61703,0.19207 0,0 -14.37822,-10.40087 -14.33957,-16.95566 0.67275,-10.48587 15.47407,-6.1333 25.13574,-11.00107 3.3247,-1.67506 5.4505,-6.28127 5.4505,-6.28127 l -20.94972,-2.92197 -9.34272,0.19727 v -3.95877 z"
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.21517;stroke-linejoin:bevel;paint-order:markers stroke fill"
+     id="rect837" />
+</svg>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 100 110"
+   version="1.1"
+   id="svg36"
+   sodipodi:docname="hammer.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata42">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs40">
+    <clipPath
+       id="ordi2-0">
+      <circle
+         cx="204.90433"
+         cy="21.921255"
+         r="3.75"
+         id="circle19-4" />
+      <circle
+         cx="204.90433"
+         cy="81.921257"
+         r="3.75"
+         id="circle21-8" />
+      <circle
+         cx="174.90433"
+         cy="51.921257"
+         r="3.75"
+         id="circle23-8" />
+      <circle
+         cx="234.90433"
+         cy="51.921257"
+         r="3.75"
+         id="circle25-8" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1020"
+     id="namedview38"
+     showgrid="false"
+     inkscape:zoom="3.0341309"
+     inkscape:cx="-23.327737"
+     inkscape:cy="37.94226"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg36"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:document-rotation="0"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true" />
+  <clipPath
+     id="escu">
+    <rect
+       width="100"
+       height="120"
+       id="rect2" />
+  </clipPath>
+  <rect
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:12.41;stroke-linejoin:bevel;paint-order:markers stroke fill"
+     id="rect906"
+     width="15.052796"
+     height="77.92141"
+     x="42.5788"
+     y="8.6736584" />
+  <rect
+     ry="3.4907727"
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:10.9622;stroke-linejoin:bevel;paint-order:markers stroke fill"
+     id="rect908"
+     width="49.310345"
+     height="19.468243"
+     x="25.450026"
+     y="8.6736584" />
+</svg>

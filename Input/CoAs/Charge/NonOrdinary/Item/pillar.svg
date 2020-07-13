@@ -7,11 +7,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 100 110"
-   version="1.1"
-   id="svg4"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
    sodipodi:docname="pillar.svg"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+   id="svg4"
+   version="1.1"
+   viewBox="0 0 100 110">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -27,36 +27,36 @@
   <defs
      id="defs8" />
   <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1020"
-     id="namedview6"
-     showgrid="false"
-     inkscape:zoom="3.2593742"
-     inkscape:cx="34.764238"
-     inkscape:cy="62.168919"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg4"
-     inkscape:document-rotation="0"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:snap-bbox="true"
-     inkscape:bbox-paths="true"
-     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-midpoints="true"
      inkscape:snap-bbox-edge-midpoints="true"
-     inkscape:snap-bbox-midpoints="true" />
+     inkscape:bbox-nodes="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox="true"
+     inkscape:guide-bbox="true"
+     showguides="true"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="svg4"
+     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:cy="62.168919"
+     inkscape:cx="34.764238"
+     inkscape:zoom="3.2593742"
+     showgrid="false"
+     id="namedview6"
+     inkscape:window-height="1020"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
   <path
-     id="rect3044"
-     style="opacity:1;fill:#000000;fill-opacity:0.99958;fill-rule:evenodd;stroke-width:0.923814;stroke-linejoin:round;paint-order:markers stroke fill"
-     d="m 37.376953,9.9292067 c 0,0 -1.069588,3.1975723 0,4.2671603 1.069588,1.069588 -1.957594,-6.7661879 4.808594,0 6.766188,6.766188 0,52.604414 0,52.604414 h 15.628906 c 0,0 -6.766188,-45.838226 0,-52.604414 6.766188,-6.7661879 3.739006,1.069588 4.808594,0 1.069588,-1.069588 0,-4.2671603 0,-4.2671603 z"
-     sodipodi:nodetypes="czzcczzcc" />
+     sodipodi:nodetypes="czzcczzcc"
+     d="m 34.300977,9.5834679 c 0,0 -1.330224,3.9767541 0,5.3069791 1.330225,1.330224 -2.434619,-8.4149681 5.980349,0 8.414968,8.414968 0,65.423023 0,65.423023 h 19.437348 c 0,0 -8.414968,-57.008055 0,-65.423023 8.414968,-8.4149681 4.650124,1.330224 5.980349,0 1.330224,-1.330225 0,-5.3069791 0,-5.3069791 z"
+     style="opacity:1;fill:#000000;fill-opacity:0.99958;fill-rule:evenodd;stroke-width:1.14893;stroke-linejoin:round;paint-order:markers stroke fill"
+     id="rect3044" />
 </svg>

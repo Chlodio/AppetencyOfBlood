@@ -9,6 +9,7 @@ public class CoatOfArms {
   private String background;
   private Ordinary ordinary;
   private NonOrdinary nonOrdinary;
+  private Cadency cadency;
   private CoatOfArms parency;
   //Portmanteau of parent cadency, if the owner of coat of arms is a cadet house, quarter their new coat of arms with their parent's CoA
 
@@ -29,7 +30,7 @@ public class CoatOfArms {
 
 
   public void pickCharge(){
-    switch(Basic.randint(3)){
+    switch(Basic.randint(2)){
       case 0:
         this.ordinary = new Ordinary(this.onMetal);
         break;

@@ -7,11 +7,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 100 110"
-   version="1.1"
-   id="svg17"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
    sodipodi:docname="three.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   id="svg17"
+   version="1.1"
+   viewBox="0 0 100 110">
   <metadata
      id="metadata23">
     <rdf:RDF>
@@ -20,60 +20,55 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs21" />
   <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1020"
-     id="namedview19"
-     showgrid="false"
-     inkscape:zoom="4.2909091"
-     inkscape:cx="10.781728"
-     inkscape:cy="73.73015"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg17"
+     inkscape:document-rotation="0"
+     inkscape:guide-bbox="true"
      showguides="true"
-     inkscape:guide-bbox="true">
-    <sodipodi:guide
-       position="50.105932,90.190678"
-       orientation="1,0"
-       id="guide816"
-       inkscape:locked="false" />
-  </sodipodi:namedview>
+     inkscape:current-layer="svg17"
+     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:cy="73.73015"
+     inkscape:cx="10.781728"
+     inkscape:zoom="4.2909091"
+     showgrid="false"
+     id="namedview19"
+     inkscape:window-height="1020"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
   <clipPath
      id="escu">
     <rect
-       width="100"
+       id="rect2"
        height="120"
-       id="rect2" />
+       width="100" />
   </clipPath>
   <path
-     d="M 45,10 V 20 H 35 V 30 H 45 V 40 H 55 V 30 H 65 V 20 H 55 V 10 Z"
+     style="stroke-width:0.5"
+     inkscape:connector-curvature="0"
      id="rect6"
-     inkscape:connector-curvature="0"
-     style="stroke-width:0.5" />
+     d="M 45,80 V 70 H 35 V 60 H 45 V 50 H 55 V 60 H 65 V 70 H 55 v 10 z" />
   <path
-     d="M 25,50 V 60 H 15 V 70 H 25 V 80 H 35 V 70 H 45 V 60 H 35 V 50 Z"
+     style="stroke-width:0.5"
+     inkscape:connector-curvature="0"
      id="rect6-8"
-     inkscape:connector-curvature="0"
-     style="stroke-width:0.5" />
+     d="M 25,40 V 30 H 15 V 20 H 25 V 10 H 35 V 20 H 45 V 30 H 35 v 10 z" />
   <path
-     d="M 65,50 V 60 H 55 V 70 H 65 V 80 H 75 V 70 H 85 V 60 H 75 V 50 Z"
-     id="rect6-8-5"
+     style="stroke-width:0.5"
      inkscape:connector-curvature="0"
-     style="stroke-width:0.5" />
+     id="rect6-8-5"
+     d="M 65,40 V 30 H 55 V 20 H 65 V 10 H 75 V 20 H 85 V 30 H 75 v 10 z" />
 </svg>

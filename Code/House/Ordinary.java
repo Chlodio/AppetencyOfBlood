@@ -18,25 +18,25 @@ public class Ordinary extends Charge {
 
   public enum Type{
     BAR("Bar", new String[]{"two", "three", "wavy_two", "wavy_three", "gemel_two"}),
-    BARRY("Barry", new String[]{"five", "eight", "ten"}),
+    BARRY("Barry", new String[]{"of_five", "of_eight", "of_ten"}),
     BEND("Bend", new String[]{"dexter", "sinister", "cotised_dexter", "cotised_sinister"}),
-    BENDLET("Bendlet", new String[]{"dexter", "sinister"}),
-    CANTON("Canton", new String[]{"dexter", "sinister"}),
     CHEVRON("Chevron", new String[]{"plain", "inverted", "interlaced"}),
     CHIEF("Chief", new String[]{"plain", "triangular", "enarched", "double-arched"}),
     CROSS("Cross", new String[]{"plain", "quarter-pierced", "parted_fretted", "coldharbour", "fusils"}),
     FESS("Fess", new String[]{"plain", "cottised", "dancetty", "doubly_cottised"}),
     FLAUNCHES("Flaunches", new String[]{"plain", "flasque", "voider"}),
     GORE("Gore", new String[]{"dexter", "sinister"}),
-    BORDURE("Bordure", new String[]{"plain", "engrelee"}),
-    PALE("Pale", new String[]{"plain", "chief"}),
+    PALE("Pale", new String[]{"plain", "chief", "of_three", "of_four", "of_five"}),
     PALL("Pall", new String[]{"plain", "inverted", "shakefork"}),
-    QUARTER("Quarter", new String[]{"dexter", "sinister"}),
     SALTIRE("Saltire", new String[]{"plain", "couped"}),
     TIERCE("Tierce", new String[]{"dexter", "sinister"}),
 		FRET("Fret", new String[]{"plain"}),
 		BASE("Base", new String[]{"plain", "doventailed", "wavy", "embattled"}),
-		PILES("Piles", new String[]{"four", "ten"});
+		FUR("Fur", new String[]{"ermine", "vair"}),
+		CHEQUY("Chequy", new String[]{"plain"}),
+		GYRON("Gyron", new String[]{"dexter", "sinister"}),
+		GYRONNY("Gyronny", new String[]{"of_eight", "of_sixteen"}),
+		PILES("Piles", new String[]{"of_four", "of_ten"});
 
   private String type;
   private String[] subtype;
