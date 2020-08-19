@@ -334,8 +334,11 @@ public class Holder{
 			return "at the age of "+Basic.getCardinal(a/365);
 		} else if (a > 31) {
 			return "while only "+Basic.getCardinal(a/31)+"-months-old";
+		} else if (a != 0){
+			return "while barely "+Basic.getCardinal(a)+"-days-old";
 		} else {
-			return "while merely "+Basic.getCardinal(a)+"-days-old";
+			return "after being born only few hours priors";
+
 		}
 	}
 

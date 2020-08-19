@@ -25,6 +25,7 @@ public class Lineage{
 		this.list = 	 		new ArrayList<>();
 		this.office = 	  o;
 		this.law = 		  	new SucLaw(this);
+
 		this.succession = new Primogeniture(this); //AncestralElection(this);
 	}
 
@@ -33,7 +34,6 @@ public class Lineage{
 		this.succession.clearLineage();
 		this.succession.setLineal(false);
 		this.succession.resetSecondaryHeir();
-		SucLaw.clearTransmitters();
 		this.heir = null;
 		this.priority = this.succession.determine();
 	}

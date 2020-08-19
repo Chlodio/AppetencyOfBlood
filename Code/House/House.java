@@ -34,7 +34,7 @@ public class House {
 	protected int generation;						//How ancestors the house has
 	protected int nameNum;							//Number for noble name because has to be unique
 	protected CoatOfArms coa;						//Coat of arms
-	protected int prestige;							//How
+	protected int prestige;							//How much people value the family
 	protected int ranking;
 	protected boolean isNoble;						//true = noble/false = lowborn
 	protected List<House> branches;					//Cadet branches

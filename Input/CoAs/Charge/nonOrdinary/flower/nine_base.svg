@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="g6" transform="matrix(.3728 0 0 .3728 -6.799 -6.788)">
+  <path d="m43.94 32.68c-0.2115-0.0055-0.4262 0.0089-0.6433 0.04468-6.95 1.144-12.34 6.531-13.48 13.48-0.6144 3.732 5.046 6.617 10.42 8.497-5.376 1.88-11.04 4.765-10.42 8.497 1.144 6.95 6.531 12.34 13.48 13.48 3.732 0.6144 6.617-5.046 8.497-10.42 1.88 5.376 4.764 11.04 8.496 10.42 6.95-1.144 12.34-6.531 13.48-13.48 0.6144-3.732-5.047-6.617-10.42-8.497 5.376-1.88 11.04-4.765 10.42-8.497-1.144-6.95-6.532-12.34-13.48-13.48-3.732-0.6144-6.616 5.046-8.496 10.42-1.771-5.063-4.431-10.38-7.854-10.47z" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" style="paint-order:fill markers stroke"/>
+ </g>
+ <use id="use855" transform="translate(21.63 25.29)" width="100%" height="100%" xlink:href="#g6"/>
+ <use id="use875" transform="translate(52.31 57.58)" width="100%" height="100%" xlink:href="#use855"/>
+ <use transform="translate(33.66 .9564)" width="100%" height="100%" xlink:href="#g6"/>
+ <use transform="translate(31.46 -3.248)" width="100%" height="100%" xlink:href="#use855"/>
+ <use id="use987" transform="translate(-12.07 -85.3)" width="100%" height="100%" xlink:href="#use875"/>
+ <use transform="translate(24.17 -9.099)" width="100%" height="100%" xlink:href="#use955"/>
+ <use transform="translate(15.51 23.78)" width="100%" height="100%" xlink:href="#use987"/>
+ <use id="use1011" transform="translate(22.39 30.8)" width="100%" height="100%" xlink:href="#use855"/>
+ <use transform="translate(26.02 -10.44)" width="100%" height="100%" xlink:href="#use1011"/>
+</svg>

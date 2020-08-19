@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="ace_base.svg"
+   id="svg10"
+   viewBox="0 0 100 110"
+   version="1.1">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     inkscape:current-layer="svg10"
+     inkscape:window-maximized="0"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:cy="55.080355"
+     inkscape:cx="31.093127"
+     inkscape:zoom="1.9659091"
+     showgrid="false"
+     id="namedview12"
+     inkscape:window-height="480"
+     inkscape:window-width="714"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <text
+     id="text4"
+     xml:space="preserve"
+     style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px"
+     word-spacing="0px"
+     letter-spacing="0px"
+     font-size="16px"
+     font-family="monospace"
+     fill="#000000"
+     y="21.611652"
+     x="-52.679455" />
+  <text
+     id="text6"
+     xml:space="preserve"
+     style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px"
+     word-spacing="0px"
+     letter-spacing="0px"
+     font-size="16px"
+     font-family="monospace"
+     fill="#000000"
+     y="15.998991"
+     x="-52.414291" />
+  <path
+     id="path8"
+     d="m 14.988894,17.02 c 1.976,2.978 1.199,5.842 0.9867,9.09 0.1067,3.842 2.974,6.86 6.538,7.9 -8.701,9.202 -0.395,17.31 8.455,15.02 4.625,-1.122 -1.439,-2.554 -1.868,-4.796 -0.313,-3.77 7.487,-1.76 6.124,1.086 -1.157,4.597 3.878,2.452 5.659,4.73 3.249,2.414 6.154,5.414 8.401,8.707 -0.7861,3.182 1.491,4.887 4.418,4.028 3.383,1.502 5.199,5.089 7.774,7.594 3.008,1.895 0.6068,7.824 5.596,6.532 4.545,0.8465 6.777,6.646 10.22,9.513 0.1046,2.324 0.1341,5.301 3.521,4.787 1.397,-1.39 2.794,-2.779 4.187,-4.175 1.395,-1.393 2.785,-2.79 4.175,-4.187 0.5148,-3.387 -2.462,-3.416 -4.787,-3.521 -2.867,-3.444 -8.667,-5.676 -9.513,-10.22 1.292,-4.99 -4.637,-2.589 -6.532,-5.596 -2.504,-2.575 -6.092,-4.391 -7.594,-7.774 0.8593,-2.927 -0.8458,-5.204 -4.028,-4.418 -3.293,-2.247 -6.292,-5.152 -8.707,-8.401 -2.278,-1.782 -0.1329,-6.817 -4.73,-5.659 -2.846,1.363 -4.856,-6.437 -1.086,-6.124 2.242,0.4291 3.674,6.494 4.796,1.868 2.294,-8.85 -5.815,-17.16 -15.02,-8.455 -1.04,-3.564 -4.057,-6.431 -7.9,-6.538 -3.249,0.2124 -6.113,0.9891 -9.09,-0.9867 z" />
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <clipPath id="escu">
+  <rect width="100" height="120"/>
+ </clipPath>
+ <path id="rect6-8-2-9" d="m57.51 55.29v5.438h-5.438v5.438h5.438v5.438h5.438v-5.438h5.438v-5.438h-5.438v-5.438z" stroke-width=".2719"/>
+ <use id="use838" transform="translate(-42.57 -49.16)" width="100%" height="100%" xlink:href="#rect6-8-2-9"/>
+ <use id="use840" transform="translate(38.03 1.544)" width="100%" height="100%" xlink:href="#use838"/>
+ <use transform="translate(16.61 24.1)" width="100%" height="100%" xlink:href="#use838"/>
+ <use transform="translate(28.07 30.43)" width="100%" height="100%" xlink:href="#use840"/>
+ <use transform="translate(23.4 21.07)" width="100%" height="100%" xlink:href="#rect6-8-2-9"/>
+</svg>

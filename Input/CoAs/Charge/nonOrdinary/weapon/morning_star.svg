@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <text x="-52.679455" y="21.611652" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <text x="-52.414291" y="15.998991" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <path d="m50 28.06v71.31" fill="none" stroke="#000" stroke-width="8.166"/>
+ <circle transform="scale(-1,1)" cx="-50" cy="25.61" r="11.56" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.865" style="paint-order:stroke fill markers"/>
+ <path id="path1650" d="m50 25.61h3.837c0-3.568-3.837-14.27-3.837-17.84 0 3.568-3.837 14.27-3.837 17.84h3.837z"/>
+ <g id="g1711" transform="translate(-2.713 -4)">
+  <use id="use1694" transform="rotate(-45 54.83 27.61)" width="100%" height="100%" xlink:href="#path1650"/>
+  <use transform="rotate(-90 52 27.61)" width="100%" height="100%" xlink:href="#path1650"/>
+  <use transform="rotate(-90 50 29.61)" width="100%" height="100%" xlink:href="#use1694"/>
+ </g>
+ <use transform="matrix(-1,0,0,1,100,0)" width="100%" height="100%" xlink:href="#g1711"/>
+</svg>

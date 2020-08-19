@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="matrix(.7556 0 0 .7556 3.096 6.373)">
+  <ellipse id="path835" cx="31.21" cy="38.21" rx="18.77" ry="11.6" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
+  <use id="use837" transform="translate(13.97 12.93)" width="100%" height="100%" xlink:href="#path835"/>
+  <use id="use841" transform="translate(32)" width="100%" height="100%" xlink:href="#use837"/>
+  <use transform="translate(60)" width="100%" height="100%" xlink:href="#path835"/>
+  <use transform="translate(0,-20)" width="100%" height="100%" xlink:href="#use837"/>
+  <use transform="translate(0,-20)" width="100%" height="100%" xlink:href="#use841"/>
+  <rect x="35.6" y="33.69" width="46.62" height="15.18" rx="0" ry="0" stroke-linecap="square" stroke-linejoin="round" stroke-width="1.568" style="paint-order:stroke fill markers"/>
+ </g>
+</svg>

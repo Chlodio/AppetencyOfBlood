@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path id="path833-3-0-2" d="m44.21 30.9c-1.606 0.7209-3.262 2.203-3.509 3.946-0.2546 1.795 1.493 3.275 2.342 4.909-1.527-0.9764-2.493-2.189-4.035-2.65-0.0044-0.0014-0.0095-0.0016-0.01374 0-1.641 0.6259-3.934 1.752-3.932 3.509 0.0015 1.76 2.194 3.339 3.946 3.509 1.803 0.1748 3.223-2.425 4.678-2.763l-1.103 5.102c-0.6027 1.304-1.599 1.559-2.142 1.599h7.759c-0.5429-0.04005-1.539-0.2954-2.142-1.599l-1.103-5.102c1.455 0.3382 2.875 2.938 4.678 2.763 1.752-0.1699 3.944-1.749 3.946-3.509 0.0015-1.757-2.291-2.883-3.932-3.509-0.0043-0.0016-0.0093-0.0014-0.01374 0-1.542 0.4611-2.508 1.674-4.035 2.65 0.849-1.634 2.596-3.114 2.342-4.909-0.2471-1.743-1.896-3.24-3.509-3.946-0.03383-0.01481-0.07383 0.0021-0.1108 0.0021-0.03693 0-0.07384-0.0018-0.1108-0.0021-1e-6 0-1e-6 0 0 0z" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="round" stroke-width="1.066" style="paint-order:fill markers stroke"/>
+ <use id="use837" transform="translate(42.83 12.86)" width="100%" height="100%" xlink:href="#path833-3-0-2"/>
+ <use transform="translate(-23.57 14.11)" width="100%" height="100%" xlink:href="#use837"/>
+ <use id="use841" transform="translate(-19.96 -23.64)" width="100%" height="100%" xlink:href="#path833-3-0-2"/>
+ <use id="use843" transform="translate(29.28 .1261)" width="100%" height="100%" xlink:href="#use841"/>
+ <use id="use845" transform="matrix(1.087 0 0 1.087 27.84 71.7)" width="100%" height="100%" xlink:href="#use843"/>
+ <use transform="translate(-6.554 -67.15)" width="100%" height="100%" xlink:href="#use845"/>
+</svg>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <text x="-52.679455" y="21.611652" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <text x="-52.414291" y="15.998991" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <path id="path872-3-6-8-2-11" d="m82.63 63.59 0.8049 1.958s0.3374 0.6481 0.5747 0.8995c0.3523 0.3732 0.8312 0.6052 1.219 0.861 2.894 1.906 3.562 5.405 1.633 8.61 7.054-1.621 8.745 5.861 4.27 10.14-1.236 0.6282-1.63 0.7223-2.681 1.079 0.2131-0.668 0.5263-1.19 0.6381-1.713 0.5579-2.604-1.613-3.789-2.807-1.157-0.3003 0.8421-0.4592 1.675-0.5146 2.499h0.8698l1.167 1.68-1.167 1.678h-0.6004c0.0454 0.2243 0.09124 0.4496 0.1441 0.672 0.4523 1.903 1.696 3.46 2.692 5.016-1.531-0.2044-2.578-0.4051-3.779-1.404 0.5268 2.787-0.8576 5.086-2.463 6.761-1.606-1.675-2.99-3.974-2.463-6.761-1.201 0.999-2.248 1.2-3.779 1.404 0.9956-1.556 2.239-3.113 2.692-5.016 0.05287-0.2224 0.09875-0.4477 0.1441-0.672h-0.6004l-1.167-1.678 1.167-1.68h0.8698c-0.05551-0.8231-0.2144-1.657-0.5146-2.499-1.193-2.632-3.364-1.447-2.807 1.157 0.1119 0.5221 0.4251 1.044 0.6381 1.713-1.051-0.3562-1.445-0.4503-2.681-1.079-4.477-4.277-2.784-11.76 4.27-10.14-1.929-3.207-1.261-6.705 1.633-8.61 0.3887-0.256 0.8671-0.488 1.219-0.861 0.2373-0.2513 0.5747-0.8995 0.5747-0.8995z" stroke-width=".6764"/>
+ <use id="use9" transform="translate(-27.18 -30.92)" width="100%" height="100%" xlink:href="#path872-3-6-8-2-11"/>
+ <use transform="translate(-32.3 -31.44)" width="100%" height="100%" xlink:href="#use9"/>
+ <use transform="translate(27 -26.36)" width="100%" height="100%" xlink:href="#use9"/>
+</svg>

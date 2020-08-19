@@ -7,6 +7,7 @@ import Code.Interest.*;
 import Code.Politics.*;
 import Code.Relationship.*;
 import Code.History.Annals;
+import Code.History.Census;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,7 +16,6 @@ import java.util.*;
 
 public class Basic {
 	public static Calendar date = 									Calendar.getInstance();
-	public static List<String> census = 							new ArrayList<>();
 	public static Map<Integer, ArrayList<Human>> monthC = 			new HashMap<>();
 	public static Map<Integer, House> house = 						new HashMap<>();
 	public static String row = 										"%-23s %s–%s\t%s\t%s\t%s\n";
@@ -34,6 +34,7 @@ public class Basic {
 
 
 		int cntl = 5;										//Century length
+		Census.booking = new Census[cntl];
 		annals = new Annals(1000, cntl);
 
 		Religion.foundReligion();
@@ -84,8 +85,8 @@ public class Basic {
 		int maom = 0;
 
       for (int century = 0; century < cntl; century++){
+				Census.booking[century] = new Census(getDateYear(), Man.getAmount(), Woman.getAmount());
 			for (int decade = 0; decade < 10; decade++){
-				census.add("<tr><td>"+Basic.sDate()+"</td><td>"+Man.getAmount()+"</td><td>"+Woman.getAmount()+"</td><td>"+Bastard.getAmount()+"</td></tr>");
 				for (int lustrum = 0; lustrum < 2; lustrum++){
 					for (int annum = 0; annum < 5; annum++){
 						Man.growUp();
@@ -363,6 +364,12 @@ public class Basic {
 		return it.replace(0, 1, s);
 	}
 
+	//Converts float to string percent
+	public static String getPercString(float f){
+		return (int) (f*100)+"%";
+	}
+
+
 	public static String toLowerCase(String it){
 		return Character.toLowerCase(it.charAt(0))+it.substring(1);
 	}
@@ -382,7 +389,7 @@ public class Basic {
 			}
 		} else {
 			if (Basic.isNotZero(i)){
-				return "one "+s;
+				return s;
 			} else {
 				return "";
 			}
@@ -458,7 +465,7 @@ public class Basic {
 
 	private final static String[] roman = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX"};
 
-	final static String[] order = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelveth", "thirteenth", "fourteenth", "fifteenth"};
+	final static String[] order = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelveth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteen", "nineteenth", "twentieth", "twentyfirst", "twentysecond", "twentythird"};
 	final static String[] orderShort = {"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31st", "32nd", "33rd", "34th", "35th", "36th", "37th", "38th", "39th", "40th", "41st", "42nd", "43rd", "44th", "45th", "46th", "47th", "48th", "49th", "50th"};
 
 }

@@ -60,7 +60,7 @@ public class CoatOfArms {
   	  s = HTML.getImgClass(this.ordinary.getTincture()+"_o", c);
     }
     if (this.nonOrdinary != null){
-      c = "../Input/CoAs/Charge/NonOrdinary/"+this.getNonOrdinaryHTML();
+      c = "../Input/CoAs/Charge/nonOrdinary/"+this.getNonOrdinaryHTML("");
       s += HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
     }
 
@@ -82,18 +82,22 @@ public class CoatOfArms {
   public String parencyQuarterForHTML(){
     String s = "";
     String c = "";
+    String h = "";    //Chief, bottom of the coat of arms
 
     if (this.ordinary != null){
       c = "../Input/CoAs/Charge/Ordinary/"+this.getOrdinaryHTML();
   	  s = HTML.getImgClass(this.ordinary.getTincture()+"_o", c);
+      h = s;
     }
     if (this.nonOrdinary != null){
-      c = "../Input/CoAs/Charge/NonOrdinary/"+this.getNonOrdinaryHTML();
-      s += HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
+      c = "../Input/CoAs/Charge/nonOrdinary/"+this.getNonOrdinaryHTML("");
+      s = HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
+      c = "../Input/CoAs/Charge/nonOrdinary/"+this.getNonOrdinaryHTML("_base");
+      h = HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
     }
 
     c = HTML.getDivClass("qurTopRight "+this.background+"_e", s);
-    c += HTML.getDivClass("qurBottomLeft "+this.background+"_e", s);
+    c += HTML.getDivClass("qurBottomLeft "+this.background+"_e", h);
     return c;
   }
 
@@ -101,18 +105,22 @@ public class CoatOfArms {
   public String cadencyQuarterForHTML(){
     String s = "";
     String c = "";
+    String h = "";    //Chief, bottom of the coat of arms
 
     if (this.ordinary != null){
       c = "../Input/CoAs/Charge/Ordinary/"+this.getOrdinaryHTML();
   	  s = HTML.getImgClass(this.ordinary.getTincture()+"_o", c);
+      h = s;
     }
     if (this.nonOrdinary != null){
-      c = "../Input/CoAs/Charge/NonOrdinary/"+this.getNonOrdinaryHTML();
-      s += HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
+      c = "../Input/CoAs/Charge/nonOrdinary/"+this.getNonOrdinaryHTML("");
+      s = HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
+      c = "../Input/CoAs/Charge/nonOrdinary/"+this.getNonOrdinaryHTML("_base");
+      h = HTML.getImgClass(this.nonOrdinary.getTincture()+"_o", c);
     }
 
     c = HTML.getDivClass("qurTopLeft "+this.background+"_e", s);
-    c += HTML.getDivClass("qurBottomRight "+this.background+"_e", s);
+    c += HTML.getDivClass("qurBottomRight "+this.background+"_e", h);
     return c;
   }
 
@@ -122,8 +130,8 @@ public class CoatOfArms {
     return this.ordinary.getPath();
   }
 
-  public String getNonOrdinaryHTML(){
-    return this.nonOrdinary.getPath();
+  public String getNonOrdinaryHTML(String s){
+    return this.nonOrdinary.getPath(s);
   }
 
 

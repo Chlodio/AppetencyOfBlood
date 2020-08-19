@@ -18,33 +18,34 @@ public class NonOrdinary extends Charge {
       this.subtype = this.type.pickSubtype();
   }
 
-  public String getPath(){
-    return this.type.getType()+"/"+this.type.getSubtype(subtype)+".svg";
+  public String getPath(String s){
+    return this.type.getType()+"/"+this.type.getSubtype(subtype)+s+".svg";
   }
 
 	public static final String[] order = new String[]{"ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
 
   public enum Type{
-		ANNULET("Annulet", order),
-		BENDLET("Bendlet", new String[]{"dexter", "sinister"}),
-		BILLET("Billet", order),
-		CLOVER("Clover", order),
-		CROSSCOUPED("Cross_couped", order),
-		CROWN("Crown", order),
-		DIAMOND("Diamond", order),
-		ESCUTCHEON("Escutcheon", order),
-		FEATURE("Feature", new String[]{"ford", "mount", "wall", "sun", "moon"}),
-		FLEURDELIS("Fleur-de-lis", new String[]{"ace", "three"}),
-		FLOWER("Flower", order),
-		HEART("Heart", order),
-		ITEM("Item", new String[]{"wheel", "anchor", "chain", "pillar", "ladder", "label", "anvil", "bowen_knot", "carbuncle"}),
-		ROD("Rod", order),
-		ROUNDEL("Roundel", order),
-		SEMY("Semy", new String[]{"annulet", "billet", "clover", "cross_couped", "crown", "diamond", "escutcheon", "fleur-de-lis", "heart", "rod", "roundel", "spade", "star"}),
-		SPADE("Spade", order),
-		STAR("Star", order),
-		WEAPON("Weapon", new String[]{"hammer", "sword", "sword_cross", "scythe", "sickle", "bow_and_arrow", "axe"}),
-    CROSS("Cross", new String[]{"annulets_braced", "coptic", "mascles", "annulety", "crescenty", "patonce", "avellane", "doubled", "patriarchal", "bottony", "formerly_fitchy", "pomelly", "bowen", "formerly", "pommeled", "calvatry", "let", "potent", "canterbury", "lorraine", "jerusalem", "latin", "norse_sun"});
+		ANNULET("annulet", order),
+		BILLET("billet", order),
+		CLOVER("clover", order),
+		CROSSCOUPED("cross_couped", order),
+		CROWN("crown", order),
+		DIAMOND("diamond", order),
+		ESCUTCHEON("escutcheon", order),
+		FEATURE("nature", new String[]{"ford", "mount", "sun", "crescent", "thunderbolt", "cloud"}),
+		FLEURDELIS("fleur-de-lis", order),
+		FLOWER("flower", order),
+		HEART("heart", order),
+		ITEM("item", new String[]{"wheel", "anchor", "chain", "bowen_knot", "carbuncle"}),
+		ROD("rod", order),
+		ROUNDEL("roundel", order),
+		SEMY("semy", new String[]{"annulet", "billet", "clover", "cross_couped", "crown", "diamond", "escutcheon", "fleur-de-lis", "heart", "rod", "roundel", "spade", "star"}),
+		SPADE("spade", order),
+		STAR("star", order),
+		WEAPON("weapon", new String[]{"sword", "sword_cross", "bow_and_arrow", "axe", "trident", "morning_star"}),
+		STRUCTURE("structure", new String[]{"pillar", "wall", "castle", "tower", "mill"}),
+		TOOL("tool", new String[]{"anvil", "ladder", "label", "scythe", "sickle", "hammer",}),
+    CROSS("cross", new String[]{"annulets_braced", "coptic", "mascles", "annulety", "crescenty", "patonce", "avellane", "doubled", "patriarchal", "bottony", "formerly_fitchy", "pomelly", "bowen", "formerly", "pommeled", "calvatry", "let", "potent", "canterbury", "lorraine", "jerusalem", "latin", "norse_sun"});
   private String type;
   private String[] subtype;
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path id="path833-3-0-92" d="m84.22 62c-1.352 0.6071-2.747 1.855-2.955 3.323-0.2144 1.512 1.257 2.758 1.972 4.134-1.286-0.8223-2.1-1.844-3.398-2.232-0.0038-0.0011-8e-3 -0.0014-0.01158 0-1.382 0.527-3.313 1.475-3.311 2.955 0.0013 1.482 1.848 2.812 3.323 2.955 1.518 0.1472 2.714-2.042 3.939-2.327l-0.9286 4.296c-0.5075 1.098-1.347 1.313-1.804 1.347h6.534c-0.4571-0.03371-1.296-0.2487-1.804-1.347l-0.9286-4.296c1.225 0.2848 2.421 2.474 3.939 2.327 1.475-0.143 3.322-1.473 3.323-2.955 0.0013-1.479-1.929-2.428-3.311-2.955-0.0036-0.0014-0.0079-0.0011-0.01158 0-1.298 0.3883-2.112 1.41-3.398 2.232 0.7149-1.376 2.186-2.622 1.972-4.134-0.2081-1.467-1.597-2.729-2.955-3.323-0.02849-0.01247-0.06218 0.0017-0.09328 0.0017s-0.06218-0.0015-0.09327-0.0017h-1e-6z" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="round" stroke-width=".8977" style="paint-order:fill markers stroke"/>
+ <use id="use840" transform="translate(-16.38 -57.03)" width="100%" height="100%" xlink:href="#path833-3-0-92"/>
+ <use id="use842" transform="translate(-45.31 5.8)" width="100%" height="100%" xlink:href="#use840"/>
+ <use id="use844" transform="translate(15.3 23.15)" width="100%" height="100%" xlink:href="#use842"/>
+ <use id="use846" transform="translate(25.56 4.747)" width="100%" height="100%" xlink:href="#use844"/>
+ <use id="use848" transform="translate(21.98 -10.42)" width="100%" height="100%" xlink:href="#use846"/>
+ <use id="use850" transform="translate(-2.054 58.27)" width="100%" height="100%" xlink:href="#use848"/>
+ <use id="use852" transform="translate(-24.49 -24.04)" width="100%" height="100%" xlink:href="#use850"/>
+ <use transform="translate(5.265 -80.28)" width="100%" height="100%" xlink:href="#use850"/>
+ <use transform="translate(-12.35 -52.31)" width="100%" height="100%" xlink:href="#use852"/>
+</svg>

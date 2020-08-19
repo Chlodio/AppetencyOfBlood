@@ -173,7 +173,7 @@ public class Woman extends Human {
 		Woman.pregnant.remove(this);
 	}
 
-	public static Human beBornSpeacial(Human f, Human m, int y){
+	public static Human beBornSpecial(Human f, Human m, int y){
 		Human it = new Woman(y, false);
 		Woman.children.add(it);
 		it.setParents(f, m);
@@ -303,7 +303,7 @@ public class Woman extends Human {
 				case 8:
 					childBridePool.add(x);
 					break;
-				case 14:
+				case 12:
 					rem.add(x);
 					break;
 			}

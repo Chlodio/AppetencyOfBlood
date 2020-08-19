@@ -1,0 +1,8 @@
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+ <text x="-52.679455" y="21.611652" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <text x="-52.414291" y="15.998991" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <g transform="matrix(1.286 0 0 1.286 773.4 -274.4)">
+  <path d="m-558.1 269.8v-40.19" fill="none" stroke="#000" stroke-linecap="square" stroke-width="9.614"/>
+  <path d="m-579.8 224.4 32.43 3.084v10.58c-10.81-0.7453-21.62 2.769-32.43 5.464 0 0-5.107-12.27 0-19.13z" fill-rule="evenodd" style="paint-order:stroke fill markers"/>
+ </g>
+</svg>

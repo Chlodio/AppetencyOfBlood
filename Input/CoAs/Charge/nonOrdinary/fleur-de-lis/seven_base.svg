@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <text x="-52.679455" y="21.611652" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <text x="-52.414291" y="15.998991" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <path id="path872-3-6-8-2-11" d="m81.85 76.18 0.5666 1.378s0.2375 0.4562 0.4046 0.6332c0.248 0.2627 0.5852 0.426 0.8585 0.6061 2.037 1.342 2.508 3.805 1.15 6.061 4.966-1.141 6.156 4.126 3.006 7.137-0.8704 0.4422-1.147 0.5085-1.887 0.7594 0.15-0.4703 0.3705-0.838 0.4492-1.206 0.3927-1.833-1.136-2.667-1.976-0.8147-0.2114 0.5928-0.3232 1.179-0.3623 1.759h0.6123l0.8213 1.183-0.8213 1.181h-0.4227c0.03196 0.1579 0.06423 0.3165 0.1015 0.4731 0.3184 1.34 1.194 2.436 1.895 3.531-1.078-0.1439-1.815-0.2852-2.661-0.9884 0.3709 1.962-0.6037 3.58-1.734 4.759-1.13-1.179-2.105-2.797-1.734-4.759-0.8451 0.7032-1.582 0.8447-2.661 0.9884 0.7009-1.095 1.576-2.191 1.895-3.531 0.03722-0.1566 0.06951-0.3151 0.1015-0.4731h-0.4227l-0.8213-1.181 0.8213-1.183h0.6123c-0.03908-0.5794-0.1509-1.167-0.3623-1.759-0.8399-1.853-2.368-1.018-1.976 0.8147 0.07875 0.3676 0.2992 0.7351 0.4492 1.206-0.7399-0.2508-1.017-0.317-1.887-0.7594-3.152-3.011-1.96-8.275 3.006-7.137-1.358-2.257-0.888-4.72 1.15-6.061 0.2736-0.1802 0.6104-0.3435 0.8585-0.6061 0.1671-0.1769 0.4046-0.6332 0.4046-0.6332z" stroke-width=".4761"/>
+ <use id="use9" transform="translate(-47.07 -47.88)" width="100%" height="100%" xlink:href="#path872-3-6-8-2-11"/>
+ <use transform="translate(-20.41 -22.94)" width="100%" height="100%" xlink:href="#use9"/>
+ <use id="use932" transform="translate(25.69 26.26)" width="100%" height="100%" xlink:href="#use9"/>
+ <use id="use952" transform="translate(8.077 -32.43)" width="100%" height="100%" xlink:href="#use932"/>
+ <use transform="translate(-19.15 -20.91)" width="100%" height="100%" xlink:href="#use952"/>
+ <use transform="translate(19.12 22.79)" width="100%" height="100%" xlink:href="#use952"/>
+</svg>

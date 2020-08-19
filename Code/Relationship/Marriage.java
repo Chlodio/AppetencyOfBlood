@@ -59,9 +59,6 @@ public class Marriage extends SexRelation{
 		this.stag.addMarriage(this);
 		this.doe.addMarriage(this);
 		this.setKinType(this.defineKinType());
-		if (doe.getAge() < 14){
-			throw new RuntimeException();
-		}
 	}
 
 	public void setKinType(byte i){
@@ -409,7 +406,7 @@ public class Marriage extends SexRelation{
 	public boolean canBreed(){
 		if (this.isActive()){
 			//Multiple sons are only for noblemen
-			if (this.getStag().isNoble() || this.getStag().getNumOfSons() <= 4){
+			if (this.getStag().isNoble() || this.getStag().getLivingChildren().size() <= 8){
 				return true;
 			}
 		}
@@ -703,8 +700,8 @@ public class Marriage extends SexRelation{
 		return (int) (i*100);
 	}
 
-	public static int getAvgNumOfChildren(){
-		int n = getNumOfChildren();
+	public static float getAvgNumOfChildren(){
+		float n = getNumOfChildren()+0.0f;
 
 		return n/getNum();
 	}

@@ -8,22 +8,31 @@ import java.util.List;
 /*Succession law for lineage*/
 public class SucLaw{
 
+
+	public static SucLaw global = new SucLaw();		//Container for non-static object
+
 	private Lineage lineage;
 	/*Recipes
-		sex 1 + preference 1 + tracing 1 + purity 2 = 		agnatic primogeniture
-		sex 0 + preference 1 + tracing 0 + purity 2 = 		agnatic-cognatic primogeniture
-		sex 1 + preference -1 + tracing 0 + purity 1 =		female-exclusion agnatic-preference cognatic primogeniture
-		sex 0 + preference 1 + tracing 0 + purity 1 = 		male-preference cognatic primogeniture
+		sex 1 + preference 1 + tracing 1  = 		agnatic primogeniture
+		sex 0 + preference 1 + tracing 0  = 		agnatic-cognatic primogeniture
+		sex 1 + preference -1 + tracing 0 =		female-exclusion agnatic-preference cognatic primogeniture
+		sex 0 + preference 1 + tracing 0  = 		male-preference cognatic primogeniture
 
-		sex 1 + preference -1 + tracing 0 + purity 1 =		agnatic uterine primogeniture
+		sex 1 + preference -1 + tracing 0 =		agnatic uterine primogeniture
 
-		sex 0 + preference 0 + tracing 0 + purity 0 = 		absolute cognatic primogeniture
-		sex -1 + preference -1 + tracing -1 + purity 0 = 	enatic primogeniture
+		sex 0 + preference 0 + tracing 0 = 		absolute cognatic primogeniture
+		sex -1 + preference -1 + tracing -1 = 	enatic primogeniture
 
 	*/
 
+
 	private byte sex; 			/*0 = cognatic, 1 = agnatic, -1 = enatic	*/
-	private byte preference;		/*0 = none, 1 = male, -1 = female*/
+	private byte preference;	/*
+		0 = all children will be validated within the order they were born in
+		1 = sons will place before daughters despite the birth order
+		-1 = daughters will place before sons despite the birth order
+	*/
+
 	private byte tracing;		/*0 = cognatic 1 = agnatic, -1 = -enatic 	*/
 	private byte bastardy;		/*0 = banned, 1 = ultimate, 2 = ulterior, 3 = proximate, 4 = absolute*/
 	/*
@@ -32,46 +41,50 @@ public class SucLaw{
 		proximate: 	only second to legimates
 		absolute: 	equal to legimates
 	*/
-	private byte purity;
+	private byte lastResort;
 	/*
-		0:	core principle matters more than anything, i.e in primogeniture, daughter's son goes before her younger brother, unless tracing is agnatic
-		1:	core principle is respected, but takes second place, i.e in primogeniture, holder's all sons (and their sons) will be put before the holder's daughters (and their children)
-		2:	core principle is only consulted when obsecure case presents itself
+		When heir is not found with traditional way, the succession law apply an exception to allow people to succeed who otherwise couldn't
+		0 = no last last resort
+		1 = semi-last resort, sets sex and tracing to cognatic
+		2 = quasi-last resort, sets tracing to cognatic
 	*/
-
 
 	private static List<Human> transmitters = new ArrayList<>(10);
 
 
 	public SucLaw(Lineage l){
 		this.lineage =		l;
-		this.sex = 			1;
-		this.preference = 	1;
-		this.tracing =		0;
-		this.purity = 		2;
+		this.sex = 				1;
+		this.preference =  1;
+		this.tracing =		1;
 		this.bastardy = 	0;
+		this.lastResort = 0;
 	}
 
-	public List<Human> getHeirGroup(Human h){
+		public SucLaw(){}
+
+	public static List<Human> getHeirGroup(Human h){
 		List<Human> l;
-		switch(this.getSex()){
+
+		switch(global.getTracing()){
 			case 1:
-				l = this.getShouldGroupAgnatic(h);
+				l = h.getSons();
 				break;
 			case 0:
-				l = this.getPreferenceGroup(h);		//Possible method 'GroupCognatic', but not real need
+				l = global.getPreferenceGroup(h);
 				break;
 			default:
-				l = this.getShouldGroupEnatic(h);
+				l = h.getDaughters();
 		}
-		l.remove(this.getIncumbent());
+
+		l.remove(global.getIncumbent());
 		return l;
 	}
 
-/*both sexes can inherit, hence find preference*/
-	public List<Human> getPreferenceGroup(Human h){
+/*Both sexes can inherit, hence find preference*/
+	public static List<Human> getPreferenceGroup(Human h){
 		List<Human> l;
-		switch(this.getPreference()){
+		switch(global.getPreference()){
 			case 1:
 				l = h.getSons();
 				l.addAll(h.getDaughters());
@@ -85,59 +98,34 @@ public class SucLaw{
 		}
 	}
 
-	public boolean isNaturallyDead(Human h){
+	public static boolean isNaturallyDead(Human h){
 		return !h.isLegimate();
-	/*	switch(this.bastardy){
-			case 0:
-				return !h.isLegimate();
-			default:
-				return false;
-		}*/
 	}
-
 
 	//If the person themselves is suited to inherit
-	public boolean canInherit(Human h){
-		return h.isAlive() && isRightSex(h);
+	public static boolean canInherit(Human h){
+		return h.isAlive() && global.isRightSex(h);
 	}
-
-
-	public boolean shouldInherit(Human h){
-		return this.fitsPreference(h);
-	}
-
 
 	//Determines what group should be checked after checking eligiblity
-	public List<Human> getShouldGroupAgnatic(Human h){
-		if (this.getTracing() == 1){
+	public static List<Human> getShouldGroupAgnatic(Human h){
+		if (global.getTracing() == 1){
 			return h.getSons();
 		} else {
 			return h.getChildren();
 		}
 	}
 
-	public List<Human> getShouldGroupEnatic(Human h){
-		if (this.getTracing() == -1){
+	public static List<Human> getShouldGroupEnatic(Human h){
+		if (global.getTracing() == -1){
 			return h.getDaughters();
 		} else {
 			return h.getChildren();
 		}
 	}
 
-	/*If lineage should be traced through them*/
-	public boolean shouldBeTraced(Human h){
-		switch(this.getPurity()){
-			case 2:
-				return this.fitsPreference(h);
-			case 1:
-				return this.fitsPreference(h);
-			default:
-				return true;
-		}
-	}
-
-	public boolean fitsPreference(Human h){
-		switch(this.getPreference()){
+	public static boolean fitsPreference(Human h){
+		switch(global.getPreference()){
 			case 1:
 				return h.isMale();
 			case 0:
@@ -148,8 +136,8 @@ public class SucLaw{
 	}
 
 	/*If lineage can be traced through them*/
-	public boolean canBeTraced(Human h){
-		switch(this.getTracing()){
+	public static boolean canBeTraced(Human h){
+		switch(global.getTracing()){
 			case 1:
 				return h.isMale();		//paternal lineage
 			case 0:
@@ -159,8 +147,8 @@ public class SucLaw{
 		}
 	}
 
-	public boolean isRightSex(Human h){
-		switch(this.getSex()){
+	public static boolean isRightSex(Human h){
+		switch(global.getSex()){
 			case 1:
 				return h.isMale();
 			case 0:
@@ -170,7 +158,26 @@ public class SucLaw{
 		}
 	}
 
+	public static void applyLastResort(){
+		switch(global.lastResort){
+			case 1:
+				global.sex = 				0;
+				global.tracing = 		0;
+				break;
+			case 2:
+				global.tracing = 		0;
+				break;
+		}
+	}
 
+	public void setAsGlobal(){
+		global.lineage = 		this.lineage;
+		global.sex = 				this.sex;
+		global.preference = this.preference;
+		global.tracing = 		this.tracing;
+		global.bastardy = 	this.bastardy;
+		global.lastResort = this.lastResort;
+	}
 
 	public boolean hasMalePreference(){	return this.preference == 1;	}
 
@@ -180,38 +187,25 @@ public class SucLaw{
 
 	public boolean isEnatic(){			return this.sex == -1;			}
 
-
-
-	public void addTransmitter(Human h){
-		this.transmitters.add(h);
-	}
-
-
-
-	public Human getTransmitter(){					return this.transmitters.get(0);	}
-
-
-	public List<Human> getTransmitters(){			return new ArrayList<>(this.transmitters); }
-
-
-	public boolean toleratesSecondaryHeir(){		return this.purity < 2;				}
-
-	public boolean toleratesUltimateHeir(){			return this.purity == 2;			}
-
-
-
-	public static void clearTransmitters(){			transmitters.clear();				}
-
-	public static void removeTransmitter(){			transmitters.remove(0);				}
+	public boolean hasLastResort(){	return this.lastResort != 0;	}
 
 	public Human getIncumbent(){
 		return this.lineage.getIncumbent().getPerson();
 	}
 
 	public byte getTracing(){						return this.tracing;				}
-	public byte getPurity(){						return this.purity;					}
-	public byte getPreference(){					return this.preference;				}
-	public byte getSex(){							return this.sex;					}
+	public byte getPreference(){				return this.preference;			}
+	public byte getSex(){								return this.sex;						}
+
+	public static byte getGlobalTracing(){				return global.tracing;				}
+	public static byte getGlobalPreference(){			return global.preference;			}
+	public static byte getGlobalSex(){						return global.sex;						}
+
+	public void setTracing(int b){			this.tracing = (byte) b;		}
+	public void setPreference(int b){		this.preference = (byte) b;	}
+	public void setSex(int b){					this.sex = (byte) b;	}
+
+	public Lineage getLineage(){				return this.lineage;	}
 
 
 }

@@ -7,6 +7,7 @@ import Code.Looks.*;
 import Code.House.House;
 import Code.Common.Basic;
 import Code.Common.HTML;
+import Code.History.Census;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -109,7 +110,7 @@ public class Writing {
 			List<Marriage> m = h.getMarriages();
 			String n;
 			for(Marriage x: m){
-				n = x.getDoe().getBirthName();
+				n = x.getPartnerOf(h).getBirthName();
 
 				if (x.hasKinType()){
 					lt.append(HTML.getPTitle(x.getKinTypeHTML(h), n+" †"));
@@ -397,8 +398,9 @@ public class Writing {
 			writer.write("<tr><th>Avg. num. of children</th><td>"+Marriage.getAvgNumOfChildren()+"</td><tr>\n");
 
 			writer.write("</table><p style='float:right'><b>CENSUS:</b><table>");
-			writer.write("<tr><th>YEAR</th><th>MEN</th><th>WOMEN</th><th>Bastards</th></tr>");
-			for(String x: Basic.census){
+			writer.write("<tr><th>YEAR</th><th>LIVING</th><th>MEN</th><th>WOMEN</th></tr>");
+			String[] census = Census.write();
+			for(String x: census){
 				writer.write(x);
 			}
 			writer.write("</table></p>");

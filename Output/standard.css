@@ -76,7 +76,7 @@ ul {
 }
 
 .qurBottomRight {
-	bottom: 0%;
+	bottom: 1px;
   left:0px;
   position: absolute;
   width:50%;
@@ -84,11 +84,12 @@ ul {
 }
 
 .qurBottomLeft {
-	bottom: 0%;
+	bottom: 1px;
   right:0px;
   position: absolute;
   width:50%;
   height:50%;
+	transform: scaleX(-1);
 }
 
 .or_e { background:yellow; }

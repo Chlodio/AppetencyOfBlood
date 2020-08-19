@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path id="use852" d="m28.08 6.294c-1.441 0.6469-2.927 1.977-3.149 3.541-0.2284 1.611 1.339 2.939 2.101 4.405-1.37-0.8762-2.237-1.965-3.621-2.378-4e-3 -0.0012-0.0085-0.0015-0.01234 0-1.473 0.5616-3.53 1.572-3.529 3.149 0.0014 1.579 1.969 2.996 3.541 3.149 1.618 0.1568 2.892-2.176 4.198-2.479l-0.9895 4.578c-0.5408 1.17-1.435 1.399-1.922 1.435h6.963c-0.4871-0.03596-1.381-0.2651-1.922-1.435l-0.9895-4.578c1.306 0.3035 2.58 2.636 4.198 2.479 1.572-0.1524 3.54-1.569 3.541-3.149 0.0014-1.576-2.056-2.587-3.529-3.149-0.0038-0.0015-0.0084-0.0012-0.01234 0-1.384 0.4138-2.251 1.502-3.621 2.378 0.7618-1.466 2.33-2.794 2.101-4.405-0.2218-1.564-1.702-2.908-3.149-3.541-0.03036-0.01329-0.06626 0.0018-0.0994 0.0018s-0.06626-0.0016-0.0994-0.0018v0z" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="round" stroke-width=".9566" style="paint-order:fill markers stroke"/>
+ <use id="use854" transform="translate(8.858 21.04)" width="100%" height="100%" xlink:href="#use852"/>
+ <use id="use862" transform="translate(37.77 62.55)" width="100%" height="100%" xlink:href="#use852"/>
+ <use id="use864" transform="translate(10.81 21.79)" width="100%" height="100%" xlink:href="#use854"/>
+ <use transform="matrix(-1 0 0 1 86.04 7.823)" width="100%" height="100%" xlink:href="#use852"/>
+ <use transform="matrix(-1 0 0 1 115.6 14.74)" width="100%" height="100%" xlink:href="#use854"/>
+ <use transform="matrix(-1 0 0 1 154.4 15.72)" width="100%" height="100%" xlink:href="#use862"/>
+ <use transform="matrix(-1 0 0 1 135.7 -39.34)" width="100%" height="100%" xlink:href="#use864"/>
+</svg>

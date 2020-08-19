@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="matrix(1.53 0 0 1.53 -29.26 -35.97)">
+  <path id="rect873-7" d="m30.31 41.27c-0.0765-2e-3 -0.1542 0.0032-0.2327 0.01615-2.514 0.4139-4.463 2.362-4.876 4.876-0.2223 1.35 1.825 2.394 3.77 3.074-1.945 0.6801-3.992 1.724-3.77 3.074 0.4139 2.514 2.362 4.463 4.876 4.876 1.35 0.2223 2.394-1.825 3.074-3.77 0.6801 1.945 1.723 3.992 3.073 3.77 2.514-0.4139 4.463-2.362 4.877-4.876 0.2223-1.35-1.826-2.394-3.77-3.074 1.945-0.6801 3.992-1.724 3.77-3.074-0.4139-2.514-2.363-4.463-4.877-4.876-1.35-0.2223-2.393 1.825-3.073 3.77-0.6406-1.831-1.603-3.754-2.841-3.786z" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.447" style="paint-order:fill markers stroke"/>
+  <use id="use901" transform="translate(37.29)" width="100%" height="100%" xlink:href="#rect873-7"/>
+  <use id="use945" transform="translate(-1.094e-7 18.15)" width="100%" height="100%" xlink:href="#rect873-7"/>
+  <use transform="translate(-1.094e-7 18.15)" width="100%" height="100%" xlink:href="#use901"/>
+  <use id="use993" transform="translate(18.64 11.84)" width="100%" height="100%" xlink:href="#use945"/>
+  <use transform="translate(0 -41.83)" width="100%" height="100%" xlink:href="#use993"/>
+  <use transform="translate(0 -20.91)" width="100%" height="100%" xlink:href="#use993"/>
+ </g>
+</svg>

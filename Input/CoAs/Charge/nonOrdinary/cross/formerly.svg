@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <clipPath id="escu">
+  <rect width="100" height="120"/>
+ </clipPath>
+ <path d="m31.93 11.18 4.002 5.416c4.86 7.539 8.542 14 9.373 23.27v0.1719h-0.1719c-9.267-0.8307-15.73-4.513-23.27-9.373l-5.416-4.002v36.12l5.416-4.002c7.539-4.86 14-8.542 23.27-9.373h0.1719v0.1719c-0.8307 9.267-4.513 15.73-9.373 23.27l-4.002 5.416h36.12l-4.002-5.416c-4.86-7.539-8.542-14-9.373-23.27v-0.1719h0.1719c9.267 0.8307 15.73 4.513 23.27 9.373l5.416 4.002v-36.12l-5.416 4.002c-7.539 4.86-14 8.542-23.27 9.373h-0.1719v-0.1719c0.8307-9.267 4.513-15.73 9.373-23.27l4.002-5.416h-18.06z"/>
+</svg>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="g10" transform="matrix(.28 0 0 .28 18.52 7.326)">
+  <text x="-52.679455" y="21.611652" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+  <text x="-52.414291" y="15.998991" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+  <path d="m-6.108-8.794 12.18 24.69 27.25 3.959-19.71 19.22 4.654 27.14-24.37-12.81-24.37 12.81 4.654-27.14-19.71-19.22 27.25-3.959z" style="paint-order:markers fill stroke"/>
+ </g>
+ <use id="use975" transform="translate(19.33 26.76)" width="100%" height="100%" xlink:href="#g10"/>
+ <use transform="translate(47.4 51.12)" width="100%" height="100%" xlink:href="#use975"/>
+ <use id="use1049" transform="translate(49.8 23.36)" width="100%" height="100%" xlink:href="#use975"/>
+ <use transform="translate(8.363 -30.36)" width="100%" height="100%" xlink:href="#use975"/>
+ <use id="use1107" transform="translate(-11.42 -53.53)" width="100%" height="100%" xlink:href="#use1049"/>
+ <use transform="translate(-29.35 2.186)" width="100%" height="100%" xlink:href="#use1049"/>
+ <use transform="translate(-9.761 30.36)" width="100%" height="100%" xlink:href="#use1107"/>
+ <use transform="translate(14.47 22.73)" width="100%" height="100%" xlink:href="#use1107"/>
+</svg>

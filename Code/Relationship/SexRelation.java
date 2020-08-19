@@ -20,8 +20,8 @@ public class SexRelation{
 	protected Calendar beginning;
 	protected Calendar ending;
 
-	final static double[][] fert = {{0.0, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8},
-	{0.9, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0},
+	final static double[][] fert = {{0.0, 0.0, 0.35, 0.40, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9},
+	{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0},
 	{1.0, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55},
 	{0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05},};		//female age modifier
 
@@ -251,6 +251,14 @@ public class SexRelation{
 	public static String[] happyDesc = 		{"miserable", "joyless", "", "happy", "loving"};
 	public static String[] unionDesc = 		{"union", "couple", "wedlock", "marriage", "matrimony"};
 
+	//Used to get wife for husband and husband for wife
+	public Human getPartnerOf(Human x){
+		if (x.isMale()){
+			return this.getDoe();
+		} else {
+			return this.getStag();
+		}
+	}
 
 
 	public float getFertility(){ 				return this.fertility;					}

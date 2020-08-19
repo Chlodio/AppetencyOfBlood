@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <pattern id="pattern1895" patternTransform="matrix(1.212 0 0 1.176 50 1.258)" xlink:href="#pattern928"/>
+  <pattern id="pattern928" width="16.458118" height="34.083809" patternTransform="translate(25.31 1.258)" patternUnits="userSpaceOnUse">
+   <g transform="translate(-25.31 -1.258)">
+    <path d="m34.69 4.17 4.723 3.542 2.361-3.542v11.22h-4.014z"/>
+    <path d="m25.31 4.17 2.362 3.542 4.723-3.542-3.07 11.22h-4.015z"/>
+    <path d="m26.46 21.21 4.723 3.542 2.362-3.542 2.362 3.542 4.723-3.542-3.07 11.22h-8.029z"/>
+    <rect x="25.31" y="1.258" width="16.46" height="34.08" opacity="0" stroke-width="28.01" style="paint-order:stroke fill markers"/>
+   </g>
+  </pattern>
+ </defs>
+ <rect x="-2.5" width="105" height="115" fill="url(#pattern1895)"/>
+</svg>

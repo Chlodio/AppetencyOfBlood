@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path id="path872-3-6-8-2-11-5-5-1" d="m51.08 31.8c0.5675 0.8553 0.3444 1.678 0.2834 2.611 0.03065 1.104 0.8543 1.97 1.878 2.269-2.499 2.643-0.1134 4.972 2.428 4.313 1.328-0.3223-0.4134-0.7336-0.5367-1.377-0.08989-1.083 2.151-0.5055 1.759 0.3118-0.3324 1.32 1.114 0.7043 1.625 1.358 0.933 0.6934 1.767 1.555 2.413 2.501-0.2258 0.914 0.4281 1.404 1.269 1.157 0.9717 0.4315 1.493 1.462 2.233 2.181 0.8638 0.5443 0.1743 2.247 1.607 1.876 1.305 0.2431 1.947 1.909 2.936 2.732 0.03003 0.6676 0.0385 1.523 1.011 1.375 0.4012-0.3992 0.8026-0.7983 1.202-1.199 0.4008-0.4 0.8-0.8012 1.199-1.202 0.1478-0.9728-0.7072-0.9813-1.375-1.011-0.8236-0.9892-2.489-1.63-2.732-2.936 0.371-1.433-1.332-0.7436-1.876-1.607-0.7193-0.7396-1.75-1.261-2.181-2.233 0.2468-0.8407-0.2429-1.495-1.157-1.269-0.9458-0.6454-1.807-1.48-2.501-2.413-0.6542-0.5118-0.03819-1.958-1.358-1.625-0.8173 0.3915-1.395-1.849-0.3118-1.759 0.6438 0.1232 1.055 1.865 1.377 0.5367 0.659-2.542-1.67-4.927-4.313-2.428-0.2986-1.024-1.165-1.847-2.269-1.878-0.9331 0.06101-1.756 0.2841-2.611-0.2834z"/>
+ <use id="use838" transform="translate(18.63 46.02)" width="100%" height="100%" xlink:href="#path872-3-6-8-2-11-5-5-1"/>
+ <use id="use840" transform="translate(-24.93 -30.61)" width="100%" height="100%" xlink:href="#path872-3-6-8-2-11-5-5-1"/>
+ <use id="use842" transform="translate(-34.85 -35.35)" width="100%" height="100%" xlink:href="#use838"/>
+ <use transform="translate(26.73 -.3165)" width="100%" height="100%" xlink:href="#use840"/>
+ <use transform="translate(42.27 16.53)" width="100%" height="100%" xlink:href="#use842"/>
+ <use id="use848" transform="translate(-21.32 5.966)" width="100%" height="100%" xlink:href="#use840"/>
+ <use transform="translate(72.17 19.18)" width="100%" height="100%" xlink:href="#use848"/>
+</svg>

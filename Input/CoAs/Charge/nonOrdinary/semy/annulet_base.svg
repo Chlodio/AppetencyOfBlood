@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <pattern id="pattern1932" patternTransform="matrix(1.055 0 0 1.2 50 1.946)" xlink:href="#pattern965"/>
+  <pattern id="pattern965" width="16.660002" height="33.958252" patternTransform="translate(16.66 1.946)" patternUnits="userSpaceOnUse">
+   <g transform="translate(-16.66 -1.946)">
+    <rect x="16.66" y="1.946" width="16.66" height="33.96" opacity="0" stroke-width="10" style="paint-order:stroke fill markers"/>
+    <path d="m16.66 19.32v15c4.127 0 7.5-3.373 7.5-7.5 0-4.127-3.373-7.5-7.5-7.5zm0 2.5c2.776 0 5 2.224 5 5 0 2.776-2.224 5-5 5z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;font-variation-settings:normal;inline-size:0;isolation:auto;mix-blend-mode:normal;paint-order:markers stroke fill;shape-margin:0;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+    <circle cx="24.99" cy="9.779" r="6.25" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" style="paint-order:markers stroke fill"/>
+    <path d="m33.32 19.32v15c-4.127 0-7.5-3.373-7.5-7.5 0-4.127 3.373-7.5 7.5-7.5zm0 2.5c-2.776 0-5 2.224-5 5 0 2.776 2.224 5 5 5z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;font-variation-settings:normal;inline-size:0;isolation:auto;mix-blend-mode:normal;paint-order:markers stroke fill;shape-margin:0;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+   </g>
+  </pattern>
+ </defs>
+ <rect x="-2.5" width="105" height="115" fill="url(#pattern1932)"/>
+</svg>

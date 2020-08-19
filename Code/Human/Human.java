@@ -34,6 +34,7 @@ public class Human {
 	protected Title title;
   protected boolean sex;
   protected Calendar birth;
+	protected byte alleles;
   protected Name name;
 	protected Personality personality;
 	private Minister role;									//Character's career as minister
@@ -63,7 +64,7 @@ public class Human {
 	10 = childbirth/maternal death
 	*/
 
-//generated
+//allelesrated
 	public Human(int age){
   	this.id++;
 		this.living.add(this);
@@ -75,6 +76,7 @@ public class Human {
 		this.fertility = 	Basic.randint(91)+10;
 		this.rela =			new Rela(this);
 		this.DNA = 			Eye.getRandom()+Hair.getRandom();
+		this.alleles = (byte) Basic.randint(3);
 		this.gen =			0;
 		this.fund = 		0;
 		this.chaBox = 		new boolean[]{true, false, false};
@@ -82,7 +84,7 @@ public class Human {
 //		Basic.human.put(Human.id, this);
 	}
 
-//generated born
+//allelesrated born
 	public Human(int y, boolean b){
  	   this.id++;
  	   this.living.add(this);
@@ -424,14 +426,74 @@ public class Human {
 		}
 	}
 
-	public void deliverSpecial(Human f,int year){
-		String g;
-		Human it;
+	public Human randomizeSexSpecial(Human f, int y){
 		if (Basic.randint(2) == 0){
-			it = Man.beBornSpecial(f, this, year);
+			return Man.beBornSpecial(f, this, y);
 		} else {
-			it = Woman.beBornSpeacial(f, this, year);
+			return Woman.beBornSpecial(f, this, y);
 		}
+	}
+
+	public Human randomizeSex(Human f){
+		if (Basic.randint(2) == 0){
+			return Man.beBorn(f, this);
+		} else {
+			return Woman.beBorn(f, this);
+		}
+	}
+
+	//This is mother, f = father, y = current year
+	public Human determineSexSpecial(Human f, int y){
+		switch (f.alleles){
+			case 0:
+				return this.randomizeSexSpecial(f, y);
+			case 1:
+				if (Basic.drawStraws(10)){
+					return Woman.beBornSpecial(f, this, y);
+				} else {
+					return Man.beBornSpecial(f, this, y);
+				}
+			default:
+			if (Basic.drawStraws(10)){
+				return Man.beBornSpecial(f, this, y);
+			} else {
+				return Woman.beBornSpecial(f, this, y);
+			}
+		}
+	}
+
+	//This is mother, f = father, y = current year
+	public Human determineSex(Human f){
+		switch (f.alleles){
+			case 0:
+				return this.randomizeSex(f);
+			case 1:
+				if (Basic.drawStraws(10)){
+					return Woman.beBorn(f, this);
+				} else {
+					return Man.beBorn(f, this);
+				}
+			default:
+			if (Basic.drawStraws(10)){
+				return Man.beBorn(f, this);
+			} else {
+				return Woman.beBorn(f, this);
+			}
+		}
+	}
+
+	public void determineAlleles(Human f, Human m){
+		if (m.alleles == f.alleles){
+			this.alleles = m.alleles;
+		} else {
+			this.alleles = (byte) Basic.randint(3);
+		}
+	}
+
+	public void deliverSpecial(Human f,int y){
+		String g;
+		Human it = this.determineSexSpecial(f, y);
+
 		it.gen = f.getGen() + 1;
 		it.DNA = Eye.getGenetic(f.getEye(), this.getEye())+""+Hair.getGenetic(f.getHair(), this.getHair());
 		this.getLatestMarriage().addOffspring(it);
@@ -440,23 +502,18 @@ public class Human {
 		}
 		it.addRealChild(f, this);
 		it.addChild(f, this);
-	/*	if (it.isMale() && !f.getHouse().getPrinces().contains(it)){
-			throw new RuntimeException();
-		}*/
+
+		it.determineAlleles(f, this);
 	}
 
 	public Human deliverBasic(SexRelation union){
-		Human father = union.getStag();
+		Human f = union.getStag();
 		String g;
-		Human it;
-		if (Basic.randint(2) == 0){
-			it = Man.beBorn(father, this);
-		} else {
-			it = Woman.beBorn(father, this);
-		}
-		it.gen = father.getGen() + 1;
-		it.DNA = Eye.getGenetic(father.getEye(), this.getEye())+""+Hair.getGenetic(father.getHair(), this.getHair());
+		Human it = this.determineSex(f);
+		it.gen = f.getGen() + 1;
+		it.DNA = Eye.getGenetic(f.getEye(), this.getEye())+""+Hair.getGenetic(f.getHair(), this.getHair());
 		union.addOffspring(it);
+		it.determineAlleles(f, this);
 		return it;
 	}
 

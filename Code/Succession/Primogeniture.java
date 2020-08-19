@@ -17,6 +17,21 @@ public class Primogeniture extends Succession {
 	public int determine(){
 		Human h = this.lineage.getIncumbent().getPerson();
 
+		this.law.setAsGlobal();
+
+		int heirStatus = this.getHeirStatus();
+
+		if (heirStatus != 3){
+			return heirStatus;						//Heir is found the traditional way
+		} else if (this.law.hasLastResort()){
+			SucLaw.applyLastResort();
+			heirStatus = this.getHeirStatus();	//Heir is found the exceptional way
+		}
+		return heirStatus;
+	}
+
+	public int getHeirStatus(){
+		Human h = this.lineage.getIncumbent().getPerson();
 		if (this.hasPrimoApparent(h)){
 			setLineage();
 			setLineal(true);
@@ -24,11 +39,7 @@ public class Primogeniture extends Succession {
 		} else if (this.hasPrimoPresumptive()){
 			setLineage();
 			return 2;
-		}   else if(this.law.toleratesUltimateHeir() && this.hasSecondaryHeir()){
-			this.installSecondaryHeir();
-			setLineage();
-			return 2;
-		} else {
+		} else {;
 			return 3;
 		}
 	}
@@ -38,31 +49,10 @@ public class Primogeniture extends Succession {
 		if (hasPrimoPrimaryHeir(h)){
 			this.setPriority(1);
 			return true;
-		}  else if (this.law.toleratesSecondaryHeir()){
-			if (this.hasSecondaryHeir()){
-				this.installSecondaryHeir();
-				return true;
-			}
 		}
 		removeFromLineage();
 		return false;
 	}
-
-	public boolean hasTransmitter(){
-		return this.law.getTransmitters().size() > 0;
-	}
-
-	public boolean hasPrimoTransmitter(){
-		List<Human> l = this.law.getTransmitters();
-		SucLaw.clearTransmitters();
-		for (Human x: l){
-			if (hasPrimoPrimaryHeir(x)){
-				return true;
-			}
-		}
-		return false;
-	}
-
 
 	public boolean hasPrimoCheck(Holder h){
 		Claim c = h.getClaim();
@@ -134,25 +124,16 @@ public class Primogeniture extends Succession {
 
 	public boolean hasPrimoPrimaryHeir(Human h){
 		if (h.isAdult()){
-			List<Human> l = this.law.getHeirGroup(h);
+			List<Human> l = SucLaw.getHeirGroup(h);
 			for(Human x: l){
 				addToLineage(x);
-				if (!this.law.isNaturallyDead(x) ){
-					if (this.law.canInherit(x)){
-						if (this.law.shouldInherit(x)){
+				if (!SucLaw.isNaturallyDead(x) ){
+					if (SucLaw.canInherit(x)){
 							this.setHeir(x);
 							return true;
-						} else if (!this.hasSecondaryHeir()){
-							this.lockAndSetHeir(x);
-						}
-					} else if (this.law.canBeTraced(x)){
-						if (this.law.shouldBeTraced(x)){
+					} else if (SucLaw.canBeTraced(x)){
 							if (hasPrimoPrimaryHeir(x)){
 								return true;
-							}
-						} else if (!this.hasSecondaryHeir()) {
-							lockSecLineage();
-							if (this.findPrimoSecondaryHeir(x)){}
 						}
 					}
 				}
@@ -161,55 +142,5 @@ public class Primogeniture extends Succession {
 		}
 		return false;
 	}
-
-	public boolean findPrimoSecondaryHeir(Human h){
-		if (this.law.canInherit(h)){
-			return true;
-		} else if (this.hasPrimoSecondaryHeir(h) ){
-			return true;
-		} else {
-			List<Human> l;
-			l = this.law.getTransmitters();
-			SucLaw.clearTransmitters();
-			for (Human x: l){
-				addToSecLineage(x);
-				if ((hasPrimoSecondaryHeir(x))){
-					return true;
-				}
-				removeFromSecLineage();
-			}
-		}
-		return false;
-	}
-
-	public boolean hasPrimoSecondaryHeir(Human h){
-		if (h.isAdult()){
-			List<Human> l = this.law.getHeirGroup(h);
-			for(Human x: l){
-				addToSecLineage(x);
-				if (!this.law.isNaturallyDead(x) ){
-					if (this.law.canInherit(x)){
-						if (this.law.shouldInherit(x)){
-							this.setSecondaryHeir(x);
-							return true;
-						} else {
-							this.law.addTransmitter(x);
-						}
-					} else if (this.law.canBeTraced(x)){
-						if (this.law.shouldBeTraced(x)){
-							if (hasPrimoSecondaryHeir(x)){
-								return true;
-							}
-						} else if (!this.hasSecondaryHeir()) {
-							this.law.addTransmitter(x);
-						}
-					}
-				}
-				removeFromSecLineage();
-			}
-		}
-		return false;
-	}
-
 
 };

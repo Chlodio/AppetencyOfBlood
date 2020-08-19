@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="matrix(.7545 0 0 .7545 26.47 2.277)">
+  <g>
+   <rect x="31.25" y="10" width="37.5" height="5"/>
+   <rect x="17.5" y="42.5" width="65" height="5"/>
+   <rect x="31.25" y="75" width="37.5" height="5"/>
+   <rect x="47.5" y="10" width="5" height="70"/>
+   <rect x="17.5" y="28.12" width="5" height="33.75"/>
+   <rect x="77.5" y="28.12" width="5" height="33.75"/>
+  </g>
+  <g>
+   <rect x="31.25" y="20.6" width="5" height="15" style="paint-order:markers stroke fill"/>
+   <rect transform="rotate(-90)" x="-30.6" y="26.25" width="5" height="15" style="paint-order:markers stroke fill"/>
+  </g>
+  <g transform="translate(32.5)">
+   <rect x="31.25" y="20.6" width="5" height="15" style="paint-order:markers stroke fill"/>
+   <rect transform="rotate(-90)" x="-30.6" y="26.25" width="5" height="15" style="paint-order:markers stroke fill"/>
+  </g>
+  <g transform="translate(0 33.77)">
+   <rect x="31.25" y="20.6" width="5" height="15" style="paint-order:markers stroke fill"/>
+   <rect transform="rotate(-90)" x="-30.6" y="26.25" width="5" height="15" style="paint-order:markers stroke fill"/>
+  </g>
+  <g transform="translate(32.5 33.77)">
+   <rect x="31.25" y="20.6" width="5" height="15" style="paint-order:markers stroke fill"/>
+   <rect transform="rotate(-90)" x="-30.6" y="26.25" width="5" height="15" style="paint-order:markers stroke fill"/>
+  </g>
+ </g>
+</svg>

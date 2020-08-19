@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path id="path828" d="m20.31 2.177c-0.01324 2.609 0.028 5.22-0.02356 7.828-0.1662 3.268-2.087 6.222-4.656 8.155-1.084 0.829-2.265 1.54-3.529 2.057-3.326-1.416-6.367-3.974-7.618-7.448-0.7933-2.067-0.5502-4.298-0.5903-6.46v-4.131h16.42z"/>
+ <use transform="translate(45.96 49.89)" width="100%" height="100%" xlink:href="#path828"/>
+ <use id="use843" transform="translate(76.71 43.22)" width="100%" height="100%" xlink:href="#path828"/>
+ <use transform="translate(-.01579 39.09)" width="100%" height="100%" xlink:href="#use843"/>
+ <path id="use851" d="m40.32 27.55c-0.0132 2.609 0.02806 5.22-0.02355 7.828-0.1662 3.268-2.087 6.222-4.656 8.155-1.084 0.829-2.265 1.54-3.529 2.057-3.326-1.416-6.367-3.974-7.618-7.448-0.7933-2.067-0.5502-4.298-0.5903-6.46v-4.131h16.42z"/>
+ <use id="use853" transform="translate(26.17 -19.69)" width="100%" height="100%" xlink:href="#use851"/>
+ <use transform="translate(27.36 -3.803)" width="100%" height="100%" xlink:href="#use853"/>
+</svg>

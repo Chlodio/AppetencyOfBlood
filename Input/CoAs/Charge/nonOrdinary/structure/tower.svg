@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <rect x="29.71" y="19.69" width="9.027" height="5.416" stroke-width=".7222" style="paint-order:markers stroke fill"/>
+ <rect id="use863" x="60.76" y="19.69" width="9.027" height="5.416" stroke-width=".7222" style="paint-order:markers stroke fill"/>
+ <rect id="use869" x="29.71" y="25.47" width="9.027" height="5.416" stroke-width=".7222" style="paint-order:markers stroke fill"/>
+ <use id="use877" transform="translate(31.05)" width="100%" height="100%" xlink:href="#use869"/>
+ <use id="use34" transform="translate(1.223e-7 11.55)" width="100%" height="100%" xlink:href="#use869"/>
+ <use id="use42" transform="translate(1.439e-7 11.55)" width="100%" height="100%" xlink:href="#use877"/>
+ <rect id="rect1388-3-83-8-3-3-3-3" x="65.1" y="31.24" width="4.694" height="5.416" stroke-width=".5207" style="paint-order:markers stroke fill"/>
+ <use id="use1002" transform="translate(-35.39)" width="100%" height="100%" xlink:href="#rect1388-3-83-8-3-3-3-3"/>
+ <use id="use1004" transform="matrix(1.538 0 0 1 -10.94 -3e-7)" width="100%" height="100%" xlink:href="#use1002"/>
+ <use id="use1010" transform="translate(22.75)" width="100%" height="100%" xlink:href="#use1004"/>
+ <use id="use1012" transform="translate(7.583)" width="100%" height="100%" xlink:href="#use1004"/>
+ <use id="use1014" transform="translate(7.583)" width="100%" height="100%" xlink:href="#use1012"/>
+ <use id="use1033" transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use34"/>
+ <use id="use1041" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use42"/>
+ <use id="use1043" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#rect1388-3-83-8-3-3-3-3"/>
+ <use id="use1045" transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1002"/>
+ <use id="use1047" transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1004"/>
+ <use id="use1049" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1010"/>
+ <use id="use1051" transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1012"/>
+ <use id="use1053" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1014"/>
+ <use id="use1057" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use34"/>
+ <use id="use1065" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use42"/>
+ <use id="use1067" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#rect1388-3-83-8-3-3-3-3"/>
+ <use id="use1069" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1002"/>
+ <use id="use1071" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1004"/>
+ <use id="use1073" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use1010"/>
+ <use id="use1075" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1012"/>
+ <use id="use1077" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use1014"/>
+ <use id="use1081" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1033"/>
+ <use id="use1089" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use1041"/>
+ <use id="use1091" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use1043"/>
+ <use id="use1093" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1045"/>
+ <use id="use1095" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1047"/>
+ <use id="use1097" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use1049"/>
+ <use id="use1099" transform="translate(2.667e-7 23.11)" width="100%" height="100%" xlink:href="#use1051"/>
+ <use id="use1101" transform="translate(2.884e-7 23.11)" width="100%" height="100%" xlink:href="#use1053"/>
+ <use id="use1004-7" transform="matrix(1.538 0 0 1 -6.61 -5.777)" width="100%" height="100%" xlink:href="#use1002"/>
+ <use id="use1146" transform="translate(14.08)" width="100%" height="100%" xlink:href="#use1004-7"/>
+ <use id="use1004-7-3" transform="matrix(1.308 0 0 1 7.829 -5.777)" width="100%" height="100%" xlink:href="#use1002"/>
+ <use id="use1165" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1004-7"/>
+ <use id="use1167" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1146"/>
+ <use id="use1169" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1004-7-3"/>
+ <use id="use1171" transform="translate(0 23.11)" width="100%" height="100%" xlink:href="#use1004-7"/>
+ <use id="use1173" transform="translate(0 23.11)" width="100%" height="100%" xlink:href="#use1146"/>
+ <use id="use1175" transform="translate(0 23.11)" width="100%" height="100%" xlink:href="#use1004-7-3"/>
+ <use id="use1177" transform="translate(0 23.11)" width="100%" height="100%" xlink:href="#use1165"/>
+ <use id="use1179" transform="translate(0 23.11)" width="100%" height="100%" xlink:href="#use1167"/>
+ <use id="use1181" transform="translate(0 23.11)" width="100%" height="100%" xlink:href="#use1169"/>
+ <use transform="translate(-15.53)" width="100%" height="100%" xlink:href="#use863"/>
+ <use id="use1187" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1177"/>
+ <use id="use1189" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1179"/>
+ <use id="use1191" transform="translate(0 11.55)" width="100%" height="100%" xlink:href="#use1181"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1081"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1089"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1091"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1093"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1095"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1097"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1099"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1101"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1187"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1189"/>
+ <use transform="translate(-2.215e-8 11.55)" width="100%" height="100%" xlink:href="#use1191"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1033"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1041"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1043"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1045"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1047"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1049"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1051"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1053"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1057"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1065"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1067"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1069"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1071"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1073"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1075"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1077"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1171"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1173"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1175"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1177"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1179"/>
+ <use transform="translate(5.341e-7 46.36)" width="100%" height="100%" xlink:href="#use1181"/>
+</svg>

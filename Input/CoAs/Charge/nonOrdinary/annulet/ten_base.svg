@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <text x="-52.679455" y="21.611652" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <text x="-52.414291" y="15.998991" fill="#000000" font-family="monospace" font-size="16px" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+ <g fill="none">
+  <g transform="matrix(1.249,0,0,1.249,-29.13,-8.269)" font-family="monospace" font-size="16px" letter-spacing="0px" stroke="#000" word-spacing="0px">
+   <text x="-52.679455" y="21.611652" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+   <text x="-52.414291" y="15.998991" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:20px" xml:space="preserve"/>
+   <circle id="use839" transform="rotate(-90)" cx="-30.49" cy="67.55" r="4.775" fill="none" stroke="#000"/>
+  </g>
+  <g stroke="#000000">
+   <use id="use841" transform="matrix(1.249,0,0,1.249,-43.87,-28.52)" width="100%" height="100%" fill="none" stroke="#000000" xlink:href="#use839"/>
+   <use id="use843" transform="translate(-24.38,2.995)" width="100%" height="100%" fill="none" stroke="#000000" xlink:href="#use841"/>
+   <use id="use866" transform="matrix(1.249,0,0,1.249,3.805,27.33)" width="100%" height="100%" fill="none" stroke="#000000" xlink:href="#use839"/>
+   <use id="use868" transform="translate(48.62,24.07)" width="100%" height="100%" fill="none" stroke="#000000" xlink:href="#use841"/>
+   <use id="use870" transform="translate(55.82 -.6251)" width="100%" height="100%" fill="none" stroke="#000000" xlink:href="#use843"/>
+   <use transform="matrix(-1,0,0,1,172.8,26.59)" width="100%" height="100%" xlink:href="#use866"/>
+   <use transform="matrix(-1,0,0,1,148.5,40.05)" width="100%" height="100%" xlink:href="#use868"/>
+   <use transform="matrix(-1,0,0,1,110.6,33.03)" width="100%" height="100%" xlink:href="#use870"/>
+   <use transform="matrix(1.249,0,0,1.249,-11.82,14.86)" width="100%" height="100%" xlink:href="#use839"/>
+  </g>
+ </g>
+</svg>

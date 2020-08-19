@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="matrix(.7962 0 0 .7962 29.61 -.7702)">
+  <g fill="#0a0a0a">
+   <path d="m43.08 33.6s3.391-7.999 6.916-8c3.526-6.46e-4 6.921 8 6.921 8v39.69h-13.84z" stroke-linecap="square" stroke-linejoin="round" stroke-width="1.067" style="paint-order:stroke fill markers"/>
+   <path d="m36.98 63.29 13.09-4 12.96 4c3.248 1.002 2 9.999 2 9.999h-30.05s-1.251-9.005 2-9.999z" style="paint-order:stroke fill markers"/>
+  </g>
+  <g transform="matrix(.1623 0 0 .1623 42.92 51.05)">
+   <rect id="rect2348" transform="rotate(45)" x="-90.08" y="67.43" width="15" height="12.5" fill="none" stroke="#000" style="paint-order:stroke fill markers"/>
+   <use id="use2350" transform="translate(10.61 10.61)" width="100%" height="100%" xlink:href="#rect2348"/>
+   <use id="use2352" transform="translate(10.61 10.61)" width="100%" height="100%" xlink:href="#use2350"/>
+   <use id="use2354" transform="translate(8.839 -8.839)" width="100%" height="100%" xlink:href="#rect2348"/>
+   <use id="use2356" transform="translate(8.839 -8.839)" width="100%" height="100%" xlink:href="#use2350"/>
+   <use id="use2358" transform="translate(8.839 -8.839)" width="100%" height="100%" xlink:href="#use2352"/>
+   <use id="use2360" transform="translate(8.839 -8.839)" width="100%" height="100%" xlink:href="#use2354"/>
+   <use id="use2362" transform="translate(8.839 -8.839)" width="100%" height="100%" xlink:href="#use2356"/>
+   <use id="use2364" transform="translate(8.839 -8.839)" width="100%" height="100%" xlink:href="#use2358"/>
+   <use id="use2366" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#rect2348"/>
+   <use id="use2368" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2350"/>
+   <use id="use2370" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2352"/>
+   <use id="use2372" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2354"/>
+   <use id="use2374" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2356"/>
+   <use id="use2376" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2358"/>
+   <use id="use2378" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2360"/>
+   <use id="use2380" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2362"/>
+   <use id="use2382" transform="translate(26.52 -26.52)" width="100%" height="100%" xlink:href="#use2364"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#rect2348"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2350"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2352"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2354"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2356"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2358"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2360"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2362"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2364"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2366"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2368"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2370"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2372"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2374"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2376"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2378"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2380"/>
+   <use transform="translate(53.03 -53.03)" width="100%" height="100%" xlink:href="#use2382"/>
+   <path d="m-88.75 25 132.4-132.4" fill="none" stroke="#000" stroke-width="5"/>
+   <g transform="rotate(-45 109.9 -28.3)">
+    <rect x="73.94" y="43.07" width="15" height="12.5" fill="none" stroke="#000" style="paint-order:stroke fill markers"/>
+    <use transform="rotate(-45 60.11 -228.3)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 60.11 -228.3)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2360"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2362"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2364"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2360"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2362"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2364"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2366"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2368"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2370"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2372"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2374"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2376"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2378"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2380"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2382"/>
+    <path d="m118.9 56.07v-187.2" fill="none" stroke="#000" stroke-width="5"/>
+   </g>
+   <g transform="rotate(225 86.19 -103.6)">
+    <rect x="73.94" y="43.07" width="15" height="12.5" fill="none" stroke="#000" style="paint-order:stroke fill markers"/>
+    <use transform="rotate(-45 60.11 -228.3)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 60.11 -228.3)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2360"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2362"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2364"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2360"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2362"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2364"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2366"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2368"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2370"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2372"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2374"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2376"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2378"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2380"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2382"/>
+    <path d="m118.9 56.07v-187.2" fill="none" stroke="#000" stroke-width="5"/>
+   </g>
+   <g transform="rotate(135 76.36 -134.8)">
+    <rect x="73.94" y="43.07" width="15" height="12.5" fill="none" stroke="#000" style="paint-order:stroke fill markers"/>
+    <use transform="rotate(-45 60.11 -228.3)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 60.11 -228.3)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 37.52 -216.4)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2360"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2362"/>
+    <use transform="rotate(-45 7.339 -228.9)" width="100%" height="100%" xlink:href="#use2364"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#rect2348"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2350"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2352"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2354"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2356"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2358"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2360"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2362"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2364"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2366"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2368"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2370"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2372"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2374"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2376"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2378"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2380"/>
+    <use transform="rotate(-45 -37.93 -247.7)" width="100%" height="100%" xlink:href="#use2382"/>
+    <path d="m118.9 56.07v-187.2" fill="none" stroke="#000" stroke-width="5"/>
+   </g>
+  </g>
+ </g>
+</svg>
