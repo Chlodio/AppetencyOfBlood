@@ -2,7 +2,7 @@ package Code.Human;
 import Code.Relationship.*;
 import Code.Common.Basic;
 import Code.Human.Human;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -318,6 +318,14 @@ public class Rela{
 		this.mother = m;
 	}
 
+	public String getParentsString(){
+		if (this.hadFather()){
+			String s = this.getFather().getFormalName();
+			s += "<br>"+this.getMother().getFormalName();
+			return s;
+		}
+		return "?";
+	}
 
 	public boolean fatherIsDead(){				return !this.getFather().isAlive(); 	}
 	public Human getGenitor(){					return this.genitor;					}
@@ -672,6 +680,34 @@ public boolean isSisterOf(Human h){
 
 	public Human getLatestWife(){
 		return this.marriages.get(this.marriages.size()-1).getDoe();
+	}
+
+	public Human getLatestSpouse(){
+		if (this.o.isMale()){
+			return this.getLatestWife();
+		} else {
+			return this.getLatestHusband();
+		}
+	}
+
+	//For men
+	public boolean hasUnbornChild(){
+		if (this.o.isAdult() && this.o.wasMarried()){
+			if (this.o.getLatestWife().isAlive() && ((Woman) this.o.getLatestWife()).isCarryingChildOf(this.o)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public boolean hasUnbornChildFemale(){
+		if (this.o.isLivingAdult() && this.o.wasMarried()){
+			if (((Woman) this.o).isPregnant()){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Marriage getLatestMarriage(){

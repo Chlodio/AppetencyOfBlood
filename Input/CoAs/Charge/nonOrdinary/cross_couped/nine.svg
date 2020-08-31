@@ -12,12 +12,12 @@
  <clipPath id="escu">
   <rect width="100" height="120"/>
  </clipPath>
- <path id="rect6-8-2-9" d="m46 5v8h-8v8h8v8h8v-8h8v-8h-8v-8z" stroke-width=".4"/>
- <use id="use841" transform="translate(0,28)" width="100%" height="100%" xlink:href="#rect6-8-2-9"/>
- <use id="use843" transform="translate(0,28)" width="100%" height="100%" xlink:href="#use841"/>
- <use id="use845" transform="translate(-26,8)" width="100%" height="100%" xlink:href="#rect6-8-2-9"/>
- <use id="use847" transform="translate(-26,8)" width="100%" height="100%" xlink:href="#use841"/>
- <use id="use849" transform="translate(-26,8)" width="100%" height="100%" xlink:href="#use843"/>
+ <path id="rect6-8-2-9" d="m46 93v-8h-8v-8h8v-8h8v8h8v8h-8v8z" stroke-width=".4"/>
+ <use id="use841" transform="translate(0,-28)" width="100%" height="100%" xlink:href="#rect6-8-2-9"/>
+ <use id="use843" transform="translate(0,-28)" width="100%" height="100%" xlink:href="#use841"/>
+ <use id="use845" transform="translate(-26,-8)" width="100%" height="100%" xlink:href="#rect6-8-2-9"/>
+ <use id="use847" transform="translate(-26,-8)" width="100%" height="100%" xlink:href="#use841"/>
+ <use id="use849" transform="translate(-26,-8)" width="100%" height="100%" xlink:href="#use843"/>
  <use transform="translate(52)" width="100%" height="100%" xlink:href="#use845"/>
  <use transform="translate(52)" width="100%" height="100%" xlink:href="#use847"/>
  <use transform="translate(52)" width="100%" height="100%" xlink:href="#use849"/>

@@ -43,7 +43,6 @@ public class Affair extends SexRelation {
 		Woman w = (Woman) this.doe;
 		if (Basic.randint(100) < this.calcProcreation() && !w.isPregnant()){
 			w.fillUterus(this);
-			w.growFetus();
 			Woman.pregnant.add(this.doe);
 			Basic.print(w.getShortName()+" became pregnant with his lover, "+this.stag.getShortName()+"'s child");
 		}

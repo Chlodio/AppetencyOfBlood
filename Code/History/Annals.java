@@ -12,7 +12,7 @@ public class Annals {
 
   public Annals(int y, int l){
     this.firstYear = y;
-    this.annals = new Annal[l*100];
+    this.annals = new Annal[(l*100)];
   }
 
   public void publishAnnal(int i){
@@ -23,7 +23,7 @@ public class Annals {
   }
 
   public void writeLegitBirth(Human h){
-    if (h.isNoble()){
+    if (h.hasTitle()){
       Annal a = this.secureEntry();
       String s = String.format("%s was born to %s and %s", h.getFullName(), h.getFather().getFullName(), h.getMother().getFullName());
       a.add(s);
@@ -31,23 +31,25 @@ public class Annals {
   }
 
   public void recordExtinction(House h){
+    /*
     if (h.isNoble()){
       Annal a = this.secureEntry();
       String s = "house of "+h.getName()+" went extinct";
       a.add(s);
-    }
+    }*/
   }
 
   public void recordExtinctSeniorSuc(House d, House c){
+    /*
     if (d.isNoble()){
       Annal a = this.secureEntry();
       String s = String.format("senior line of %s went extinct, but was succeeded by %s", d.getFullName(), c.getFullName());
       a.add(s);
-    }
+    }*/
   }
 
   public void recordMarriage(Human h, Human w){
-    if (h.isNoble()){
+    if (h.hasTitle() || w.hasTitle()){
       Annal a = this.secureEntry();
       String s = h.getFullName()+" wed "+w.getName().getPatronymic();
       a.add(s);
@@ -68,7 +70,7 @@ public class Annals {
 
 
   public void recordWidowDeath(Human h, Human w){
-      if (h.isNoble()){
+      if (h.hasTitle() || w.hasTitle()){
         Annal a = this.secureEntry();
         String s = String.format("%s departed, leaving %s a %s",
         h.getFullName(),w.getFullName(), w.widow());
@@ -77,15 +79,28 @@ public class Annals {
   }
 
   public void recordSingleDeath(Human h){
-      if (h.isNoble()){
+      if (h.hasTitle()){
         Annal a = this.secureEntry();
         String s = String.format("%s deceased", h.getFullName()) ;
         a.add(s);
       }
   }
 
+  public void recordInterregnumBeginning(Human h){
+    Annal a = this.secureEntry();
+    String s = String.format("Interregnum began for unborn child of %s and %s", h.getFullName(), h.getLatestSpouse().getFormalName(), h.getFormalName());
+    a.add(s);
+  }
+
+  public void recordInterregnumEnding(){
+    Annal a = this.secureEntry();
+    String s = String.format("Interregnum ended");
+    a.add(s);
+  }
+
+
   public Annal secureEntry(){
-    int y = Basic.getDateYear();
+    int y = Basic.getDate().getYear();
     if (this.annalIsEmptryFor(y)){
       return this.createEntryFor(y);
     } else {
@@ -100,6 +115,7 @@ public class Annals {
   public boolean annalIsEmptryFor(int y){
     return this.annals[y-firstYear] == null;
   }
+
 
 
 }

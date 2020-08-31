@@ -11,7 +11,7 @@ import Code.Politics.Cabinet;
 import Code.Common.*;
 import Code.House.Dynasty;
 import java.util.ArrayList;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class Office{
 	private String name;
 	private List<Rule> ruleList;
 	private Lineage lineage;
-	private List<Human> consortList;
+	private List<Consort> consortList;
 	private List<Project> projects;
 	private Military military;
 	private Territory territory;
@@ -53,9 +53,6 @@ public class Office{
 		id++;
 		office.put(id, new Office());
 		Human founder = Basic.choice(House.getMagnates());
-		if (founder.isRegnant()){
-			throw new RuntimeException();		//The same
-		}
 		office.get(offices.size()).inaugurate(founder);
 		office.get(offices.size()).handleCabinet();
 		return office.get(id);
@@ -95,6 +92,10 @@ public class Office{
 	}
 
 	public void endTenure(){
+		//Mark an ending for the previous consort
+		if (this.consortList.size() > 0){
+			this.consortList.get(this.consortList.size()-1).setEnding();
+		}
 		this.getRule().handleRegency();
 		this.rule.endReign();
 		this.spreadClaims();
@@ -116,8 +117,11 @@ public class Office{
 						c.diludeBlood();
 					}
 					x.addClaim(c);
-					x.passClaims();
-					x.removeClaim(c);
+					//The late claimant might have been denied the claim for some reason
+					if (x.hasClaims()){
+						x.passClaims();
+						x.removeClaim(c);
+					}
 				}
 			}
 		}
@@ -127,13 +131,19 @@ public class Office{
 
 		this.getLineage().determineSuccession();
 		Human s;
-		if (this.getLineage().getPriority() < 3){
-			s = this.getLineage().getHeir();
-		} else {
-			s = Basic.choice(House.getMagnates());		//Elect
+		switch (this.getLineage().getPriority()){
+			case 3:
+				s = Basic.choice(House.getMagnates());		//Elect
+				inaugurate(s);
+				break;
+			case 0:
+				break;
+			default:
+				s = this.getLineage().getHeir();
+				inaugurate(s);
 		}
 
-		inaugurate(s);
+
 	}
 
 
@@ -263,8 +273,36 @@ public void sortClaims(){
 	}
 }
 
+
+//Consorts
+
+	public void addToConsortList(Consort h){
+		//Add new consort
+		this.consortList.add(h);
+	}
+
+	//Find from arraylist
+	public int getConsortRank(Human h){
+		for(int x = this.consortList.size()-1; x >= 0; x--){
+			if (this.consortList.get(x).isTheSameAs(h)){
+				return x;
+			}
+		}
+		throw new RuntimeException();
+	}
+
+	public List<Consort> getConsorts(){
+		return this.consortList;
+	}
+
+	//Check if this person is th holder of the office
+	public boolean isHeldBy(Human h){
+		return this.getHolder().getPerson() == h;
+	}
+
+
 //shortcuts
-	public boolean isHolder(Holder h){					return this.lineage.isHolder(h); 	}
+	public boolean isHolder(Holder h){				return this.lineage.isHolder(h); 	}
 	public void addToLineage(Holder h){					this.lineage.addTo(h);				}
 	public Holder getFounder(){ 						return this.lineage.getFounder(); 	}
 
@@ -297,9 +335,6 @@ public void sortClaims(){
 	public void endWar(){ 								this.atWar = false; 		}
 	public void goToWar(){ 								this.atWar = true; 			}
 	public void setRuler(Ruler r){						this.rule.setSeniorRuler(r);}
-	public void addToConsortList(Human h){				this.consortList.add(h);	}
-	public int getConsortRank(Human h){					return this.consortList.indexOf(h);}
-
 	public Cabinet getCabinet(){						return this.cabinet;		}
 
 	public void handleCabinet(){

@@ -49,16 +49,24 @@ public class SucLaw{
 		2 = quasi-last resort, sets tracing to cognatic
 	*/
 
+	private byte coverture;
+	/*
+	If the spouse of holder rules alongside them, only applied preference isn't 0
+	0 = no coverture
+	1 = coverture
+	2 = conditional coverture
+	*/
 	private static List<Human> transmitters = new ArrayList<>(10);
 
 
 	public SucLaw(Lineage l){
 		this.lineage =		l;
-		this.sex = 				1;
+		this.sex = 				0;
 		this.preference =  1;
-		this.tracing =		1;
+		this.tracing =		0;
 		this.bastardy = 	0;
 		this.lastResort = 0;
+		this.coverture = 1;
 	}
 
 		public SucLaw(){}

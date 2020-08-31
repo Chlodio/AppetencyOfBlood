@@ -59,11 +59,26 @@ public class Claim  implements Cloneable{
 		return n;
 	}
 
-
+	//Compares which claim is superior
+	public boolean isSuperiorTo(Claim c){
+		switch(this.blood - c.blood){
+			case 0:
+				//Blood is of equal weight determine by the proximity of blood
+				return this.lineage.length <= c.lineage.length;
+			case -1:
+				//Quasi-agnatic vs agnatic or cognatic vs quasi-agnatic
+				return true;
+			case -2:
+				//Agnatic vs cognatic
+				return true;
+			default:
+				return false;
+		}
+	}
 
 	public void pass(){
-		if (this.holder.isAdult()){
-			List<Human> l = this.holder.getLegitSons();
+		if (this.holder.isAdult() && this.lineage.length <= 10 ){
+			List<Human> l = this.holder.getLegitChildren();
 			try {
 				Claim c = (Claim) this.clone();
 				if (this.holder.isFemale()){
@@ -75,12 +90,14 @@ public class Claim  implements Cloneable{
 					} else if (x.isAdult() && x.hasSon()){
 						Claim cn = new Claim(makeLineage(this.getLineage(), x), c);
 						x.addClaim(cn);
-						x.passClaims();
-						x.removeClaim(cn);
+						//The late claimant might have been denied the claim for some reason
+						if (x.hasClaims()){
+							x.passClaims();
+							x.removeClaim(cn);						}
 					}
 				}
 			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
+				throw new RuntimeException();
 			}
 		}
 	}

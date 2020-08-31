@@ -3,6 +3,7 @@ import Code.Human.Human;
 import Code.Politics.Office;
 import Code.Interest.Interest;
 import Code.Politics.Skill;
+import Code.Politics.Consort;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class PolProfile {
 	private List<Holder> regnalTitles;
 	private List<Office> nobleTitles;		//Peerages
 	private List<Office> offices;
+	private Consort[] consortships;
 	private Interest interest;
 	private Skill skill;
 //	this.interest 	= 	new Interest();
@@ -33,7 +35,6 @@ public class PolProfile {
 			}
 			this.regnalTitles.get(0).handleNickname();
 
-
 	/*		if (owner.isMarried()){
 				w = owner.getSpouse();
 				if (this.isQueenMother(w)){
@@ -43,6 +44,13 @@ public class PolProfile {
 				}
 			}*/
 		}
+
+		if (this.isConsort()){
+			for(Consort x: this.consortships){
+				x.setEnding();
+			}
+		}
+
 	}
 
 	public void addRegnalTitle(Holder v){
@@ -60,7 +68,31 @@ public class PolProfile {
 	}
 
 //Small methods
-	public void addRegnalTitles(Office o){		this.regnalTitles.add(o.getHolder());				}
+	public void addRegnalTitles(Office o){
+		this.regnalTitles.add(o.getHolder());
+	}
+
+//Consortships
+
+	public Consort getConsort(int i){
+		return this.consortships[0];
+	}
+
+	public void addConsort(Consort c){
+		Consort[] n = new Consort[this.consortships.length+1];
+		System.arraycopy(this.consortships, 0, n, 0, this.consortships.length);
+		this.consortships = n;
+		this.consortships[consortships.length-1] = c;
+	}
+
+	public void makeConsort(Consort c){
+		this.consortships = new Consort[]{c};
+	}
+
+	public boolean isConsort(){
+		return this.consortships != null;
+	}
+
 	public void makeRegnant(){					this.regnalTitles = new ArrayList<>();	}
 	public boolean isRegnant(){					return this.regnalTitles != null;		}
 	public List<Holder> getRegnal(){			return this.regnalTitles;				}

@@ -36,13 +36,22 @@ public class HTML {
 		return "<th></th>";
 	}
 
+	//Get th with colspan
 	public static String getThColspan(int i){
 		return "<th colspan='"+i+"'></th>";
 	}
 
-	//Get th with colspan
+	//Get th with colspan with string
 	public static String getThCoSpan(String s, int i){
 		return "<th colspan='"+i+"'>"+s+"</th>";
+	}
+
+	public static String getTdRowspan(String s, int i){
+		return "<td rowspan='"+i+"'>"+s+"</td>";
+	}
+
+	public static String getTdClassRowspan(String c, String s, int i){
+		return "<td class='"+c+"' rowspan='"+i+"'>"+s+"</td>";
 	}
 
 	//Get td with a class assignment

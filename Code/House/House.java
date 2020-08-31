@@ -11,7 +11,7 @@ import Code.Politics.Holder;
 import Code.Politics.DynasticOffice;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -1096,6 +1096,15 @@ public class House {
 
 	public void resetDynasty(){				this.dynasty = null;	}
 
+//Coat of arm methods
+
+public CoatOfArms getCoA(){					return this.coa;			}
+
+public String getCoALink(){
+	return this.getCoA().getHTML();
+}
+
+
 //Micro methods
 
 	public boolean hasHead(){						return this.head != null;	}
@@ -1105,9 +1114,7 @@ public class House {
 	public int getGeneration(){						return this.generation;		}
 	public int getPrestige(){						return this.prestige;		}
 	public int getRanking(){						return this.ranking;		}
-	public CoatOfArms getCoA(){					return this.coa;			}
 	public String getName(){						return name;						}
-	public String getCoALink(){					return this.getCoA().getHTML();}
 	public List<String> getFemaleNames(){			return this.femaleNames;	}
 	public List<String> getMaleNames(){				return this.maleNames;		}
 	public static House getHouse(int id){			return Basic.house.get(id);	}
@@ -1136,8 +1143,8 @@ public class House {
 	public List<Human> getHeads(){					return new ArrayList<>(this.heads);		}
 	public boolean isLegimate(){					return this.legimate;		}
 	public boolean isFounder(Human h){				return this.founder == h;	}
-	public String getFounding(){		return  Basic.format1.format(this.founding.getTime());	 }
 	public Human getFounder(){						return this.founder;}
+	public Calendar getFounding(){				return this.founding;}
 
 	private static List<Integer> highbornNamesN = 		new ArrayList<>();
 	private static String[] highbornNames = 			new String[1082];

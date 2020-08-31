@@ -9,10 +9,10 @@
    </cc:Work>
   </rdf:RDF>
  </metadata>
- <path id="use864" d="m46.94 11.31c-0.01634 3.221 0.03457 6.444-0.02907 9.664-0.2051 4.034-2.577 7.681-5.748 10.07-1.338 1.023-2.796 1.901-4.356 2.539-4.106-1.748-7.861-4.906-9.405-9.195-0.9793-2.552-0.6792-5.306-0.7288-7.976v-5.1h20.27z"/>
- <path id="use866" d="m31.55 68.49c-0.01634 3.221 0.03457 6.444-0.02907 9.664-0.2051 4.034-2.577 7.681-5.748 10.07-1.338 1.023-2.796 1.901-4.356 2.539-4.106-1.748-7.861-4.906-9.405-9.195-0.9793-2.552-0.6792-5.306-0.7288-7.976v-5.1h20.27z"/>
- <use id="use870" transform="translate(28.59)" width="100%" height="100%" xlink:href="#use864"/>
- <use transform="translate(57.18)" width="100%" height="100%" xlink:href="#use866"/>
- <use transform="translate(-8.797 28.59)" width="100%" height="100%" xlink:href="#use864"/>
- <use transform="translate(6.597 28.59)" width="100%" height="100%" xlink:href="#use870"/>
+ <path id="use864" d="m42.94 68.49c-0.01634 3.221 0.03457 6.444-0.02907 9.664-0.2051 4.034-2.577 7.681-5.748 10.07-1.338 1.023-2.796 1.901-4.356 2.539-4.106-1.748-7.861-4.906-9.405-9.195-0.9793-2.552-0.6792-5.306-0.7288-7.976v-5.1h20.27z"/>
+ <use id="use870" transform="translate(36.59)" width="100%" height="100%" xlink:href="#use864"/>
+ <use id="use920" transform="translate(-2.253 -30)" width="100%" height="100%" xlink:href="#use864"/>
+ <use id="use922" transform="translate(2,-30)" width="100%" height="100%" xlink:href="#use870"/>
+ <use transform="translate(.2529 -32)" width="100%" height="100%" xlink:href="#use920"/>
+ <use transform="translate(0,-32)" width="100%" height="100%" xlink:href="#use922"/>
 </svg>

@@ -3,8 +3,10 @@ import Code.Human.*;
 import Code.Ancestry.Lineage;
 import Code.Ancestry.Claim;
 import Code.Politics.Holder;
+import Code.Common.Basic;
+import Code.History.Annals;
 //import Code.Politics.Office;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,7 +18,7 @@ public class Primogeniture extends Succession {
 
 	public int determine(){
 		Human h = this.lineage.getIncumbent().getPerson();
-
+		this.resetPriority();
 		this.law.setAsGlobal();
 
 		int heirStatus = this.getHeirStatus();
@@ -35,10 +37,10 @@ public class Primogeniture extends Succession {
 		if (this.hasPrimoApparent(h)){
 			setLineage();
 			setLineal(true);
-			return 1;
+			return this.getPriority();
 		} else if (this.hasPrimoPresumptive()){
 			setLineage();
-			return 2;
+			return this.getPriority();
 		} else {;
 			return 3;
 		}
@@ -131,10 +133,18 @@ public class Primogeniture extends Succession {
 					if (SucLaw.canInherit(x)){
 							this.setHeir(x);
 							return true;
-					} else if (SucLaw.canBeTraced(x)){
-							if (hasPrimoPrimaryHeir(x)){
+					}  else if (SucLaw.canBeTraced(x) && hasPrimoPrimaryHeir(x) ){
 								return true;
+					} else if  (x.hasUnbornChild()){
+						if (x.isMale()){
+							((Woman) x.getLatestWife()).getEmbryo().setOffice(this.getLineage().getOffice());
+						} else {
+								((Woman) x).getEmbryo().setOffice(this.getLineage().getOffice());
 						}
+						x.getLatestWife();
+						this.setPriority(0);
+						Basic.annals.recordInterregnumBeginning(x);
+						return true;
 					}
 				}
 				removeFromLineage();

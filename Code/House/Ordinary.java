@@ -17,10 +17,8 @@ public class Ordinary extends Charge {
   }
 
   public enum Type{
-    BAR("bar", new String[]{"two", "three", "of_two_wavy", "of_three_wavy", "gemel_two"}),
-    BARRY("barry", new String[]{"of_five", "of_eight", "of_ten", "of_five_wavy", "of_eight_wavy", "of_ten_wavy"}),
-    BEND("Bend", new String[]{"dexter", "sinister", "cotised_dexter", "cotised_sinister", "bendlet_dexter", "bendlet_sinister", "riband_dexter", "riband_sinister", "scarp"}),
-    CHEVRON("Chevron", new String[]{"plain", "inverted", "interlaced"}),
+		BAR("bar", new String[]{"two", "three", "of_two_wavy", "of_three_wavy", "gemel_two"}),
+    BEND("Bend", new String[]{"dexter", "sinister", "cotised_dexter", "cotised_sinister", "bendlet_dexter", "bendlet_sinister", "riband_dexter", "riband_sinister", "scarp", "fret"}),
     CHIEF("Chief", new String[]{"plain", "triangular", "enarched", "double-arched"}),
     CROSS("Cross", new String[]{"plain", "dancetty", "quarter-pierced", "parted_fretted", "coldharbour", "fusils"}),
     FESS("Fess", new String[]{"plain", "cottised", "dancetty", "doubly_cottised"}),
@@ -30,10 +28,8 @@ public class Ordinary extends Charge {
     PALL("Pall", new String[]{"plain", "inverted", "shakefork"}),
     SALTIRE("Saltire", new String[]{"plain", "couped"}),
     TIERCE("Tierce", new String[]{"dexter", "sinister", "dancetty_dexter", "dancetty_sinister"}),
-		FRET("Fret", new String[]{"plain"}),
-		BASE("Base", new String[]{"plain", "doventailed", "wavy", "embattled"}),
+		BASE("base", new String[]{"plain", "dovetailed", "wavy", "embattled", "engrailed", "indented"}),
 		FUR("Fur", new String[]{"ermine", "vair"}),
-		CHEQUY("Chequy", new String[]{"plain"}),
 		GYRON("Gyron", new String[]{"dexter", "sinister"}),
 		GYRONNY("Gyronny", new String[]{"of_eight", "of_sixteen"}),
 		PILES("Piles", new String[]{"of_four", "of_ten"});

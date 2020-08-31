@@ -3,8 +3,9 @@ import Code.Human.*;
 import Code.Common.Basic;
 import Code.Politics.Title;
 import Code.Politics.Realm;
+import Code.Common.Basic;
 import java.util.ArrayList;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,19 +40,24 @@ public class Marriage extends SexRelation{
 /*Used for starters*/
 	public Marriage(Human husband, Human wife, int year){
 		super(husband, wife);
-		this.beginning.add(Calendar.DATE, -365*year);
+		this.beginning.addDays(-360*year);
 		this.setMarriage();
+
     }
 
 /*Used for regulars*/
     public Marriage(Human husband, Human wife){
 		super(husband, wife);
 		this.anniversary = 	0;
+
 		this.setMarriage();
 		this.determineEndForFornication();
 		this.consummate();
 		this.sated = false;
-    }
+		if (!husband.isFromSameEstate(wife)){
+			throw new RuntimeException();
+		}
+	}
 
 
 	public void setMarriage(){
@@ -59,6 +65,11 @@ public class Marriage extends SexRelation{
 		this.stag.addMarriage(this);
 		this.doe.addMarriage(this);
 		this.setKinType(this.defineKinType());
+		if (stag.isRegnant()){
+			Realm.getHolder(0).setConsort(doe);
+		} else if (doe.isRegnant()){
+			Realm.getHolder(0).setConsort(stag);
+		}
 	}
 
 	public void setKinType(byte i){
@@ -175,8 +186,12 @@ public class Marriage extends SexRelation{
 	public static void checkProposals(int maom){
 		List<Human> w = Woman.getSingles();
 		if (w.size() >= 2){
+			//If there are at least two unwed women seeking for marriage
+
+
 			List<Integer> l = new ArrayList<>(w.size());
-			int i = Basic.max(2, (int) (w.size()*0.05) );//(int) (w.size()*0.025);
+			int i = Basic.max(2, (int) (w.size()*0.015) );
+			//Figure out what number of unwed women should get married, minium of two, but ideally a larger percentage
 
 			int a;
 			while(l.size() < i){
@@ -191,6 +206,7 @@ public class Marriage extends SexRelation{
 		}
 	}
 
+
 	public static void propose(Human h, int maom){
 		int f = Basic.randint(maom)+1;
 		Basic.dayC.get(f).add(h);
@@ -198,15 +214,13 @@ public class Marriage extends SexRelation{
 		addMonthlyWedding();
 	}
 
-	public static int bs = 0;
-
 	public static void prepare(Human b){
 		if (match(b)){
 			marryFiancee(bestMatch, b);
 		}
 
 		/*else if (b.isNoble()){
-			if (Basic.getDateYear() > 1100 ){
+			if (Basic.getYear() > 1100 ){
 				bs++;
 				//throw new RuntimeException();
 			}*/
@@ -227,8 +241,6 @@ public class Marriage extends SexRelation{
 		}*/
 	}
 
-	public static int ca = 0;
-
 	//When a noble decides to marry a peasant or a mistress who likely is a peasant,
 	private static void marryMistress(Human g){
 		Human b = g.getRandomUnmarriedMistress();					//Bride who marries the (g)room
@@ -237,7 +249,6 @@ public class Marriage extends SexRelation{
 			if (b.getHouse().isActive()){
 				if (!b.getHouse().isNoble()){						//Just to be safe
 					b.getHouse().ennoble(4);						//Origin being morganatic origin
-					System.out.println("morganatic ennoblement");
 				}
 			}
 		}
@@ -356,36 +367,39 @@ public class Marriage extends SexRelation{
     Marriage temp = new Marriage(husband, wife, year);
 		husband.setRelSta(2);
 		wife.setRelSta(2);
-		if (husband.getTitle() == Title.KING){
-			Realm.getHolder(0).setConsort(wife);
-		}
 		husband.becomeTaken();
 		wife.becomeTaken();
     }
 
   public static void marry(Human husband, Human wife){
+			if (wife.getRelSta() == 2){
+				throw new RuntimeException();
+			}
       Marriage temp = new Marriage(husband, wife);
 			husband.setRelSta(2);
 			wife.setRelSta(2);
-			if (husband.getTitle() == Title.KING){
-				Realm.getHolder(0).setConsort(wife);
-			}
   }
 
 	public int getAgeAt(Human spouse){
-		return this.beginning.get(Calendar.YEAR)-spouse.getBirth().get(Calendar.YEAR);
+		return this.beginning.getYear()-spouse.getBirth().getYear();
 	}
 
 	/*Widow marries her brother-in-laws*/
 	public static void doLevirate(Human widow, Human departed){
-		marryFiancee(departed.getUnwedPatBrother(), widow);
-		getRecentMarriage().setLevirate();
+		Human h = departed.getUnwedPatBrother();
+		if (widow.isFromSameEstate(h)){
+			marryFiancee(h, widow);
+			getRecentMarriage().setLevirate();
+		}
 	}
 
 	/*Widower marries his sister-in-laws*/
 	public static void doSororate(Human widower, Human departed){
-		marryFiancee(widower, departed.getUnwedPatSister());
-		getRecentMarriage().setSorotate();
+		Human h = departed.getUnwedPatSister();
+		if (widower.isFromSameEstate(h)){
+			marryFiancee(widower, h);
+			getRecentMarriage().setSorotate();
+		}
 	}
 
 	public void terminate(){
@@ -394,6 +408,9 @@ public class Marriage extends SexRelation{
 		this.getStag().setSpouseNull();
 		this.getDoe().setSpouseNull();
 		list.remove(this);
+		if (list.contains(this)){
+			throw new RuntimeException();
+		}
 	}
 
 	public static void doBreeding(){
@@ -415,12 +432,10 @@ public class Marriage extends SexRelation{
 
 	public void breed(){
 		Woman w = (Woman) this.doe;
-		if (this.canBreed() && !w.isPregnant()){
+		if (!w.isPregnant()){
 			if (w.isUnderAgeOf(46)){
 				if (Basic.randint(100) < this.calcProcreation() ){
 					w.fillUterus(this);
-					w.growFetus();
-					Woman.pregnant.add(this.doe);
 				}
 			}
 		}
@@ -591,7 +606,7 @@ public class Marriage extends SexRelation{
 	}
 
 	public static void flushMonthlyWedding(){
-		if (Basic.date.get(Calendar.YEAR) >= 1100){
+		if (Basic.date.getYear() >= 1100){
 			monthlyWeddingList.add(getMonthlyWedding()/(0.0f+Human.living.size()));
 		}
 		numOfMonthlyWeddings = 0;

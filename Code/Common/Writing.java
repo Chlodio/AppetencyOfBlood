@@ -8,10 +8,11 @@ import Code.House.House;
 import Code.Common.Basic;
 import Code.Common.HTML;
 import Code.History.Census;
+import Code.Politics.Consort;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.io.IOException;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class Writing {
 		for(House x: l){
 			StringBuffer td = new StringBuffer(HTML.getTd(x.getName()));
 			td.append(HTML.getTdClass("CoAT", x.getCoALink()));
-			td.append(HTML.getTd(x.getFounding()));
+			td.append(HTML.getTd(x.getFounding().getYearString()));
 			td.append(HTML.getTd(x.getOriginString()));
 			td.append(HTML.getTd(String.valueOf(x.getKinsmenCount())));
 			td.append(HTML.getTd(String.valueOf(x.getKinswomenCount())));
@@ -170,7 +171,7 @@ public class Writing {
 		tr.append(HTML.getTdClass("CoAT", q.getHouseCoALink()));
 
 	//Cell for birth
-		tr.append(HTML.getTd(q.getBirthF()));
+		tr.append(HTML.getTd(q.getBirth().getDateString()));
 
 	//Cell for marriage
 		tr.append(HTML.getTd(recordMarriages(q)));
@@ -241,6 +242,7 @@ public class Writing {
 		}
 	}
 
+/*
 	public static void writeSummary(){
 		try {
 			FileWriter writer = new FileWriter("Output/Summary.html", false);
@@ -302,102 +304,295 @@ public class Writing {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}*/
+
+	public static String getGeneralCensus(){
+		StringBuffer s = new StringBuffer();
+		s.append("General");
+
+		//The names of headers
+		String[] th = {"#", "⚤", "♂", "♀"};
+
+		String temp = "";
+		s.append(HTML.getTr(HTML.createTableHeader(th)));
+		temp = HTML.getTd("Living");
+		temp += HTML.getTd(Human.living.size()+"");
+		temp += HTML.getTd(Man.getAmount()+"");
+		temp += HTML.getTd(Woman.getAmount()+"");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Children");
+		temp += HTML.getTd(Human.getPerOfChildren()+"%");
+		temp += HTML.getTd(Man.getPerOfChildren()+"%");
+		temp += HTML.getTd(Woman.getPerOfChildren()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Elderly");
+		temp += HTML.getTd(Human.getPerOfElderly()+"%");
+		temp += HTML.getTd(Man.getPerOfElderly()+"%");
+		temp += HTML.getTd(Woman.getPerOfElderly()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Median age");
+		temp += HTML.getTd(Human.getMedianAge(Human.getLiving())+"");
+		temp += HTML.getTd(Human.getMedianAge(Man.getMen())+"");
+		temp += HTML.getTd(Human.getMedianAge(Woman.getWomen())+"");
+		s.append(HTML.getTr(temp));
+
+		return HTML.getTable(String.valueOf(s));
 	}
 
 
-	public static void writeDemography(){
+	public static String getAdultCensus(){
+		StringBuffer s = new StringBuffer();
 		int[] lifE = getLifeExpetency();
-		int[] eyeC = getEyeColorCensus();
-		int[] hairC = getHairColorCensus();
+		s.append("Adult");
+
+		//The names of headers
+		String[] th = {"#", "⚤", "♂", "♀"};
+
+		String temp = "";
+		s.append(HTML.getTr(HTML.createTableHeader(th)));
+
+		temp = HTML.getTd("Bachelors");
+		temp += HTML.getTd(Human.getPerOfBachelors()+"%");
+		temp += HTML.getTd(Man.getPerOfBachelors()+"%");
+		temp += HTML.getTd(Woman.getPerOfBachelors()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Singles");
+		temp += HTML.getTd(Human.getPerOfSingles()+"%");
+		temp += HTML.getTd(Man.getPerOfSingles()+"%");
+		temp += HTML.getTd(Woman.getPerOfSingles()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Widowed");
+		temp += HTML.getTd(Human.getPerOfWidowed()+"%");
+		temp += HTML.getTd(Man.getPerOfWidowed()+"%");
+		temp += HTML.getTd(Woman.getPerOfWidowed()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Parents");
+		temp += HTML.getTd(Human.getPerOfParents()+"%");
+		temp += HTML.getTd(Man.getPerOfParents()+"%");
+		temp += HTML.getTd(Woman.getPerOfParents()+"%");
+		s.append(HTML.getTr(temp));
+
+		return HTML.getTable(String.valueOf(s));
+	}
+
+	public static String getReproductiveWomen(){
+		StringBuffer s = new StringBuffer();
+		int[] lifE = getLifeExpetency();
+		s.append("Reproductive women");
+
+		//The names of headers
+		String[] th = {"#", "%"};
+
+		String temp = "";
+		s.append(HTML.getTr(HTML.createTableHeader(th)));
+
+		temp = HTML.getTd("Married");
+		temp += HTML.getTd(Woman.getPerOfMarriedRepWomen()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Pregnant");
+		temp += HTML.getTd(Woman.getPerOfPregnantWomen()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Fertility rate");
+		temp += HTML.getTd((Woman.getFertilityRate()+"").substring(0,3));
+		s.append(HTML.getTr(temp));
+
+
+		return HTML.getTable(String.valueOf(s));
+	}
+
+	public static String getMarriageCensus(){
+		StringBuffer s = new StringBuffer();
+		s.append("Marriages");
+
+		//The names of headers
+		String[] th = {"#", "%"};
+
+		String temp = "";
+		s.append(HTML.getTr(HTML.createTableHeader(th)));
+
+		temp = HTML.getTd("First cousin marriages");
+		temp += HTML.getTd(Marriage.getPerOfCousinUnions()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Second cousin marriages");
+		temp += HTML.getTd(Marriage.getPerOfSecondCousinUnions()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Levirate marriages");
+		temp += HTML.getTd(Marriage.getPerOfLevirates()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Sororate marriages");
+		temp += HTML.getTd(Marriage.getPerOfSororates()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Childless marriages");
+		temp += HTML.getTd(Marriage.getPerOfChildless()+"%");
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Avg. num. of children");
+		temp += HTML.getTd((Marriage.getAvgNumOfChildren()+"").substring(0,3));
+		s.append(HTML.getTr(temp));
+
+		return HTML.getTable(String.valueOf(s));
+	}
+
+	public static String[] getOldestLongevityMonarch(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = h.getPerson().getAged();
+		for(Holder x: l){
+			if (x.getPerson().getAged() > a){
+				h = x;
+				a = x.getPerson().getAged();
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = h.getName();
+		s[1] = a+"";
+		return s;
+	}
+
+	public static String[] getYoungestLongevityMonarch(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = h.getPerson().getAged();
+		for(Holder x: l){
+			if (x.getPerson().getAged() < a){
+				h = x;
+				a = x.getPerson().getAged();
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = h.getName();
+		s[1] = a+"";
+		return s;
+	}
+
+	public static String[] getLongestReign(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = h.getReignLengthExact();
+		for(Holder x: l){
+			if (x.getReignLengthExact() > a){
+				h = x;
+				a = x.getReignLengthExact();
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = h.getName();
+		s[1] = h.getReignYearsAndDays();
+		return s;
+	}
+
+	public static String[] getShortestReign(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = h.getReignLengthExact();
+		for(Holder x: l){
+			if (x.getReignLengthExact() < a){
+				h = x;
+				a = x.getReignLengthExact();
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = h.getName();
+		s[1] = h.getReignYearsAndDays();
+		return s;
+	}
+
+	public static String[] getMostChildrenMonarch(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = h.getPerson().getChildren().size();
+		for(Holder x: l){
+			if (x.getPerson().isAdult() && x.getPerson().getChildren().size() > a){
+				h = x;
+				a = h.getPerson().getChildren().size();
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = h.getName();
+		s[1] = a+"";
+		return s;
+	}
+
+
+	public static String getMonarchialRecord(){
+		StringBuffer s = new StringBuffer();
+		s.append("Monarchial record");
+
+		//The names of headers
+		String[] th = {"#", "Holder", "Record"};
+		String[] m;							//Store monarchial record
+		String temp = "";
+		s.append(HTML.getTr(HTML.createTableHeader(th)));
+
+		temp = HTML.getTd("Oldest longevity");
+		m = getOldestLongevityMonarch();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Youngest longevity");
+		m = getYoungestLongevityMonarch();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Longest reign");
+		m = getLongestReign();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Shortest reign");
+		m = getShortestReign();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Most children");
+		m = getMostChildrenMonarch();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+		return HTML.getTable(String.valueOf(s));
+
+	}
+
+	public static void writeDemography(){
+		//int[] eyeC = getEyeColorCensus();
+		//int[] hairC = getHairColorCensus();
 		int[][] pop = buildPopulationPyramid();
-		//int[] wom = buildGynaecology();
+
+		StringBuffer s = HTML.getBeginning();
+		s.append(getGeneralCensus());
+		s.append(getAdultCensus());
+		s.append(getReproductiveWomen());
+		s.append(getMarriageCensus());
+		s.append(getMonarchialRecord());
+
+
 		try {
 			FileWriter writer = new FileWriter("Output/Demography.html", false);
-			writer.write("<html>\n<head><meta charset='UTF-8'>\n");
-			writer.write("<link type='text/css' rel='stylesheet' href='standard.css'/>");
-			writer.write("</head><body>\n");
+			writer.write(String.valueOf(s));
 
-			writer.write("<b>General</b><table>");
-			writer.write("<tr><th>#</th><th>⚤</th><th>♂</th><th>♀</th><tr>\n");
-
-			writer.write("<tr><td>Living</td><td>"+Human.living.size()+"</td>");
-			writer.write("<td>"+Man.getAmount()+"</td>");
-			writer.write("<td>"+Woman.getAmount()+"</td></tr>");
-
-			writer.write("<tr><td>Children</td><td>"+Human.getPerOfChildren()+"%</td>");
-			writer.write("<td>"+Man.getPerOfChildren()+"%</td>");
-			writer.write("<td>"+Woman.getPerOfChildren()+"%</td></tr>");
-
-			writer.write("<tr><td>Elderly</td><td>"+Human.getPerOfElderly()+"%</td>");
-			writer.write("<td>"+Man.getPerOfElderly()+"%</td>");
-			writer.write("<td>"+Woman.getPerOfElderly()+"%</td></tr>");
-
-
-			writer.write("<tr><td>Life expectancy</td><td>"+lifE[0]+"</td>");
-			writer.write("<td>"+lifE[3]+"</td>");
-			writer.write("<td>"+lifE[4]+"</td></tr>");
-
-
-			writer.write("<tr><td>Oldest</td><td>"+lifE[2]+"</td></tr>");
-			writer.write("<tr><td>Brown eyed</td><td>"+eyeC[0]+"</td></tr>");
-			writer.write("<tr><td>Blue eyed</td><td>"+eyeC[1]+"</td></tr>");
-			writer.write("<tr><td>Green eyed</td><td>"+eyeC[2]+"</td></tr>");
-			writer.write("<tr><td>Black haired</td><td>"+hairC[0]+"</td></tr>");
-			writer.write("<tr><td>Brown haired</td><td>"+hairC[1]+"</td></tr>");
-			writer.write("<tr><td>Blond haired</td><td>"+hairC[2]+"</td></tr>");
-			writer.write("<tr><td>Straw haired</td><td>"+hairC[3]+"</td></tr>");
-			writer.write("<tr><td>Red haired</td><td>"+hairC[4]+"</td></tr>");
-
-			writer.write("</table><b>Adults</b><table>");
-			writer.write("<tr><th>#</th><th>⚤</th><th>♂</th><th>♀</th><tr>\n");
-
-			writer.write("<tr><td>Life expectancy</td><td>"+lifE[1]+"</td>");
-			writer.write("<td>"+lifE[5]+"</td>");
-			writer.write("<td>"+lifE[6]+"</td></tr>");
-
-			writer.write("<tr><td>Bachelors</td>");
-			writer.write("<td>"+Human.getPerOfBachelors()+"%</td>");
-			writer.write("<td>"+Man.getPerOfBachelors()+"%</td>");
-			writer.write("<td>"+Woman.getPerOfBachelors()+"%</td></tr>");
-
-			writer.write("<tr><td>Singles</td>");
-			writer.write("<td>"+Human.getPerOfSingles()+"%</td>");
-			writer.write("<td>"+Man.getPerOfSingles()+"%</td>");
-			writer.write("<td>"+Woman.getPerOfSingles()+"%</td></tr>");
-
-			writer.write("<tr><td>Widowed</td>");
-			writer.write("<td>"+Human.getPerOfWidowed()+"%</td>");
-			writer.write("<td>"+Man.getPerOfWidowed()+"%</td>");
-			writer.write("<td>"+Woman.getPerOfWidowed()+"%</td></tr>");
-
-			writer.write("<tr><td>Parents</td>");
-			writer.write("<td>"+Human.getPerOfParents()+"%</td>");
-			writer.write("<td>"+Man.getPerOfParents()+"%</td>");
-			writer.write("<td>"+Woman.getPerOfParents()+"%</td></tr>");
-
-			writer.write("</table><b>Reproductive age women</b><table>");
-
-			writer.write("<tr><th>#</th><th>%</th><tr>\n");
-			writer.write("<tr><td>Married</td><td>"+Woman.getPerOfMarriedRepWomen()+"%</td></tr>");
-			writer.write("<tr><td>Pregnant</td><td>"+Woman.getPerOfPregnantWomen()+"%</td></tr>");
-
-			writer.write("</table><b>Marriages</b><table>");
-
-			writer.write("<tr><th>#</th><th>%</th><tr>\n");
-
-			writer.write("<tr><th>First Cousin marriages</th><td>"+Marriage.getPerOfCousinUnions()+"%</td><tr>\n");
-
-			writer.write("<tr><th>Second Cousin marriages</th><td>"+Marriage.getPerOfSecondCousinUnions()+"%</td><tr>\n");
-
-			writer.write("<tr><th>Levirate marriages</th><td>"+Marriage.getPerOfLevirates()+"%</td><tr>\n");
-
-			writer.write("<tr><th>Sororate marriages</th><td>"+Marriage.getPerOfSororates()+"%</td><tr>\n");
-
-			writer.write("<tr><th>Childless marriages</th><td>"+Marriage.getPerOfChildless()+"%</td><tr>\n");
-
-			writer.write("<tr><th>Avg. num. of children</th><td>"+Marriage.getAvgNumOfChildren()+"</td><tr>\n");
-
-			writer.write("</table><p style='float:right'><b>CENSUS:</b><table>");
+			writer.write("<p style='float:right'><b>CENSUS:</b><table>");
 			writer.write("<tr><th>YEAR</th><th>LIVING</th><th>MEN</th><th>WOMEN</th></tr>");
 			String[] census = Census.write();
 			for(String x: census){
@@ -492,6 +687,24 @@ public class Writing {
 		arr[6] = AFLE/NAW;
 		return arr;*/
 	}
+
+	public static void writeConsorts(){
+		String t  = String.valueOf(HTML.getBeginning());	//Short for text the written text will be stored here
+
+		t += Consort.getHTML(Office.offices.get(0).getConsorts());
+
+		t += HTML.getEnding();
+
+		try {
+			FileWriter writer = new FileWriter("Output/Consorts.html", false);
+			writer.write(t);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	public static int[] getEyeColorCensus(){
 		int[] c = new int[3];

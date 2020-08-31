@@ -14,7 +14,7 @@ public class CoatOfArms {
   //Portmanteau of parent cadency, if the owner of coat of arms is a cadet house, quarter their new coat of arms with their parent's CoA
 
   public CoatOfArms(House h) {
-    if (Basic.coinFlip()){
+    if (Basic.flipCoin()){
       this.onMetal = true;
       this.background = metals[Basic.randint(2)];
     } else {

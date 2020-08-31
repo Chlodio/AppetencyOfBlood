@@ -27,7 +27,7 @@ public class Rule {
 		s.setTitle(s.getRoyalTitle());
 		s.getName().setFull(this.seniorHolder.getName());
 		if(s.isMarried()){
-			this.seniorHolder.setConsort(s.getSpouse()) ;
+			this.seniorHolder.setConsort(s.getSpouse());
 		}
 		if (s.isAdult()){
 			s.princifyChildren();

@@ -3,7 +3,7 @@ import Code.Human.Human;
 import Code.Common.Basic;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 
 public class SexRelation{
 
@@ -16,7 +16,7 @@ public class SexRelation{
 	protected int romance;
 //	protected int[] procreation;
 	protected List<Human> offspring;
-    protected static int id 								= 0;
+  protected static int id 								= 0;
 	protected Calendar beginning;
 	protected Calendar ending;
 
@@ -32,6 +32,8 @@ public class SexRelation{
 	}
 
 	public SexRelation(Human m, Human w){
+
+
 		this.sexSat =	1+Basic.randint(5);
 		this.romance =	1+Basic.randint(5);
 		if (m.isActiveAdulterer() && w.isActiveAdulterer()){
@@ -52,16 +54,7 @@ public class SexRelation{
 		this.stag = 		m;
 		this.doe = 			w;
 		this.beginning = 	(Calendar) Basic.date.clone();
-		try{
-			this.fertility = 	Math.min(m.getFert(), w.getFert());
-		} catch(NullPointerException e){
-			System.out.println("Husband fert: "+m.getFert());
-			System.out.println(w);
-			System.out.println("Wife age: "+w.getAge());
-			System.out.println("Adult: "+w.isAdult());
-			System.out.println("Wife fert: "+w.getFert());
-			throw new RuntimeException();
-		}
+		this.fertility = 	Math.min(m.getFert(), w.getFert());
 		this.offspring = 	new ArrayList<>();
 		this.active = 		true;
 	}
@@ -72,7 +65,7 @@ public class SexRelation{
 		int wa = 			this.getDoe().getAge();
 		int fmy = 			70-ha;
 		int ffy = 			50-wa;
-		float v = 			(this.getFertility()/10f)*(1.25f);
+		float v = 			(this.getFertility()/10f)*(1.5f);
 		int tfy = Math.min(fmy, ffy);
 		return (int) (v*(fert[(wa-12)/10][(wa-12)%10]));
 	}
@@ -241,8 +234,8 @@ public class SexRelation{
 
 	}
 
-	public int getBeginningYear(){				return this.beginning.get(Calendar.YEAR);}
-	public int getEndingYear(){					return this.ending.get(Calendar.YEAR);}
+	public int getBeginningYear(){				return this.beginning.getYear();}
+	public int getEndingYear(){					return this.ending.getYear();}
 
 	public Calendar getBeginning(){				return this.beginning;}
 	public Calendar getEnding(){				return this.ending;}

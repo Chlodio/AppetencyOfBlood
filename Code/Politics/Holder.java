@@ -12,9 +12,10 @@ import Code.House.Dynasty;
 import Code.House.House;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import Code.Politics.Consort;
 import Code.House.CadetHouse;
 
 public class Holder{
@@ -23,7 +24,7 @@ public class Holder{
 	private Calendar end;
 	private Calendar start;
 	private Claim claim;
-	private Human consort;
+	private Consort consort;
 	private Human person;
 	private Office office;
 	private Ruler ruler;
@@ -85,12 +86,7 @@ public class Holder{
 
 	public void setConsort(Human c){
 		c.setOffice(this.office);
-		this.consort = c;
-		this.office.addToConsortList(c);
-		if (c.isFemale()){
-			c.setTitle(Title.QUEENCONSORT);
-			c.sRename(Title.QUEENCONSORT);
-		}
+		c.makeConsortOf(this);
 	}
 
 	public static Holder regnafy(Human person, Office office){
@@ -112,9 +108,9 @@ public class Holder{
 	public String getReign(){
 		String x = this.getStartYearStr();
 		if(this.hasEnded()){
-			if(this.start.get(Calendar.YEAR) != this.end.get(Calendar.YEAR)){
+			if(this.start.getYear() != this.end.getYear()){
 				x += "–";
-				x = x+this.end.get(Calendar.YEAR);
+				x = x+this.end.getYear();
 			}
 			return x;
 		}
@@ -126,10 +122,10 @@ public class Holder{
 	public String getReignLength(){
 		String rl = "";
 		if(this.hasEnded()){
-			rl += Integer.toString((this.end.get(Calendar.YEAR)-this.start.get(Calendar.YEAR)));
+			rl += Integer.toString((this.end.getYear()-this.start.getYear()));
 		}
 		else{
-			rl += Integer.toString((Basic.date.get(Calendar.YEAR)-this.start.get(Calendar.YEAR)));
+			rl += Integer.toString((Basic.date.getYear()-this.start.getYear()));
 		}
 		return rl;
 	}
@@ -143,14 +139,14 @@ public class Holder{
 	}
 
 	public int getReignLengthYears(){
-		return this.getReignLengthExact()/365;
+		return this.getReignLengthExact()/360;
 	}
 
 	public String getReignYearsAndDays(){
 		int d = this.getReignLengthExact();		//Days
-		int y = d/365;
+		int y = d/360;
 		String s = "";
-		d -= y*365;
+		d -= y*360;
 		s = Basic.getPlural(y, "year");
 		if (s != ""){
 			s += " and ";
@@ -243,7 +239,7 @@ public class Holder{
 		s.append(" was");
 		if (h.hadFather()){
 			s.append(" born in ");
-			s.append(Basic.sDateLong(h.getBirth())).append(" as the ");
+			s.append(h.getBirth().getDateLong()).append(" as the ");
 			s.append(h.getAgnaticOrderStr()).append(" of ");
 			s.append(this.getParentNameAge(h.getFather())).append(" and ");
 			if (!h.hasSameBirthOrder()){
@@ -330,15 +326,14 @@ public class Holder{
 
 	public String getAgeOfAscensionS(){
 		int a = this.getPerson().getDaysIn(this.getStart());
-		if (a > 365){
-			return "at the age of "+Basic.getCardinal(a/365);
-		} else if (a > 31) {
-			return "while only "+Basic.getCardinal(a/31)+"-months-old";
-		} else if (a != 0){
+		if (a > 360){
+			return "at the age of "+Basic.getCardinal(a/360);
+		} else if (a > 30) {
+			return "while only "+Basic.getCardinal(a/30)+"-months-old";
+		} else if (a > 0){
 			return "while barely "+Basic.getCardinal(a)+"-days-old";
 		} else {
 			return "after being born only few hours priors";
-
 		}
 	}
 
@@ -347,7 +342,7 @@ public class Holder{
 	}
 
 	public String getStartYearStr(){
-		return Integer.toString(this.getStart().get(Calendar.YEAR));
+		return Integer.toString(this.getStart().getYear());
 	}
 
 //Claim
@@ -387,7 +382,7 @@ public String getClaimName(String o){
 	public boolean hasConsort(){ 			return this.consort != null; }
 	public Claim getClaim(){				return this.claim; }
 	public Holder getHolder(){ 				return this; }
-	public Human getConsort(){ 				return this.consort; }
+	public Consort getConsort(){ 				return this.consort; }
 	public Human getPerson(){ 				return this.person; }
 	public Office getOffice(){				return this.office; }
 	public Ruler getRuler(){ 				return this.ruler; }

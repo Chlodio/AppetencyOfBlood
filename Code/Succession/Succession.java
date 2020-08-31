@@ -11,6 +11,7 @@ public class Succession {
 	public static Human[] lineageSecT;
 	public static boolean lineal;
 	private static int blood;
+	static boolean coverture;
 
 	protected Human secondaryHeir;
 	protected Lineage lineage;
@@ -28,6 +29,7 @@ public class Succession {
 	public static void clearLineage(){
 		lineageI = 0;
 		lineageT = new Human[21];
+		coverture = false;
 	}
 
 	public static void clearSLineage(){
@@ -55,8 +57,8 @@ public class Succession {
 		lineageT[lineageI] = h;
 		lineageI++;
 		if (!lineageT[0].isRegnant()){
-			System.out.println(lineageT[0].getFormalName());
-			throw new RuntimeException();
+	//		System.out.println(lineageT[0].getFormalName());
+	//		throw new RuntimeException();
 		}
 	}
 
@@ -123,7 +125,7 @@ public class Succession {
 	//Count the number of women in the lineage for the sake determining blood type
 	public int countNumOfWomen(){
 		int i = 0;
-		Human[] a = this.getLineage();
+		Human[] a = this.getHumanLineage();
 		for(int x = 0; x < lineageI;x++){
 			if (a[x].isFemale()){
 				i++;
@@ -133,7 +135,17 @@ public class Succession {
 	}
 
 	public void setPriority(int v){
-		this.lineage.setPriority(v);
+		if (this.lineage.getPriority() == -1){
+			this.lineage.setPriority(v);
+		}
+	}
+
+	public void resetPriority(){
+		this.lineage.setPriority(-1);
+	}
+
+	public int getPriority(){
+		return this.lineage.getPriority();
 	}
 
 	public void lockAndSetHeir(Human h){
@@ -152,6 +164,10 @@ public class Succession {
 		blood = 0;
 	}
 
+	public static void setCoverture(){
+		coverture = true;
+	}
+
 	public static void setBlood(int i){
 		blood = i;
 	}
@@ -160,8 +176,12 @@ public class Succession {
 		return blood;
 	}
 
-	public Human[] getLineage(){
+	public Human[] getHumanLineage(){
 		return this.lineageT;
+	}
+
+	public Lineage getLineage(){
+		return this.lineage;
 	}
 
 	public Office getOffice(){

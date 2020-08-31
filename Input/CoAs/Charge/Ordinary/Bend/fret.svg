@@ -9,6 +9,9 @@
    </cc:Work>
   </rdf:RDF>
  </metadata>
- <path d="m-1.655 11.4 51.65 67.81 51.66-67.81" fill="none" stroke="#000" stroke-linecap="square" stroke-width="18.15" style="paint-order:markers stroke fill"/>
- <path d="m-1.655 92.96 51.65-67.81 51.66 67.81" fill="none" stroke="#000" stroke-linecap="square" stroke-width="18.15" style="paint-order:markers stroke fill"/>
+ <g fill-rule="evenodd">
+  <rect transform="rotate(-45)" x="-11.37" y="-.4152" width="15" height="150" style="paint-order:markers stroke fill"/>
+  <rect transform="matrix(-.7071 -.7071 -.7071 .7071 0 0)" x="-82.08" y="-71.13" width="15" height="150" style="paint-order:markers stroke fill"/>
+  <path d="m50 15.48-40 40 40 40 40-40-40-40zm0 16.19 23.81 23.81-23.81 23.81-23.81-23.81 23.81-23.81z" style="paint-order:markers stroke fill"/>
+ </g>
 </svg>

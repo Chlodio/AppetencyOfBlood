@@ -5,13 +5,14 @@ import Code.Politics.Title;
 import Code.Common.Name;
 import Code.Common.Basic;
 import Code.House.House;
+import Code.Human.Embryo;
+import Code.Politics.Office;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Calendar;
+import Code.calendar.Calendar;
 
 public class Woman extends Human {
-	protected SexRelation uterus;
-	protected int mop;							//month of pregnancy
+	protected Embryo uterus;
 	protected Office eop;						//events of pregnancy
 	protected static List<Human> elders =	  	new ArrayList<>();
 	public static List<Human> women = 		new ArrayList<>();
@@ -44,9 +45,8 @@ public class Woman extends Human {
 
 	public void setUp(){
 		this.sex = true;
- 	  	this.mop = -1;
- 	  	this.religion.getParish().add(this);
- 	  	women.add(this);
+ 	  this.religion.getParish().add(this);
+ 	  women.add(this);
 	}
 
 	@Override
@@ -98,13 +98,43 @@ public class Woman extends Human {
 		return s;
 	}
 
+	@Override
+	public int getLifeChance(){
+		if (Basic.drawStraws(4)){
+			//25% chance to die before age of 10
+			if (Basic.drawStraws(3)){
+				return 61+Basic.randint(60);
+				//To live to be 5–10 year olds odds are 0.25*0.33 = 8.25%
+			} else {
+				return 1+Basic.randint(60);
+				//To live to be 0–5 year olds odds are 0.25*0.66 = 15%
+			}
+		} else {
+			//75% chance to live past age of 10
+			if (Basic.drawStraws(40)){
+				//2.5% chance to die before a teenager
+				return 121+Basic.randint(120);
+				//To live to be 10–20 year olds odds are 0.75*0.2*0.5 = 7.5%
+			} else {
+				//70%
+				if (!Basic.drawStraws(5)){
+					return 241+Basic.randint(480);
+					//To live to be 20–60 year olds odds are 0.75*0.8 = 56%
+				} else {
+					return 721+Basic.randint(300);
+					//60–85
+				}
+			}
+		}
+	}
+
 
 
   @Override
 	public void saunter(int x){
     switch(x){
 			case 1:
-				if (this.isAlive()){
+				if (this.isAlive() && this.isUnwed()){
 					Marriage.prepare(this);
 				}
         break;
@@ -135,42 +165,91 @@ public class Woman extends Human {
 	}
 
 	@Override
-	public void ovulate(int maom){
-		this.growFetus();
-		if (this.mop == 10){
-			int f = Basic.randint(maom)+1;
-			Basic.dayC.get(f).add(this); Basic.dayE.get(f).add(20);
-		}
-	}
-
-	@Override
 	public void childbirth(){
+
 		if (Basic.randint(10) != 0){					//Stillbirth? this.relSta != 4
-			this.deliver(this.uterus);
+			this.deliver();
 			if (Basic.randint(150) == 0){
-				this.deliver(this.uterus);			//Twins?
+				this.deliver();										//Twins?
 			}
+
 		}
+		this.drainUterus();
+
 		if (Basic.randint(50) == 0){					//Maternal death?
 			this.kill((byte) 10);
 		}
-
-		else {
-			this.drainUterus();
-			//Posthumous
+		else {			//Posthumous
 			if (this.isRelSta(4)){
 				this.becomeWidow();
+	//			this.uterus.handlePosthumous();
+
 			}
 		}
 	}
-	public boolean isPregnant(){ 			return this.uterus != null; 	}
-	public void fillUterus(SexRelation sperm){ 		this.uterus = sperm; 	}
-	public void growFetus(){				this.mop++; }
+
+	public void deliver(){
+		Human c;
+
+		SexRelation union = this.uterus.getOrigin();
+		if (union instanceof Marriage){
+			c = this.deliverLegimate(union);
+		} else{
+			if (union.getDoe().isMarried()){
+				c = this.deliverLegimate(union.getDoe().getLatestMarriage());
+			} else {
+				c = this.deliverIllegimate(union);
+			}
+			c.setGenitor(union.getStag());
+		}
+		c.addChild(c.getFather(), this);
+		c.addRealChild(union.getStag(), this);
+	}
+
+	public boolean isPregnant(){
+		return this.uterus != null;
+	}
+
+	//Impregnates, the relation determines parantage
+	public void fillUterus(SexRelation s){
+		this.uterus = new Embryo(s);
+		if (Woman.pregnant.contains(this)){
+			throw new RuntimeException();
+		}
+		Woman.pregnant.add(this);
+	}
+
+	public void growEmbryo(){
+		this.uterus.growEmbryo();
+	}
+
+	public Embryo getEmbryo(){
+		return this.uterus;
+	}
+
+	public boolean isCarryingChildOf(Human h){
+		if (this.isPregnant()){
+			return this.uterus.getFather() == h;
+		};
+		return false;
+	}
+
+	@Override
+	public boolean hasUnbornChild(){
+		return this.hasUnbornChildFemale();
+	}
+
 
 	public void drainUterus(){
-		this.uterus = null;
-		this.mop = -1;
-		Woman.pregnant.remove(this);
+		if (this.uterus.hasOffice()){
+			Office o = this.uterus.getOffice();
+			this.uterus = null;
+			Woman.pregnant.remove(this);
+			Basic.annals.recordInterregnumEnding();
+			o.manageSuccession();		} else {
+				this.uterus = null;
+				Woman.pregnant.remove(this);
+		}
 	}
 
 	public static Human beBornSpecial(Human f, Human m, int y){
@@ -221,6 +300,9 @@ public class Woman extends Human {
 
 	@Override
 	public void becomeSingle(){
+		if (singles.contains(this)){
+			throw new RuntimeException();
+		}
 		singles.add(this);
 		this.setSpouseNull();
 		this.mating = Mating.revaluateF(this);
@@ -246,10 +328,7 @@ public class Woman extends Human {
 		this.becomeSingle();
 		this.setRelSta(1);
 		if(h.hasUnwedSameSexSibling()){
-		//	Human d = h.getUnwedPatBrother();
 			Marriage.doLevirate(this, h);
-		//	System.out.println(this.isMarriedTo(d));
-		//	Basic.pause(1000);
 		}
 	}
 
@@ -257,7 +336,12 @@ public class Woman extends Human {
 
 
 	@Override
-	public void becomeTaken(){				singles.remove(this); }
+	public void becomeTaken(){
+		singles.remove(this);
+		if (singles.contains(this)){
+			throw new RuntimeException();
+		}
+	}
 
 	@Override
 	public void bury(){
@@ -274,6 +358,9 @@ public class Woman extends Human {
 
 		this.religion.getParish().remove(this);
 		women.remove(this);
+		if (this.isPregnant()){
+			this.drainUterus();
+		}
 		if (this.isHost()){
 			this.getHostHouse().findHost();
 		}
@@ -284,7 +371,8 @@ public class Woman extends Human {
 		//Mother dies while pregnant
 		if (this.isAdult()){
 			if (this.uterus != null){;
-				pregnant.remove(this);
+				this.uterus.handlePosthumous();
+				this.drainUterus();
 			}
 		} else{
 			if (this.isOverAgeOf(8)){
@@ -511,6 +599,19 @@ public class Woman extends Human {
 	}
 
 
+	public static float getFertilityRate(){
+		int i = 0;
+		int w = 0;
+		List<Human> l = getWomen();
+		for(Human x: l){
+			if (x.isAdult()){
+				i += x.getChildren().size();
+				w++;
+			}
+		}
+
+		return  (i+0.0f)/(l.size()+0.0f);
+	}
 
 
 	public static int getPerOfChildren(){
@@ -580,6 +681,11 @@ public class Woman extends Human {
 			}
 		}
 		return s;
+	}
+
+	@Override
+	public String getSpouseTitle(){
+		return "husband";
 	}
 
 }

@@ -8,6 +8,7 @@ import Code.Politics.*;
 import Code.Relationship.*;
 import Code.History.Annals;
 import Code.History.Census;
+import Code.calendar.Calendar;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,7 +16,9 @@ import java.util.*;
 
 
 public class Basic {
-	public static Calendar date = 									Calendar.getInstance();
+	public static Calendar date = new Calendar(1000,1,1);
+
+	//;Calendar.getInstance();
 	public static Map<Integer, ArrayList<Human>> monthC = 			new HashMap<>();
 	public static Map<Integer, House> house = 						new HashMap<>();
 	public static String row = 										"%-23s %s–%s\t%s\t%s\t%s\n";
@@ -24,17 +27,17 @@ public class Basic {
   public static Map<Integer, List<Human>> dayC = 					new HashMap<>();
   public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
   public static Random randomizer = 											new Random();
-  public static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-  public static SimpleDateFormat format2 = new SimpleDateFormat("d MMMM y");
+
 	public static Annals annals;
+
 	public static void performSetup(){
 		long seed = randomizer.nextLong();
 		randomizer.setSeed(seed);
 		System.out.println("Seed: "+seed);
 
 
-		int cntl = 5;										//Century length
-		Census.booking = new Census[cntl];
+		int cntl = 6;										//Century length
+		Census.booking = new Census[cntl+1];
 		annals = new Annals(1000, cntl);
 
 		Religion.foundReligion();
@@ -51,7 +54,7 @@ public class Basic {
 			monthC.put(x, new ArrayList<>());
 			monthE.put(x, new ArrayList<>());
 		}
-		getDate().set(1000,0,1);
+	//	getDate().set(1000,0,1);
 
 		for (int x = 0; x < 100; x++){
 			Human.createFamily();
@@ -82,10 +85,8 @@ public class Basic {
 		Death.death();
 
 		int dom = 1; 										//day of the month
-		int maom = 0;
-
       for (int century = 0; century < cntl; century++){
-				Census.booking[century] = new Census(getDateYear(), Man.getAmount(), Woman.getAmount());
+				Census.booking[century] = new Census(date.getYear(), Man.getAmount(), Woman.getAmount());
 			for (int decade = 0; decade < 10; decade++){
 				for (int lustrum = 0; lustrum < 2; lustrum++){
 					for (int annum = 0; annum < 5; annum++){
@@ -98,28 +99,34 @@ public class Basic {
 						Mating.retire();
 
 						for (int quarter = 0; quarter != 4; quarter++){
-							maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
-							Marriage.checkProposals(maom);
+							Marriage.checkProposals(30);
 							for (int month = 0; month != 3; month++){
-							  maom = getDate().getActualMaximum(Calendar.DAY_OF_MONTH);
 							  for (Office x: Office.offices){
 									 if(x.isAtWar()){
 										 InterestImperialism.handleSiege(x);
 									 }
 							  }
-							  for (Human x: Human.living){ 		Death.check(x, maom);		}
+							  for (Human x: Human.living){ 		Death.check(x, 30);		}
+								for (Human x: Woman.pregnant){ 	((Woman) x).growEmbryo();		}
 
-						//	   for (Human x: Man.singles){ 			Marriage.propose(x, maom);	}
 							  Marriage.doBreeding();
 							  Affair.doAdultery();
-							  for (Human x: Woman.pregnant){x.ovulate(maom);}
-							  while(dom != maom){
-									for (int x0 = 0; x0 != dayC.get(dom).size();x0++){
-										dayC.get(dom).get(x0).saunter(dayE.get(dom).get(x0));
+
+			//					getDate().addDays(1);
+								dom = getDate().getMonthDay();
+
+							  for(int zq = 1; zq <= 30; zq++){
+
+									for (int x0 = 0; x0 < dayC.get(zq).size(); x0++){
+
+										dayC.get(zq).get(x0).saunter(dayE.get(zq).get(x0));
 									}
-									getDate().add(Calendar.DATE, 1);
-									dom = getDate().get(Calendar.DAY_OF_MONTH);
-							  }
+									getDate().addDay();
+								}
+
+								getDate().takeDay();
+
+
 							  for (int xc = 1; xc < 32; xc++){
 								  dayC.get(xc).clear();
 								  dayE.get(xc).clear();
@@ -128,42 +135,36 @@ public class Basic {
 								  monthC.get(xc).clear();
 								  monthE.get(xc).clear();
 					   		}
-							   getDate().add(Calendar.DATE, 1);
-								 dom = getDate().get(Calendar.DAY_OF_MONTH);
+
 								 Marriage.flushMonthlyWedding();
-							}
+								 getDate().addDay();
+								 dom = getDate().getMonthDay();
+							 }
 						}
-						annals.publishAnnal(Basic.getDateYear()-1);
+						annals.publishAnnal(date.getYear()-1);
 					}
 				}
 			}
     }
 
+		Census.booking[cntl] = new Census(date.getYear(), Man.getAmount(), Woman.getAmount());
+
+
 		Writing.writeMonarchList();
 		Writing.writeTable();
-		Writing.writeSummary();
+//		Writing.writeSummary();
 		Writing.writeDemography();
 		Writing.writeNobility();
 		Writing.writeClaims();
-
-
+		Writing.writeConsorts();
 		System.out.println("SIMULATION COMPLETED");
 	}
 
-	public static String sDate(){
-		return format1.format(date.getTime());
-	}
-
-	public static String sDateLong(Calendar c){
-		return format2.format(c.getTime());
-	}
-
-
   public static void print(String p){
-		System.out.println(Basic.sDate()+": "+p+".");
+		System.out.println(getDate().getDateString()+": "+p+".");
 	}
 
-	public static boolean coinFlip(){
+	public static boolean flipCoin(){
 		return randomizer.nextInt(2) == 0;
 	}
 
@@ -201,50 +202,49 @@ public class Basic {
 		return list[(randomizer.nextInt(list.length))];
 	}
 
+	public static int choice(int[] list){
+		return list[(randomizer.nextInt(list.length))];
+	}
+
 	public static Calendar getDate(){
 		return date;
 	}
 
-	public static int getDateDate(){
-		return getDate().get(Calendar.DATE);
-	}
-
 	public static int getDateMonth(){
-		return getDate().get(Calendar.MONTH);
+		return getDate().getMonth();
 	}
 
-	public static int getDateYear(){
-		return getDate().get(Calendar.YEAR);
+	public static int getDateDay(){
+		return getDate().getMonthDay();
 	}
-
 
 	public static int getDaysLived(Calendar c){
-		int d = getDateDate()-c.get(Calendar.DATE);
-		int m = (getDateMonth()-c.get(Calendar.MONTH));
-		m = (int) (m * 30.416f);
-		int y = (getDateYear()-c.get(Calendar.YEAR))*365;
+		int d = date.getMonthDay()-c.getMonthDay();
+		int m = (getDateMonth()-c.getMonth());
+		m = (int) (m * 30);
+		int y = (getDate().getYear()-c.getYear())*360;
 		return (y+m+d);
 	}
 
 	public static int getDaysBetween(Calendar a, Calendar b){
-		int d = b.get(Calendar.DATE)-a.get(Calendar.DATE);
-		int m = (b.get(Calendar.MONTH)-a.get(Calendar.MONTH));
-		m = (int) (m * 30.416f);
-		int y = (b.get(Calendar.YEAR)-a.get(Calendar.YEAR))*365;
+		int d = b.getMonthDay()-a.getMonthDay();
+		int m = (b.getMonth()-a.getMonth());
+		m = (int) (m * 30);
+		int y = (b.getYear()-a.getYear())*360;
 		return (y+m+d);
 	}
 
 	public static int getYears(int i){
-		return i/365;
+		return i/360;
 	}
 
 	//Parameter argument is days
 	public static String getYearsAndDays(int i){
 		int y = getYears(i);
-		int d =  i-(y*365);
+		int d =  i-(y*360);
 		String s = getPlural(y, "year");
-		if (isNotZero(s.length())){
-			s += ", and ";
+		if (isNotZero(s.length()) && isNotZero(d)){
+			s += " and ";
 		}
 		s += getPlural(d, "day");
 		return s;
@@ -355,6 +355,20 @@ public class Basic {
 		else{ return n2; }
 	}
 
+	public static int[] sortFromSmallest(int[] i){
+		int t; //temp
+		for(int x = 0; x < i.length; x++){
+			for(int y = x; y < i.length; y++){
+				if (i[y] < i[x]){
+					t = i[x];
+					i[x] = i[y];
+					i[y] = t;
+				}
+			}
+		}
+		return i;
+	}
+
 	public static String capitalize(String it){
 		return Character.toUpperCase(it.charAt(0))+it.substring(1);
 	}
@@ -428,6 +442,7 @@ public class Basic {
 	public static String getCardinal(int i){
         int v = i/10;
         String s = "";
+
         switch(v/10){
             case 0:
                 break;
@@ -444,7 +459,7 @@ public class Basic {
         }
 
         if (v == 0){
-            return s+cardinalDigit_1[i];
+          return s+cardinalDigit_1[i];
         } else {
             if (i < 20){
                 return s+cardinalDigit_2[i-10];
