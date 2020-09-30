@@ -7,15 +7,15 @@ import java.util.List;
 public class Affinity{
 	private static List<Human> list = new ArrayList<>();
 
-	public static String countInbreed(Human h){
+	public static int countInbreed(Human h){
 		int a = h.getAncestryRating();
 		list.clear();
 		addParents(h, a);
 		if (list.size() != 0){
 			list.remove(h);
-			return getUniqueEntries(list)+"%, "+a;
+			return getUniqueEntries(list);
 		}
-		return "0%";
+		return 0;
 	}
 
 	public static int getUniqueEntries(List<Human> l){

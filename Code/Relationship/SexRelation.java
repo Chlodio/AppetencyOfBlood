@@ -65,7 +65,7 @@ public class SexRelation{
 		int wa = 			this.getDoe().getAge();
 		int fmy = 			70-ha;
 		int ffy = 			50-wa;
-		float v = 			(this.getFertility()/10f)*(1.5f);
+		float v = 			(this.getFertility()/10f)*(2f);
 		int tfy = Math.min(fmy, ffy);
 		return (int) (v*(fert[(wa-12)/10][(wa-12)%10]));
 	}

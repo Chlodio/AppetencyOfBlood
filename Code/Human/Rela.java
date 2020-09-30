@@ -158,6 +158,10 @@ public class Rela{
 		return this.father == h || this.mother == h;
 	}
 
+	public Human getFirstborn(){
+		return this.children.get(0);
+	}
+
 //Sons
 
 	public boolean isSonOf(Human h){

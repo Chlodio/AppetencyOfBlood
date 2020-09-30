@@ -576,6 +576,9 @@ public class Woman extends Human {
 
 	public static int getPerOfParents(){	return calcPerParents(getWomen());  }
 
+	public static int getPerOfOrphans(){	return calcPerParents(getWomen());  	}
+
+
 	public static int getPerOfMarriedRepWomen(){
 		int i = 0;
 		List<Human> l = getRepWoman();
@@ -613,6 +616,33 @@ public class Woman extends Human {
 		return  (i+0.0f)/(l.size()+0.0f);
 	}
 
+	public static int getAgeAtFirstMarriage(){
+		int a = 0;			//Sum of ages
+		int e = 0;			//Number of entries
+		List<Human> l = getWomen();
+		Marriage t;			//Temp. for marriage
+		for(Human x: l){
+			if (x.isAdult() && x.wasMarried()){
+				e++;
+				t = x.getFirstMarriage();
+				a += x.getAgeIn(t.getBeginning());
+			}
+		}
+		return a/e;
+	}
+
+	public static int getAgeAtFirstChild(){
+		int a = 0;			//Sum of ages
+		int e = 0;			//Number of entries
+		List<Human> l = getWomen();
+		for(Human x: l){
+			if (x.isAdult() && x.hadChild()){
+				e++;
+				a += x.getAgeIn(x.getFirstborn().getBirth());
+			}
+		}
+		return a/e;
+	}
 
 	public static int getPerOfChildren(){
 		float i = (Human.getNumOfChildren(getWomen())+0.0f)/getAmount();

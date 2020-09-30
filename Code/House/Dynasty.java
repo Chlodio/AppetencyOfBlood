@@ -167,7 +167,7 @@ public class Dynasty {
   public Calendar getEnding(){     return this.ending;     }
 
   public int getTenure(){
-    int i = Basic.getDaysBetween(this.getEnding(), this.getFounding());
+    int i = this.getEnding().getDaysBetween(this.getFounding());
     return Basic.getYears(i);
   }
 

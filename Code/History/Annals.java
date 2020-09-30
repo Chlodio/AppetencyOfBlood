@@ -58,7 +58,7 @@ public class Annals {
 
   public void recordOfficeEntrace(Human h){
       Annal a = this.secureEntry();
-      String s = h.getFullName()+" became a great officer";
+      String s = h.getFullName()+" became the "+h.getRole().getTitle();
       a.add(s);
   }
 

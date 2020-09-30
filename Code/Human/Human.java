@@ -12,6 +12,7 @@ import Code.Ancestry.Bastard;
 import Code.Politics.*;
 import Code.Common.Nick;
 import Code.Relationship.*;
+import Code.History.Census;
 
 public class Human {
 	protected Calendar death;
@@ -68,7 +69,7 @@ public class Human {
 	public Human(int age){
   	this.id++;
 		this.living.add(this);
-		this.birth = 		(Calendar) Basic.getDate().clone();
+		this.birth = 	Calendar.getDateClone();
 		this.birth.takeDays(360*age);
 		this.events =		 new ArrayList<>();
 		this.setRelSta(0);
@@ -89,7 +90,7 @@ public class Human {
 	public Human(int y, boolean b){
  	   this.id++;
  	   this.living.add(this);
- 	   this.birth = 	(Calendar) Basic.date.clone();
+ 	   this.birth = 	Calendar.getDateClone();
 	   this.birth.takeDays(360*y);
  	   this.events = 	new ArrayList<>();
 	   this.setRelSta(0);
@@ -106,7 +107,7 @@ public class Human {
 	public Human(){
  	   this.id++;
  	   this.living.add(this);
- 	   this.birth = 	(Calendar) Basic.date.clone();
+		 this.birth = 	Calendar.getDateClone();
  	   this.events = 	new ArrayList<>();
 	   this.setRelSta(0);
  	   this.religion = 	Religion.getLatest();
@@ -116,6 +117,7 @@ public class Human {
 //	   Basic.human.put(Human.id, this);
 	   this.chaBox = 	new boolean[]{true, false, true};
 		 this.life = this.getLifeChance();
+		 Census.addBirth();
   }
 
 	public int getLife(){
@@ -189,6 +191,7 @@ public class Human {
 			}
 		}
 		this.setDeathCause(i);
+		Census.addDeath();
   }
 
 	public void review(){
@@ -322,7 +325,7 @@ public class Human {
 			Calendar e = this.getDeath();
 			String s = b.getDateLong();
 			s += " – "+e.getDateLong();
-			s += "<br>("+Basic.getYearsAndDays(Basic.getDaysBetween(b, e))+")";
+			s += "<br>("+Basic.getYearsAndDays(b.getDaysBetween(e))+")";
 			return s;
 		} else{
 			return b.getDateLong()+"–PRSN";
@@ -381,11 +384,11 @@ public class Human {
 	}
 
 	public int getAgeIn(Calendar d){
-		return Basic.getDaysBetween(this.birth, d)/360;
+		return this.birth.getDaysBetween(d)/360;
 	}
 
 	public int getDaysIn(Calendar d){
-		return Basic.getDaysBetween(this.birth, d);
+		return this.birth.getDaysBetween(d);
 	}
 
 	//If age is above
@@ -603,7 +606,7 @@ public class Human {
 		Human it = this.deliverBasic(sx);
 		Human f = sx.getStag();
 		it.setLegitimacy(true);
-		if (!f.isAlive()){
+		if (f.isDead()){
 			it.setPosthumous(true);
 		}
 		it.handlePostBirth(f, this);
@@ -710,6 +713,20 @@ public class Human {
 		return (int) (((i+0.0f)/(num+0.0f))*100);
 	}
 
+	public static int calcPerOrpahns(List<Human> l){
+		int num = 0;
+		int i = 0;
+		for(Human x: l){
+			if (x.isAdult()){
+				num++;
+				if (x.getFather().isDead() && x.getMother().isDead()){
+					i++;
+				}
+			}
+		}
+		return (int) (((i+0.0f)/(num+0.0f))*100);
+	}
+
 	public static int getPerOfSingles(){	return calcPerSingles(getLiving());		}
 
 	public static int getPerOfBachelors(){	return calcPerBachelors(getLiving());	}
@@ -717,6 +734,9 @@ public class Human {
 	public static int getPerOfWidowed(){	return calcPerWidowed(getLiving()); 	}
 
 	public static int getPerOfParents(){	return calcPerParents(getLiving()); 	}
+
+	public static int getPerOfOrphans(){	return calcPerOrpahns(getLiving()); 	}
+
 
 	public static int getNumOfElderly(List<Human> l){;
 		int c = 0;
@@ -1204,7 +1224,8 @@ public class Human {
 
 	public void handleRoleDeath(){
 		if (this.hasRole()){
-			this.getRole().getCabinet().appointMinister();
+			this.getRole().retire();
+			this.getRole().replace();
 		}
 	}
 
@@ -1238,12 +1259,12 @@ public class Human {
 
 	public static Human getRandomPersonForHost(){
 		Human h;
-		for(int x = 25; x > 0; x--){
-			h = Basic.choice(Woman.women);
-			if (h.isAdult() && !h.isHost()){
-				return h;
+		for(Human x: Woman.women){
+			if (x.isAdult() && !x.isHost()){
+				return x;
 			}
 		}
+
 		int as = 0;
 		for(House x: House.getList()){
 			if (x.getHost() != x.getHead()){
@@ -1260,6 +1281,22 @@ public class Human {
 				}
 			}
 		}
+
+		List<Human> la = new ArrayList<>();
+		List<Human> wa = new ArrayList<>();
+
+		for(Human x: Woman.getWomen()){
+			if (x.isAdult()){
+				la.add(x);
+				if (x.isHost()){
+					wa.add(x);
+				}
+			}
+		}
+		System.out.println("Men living: "+Man.getMen().size());
+		System.out.println("Adult men: "+la.size());
+		System.out.println("Hosts: "+wa.size());
+
 		throw new RuntimeException();
 	}
 
@@ -1381,6 +1418,7 @@ public class Human {
 	public boolean isBrotherOf(Human h){		return this.rela.isBrotherOf(h);				}
 	public boolean isFirstbornSon(){				return this.rela.isFirstbornSon();	}
 	public boolean isChildOf(Human h){			return this.rela.isChildOf(h); 					}
+	public Human getFirstborn(){		return this.rela.getFirstborn(); 					}
 	public boolean isFatherOf(Human h){			return this.rela.isFatherOf(h);					}
 	public boolean isMotherOf(Human h){			return this.rela.isMotherOf(h);					}
 	public boolean isFirstCousinOf(Human h){	return this.rela.isFirstCousinOf(h); 			}

@@ -339,7 +339,7 @@ public void sortClaims(){
 
 	public void handleCabinet(){
 		this.cabinet =				new Cabinet(this);	//Create cabinet
-		this.getCabinet().appointMinister();			//Appoint minister into the cabinet
+		this.getCabinet().setupMinisters();			//Appoint minister into the cabinet
 	}
 
 }

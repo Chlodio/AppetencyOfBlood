@@ -480,6 +480,9 @@ public class Man extends Human {
 
 	public static int getPerOfParents(){	return calcPerParents(getMen());  	}
 
+	public static int getPerOfOrphans(){	return calcPerParents(getMen());  	}
+
+
 	public static int getPerOfChildren(){
 		float i = (Human.getNumOfChildren(getMen())+0.0f)/getAmount();
 		return (int) (i*100);

@@ -4,32 +4,68 @@ import Code.Politics.Minister;
 import Code.Human.Human;
 import Code.House.House;
 import Code.Common.Basic;
+import Code.Politics.Steward;
+import Code.History.CabinetRegister;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Cabinet{
 	private Office office;
-	private Minister minister;
+	private Minister steward;
+	private Minister constable;
+	private Minister chancellor;
+	private Minister chamberlain;
+	private CabinetRegister register;	//Records historical ministers
+
+	//Steward								(governance)
+	//Constable							(stratagem)
+	//Chancellor 	(clergy)	(legalism)
+	//Chamberlain						(governance)
+	//Treasurer 	(clergy)	(finances)
+	//Marshal								(tactics)
 
 	public Cabinet(Office o){
 		this.setOffice(o);
+		this.register = new CabinetRegister();
 	}
 
-	public Office getOffice(){					return this.office;		}
 	public void setOffice(Office c){			this.office = c;			}
 
-	public void setMinister(Minister m){		this.minister = m;		}
-	public Minister getMinister(){				return this.minister;	}
+	public void setupMinisters(){
+		Minister m = findSteward();
+		this.setSteward(m);
 
-	public void appointMinister(){
-		Minister m = findMinister(this);
-		Basic.annals.recordOfficeEntrace(m.getPerson());
-		this.setMinister(m);
+		m = findConstable();
+		this.setConstable(m);
+
+		m = findChamberlain();
+		this.setChamberlain(m);
+
+		m = findChancellor();
+		this.setChancellor(m);
 	}
 
-	public Minister findMinister(Cabinet c){
+	public Minister findSteward(){
 		List<Human> l = 	filterEligible(House.getNobles());
-		Minister m = 		new Minister(c, Basic.choice(l));
+		Minister m = 		new Steward(this, Basic.choice(l));
+		return m;
+	}
+
+	public Minister findConstable(){
+		List<Human> l = 	filterEligible(House.getNobles());
+		Minister m = 		new Constable(this, Basic.choice(l));
+		return m;
+	}
+
+	public Minister findChamberlain(){
+		List<Human> l = 	filterEligible(House.getNobles());
+		Minister m = 		new Chamberlain(this, Basic.choice(l));
+		return m;
+	}
+
+	public Minister findChancellor(){
+		List<Human> l = 	filterEligible(House.getNobles());
+		Minister m = 		new Chancellor(this, Basic.choice(l));
 		return m;
 	}
 
@@ -53,5 +89,43 @@ public class Cabinet{
 		}
 		return false;
 	}
+
+	public void performDuties(){
+		this.steward.performDuties();
+	}
+
+	public void setSteward(Minister m){
+		Basic.annals.recordOfficeEntrace(m.getPerson());
+		this.register.recordSteward(m);
+		this.steward = m;
+	}
+
+	public void setConstable(Minister m){
+		Basic.annals.recordOfficeEntrace(m.getPerson());
+		this.register.recordConstable(m);
+		this.constable = m;
+	}
+
+
+	public void setChamberlain(Minister m){
+		Basic.annals.recordOfficeEntrace(m.getPerson());
+		this.register.recordChamberlain(m);
+		this.constable = m;
+	}
+
+	public void setChancellor(Minister m){
+		Basic.annals.recordOfficeEntrace(m.getPerson());
+		this.register.recordConstable(m);
+		this.constable = m;
+	}
+
+	public CabinetRegister getRegister(){
+		return this.register;
+	}
+
+	public Minister getSteward(){					return this.steward;	}
+
+	public Office getOffice(){						return this.office;		}
+
 
 }

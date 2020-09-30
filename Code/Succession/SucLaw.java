@@ -61,11 +61,11 @@ public class SucLaw{
 
 	public SucLaw(Lineage l){
 		this.lineage =		l;
-		this.sex = 				0;
+		this.sex = 				1;
 		this.preference =  1;
-		this.tracing =		0;
+		this.tracing =		1;
 		this.bastardy = 	0;
-		this.lastResort = 0;
+		this.lastResort = 1;
 		this.coverture = 1;
 	}
 

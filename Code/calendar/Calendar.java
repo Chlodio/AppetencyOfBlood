@@ -4,6 +4,8 @@ package Code.calendar;
 
 
 public class Calendar {
+  public static Calendar date = new Calendar(500,1,1);  //Universal calendar
+
   private int year;
   private int month;
   private int monthDay;
@@ -95,48 +97,10 @@ public class Calendar {
     return y+" "+m+". "+d;
   }
 
+  public int getDaysBetween(Calendar b){
+		return (b.yearDay-this.yearDay);
+	}
 
-  public int updateMonth(int d){
-      int i = d%30;
-      this.month += (d/30);
-      this.yearDay += this.month*30;
-      if (this.month > 12){
-          this.year  += 1;
-          this.month -= 12;
-      }
-      return i;
-  }
-
-  public int updateMonthDown(int d){
-      int i = d%30;
-      this.month     -= (d/30);
-      this.yearDay -= this.month*30;
-      if (this.month < 1){
-          this.year  -= 1;
-          this.month = 12+this.month;
-      }
-      return i;
-  }
-
-  //Updates year, month, and day of month based on yearDay, after reduction
-  public void updateDown(){
-      if (this.month > 1){
-        this.month--;
-      } else {
-        this.year        = this.yearDay/360;
-        this.month       = 12;
-      }
-      this.monthDay    = 30+this.monthDay;
-  }
-
-  //Updates year, month, and day of month based on yearDay, after increasement
-  public void update(){
-    this.year        = this.yearDay/360;
-    int i            = this.yearDay-(this.year*360);
-    this.month       = i/30;
-    i                = i-(this.month*30);
-    this.monthDay  = (this.yearDay)-((this.year*360)+(this.month*30));
-  }
 
   //If object came before argument
   public boolean before(Calendar c){
@@ -153,7 +117,7 @@ public class Calendar {
   }
 
   public int getMonth(){
-    return this.year;
+    return this.month;
   }
 
   public int getYear(){
@@ -162,6 +126,14 @@ public class Calendar {
 
   public String getYearString(){
     return ""+this.year;
+  }
+
+  public static Calendar getDate(){
+    return date;
+  }
+
+  public static Calendar getDateClone(){
+    return (Calendar) date.clone();
   }
 
   private static final String[] monthName = {"?", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};

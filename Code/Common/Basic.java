@@ -10,14 +10,12 @@ import Code.History.Annals;
 import Code.History.Census;
 import Code.calendar.Calendar;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
 
 public class Basic {
-	public static Calendar date = new Calendar(1000,1,1);
-
+	public static Calendar date = Calendar.getDate();
 	//;Calendar.getInstance();
 	public static Map<Integer, ArrayList<Human>> monthC = 			new HashMap<>();
 	public static Map<Integer, House> house = 						new HashMap<>();
@@ -27,7 +25,6 @@ public class Basic {
   public static Map<Integer, List<Human>> dayC = 					new HashMap<>();
   public static Map<Integer, List<Integer>> dayE = 				new HashMap<>();
   public static Random randomizer = 											new Random();
-
 	public static Annals annals;
 
 	public static void performSetup(){
@@ -36,9 +33,9 @@ public class Basic {
 		System.out.println("Seed: "+seed);
 
 
-		int cntl = 6;										//Century length
+		int cntl = 5;										//Century length
 		Census.booking = new Census[cntl+1];
-		annals = new Annals(1000, cntl);
+		annals = new Annals(500, cntl);
 
 		Religion.foundReligion();
  		House.numberNobleHouses();
@@ -54,7 +51,6 @@ public class Basic {
 			monthC.put(x, new ArrayList<>());
 			monthE.put(x, new ArrayList<>());
 		}
-	//	getDate().set(1000,0,1);
 
 		for (int x = 0; x < 100; x++){
 			Human.createFamily();
@@ -85,7 +81,7 @@ public class Basic {
 		Death.death();
 
 		int dom = 1; 										//day of the month
-      for (int century = 0; century < cntl; century++){
+      for (int century = 0; century < cntl; century++){;
 				Census.booking[century] = new Census(date.getYear(), Man.getAmount(), Woman.getAmount());
 			for (int decade = 0; decade < 10; decade++){
 				for (int lustrum = 0; lustrum < 2; lustrum++){
@@ -105,6 +101,7 @@ public class Basic {
 									 if(x.isAtWar()){
 										 InterestImperialism.handleSiege(x);
 									 }
+									 x.getCabinet().performDuties();
 							  }
 							  for (Human x: Human.living){ 		Death.check(x, 30);		}
 								for (Human x: Woman.pregnant){ 	((Woman) x).growEmbryo();		}
@@ -142,13 +139,13 @@ public class Basic {
 							 }
 						}
 						annals.publishAnnal(date.getYear()-1);
+						Census.addLiving();
+
 					}
 				}
 			}
     }
-
 		Census.booking[cntl] = new Census(date.getYear(), Man.getAmount(), Woman.getAmount());
-
 
 		Writing.writeMonarchList();
 		Writing.writeTable();
@@ -157,6 +154,7 @@ public class Basic {
 		Writing.writeNobility();
 		Writing.writeClaims();
 		Writing.writeConsorts();
+		Writing.writeCabinet();
 		System.out.println("SIMULATION COMPLETED");
 	}
 
@@ -207,7 +205,7 @@ public class Basic {
 	}
 
 	public static Calendar getDate(){
-		return date;
+		return Calendar.getDate();
 	}
 
 	public static int getDateMonth(){
@@ -223,14 +221,6 @@ public class Basic {
 		int m = (getDateMonth()-c.getMonth());
 		m = (int) (m * 30);
 		int y = (getDate().getYear()-c.getYear())*360;
-		return (y+m+d);
-	}
-
-	public static int getDaysBetween(Calendar a, Calendar b){
-		int d = b.getMonthDay()-a.getMonthDay();
-		int m = (b.getMonth()-a.getMonth());
-		m = (int) (m * 30);
-		int y = (b.getYear()-a.getYear())*360;
 		return (y+m+d);
 	}
 

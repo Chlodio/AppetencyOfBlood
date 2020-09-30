@@ -88,9 +88,9 @@ public class DynasticOffice{
     Calendar c = this.getFirst().getStart();
     int i;
     if (!this.isActive()){
-      i = Basic.getDaysBetween(c, this.getRecent().getEnd());
+      i = c.getDaysBetween(this.getRecent().getEnd());
     } else {
-      i = Basic.getDaysBetween(c, Basic.getDate());
+      i = c.getDaysBetween(Basic.getDate());
     }
     return Basic.getYears(i);
   }

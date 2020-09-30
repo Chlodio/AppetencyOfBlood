@@ -13,6 +13,11 @@ public class HTML {
 		return "</body></html>";
 	}
 
+	//Get caption for tables
+	public static String getCaption(String s){
+		return "<caption>"+s+"</caption";
+	}
+
 	//Wrap the text inside of table cell;
 	public static String getTd(String s){
 		return "<td>"+s+"</td>";

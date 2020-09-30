@@ -190,7 +190,7 @@ public class Marriage extends SexRelation{
 
 
 			List<Integer> l = new ArrayList<>(w.size());
-			int i = Basic.max(2, (int) (w.size()*0.015) );
+			int i = Basic.max(2, (int) (w.size()*0.01) );
 			//Figure out what number of unwed women should get married, minium of two, but ideally a larger percentage
 
 			int a;
@@ -725,10 +725,10 @@ public class Marriage extends SexRelation{
 		String s = "";
 		if (this.isActive()){
 			s =  ", the union has lasted ";
-			s += ""+Basic.getYearsAndDays(Basic.getDaysBetween(this.getBeginning(), Basic.getDate()));
+			s += ""+Basic.getYearsAndDays(this.getBeginning().getDaysBetween(Basic.getDate()));
 		} else {
 			s =  ", the union lasted ";
-			s += ""+Basic.getYearsAndDays(Basic.getDaysBetween(this.getBeginning(), this.getEnding()));
+			s += ""+Basic.getYearsAndDays(this.getBeginning().getDaysBetween(this.getEnding()));
 		}
 		return s;
 	}

@@ -9,6 +9,8 @@ import Code.Common.Basic;
 import Code.Common.HTML;
 import Code.History.Census;
 import Code.Politics.Consort;
+import Code.Ancestry.Affinity;
+import Code.Politics.Cabinet;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -308,7 +310,7 @@ public class Writing {
 
 	public static String getGeneralCensus(){
 		StringBuffer s = new StringBuffer();
-		s.append("General");
+		s.append(HTML.getCaption("General"));
 
 		//The names of headers
 		String[] th = {"#", "⚤", "♂", "♀"};
@@ -339,6 +341,12 @@ public class Writing {
 		temp += HTML.getTd(Human.getMedianAge(Woman.getWomen())+"");
 		s.append(HTML.getTr(temp));
 
+		temp = HTML.getTd("Orphans");
+		temp += HTML.getTd(Human.getPerOfOrphans()+"%");
+		temp += HTML.getTd(Man.getPerOfOrphans()+"%");
+		temp += HTML.getTd(Woman.getPerOfOrphans()+"%");
+		s.append(HTML.getTr(temp));
+
 		return HTML.getTable(String.valueOf(s));
 	}
 
@@ -346,7 +354,7 @@ public class Writing {
 	public static String getAdultCensus(){
 		StringBuffer s = new StringBuffer();
 		int[] lifE = getLifeExpetency();
-		s.append("Adult");
+		s.append(HTML.getCaption("Adult"));
 
 		//The names of headers
 		String[] th = {"#", "⚤", "♂", "♀"};
@@ -377,17 +385,16 @@ public class Writing {
 		temp += HTML.getTd(Man.getPerOfParents()+"%");
 		temp += HTML.getTd(Woman.getPerOfParents()+"%");
 		s.append(HTML.getTr(temp));
-
 		return HTML.getTable(String.valueOf(s));
 	}
 
 	public static String getReproductiveWomen(){
 		StringBuffer s = new StringBuffer();
 		int[] lifE = getLifeExpetency();
-		s.append("Reproductive women");
+		s.append(HTML.getCaption("Reproductive women"));
 
 		//The names of headers
-		String[] th = {"#", "%"};
+		String[] th = {"Name", "%"};
 
 		String temp = "";
 		s.append(HTML.getTr(HTML.createTableHeader(th)));
@@ -404,16 +411,23 @@ public class Writing {
 		temp += HTML.getTd((Woman.getFertilityRate()+"").substring(0,3));
 		s.append(HTML.getTr(temp));
 
+		temp = HTML.getTd("Age at first marriage");
+		temp += HTML.getTd((Woman.getAgeAtFirstMarriage()+""));
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Age at first birth");
+		temp += HTML.getTd((Woman.getAgeAtFirstChild()+""));
+		s.append(HTML.getTr(temp));
 
 		return HTML.getTable(String.valueOf(s));
 	}
 
 	public static String getMarriageCensus(){
 		StringBuffer s = new StringBuffer();
-		s.append("Marriages");
+		s.append(HTML.getCaption("Marriages"));
 
 		//The names of headers
-		String[] th = {"#", "%"};
+		String[] th = {"Name", "%"};
 
 		String temp = "";
 		s.append(HTML.getTr(HTML.createTableHeader(th)));
@@ -530,24 +544,69 @@ public class Writing {
 		return s;
 	}
 
+	public static String[] getFemaleMonarchsPercent(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = 0;
+		for(Holder x: l){
+			if (x.getPerson().isFemale()){
+				h = x;
+				a++;
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = "N/A";
+		if (a != 0){
+			s[1] = (((0.0f+a)/l.size()*100)+"");
+			if (s.length >= 4){
+				s[1] = s[1].substring(0,4)+"%";
+			} else {
+				s[1] = s[1].substring(0,3)+"%";
+			}
+		} else {
+			s[1] = "0%";
+		}
+		return s;
+	}
+
+	public static String[] getMostInbred(){
+		List<Holder> l = Realm.getLineage(0);
+		Holder h = l.get(0);
+		int a = Affinity.countInbreed(h.getPerson());
+		int t; 	//Temp for inbreeding
+		for(Holder x: l){
+			t = Affinity.countInbreed(x.getPerson());
+			if (t > a){
+				h = x;
+				a = t;
+			}
+		}
+
+		String[] s = new String[2];
+		s[0] = h.getName();
+		s[1] = a+"%";
+		return s;
+	}
+
 
 	public static String getMonarchialRecord(){
 		StringBuffer s = new StringBuffer();
-		s.append("Monarchial record");
+		s.append(HTML.getCaption("Monarchial record"));
 
 		//The names of headers
-		String[] th = {"#", "Holder", "Record"};
+		String[] th = {"Name", "Holder", "Record"};
 		String[] m;							//Store monarchial record
 		String temp = "";
 		s.append(HTML.getTr(HTML.createTableHeader(th)));
 
-		temp = HTML.getTd("Oldest longevity");
+		temp = HTML.getTd("Oldest");
 		m = getOldestLongevityMonarch();
 		temp += HTML.getTd(m[0]);
 		temp += HTML.getTd(m[1]);
 		s.append(HTML.getTr(temp));
 
-		temp = HTML.getTd("Youngest longevity");
+		temp = HTML.getTd("Youngest");
 		m = getYoungestLongevityMonarch();
 		temp += HTML.getTd(m[0]);
 		temp += HTML.getTd(m[1]);
@@ -571,9 +630,37 @@ public class Writing {
 		temp += HTML.getTd(m[1]);
 		s.append(HTML.getTr(temp));
 
+		temp = HTML.getTd("Female rulers");
+		m = getFemaleMonarchsPercent();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+		temp = HTML.getTd("Most inbred");
+		m = getMostInbred();
+		temp += HTML.getTd(m[0]);
+		temp += HTML.getTd(m[1]);
+		s.append(HTML.getTr(temp));
+
+
 		return HTML.getTable(String.valueOf(s));
 
 	}
+
+	public static String getCensus(){
+		StringBuffer s = new StringBuffer();
+		s.append(HTML.getCaption("Census"));
+
+		//The names of headers
+		String[] th = {"YEAR", "LIVING", "MEN", "WOMEN", "BIRTHS", "DEATHS"};
+		s.append(HTML.getTr(HTML.createTableHeader(th)));
+		String[] census = Census.write();
+		for(String x: census){
+				s.append(x);
+		}
+		return HTML.getTable(String.valueOf(s));
+	}
+
 
 	public static void writeDemography(){
 		//int[] eyeC = getEyeColorCensus();
@@ -586,19 +673,13 @@ public class Writing {
 		s.append(getReproductiveWomen());
 		s.append(getMarriageCensus());
 		s.append(getMonarchialRecord());
+		s.append(getCensus());
 
 
 		try {
 			FileWriter writer = new FileWriter("Output/Demography.html", false);
 			writer.write(String.valueOf(s));
 
-			writer.write("<p style='float:right'><b>CENSUS:</b><table>");
-			writer.write("<tr><th>YEAR</th><th>LIVING</th><th>MEN</th><th>WOMEN</th></tr>");
-			String[] census = Census.write();
-			for(String x: census){
-				writer.write(x);
-			}
-			writer.write("</table></p>");
 			writer.write("<svg width='500' height='130' style='left:42%'>");
 			writer.write("<rect x='0' y='20' width='500' height='110' style='fill:grey' />");
 			for (int[] x: pop){
@@ -705,6 +786,9 @@ public class Writing {
 
 	}
 
+	public static void writeCabinet(){
+		System.out.println(Office.offices.get(0).getCabinet().getRegister().getHTML());
+	}
 
 	public static int[] getEyeColorCensus(){
 		int[] c = new int[3];

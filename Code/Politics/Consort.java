@@ -66,7 +66,7 @@ public class Consort {
     Calendar e = this.getEnding();
     String s = b.getDateLong();
     s += " – "+e.getDateLong();
-    s += "<br>("+Basic.getYearsAndDays(Basic.getDaysBetween(b, e))+")";
+    s += "<br>("+Basic.getYearsAndDays(b.getDaysBetween(e))+")";
     return s;
   }
 

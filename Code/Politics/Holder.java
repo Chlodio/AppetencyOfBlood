@@ -132,9 +132,9 @@ public class Holder{
 
 	public int getReignLengthExact(){
 		if (this.hasEnded()){
-		 	return Basic.getDaysBetween(this.getStart(), this.getEnd());
+		 	return this.getStart().getDaysBetween(this.getEnd());
 		} else {
-			return Basic.getDaysBetween(this.getStart(), Basic.getDate());
+			return this.getStart().getDaysBetween(Basic.getDate());
 		}
 	}
 
@@ -247,7 +247,7 @@ public class Holder{
 			}
 			s.append(this.getParentNameAge(h.getMother()));
 			if (h.isPosthumous()){
-				int d = Basic.getDaysBetween(h.getFather().getDeath(), h.getBirth());
+				int d = h.getFather().getDeath().getDaysBetween(h.getBirth());
 				String ds = Basic.getMonthsOrDays(d);
 				s.append(", ").append(ds).append(" from his father's death");
 			}
